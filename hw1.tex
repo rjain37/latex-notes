@@ -1,0 +1,126 @@
+\documentclass{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 1}
+
+\begin{document}
+
+\qs{17}{Which of the following relations $f: \QQ \rightarrow \QQ$ define a mapping? In each case, supply a reason why $f$ is or is not a mapping.
+
+\begin{enumerate}[label=\alph*.]
+    \item $f(p/q) = \displaystyle\frac{p+1}{p-2}$
+    \item $f(p/q) = \displaystyle\frac{3p}{3q}$
+    \item $f(p/q) = \displaystyle\frac{p+q}{q^2}$
+    \item $f(p/q) = \displaystyle\frac{3p^2}{7q^2} - \frac{p}{q}$
+\end{enumerate}}
+
+\sol
+
+\begin{enumerate}[label=\alph*.]
+    \item this is not a mapping because $f(1/2) = -2 \not = f(2/4) = \text{undefined}$
+    \item this is a mapping because $f(x) = x$ for all $x \in \QQ$ (identity mapping)
+    \item this is not a mapping because $f(1/2) = 3/4 \not = f(2/4) = 3/8$
+    \item this is a mapping because $f(x) = \frac{3}{7}x^2 - x$ for all $x \in \QQ$
+\end{enumerate}
+
+\qs{22}{Let $f: A \rightarrow B$ and $g: B \rightarrow C$ be maps.
+
+\begin{enumerate}[label=\alph*.]
+    \setcounter{enumi}{1}
+    \item If $g\circ f$ is onto, show that $g$ is onto.
+    \item If $g\circ f$ is one-to-one, show that $f$ is one-to-one.
+    \item If $g\circ f$ is one-to-one and $f$ is onto, show that $g$ is one-to-one.
+    \item If $g\circ f$ is onto and $g$ is one-to-one, show that $f$ is onto.
+\end{enumerate}
+
+}
+
+\sol
+
+\begin{enumerate}[label=\alph*.]
+    \setcounter{enumi}{1}
+    \item We know that $g \circ f : A \to C$ and that this function is onto. Let there be a $c \in C$. Since $g \circ f$ is onto, we know that there exists $a \in A$ such that $$(g \circ f)(a) = g(f(a)) = c.$$ Now let $f(a) = b$ for $b \in B$. This means that $$g(f(a)) = g(b) = c$$ so $g$ is onto.
+    \item Consider $a_1, a_2 \in A$ such that $a_1 \neq a_2$. Since $g \circ f$ is one-to-one, we know that $g(f(a_1)) \neq g(f(a_2))$. Therefore, since $f(a_1) \neq f(a_2)$, $f$ is one-to-one.
+    \item Let $b_1, b_2 \in B$. We want to show that $g(b_1) = g(b_2) \implies b_1 = b_2$. Since $f$ is onto, we know that there exists $a_1, a_2 \in A$ such that $f(a_1) = b_1$ and $f(a_2) = b_2$. So since $g \circ f$ is one-to-one and since we know that $g(f(a_1)) = g(b_1) = g(b_2) = g(f(a_2))$, we can conclude that $b_1 = b_2$ and that $g$ is one-to-one.
+    \item Let $f(a) = b$ for some $a \in A$. Then let $g(b) = c$ for some $b \in B$. Since $g \circ f$ is one-to-one, we know that there exists some $a \in A$ such that $g(f(a)) = c = g(b)$. Therefore, since $g$ is one-to-one, $f(a) = b$, so $f$ is onto. 
+\end{enumerate}
+
+\qs{24}{Let $f: X \rightarrow Y$ be a map with $A_1, A_2 \subset X$ and $B_1, B_2 \subset Y$.
+
+\begin{enumerate}[label=\alph*.]
+    \item Prove $f(A_1 \cup A_2) = f(A_1) \cup f(A_2)$.
+    \item Prove $f(A_1 \cap A_2) \subset f(A_1) \cap f(A_2)$. Give an example in which equality fails.
+    \item Prove $f^{-1}(B_1 \cup B_2) = f^{-1}(B_1) \cup f^{-1}(B_2)$, where $$f^{-1}(B) = \{x \in X: f(x) \in B\}$$
+    \item Prove $f^{-1}(B_1 \cap B_2) = f^{-1}(B_1) \cap f^{-1}(B_2)$.
+    \item Prove $f^{-1}(Y$\textbackslash$ B_1) = X$ \textbackslash $f^{-1}(B_1)$.
+\end{enumerate}}
+
+\sol
+
+\begin{enumerate}[label=\alph*.]
+    \item Let $y \in f(A_1 \cup A_2)$. Then there exists $x \in A_1 \cup A_2$ such that $y = f(x)$. Since $x \in A_1 \cup A_2$, we know that $x \in A_1$ or $x \in A_2$. If $x \in A_1$, then $y = f(x) = f(A_1) \subset f(A_1) \cup f(A_2)$. If $x \in A_2$, then $y = f(x) = f(A_2 \subset f(A_1) \cup f(A_2))$. So, $y \in f(A_1 \cup A_2) \implies y \in f(A_1) \cup f(A_2)$, so $(A_1 \cup A_2) \subset f(A_1) \cup f(A_2)$.
+    
+    To prove equality, we need to prove the other way around. Let $y \in f(A_1) \cup f(A_2)$, or $y \in f(A_1) \lor y \in f(A_2)$. If $y \in f(A_1)$, there exists $x \in A_1$ such that $y=f(x)$. Since $x \in A_1 \subset A_1 \cup A_2$, it follows that $y \in f(A_1 \cup A_2)$. If $y \in f(A_2)$, there exists $x \in A_2$ such that $y=f(x)$. Since $x \in A_2 \subset A_1 \cup A_2$, it follows that $y \in f(A_1 \cup A_2)$. So, $y \in f(A_1) \cup f(A_2) \implies y \in f(A_1 \cup A_2)$, so $f(A_1) \cup f(A_2) \subset f(A_1 \cup A_2)$.
+
+    Since we have shown the conditions for equality, $f(A_1 \cup A_2) = f(A_1) \cup f(A_2). \qed$
+    \item Let $y \in f(A_1 \cap A_2)$. Then there exists $x \in A_1 \cap A_2$ such that $y = f(x)$. Since $x \in A_1$, we know that $y \in f(A_1)$. Since $x \in A_2$, we know that $y \in f(A_2)$. So, $y \in f(A_1) \cap f(A_2)$. So, $f(A_1 \cap A_2) \subset f(A_1) \cap f(A_2) \qed$.
+    
+    An example where inequality doesn't hold is a function we went through in class: $f : \ZZ \to \ZZ$, the function $f(x) = x^2$. If we have $A_1 = \{-1, 0\}$ and $A_2 = \{0, 1\}$, then $f(A_1 \cap A_2) = \{0\}$, but $f(A_1) \cap f(A_2) = \{0, 1\}$, so they are not equal. 
+    \item Let $x \in f^{-1}(B_1 \cup B_2)$. Then $f(x) \in B_1 \cup B_2$, so $f(x) \in B_1$ or $f(x) \in B_2$. So, $x \in f^{-1}(B_1)$ or $x \in f^{-1}{B_2}$. In other words, $x\in f^{-1}(B_1) \cup f^{-1}(B_2)$. So $f^{-1}(B_1 \cup B_2) \subset f^{-1}(B_1) \cup f^{-1}(B_2)$.
+    
+    Now define a new $x \in f^{-1}(B_1) \cup f^{-1}(B_2)$. Then $x \in f^{-1}(B_1)$ or $x \in f^{-1}(B_2)$. If $x \in f^{-1}(B_1)$, then $f(x) \in B_1$. If $x \in f^{-1}(B_2)$, then $f(x) \in B_2$. So, $f(x) \in B_1 \cup B_2$. So, $x \in f^{-1}(B_1 \cup B_2)$. So, $f^{-1}(B_1) \cup f^{-1}(B_2) \subset f^{-1}(B_1 \cup B_2)$. 
+    
+    Since we have shown the conditions for equality, $f^{-1}(B_1 \cup B_2) = f^{-1}(B_1) \cup f^{-1}(B_2). \qed$
+    
+    \item Let $x \in f^{-1}(B_1 \cap B_2)$. Then $f(x) \in B_1 \cap B_2$. Since $f(x) \in B_1$, we know that $x \in f^{-1}(B_1)$. Since $f(x) \in B_2$, we know that $x \in f^{-1}(B_2)$. So, $x \in f^{-1}(B_1) \cap f^{-1}(B_2)$. So, $f^{-1}(B_1 \cap B_2) \subset f^{-1}(B_1) \cap f^{-1}(B_2)$.
+    
+    Now let $x \in f^{-1}(B_1) \cap f^{-1}(B_2)$. Then $x \in f^{-1}(B_1)$ and $x \in f^{-1}(B_2)$. Since $x \in f^{-1}(B_1)$, we know that $f(x) \in B_1$. Since $x \in f^{-1}(B_2)$, we know that $f(x) \in B_2$. So, $f(x) \in B_1 \cap B_2$. So, $x \in f^{-1}(B_1 \cap B_2)$. So, $f^{-1}(B_1) \cap f^{-1}(B_2) \subset f^{-1}(B_1 \cap B_2)$.
+
+    Since we have shown the conditions for equality, $f^{-1}(B_1 \cap B_2) = f^{-1}(B_1) \cap f^{-1}(B_2). \qed$
+
+    \item Let $x \in f^{-1}(Y$\textbackslash$ B_1)$. Then $f(x) \in Y$\textbackslash$ B_1 \implies f(x) \not\in B_1$ or that $x \not\in f^{-1}(B_1)$. We also know $x \in X$ because of the definition of the function $f$. So, $x \in X$\textbackslash$ f^{-1}(B_1)$ and  $f^{-1}(Y$\textbackslash$ B_1) \subset X$ \textbackslash $f^{-1}(B_1)$.
+    
+    Now let $x \in X$\textbackslash$ f^{-1}(B_1)$. Then $x \not\in f^{-1}(B_1) \implies f(x) \not\in B_1$. Also $f(x) \in Y$ by defintion of the function, so $x \in f^{-1}(Y)$. So, $f^{-1}(Y$\textbackslash$ B_1) \subset X$\textbackslash$ f^{-1}(B_1)$. 
+
+    Since we have shown the conditions for equality, $f^{-1}(Y$\textbackslash$ B_1) = X$\textbackslash$ f^{-1}(B_1). \qed$ 
+\end{enumerate}
+
+\qs{25}{Determine whether or not the following relations are equivalence relations on the given set. If the relation is an equivalence relation, describe the partition given by it. If the relation is not an equivalence relation, state why it fails to be one.
+\begin{enumerate}[label=\alph*.]
+    \item $x \sim y$ in $\RR$ if $x \geq y$
+    \item $m \sim n$ in $\ZZ$ if $mn > 0$
+    \item $x \sim y$ in $\RR$ if $\|x-y\| \leq 4$
+    \item $m \sim n$ in $\ZZ$ if $m \equiv n \pmod{6}$
+\end{enumerate}}
+
+\sol
+
+\begin{enumerate}[label=\alph*.]
+    \item This is not an equivalence relation because it is not reflexive. For example, $0 \not \geq 1$ but $1 \geq 0$.
+    \item This is not an equivalence relation because $0 \not \sim 0$, so it is not symmetric.
+    \item This is not an equivalence relation because transitivty does not hold. For example, $0 \sim 4$ and $4 \sim 8$ but $0 \not \sim 8$.
+    % \item This is an equivalence relation and the partitions are $\{6n\}, \{6n + 1\}, \{6n + 2\}, \{6n + 3\}, \{6n + 4\},$ and $ \{6n + 5\}$ for $n \in \ZZ$.
+    \item This is an equivalence relation and the partitions is described by the group $\ZZ / 6\ZZ$.
+\end{enumerate}
+
+\qs{26}{Define a relation $\sim$ on $\RR^2$ by stating that $(a, b) \sim (c, d)$ if and only if $a^2 + b^2 \leq c^2 + d^2$. Show that $\sim$ is reflexive and transitive by not symmetric.}
+\sol
+
+\textbf{Reflexive}: We want to see if $(a, a) \sim (a, a)$. This means we have to check if $a^2 + a^2 \leq a^2 + a^2$. This is true because they are equal, so $\sim$ is reflexive.
+
+\textbf{Transitive}: Let $(a, b) \sim (c, d)$ and $(c, d) \sim (e, f)$. This means that $a^2 + b^2 \leq c^2 + d^2$ and $c^2 + d^2 \leq e^2 + f^2$. We want to show that $a^2 + b^2 \leq e^2 + f^2$. We can do this by multiplying both sides of the equation given by the $(a, b) \sim (c, d)$ relation by $e^2 + f^2$ and then dividing by $c^2 + d^2$. This gives us $a^2 + b^2 \leq e^2 + f^2$.
+
+\textbf{Symmetric}: We want to show that if $(a, b) \sim (c, d)$, then $(c, d) \not\sim (a, b)$. We assume the first statement is true, which means that $a^2 + b^2 \leq c^2 + d^2$. Since $\leq$ is not an equivalence relation (because it isn't symmetric) we cannot say that $c^2 + d^2 \leq a^2 + b^2$. Therefore, $\sim$ is not symmetric.
+
+\textbf{Addendum}: it is worth noting that the statement $c^2 + d^2 \leq a^2 + b^2$ can be true but iff $a^2 + b^2 = c^2 + d^2$.
+
+\end{document}
