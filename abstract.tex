@@ -127,24 +127,70 @@ Addition is \emph{well-defined} as an operation on $\ZZ/x\ZZ$ for $x \in \ZZ$.}
 
 \nt{Complex numbers generally take the from $z = a + bi$. 
 
-$\bar z = a - bi$ is the complex conjugate of $z$.}
+$\bar z = a - bi$ is the complex conjugate of $z$.
 
-\dfn{Matrix}{A matrix is a rectangular array of numbers.}
+Divide complex numbers by multiplying by the complex conjugate of the denominator}
+
+\dfn{Matrix}{A matrix is a rectangular array of numbers. A $m \times n$ matrix is an array of $m$ rows and $n$ columns. Define the group of $m \times n$ matrices over a field $\FF$ as $\FF^{m \times n}$.}
+
+\nt{Multiplication by an $m \times n$ matrix is a function from $\FF^n$ to $\FF^m$. It is associative because all functions are associative.}
+
+\ex{$2 \times 2$ matrix exercise}{Consider $\ZZ^{2 \times 2}$. Define a relation $A \sim B$ if there is an integer matrix $P$ whose determinant is one and $B = P^{-1}AP$. Note that if an integer matrix has a determinant 1 it is invertible and its inverse is also an integer matrix with determinant 1.
+
+\begin{enumerate}
+	\item Show that this is an equivalence relation.
+	\item Show that two matrices with different determinants cannot be similar.
+	\item Determine whether $\displaystyle \begin{bmatrix} 6 & 0 \\ 0 & 1\end{bmatrix}$ is similar to $\displaystyle \begin{bmatrix} 2 & 0 \\ 0 & 3\end{bmatrix}$. 
+	\item Determine whether $\displaystyle \begin{bmatrix} 6 & 0 \\ 0 & 1\end{bmatrix}$ is similar to $\displaystyle \begin{bmatrix} 1 & 0 \\ 0 & 6\end{bmatrix}$. 
+\end{enumerate}
+\sol
+\begin{enumerate}
+	\item Reflexive: $A = P^{-1}AP$ for $P = I_2$. 
+	
+	Symmetric: $P^{-1}AP = P^{-1}BP$ for some $P$ with determinant 1. 
+	
+	Transitive: $B = P^{-1}_1AP_1 \land C = P^{-1}_2BP_2 \Rightarrow C = P^{-1}_2P^{-1}_1AP_1P_2 $
+	\item Determinants are a multiplicative property. If $B = P^{-1}AP$ and $\det(B) \neq \det(A)$, then $\det(B) \neq 1 * \det(A) * 1$. 
+	\item No, different JCF.
+	\item Yes, same JCF.
+\end{enumerate}
+}
+
+
 
 \subsection{Number Theory}
+\nt{Know induction, division algorithm, GCD and Bezout's lemma, and Primes and the Fundmental Theorem of Arithmetic.}
+
+\ex{Weak Induction}{Prove that $5 | n^5 -n$ for all $n$.
+
+\begin{myproof} Proof by induction. 
+	\begin{enumerate}
+		\item $n = 1$ is true, $5 | 0$. 
+		\item If it is true then $n=k$, show that it is true when $n = k+1$.
+		
+		$(k+1)^5 - (k+1) = k^5 + 5k^4 + 10k^3 + 10k^3 + 5k + 1 - (k+1) = (k^5 - k) + (5k^4 + 10k^3 + 10k^2 + 5k)$. 
+
+		Both quantities are divisible by 5.
+	\end{enumerate}
+	Therefore, $5 | n^5 - n$ for all $n$. 
+\end{myproof}}
+
+\ex{Strong Induction}{Prove that every integer $n$ can be written as $n = d_11! + d_22! + \cdots + d_kk!$ for some $d_1, \ldots, d_k \leq k \in \ZZ$ and $k \geq 1$.
+
+\begin{myproof}
+	Strong induction. Given $n$, chose $s$ s.t. $s! \leq n < (s+1)!$. Then we can write $n = q \cdot s! + r$. 
+	\begin{enumerate}
+		\item $q \leq s$ (if $q \geq s+1$, then $n \geq (s+1)!$, which goes against our claim)
+		\item $r < s!$
+	\end{enumerate}
+
+	Assume that this is true for any $k < n$. Then we can write $n = q \cdot s! + r$ for some $r < s!$. Then we can write $r$ in the same format since it is true for all $k < n$. 
+\end{myproof}}
+
+
 
 
 \section{Random Examples}
-\clm{Topology}{}{Topology is cool}
-\ex{Open Set and Close Set}{
-	\begin{tabular}{rl}
-		Open Set:   & $\bullet$ $\phi$                                              \\
-		            & $\bullet$ $\bigcup\limits_{x\in X}B_r(x)$ (Any $r>0$ will do) \\[3mm]
-		            & $\bullet$ $B_r(x)$ is open                                    \\
-		Closed Set: & $\bullet$ $X,\ \phi$                                          \\
-		            & $\bullet$ $\overline{B_r(x)}$                                 \\
-		            & $x-$axis $\cup$ $y-$axis
-	\end{tabular}}
 \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 	\begin{center}
 		\begin{tikzpicture}
