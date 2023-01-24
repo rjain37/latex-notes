@@ -178,7 +178,9 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 \ex{Strong Induction}{Prove that every integer $n$ can be written as $n = d_11! + d_22! + \cdots + d_kk!$ for some $d_1, \ldots, d_k \leq k \in \ZZ$ and $k \geq 1$.
 
 \begin{myproof}
-	Strong induction. Given $n$, chose $s$ s.t. $s! \leq n < (s+1)!$. Then we can write $n = q \cdot s! + r$. 
+	Strong induction. 
+	
+	Given $n$, chose $s$ s.t. $s! \leq n < (s+1)!$. Then we can write $n = q \cdot s! + r$. 
 	\begin{enumerate}
 		\item $q \leq s$ (if $q \geq s+1$, then $n \geq (s+1)!$, which goes against our claim)
 		\item $r < s!$
@@ -187,8 +189,47 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 	Assume that this is true for any $k < n$. Then we can write $n = q \cdot s! + r$ for some $r < s!$. Then we can write $r$ in the same format since it is true for all $k < n$. 
 \end{myproof}}
 
+\ex{Well-ordering}{Prove that given $a,b,b \neq 0$, there exists unique $q,r$ such that $a = qb + r$ and $0 \leq r < |b|$. 
+\begin{myproof}
+	Well-ordering.
 
+	Consider all the integeres of the form $a - xb$ for $x \in \ZZ$. At least one of these is nonnegative. If $a > 0$, choose $x = 0$. If $a \leq 0$, then choose $x = -ab|b|$. So let the set of all negative $a-xb$ be nonempty. Let $q=x$ be the smallest. Define $r = a - qb$ so that $a = qb + r$ and $r < |b|$. 
 
+	To prove uniqueness, consider two sets: $qr$ and $q'r'$. Then $qb + r = q'b + r'$ and $r < |b|$. Or, $(q-q')b=r'-r$. The absolute value of the RHS has to be between $1 - |b|$ and $|b| - 1$. This has to be 0 since its the only multipe of $b$ in that range. So $q-q' = 0$ and $q = q'$ and $r = r'$.
+\end{myproof}}
+
+\mlenma{Bezout's Lemma}{Given integers $a,b \neq 0$, their GCD can be written in the form $ra + sb$ for some $r,s$. }
+
+\dfn{}{An integer is prime if it only has $1$ and itself as positive divisors.}
+
+\nt{1 is not a prime.}
+
+\mlenma{}{If $p$ is prime and $p|ab$, then either $p|a$ or $p|b$.}
+
+\thm{Fundamental Theorem of Arithmetic}{Every integer greater than 1 is either a prime or can be written as a product of primes in a unique way.}
+
+\section{Group Theory}
+\dfn{Binary Operation}{Given a set $S$, a \emph{binary operation} on $S$ is a function $S \times S \to S$. }
+
+\dfn{Group}{A \emph{group} is a set $G$ with a binary operation $*$ such that for all $a,b,c \in G$, the following hold:
+	\begin{enumerate}
+		\item $a*b = b*a$ (associativity)
+		\item $(a*b)*c = a*(b*c)$ (identity)
+		\item $a*a^{-1} = e$ (inverse)
+	\end{enumerate}
+}
+
+\nt{A set that only has associativity and identity is called a \emph{monoid}.}
+
+\nt{Examples of groups
+\begin{itemize}
+	\item $\ZZ, \RR, \RR^{3 \times 3}, \CC, \QQ$ with addition
+	\item $GL(2, \RR)$ with matrix multiplication.
+	\item $D_4 =$ symmetries of a square.
+	\item $D_2 =$ symmetries of a triangle.
+	\item $U(12)$
+	\item 
+\end{itemize}}
 
 \section{Random Examples}
 \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
@@ -203,14 +244,10 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 			\filldraw[green!40!black] (1.7,0) circle (1pt) node[anchor=west]{$x$};
 		\end{tikzpicture}
 	\end{center}
-
-	Given $x\in B_r(u)\subset V$, we want $\delta>0$ such that $x\in B_{\delta} (x)\subset B_r(u)\subset V$. Let $d=d(u,x)$. Choose $\delta $ such that $d+\delta<r$ (e.g. $\delta<\frac{r-d}{2}$)
-
-	If $y\in B_{\delta}(x)$ we will be done by showing that $d(u,y)<r$ but $$d(u,y)\leq d(u,x)+d(x,y)<d+\delta<r$$
 \end{myproof}
 
 \cor{}{By the result of the proof, we can then show...}
-\mlenma{}{Suppose $\vec{v_1}, \dots, \vec{v_n} \in \RR[n]$ is subspace of $\RR^n$.}
+
 \mprop{}{$1 + 1 = 2$.}
 
 \section{Random}
@@ -224,33 +261,6 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 
 
 
-\textbf{Special Case $\bs{p=1}$}: $\|x\|_1=|x_1|+|x_2|+\cdots+|x_m|$ is clearly a norm by usual triangle inequality. \par
-\textbf{Special Case $\bs{p\to\infty\ (\bbR^m$ with $\|\cdot\|_{\infty})}$}: $\|x\|_{\infty}=\max\{|x_1|,|x_2|,\cdots,|x_m|\}$\\
-For $m=1$ these $p-$norms are nothing but $|x|$.
-Now exercise
-
-\sol{\textbf{For Property \ref{n:3} for norm-2}	\subsubsection*{\textbf{When field is $\bbR:$}} We have to show\begin{align*}
-		         & \sum_i(x_i+y_i)^2\leq \left(\sqrt{\sum_ix_i^2} +\sqrt{\sum_iy_i^2}\right)^2                                       \\
-		\implies & \sum_i (x_i^2+2x_iy_i+y_i^2)\leq \sum_ix_i^2+2\sqrt{\left[\sum_ix_i^2\right]\left[\sum_iy_i^2\right]}+\sum_iy_i^2 \\
-		\implies & \left[\sum_ix_iy_i\right]^2\leq \left[\sum_ix_i^2\right]\left[\sum_iy_i^2\right]
-	\end{align*}So in other words prove $\langle x,y\rangle^2 \leq \langle x,x\rangle\langle y,y\rangle$ where
-	$$\langle x,y\rangle =\sum\limits_i x_iy_i$$
-
-	\begin{note}
-		\begin{itemize}
-			\item $\|x\|^2=\langle x,x\rangle$
-			\item $\langle x,y\rangle=\langle y,x\rangle$
-			\item $\langle \cdot,\cdot\rangle$ is $\bbR-$linear in each slot i.e. \begin{align*}
-				      \langle rx+x',y\rangle=r\langle x,y\rangle+\langle x',y\rangle	\text{ and similarly for second slot}
-			      \end{align*}Here in $\langle x,y\rangle$ $x$ is in first slot and $y$ is in second slot.
-		\end{itemize}
-	\end{note}Now the statement is just the Cauchy-Schwartz Inequality. For proof $$\langle x,y\rangle^2\leq \langle x,x\rangle\langle y,y\rangle $$ expand everything of $\langle x-\lambda y,x-\lambda y\rangle$ which is going to give a quadratic equation in variable $\lambda $ \begin{align*}
-		\langle x-\lambda y,x-\lambda y\rangle & =\langle x,x-\lambda y\rangle-\lambda\langle y,x-\lambda y\rangle                                       \\
-		                                       & =\langle x ,x\rangle -\lambda\langle x,y\rangle -\lambda\langle y,x\rangle +\lambda^2\langle y,y\rangle \\
-		                                       & =\langle x,x\rangle -2\lambda\langle x,y\rangle+\lambda^2\langle y,y\rangle
-	\end{align*}Now unless $x=\lambda y$ we have $\langle x-\lambda y,x-\lambda y\rangle>0$ Hence the quadratic equation has no root therefore the discriminant is greater than zero.
-
-	\subsubsection*{\textbf{When field is $\bbC:$}}Modify the definition by $$\langle x,y\rangle=\sum_i\overline{x_i}y_i$$Then we still have $\langle x,x\rangle\geq 0$}
 
 \section{Algorithms}
 \begin{algorithm}[H]
