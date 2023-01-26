@@ -209,12 +209,13 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 \thm{Fundamental Theorem of Arithmetic}{Every integer greater than 1 is either a prime or can be written as a product of primes in a unique way.}
 
 \section{Group Theory}
+\subsection{Introduction to Groups}
 \dfn{Binary Operation}{Given a set $S$, a \emph{binary operation} on $S$ is a function $S \times S \to S$. }
 
 \dfn{Group}{A \emph{group} is a set $G$ with a binary operation $*$ such that for all $a,b,c \in G$, the following hold:
 	\begin{enumerate}
-		\item $a*b = b*a$ (associativity)
-		\item $(a*b)*c = a*(b*c)$ (identity)
+		\item $(a*b)*c = a*(b*c)$ (associativity)
+		\item $e*a = a*e = a$ (identity)
 		\item $a*a^{-1} = e$ (inverse)
 	\end{enumerate}
 }
@@ -223,13 +224,62 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 
 \nt{Examples of groups
 \begin{itemize}
-	\item $\ZZ, \RR, \RR^{3 \times 3}, \CC, \QQ$ with addition
-	\item $GL(2, \RR)$ with matrix multiplication.
+	\item $\ZZ, \RR, \RR^{3 \times 3}, \CC, \QQ$ with addition.
+	\item $z \in \CC : |z| = 1$ with multiplication.
+	\item $GL(2, \RR)$ with matrix multiplication. However, this is not abelian. 
 	\item $D_4 =$ symmetries of a square.
 	\item $D_2 =$ symmetries of a triangle.
-	\item $U(12)$
-	\item 
+	\item $U(n)$ with multiplication modulo $n$. 
 \end{itemize}}
+
+\noindent If we take a random group, say $U(5)$, then we can create a table for how the multiplication works:
+
+\begin{center}
+	\noindent\begin{tabular}{c | c c c c}
+	$\cdot$ & 1 & 2 & 3 & 4  \\
+	\cline{1-5}
+	1 & 1 & 2 & 3 & 4 \\
+	2 & 2 & 4 & 1 & 3  \\
+	3 & 3 & 1 & 4 & 2 \\
+	4 & 4 & 3 & 2 & 1 \\
+	\end{tabular}
+\end{center}
+
+A table like this is called a \emph{Cayley Table}. Notice that this table is actually symmetric. This means that the group is \emph{commutative}, but more properly, \emph{abelian}.
+
+\dfn{Abelian Group}{An \emph{abelian group}, $G$, is a group where $a*b = b*a$ for all $a,b \in G$.}
+
+\subsection{Properties of Groups}
+\thm{}{The identity element of a group is unique.}
+\begin{myproof}
+	Let $e_1$ and $e_2$ be the identity elements. Then $e_1*e_2 = e_2*e_1 = e_1$. So $e_1 = e_2$.
+\end{myproof}
+
+\thm{}{Each element has a unique inverse.}
+\begin{myproof}
+	Let $a^{-1}$ and $b$ both be inverses of $a$ then consider the product $baa^{-1}$. Then $b = be = b(aa^{-1}) = (ba)a^{-1} = ea^{-1}= a^{-1}$. So $b = a^{-1}$.
+\end{myproof}
+
+\cor{}{$(ab)^{-1} = b^{-1}a^{-1}$}
+\begin{myproof}
+	$abb^{-1}a^{-1} = aea^{-1} = aa^{-1} = e$.
+\end{myproof}
+
+\cor{}{$(a_1a_2a_3\ldots a_n)^{-1} = a_n^{-1}a_{n-1}^{-1}a_{n-2}^{-1}\ldots a_1$}
+\begin{myproof}
+	Induction from 1.2.1. 
+\end{myproof}
+
+\cor{}{$(a^{-1})^{-1} = a$}
+\begin{myproof}
+	$(a^{-1})^{-1}a^{-1} = e = aa^{-1}$, so by uniqueness of inverses...
+\end{myproof}
+
+\thm{}{Given any $a,b \in G$, the equations $ax = b$ and $ya = b$ have unique solutions, though not necessary equal.}
+\begin{myproof}
+	Let $x = a^{-1}b$ and $y = ba^{-1}$. Then $ax = a(a^{-1}b) = eb = b$ and $ya = ba^{-1}a = be = b$. To show uniqueness, consider $ax_1 = ax_2$ then left multiply by $a^{-1}$.
+\end{myproof}
+
 
 \section{Random Examples}
 \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
