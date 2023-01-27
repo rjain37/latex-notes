@@ -217,6 +217,7 @@ Divide complex numbers by multiplying by the complex conjugate of the denominato
 		\item $(a*b)*c = a*(b*c)$ (associativity)
 		\item $e*a = a*e = a$ (identity)
 		\item $a*a^{-1} = e$ (inverse)
+		\item $*$ is closed under $G$. 
 	\end{enumerate}
 }
 
@@ -280,6 +281,26 @@ A table like this is called a \emph{Cayley Table}. Notice that this table is act
 	Let $x = a^{-1}b$ and $y = ba^{-1}$. Then $ax = a(a^{-1}b) = eb = b$ and $ya = ba^{-1}a = be = b$. To show uniqueness, consider $ax_1 = ax_2$ then left multiply by $a^{-1}$.
 \end{myproof}
 
+\cor{Cancellation Laws}{In any group $G$, if $ac=bc$, then $a=b$. And if $ca=cb$, then $a=b$. }
+\begin{myproof}
+	Right or left multiply by $c^{-1}$ for appropriate equation.
+\end{myproof}
+
+\nt{Proving that a group is associative from its Cayley digram takes too long. It is easier to show an isomorphism to a well-established group.}
+
+\nt{Groups of order $n$:
+	
+\begin{itemize}
+	\item 1: $\ZZ_1$
+	\item 2: $\ZZ_2$
+	\item 3: $\ZZ_3$
+	\item 4: $\ZZ_4, V$
+	\item 5: $\ZZ_5$
+	\item 6: $D_3, \ZZ_6$
+	\item 7: $\ZZ_7$
+	\item 8: $\ZZ_8, \ZZ_2 \times \ZZ_4, \ZZ_2 \times \ZZ_2 \times \ZZ_2, D_4, H$
+	\item 9: $\ZZ_9, \ZZ_3 \times \ZZ_3$
+\end{itemize}}
 
 \section{Random Examples}
 \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$

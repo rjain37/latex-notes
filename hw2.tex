@@ -24,17 +24,19 @@ Assignment 2}
 
 \begin{enumerate}[label=\alph*.]
     \item This is not a group because it doesn't have an identity element, $e$, such that $g \circ e = e \circ g = g$ for all $g \in G$.
-    \item This table does have an identity element, $e = a$. Now we check for invertibility. In this table, each element is it's own inverse because $g \circ g = e = a$ for all $g \in G$. 
-    \item d
-    \item 
+    \item This table does have an identity element, $e = a$. Now we check for invertibility. In this table, each element is it's own inverse because $g \circ g = e = a$ for all $g \in G$. Since the table only contains $a,b,c,d$, we know that the operation is closed. Since we cannot prove associativity from the Cayley diagram, we will attempt to show an isomorphism to one of the groups of order 4. Since we know the identity is $a$ and that the diagonal is all $a$, it is fair to assume that this is the Klein-4 group ($K_4$), a group such that $a^2 = e$ for all $a$ in the group. This property means that the corresponding operation is mulitplication. Calculating the rest of the Cayley table for $K_4$ shows that this is true.
+    \item The identity element of this table is $a$ and each element is its own inverse. Since the table only contains $a,b,c,d$, we know that the operation is closed. With the same approach as the last problem, we will assume an isomorphism to the other group of order 4, $\ZZ_4$, under addition. Calculating the rest of the Cayley table for $\ZZ_4$ shows that this is true.
+    \item The identity here is $a$ again, but $d$ doesn't have an inverse so this is not a group. 
 \end{enumerate}
 
 \qs{7}{Let $S = \RR$ \textbackslash $\{-1\}$ and define a binary operation on $S$ by $a * b = a + b + ab$. Prove that $(S, *)$ is an abelian group.}
-\sol
+\sol To show that the $*$ is closed, assume $a*b = -1$. Therefore $a + b + ab = -1$ where $a,b \neq -1$. So, $a(b+1) + b = -1 \Rightarrow a(b+1) = -(b+1)$ and since $b \neq -1$, we can divide through by $b+1$ to show that $a = -1$. $\rightarrow \leftarrow$
+
+
 
 \qs{17}{Give an example of three different groups with eight elements. Why are the groups
 different?}
-\sol
+\sol $\ZZ_8, U(16), U(20)$. 
 
 \qs{25}{Let $a$ and $b$ be elements in a group $G$. Prove that $ab^na^{-1} = (aba^{-1})^n$ for $n \in \ZZ$.}
 \sol
