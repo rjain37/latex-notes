@@ -30,24 +30,60 @@ Assignment 2}
 \end{enumerate}
 
 \qs{7}{Let $S = \RR$ \textbackslash $\{-1\}$ and define a binary operation on $S$ by $a * b = a + b + ab$. Prove that $(S, *)$ is an abelian group.}
-\sol To show that the $*$ is closed, assume $a*b = -1$. Therefore $a + b + ab = -1$ where $a,b \neq -1$. So, $a(b+1) + b = -1 \Rightarrow a(b+1) = -(b+1)$ and since $b \neq -1$, we can divide through by $b+1$ to show that $a = -1$. $\rightarrow \leftarrow$
+\sol 
 
+To show that the $*$ is closed, assume $a*b = -1$. Therefore $a + b + ab = -1$ where $a,b \neq -1$. So, $a(b+1) + b = -1 \Rightarrow a(b+1) = -(b+1)$ and since $b \neq -1$, we can divide through by $b+1$ to show that $a = -1$. $\rightarrow \leftarrow$
 
+$(S, *)$ also has an identity and it is $0$. To show this, consider $a*0 = a + 0 + a\cdot 0 = a$. Also consider $0 * b = 0 + b + 0\cdot b = b$. Therefore, $0$ is the identity element.
+
+$*$ is associative. Consider 
+\begin{equation} 
+    \begin{split}
+    a * (b * c) & = a  * (b + c + bc) \\
+    & = a + (b + c + bc) + a(b + c + bc) \\
+    & = a + b + c + bc + ab + ac + abc \\
+    & = a + b + ab + c + c(a + b + ab) \\
+    & = (a + b + ab) * c \\
+    & = (a * b) * c
+    \end{split}
+\end{equation}
+
+To find an inverse, consider $a * a^{-1} = a + a^{-1} + a\cdot a^{-1} = 0$. Grouping shows that $a^{-1} = \displaystyle\frac{-a}{1 + a}$, so this is our right inverse for $a$. But we can also say that it is our left inverse because $a * b = a + b + ab = b*a$ because addition and multiplication are commutative in $\RR$.
+
+Therefore $S$ is an abelian group under the operation $*$. $\qed$
 
 \qs{17}{Give an example of three different groups with eight elements. Why are the groups
 different?}
-\sol $\ZZ_8, U(16), U(20)$. 
+\sol In class, we went over the 5 groups of order 8 which are as follows:
+
+\begin{itemize}
+    \item $\ZZ_8$
+    \item $\ZZ_4 \times \ZZ_2$
+    \item $\ZZ_2 \times \ZZ_2 \times \ZZ_2$
+    \item $D_4$
+    \item $H$
+\end{itemize}
+
+We can pick any combination of these three groups to answer this question. For simplicity, I will pick the first three groups. These groups differ in that the highest order of any element is different in all three. 
+
+\dfn{Order}{The order of an element $g \in G$ is the smallest positive integer $n$ such that $g^n = e$.}
+
+The highest order of each of the first three groups is 8, 4, and 2 respectively. This is not hard to show for all of the groups. Therefore, the groups are different.
 
 \qs{25}{Let $a$ and $b$ be elements in a group $G$. Prove that $ab^na^{-1} = (aba^{-1})^n$ for $n \in \ZZ$.}
-\sol
+\sol To start off, when $n=0$, we have $ab^0a^{-1} = e$ and $(aba^{-1})^0 = e$. Therefore, the equation holds for $n=0$.
+
+We will prove the rest by induction on $n > 0$. Assume that the equation holds for $n-1$. So, we have $ab^{n-1}a^{-1} = (aba^{-1})^{n-1}$. Then we have $(aba^{-1})^{n} = (aba^{-1})^{n-1} (aba^{-1}) = ab^{n-1}a^{-1}aba^{-1} = ab^{n}a^{-1}$. Therefore, the equation holds for $n > 0$.
+
+We can repeat this process for $n < 0$ by defining $m = -n$ and inducting on $m$ instead. $\qed$
 
 \qs{31}{Show that if $a^2 = e$ for all elements a in a group $G$, then $G$ must be abelian.}
-\sol
+\sol Since $a^2 = e$ for all $a \in G$, $a = a^{-1}$ for all $a$ as well. For $a,b \in G$, consider $ab = (ab)^{-1} = b^{-1}a^{-1} = ba$. Therefore, $G$ is abelian if $a^2 = e$ for all $a$.
 
 \qs{32}{Show that if $G$ is a finite group of even order, then there is an $a \in G$ such that $a$ is not the identity and $a^2 = e$.}
 \sol
 
 \qs{33}{Let $G$ be a group and suppose that $(ab)^2 = a^2b^2$ for all $a$ and $b$ in $G$. Prove that $G$ is an abelian group.}
-\sol
+\sol For $a,b \in G$, consider the expanded equation $abab = aabb$. Left multiplying by $a^{-1}$ and right multiplying by $b^{-1}$ reveals our desired symmetry, $ba = ab$. Therefore, $G$ is abelian. $\qed$
 
 \end{document}
