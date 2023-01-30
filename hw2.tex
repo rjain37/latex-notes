@@ -48,7 +48,7 @@ $*$ is associative. Consider
     \end{split}
 \end{equation}
 
-To find an inverse, consider $a * a^{-1} = a + a^{-1} + a\cdot a^{-1} = 0$. Grouping shows that $a^{-1} = \displaystyle\frac{-a}{1 + a}$, so this is our right inverse for $a$. But we can also say that it is our left inverse because $a * b = a + b + ab = b*a$ because addition and multiplication are commutative in $\RR$.
+To find an inverse, consider $a * a^{-1} = a + a^{-1} + a\cdot a^{-1} = 0$. Grouping shows that $a^{-1} = \displaystyle\frac{-a}{1 + a}$, so this is our right inverse for $a$. But we can also say that it is our left inverse because $a * b = a + b + ab = b + a + ba = b*a$ because addition and multiplication are commutative in $\RR$.
 
 Therefore $S$ is an abelian group under the operation $*$. $\qed$
 
@@ -81,7 +81,7 @@ We can repeat this process for $n < 0$ by defining $m = -n$ and inducting on $m$
 \sol Since $a^2 = e$ for all $a \in G$, $a = a^{-1}$ for all $a$ as well. For $a,b \in G$, consider $ab = (ab)^{-1} = b^{-1}a^{-1} = ba$. Therefore, $G$ is abelian if $a^2 = e$ for all $a$.
 
 \qs{32}{Show that if $G$ is a finite group of even order, then there is an $a \in G$ such that $a$ is not the identity and $a^2 = e$.}
-\sol
+\sol Let $G$ be a finite group of even order. If possible, then for all $g \in G$, pair it up with its inverse such that $g^2 \neq e \iff g \neq g^{-1}$ if you can make the pair $(g, g^{-1})$. Then, there also exists the identity element since $e^2 = e \iff e = e^{-1}$. For $G$ to have an even order, it needs to have at least one element that doesn't have a pairing and is therefore its own inverse. Therefore, if $G$ has finite even order, then it has at least one element $a$ that isn't the identity such that $a^2 = e$.
 
 \qs{33}{Let $G$ be a group and suppose that $(ab)^2 = a^2b^2$ for all $a$ and $b$ in $G$. Prove that $G$ is an abelian group.}
 \sol For $a,b \in G$, consider the expanded equation $abab = aabb$. Left multiplying by $a^{-1}$ and right multiplying by $b^{-1}$ reveals our desired symmetry, $ba = ab$. Therefore, $G$ is abelian. $\qed$

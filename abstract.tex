@@ -302,6 +302,30 @@ A table like this is called a \emph{Cayley Table}. Notice that this table is act
 	\item 9: $\ZZ_9, \ZZ_3 \times \ZZ_3$
 \end{itemize}}
 
+\nt{A note on notation:
+
+$a\cdot a = a^2, a \cdot a \cdot a = a^3 \ldots$ }
+
+\dfn{Direct Product}{Given $G_1, G_2$ groups, then the direct proudct $G_1 \times G_2$ is the group of ordered pairs $(g_1, g_2)$ where $g_1 \in G_1$ and $g_2 \in G_2$. The operation is $(g_1, g_2) \cdot (h_1, h_2) = (g_1 \cdot h_1, g_2 \cdot h_2)$.}
+
+\ex{}{$\{e\} \times G \cong G$}
+
+\ex{}{$\ZZ_2 \times \ZZ_2 \cong V$}
+
+\ex{}{$\ZZ_2 \times \ZZ_3 \cong Z_6$}
+
+\thm{}{Let $(G, \circ, e)$ be a set with the binary operation $\circ$ and left identity $e$. Then assume each $x \in G$ has a left inverse such that $x^{-1} \circ x = e$. Then $G$ is a group.}
+
+\mpf{Proof}{what is $xe=$?
+
+Let $y = xe$. Then $x^{-1}y = x^{-1}(xe) = (x^{-1}x)e = e$. So $x^{-1}y  = e = x^{-1}x$. Multiply by $x^{-1^{-1}}$ to get $y = x$. Therefore, $e$ is a two-sided identity.
+
+To show that $x^{-1}$, consider $z = x \circ x^{-1}$. Left multiply by $x^{-1}$ to get $x^{-1} \circ z = x^{-1} \circ (x \circ x^{-1}) = (x^{-1} \circ x) \circ x^{-1} = x^{-1}$. Left multiply both sides by $x^{-1^{-1}}$ to see that $e \circ z = z = e$. Therefore, $x^{-1}$ is a left inverse and $G$ is a group.}
+
+\dfn{Subgroups}{Let $(G, \circ, e)$ be a group and let $H \subset G$. If $H$ is a group under the same operation $\circ$, then $H$ is a \emph{subgroup} of $G$. This is denoted as $H < G$. }
+
+\nt{Having the same operation is critical. For example $GL(2) \subset \RR^{2\times 2}$, but $GL(2)$ is not a subgroup of $\RR^{2\times 2}$ because the operation is matrix multiplication, not addition.}
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}
