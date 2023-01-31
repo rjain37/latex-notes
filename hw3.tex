@@ -1,8 +1,9 @@
-\documentclass{report}
+\documentclass[12pt]{report}
 
 \input{preamble}
 \input{macros}
 \input{letterfonts}
+
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
@@ -10,12 +11,29 @@
 \cfoot{}
 \rhead{\bf
 Abstract Algebra \\
-Assignment x}
+Assignment 3}
 
 \begin{document}
 
 \qs{34}{Find all the subgroups of $\ZZ_3 \times \ZZ_3$. Use this information to show that $\ZZ_3 \times \ZZ_3 \not \cong \ZZ_9$. }
-\sol
+\sol The subgroups of $\ZZ_3 \times \ZZ_3$ are:
+\begin{itemize}
+    \item $\ZZ_3 \times \ZZ_3$
+    \item $\{ (0,0) \}$
+    \item $\{ (0,0), (1, 0), (2, 0)\}$
+    \item $\{ (0,0), (0, 1), (0, 2)\}$
+    \item $\{ (0,0), (1, 1), (2, 2)\}$
+    \item $\{ (0,0), (1, 2), (2, 1)\}$
+\end{itemize}
+
+The subgroups of $\ZZ_9$ are: 
+\begin{itemize}
+    \item $\ZZ_9$
+    \item $\{ 0 \}$
+    \item $\{ 0, 3, 6 \}$
+\end{itemize}
+
+\noindent Since these groups have different sets of subgroups, they are not isomorphic. In other words, $\ZZ_3 \times \ZZ_3 \not \cong \ZZ_9$.
 
 \qs{35}{Find all the subgroups of the symmetry group of an equilateral triangle}
 \sol
@@ -34,13 +52,13 @@ is a subgroup of $\RR^*$ under the group operation of multiplication. }
 \qs{47}{Prove or disprove: If $H$ and $K$ are subgroups of a group $G$, then $HK = \{hk : h \in H \land k \in K \}$ is a subgroup of $G$. What is $G$ is abelian?}
 \sol
 
-\qs{48}{Prove}
+\qs{48}{Let $G$ be a group and $g \in G$. Show that $$Z(G) = \{ x \in G : gx = xg \text{ for all } g \in G\}$$ is a subgroup of $G$. This subgroup is called the \textbf{center} of $G$.}
 \sol
 
-\qs{53}{Prove}
+\qs{53}{Let $H$ be a subgroup of $G$ and $$C(H) = \{g \in G : gh = hg \text{ for all } h \in H \}.$$ Prove that $C(H)$ is a subgroup of $G$. This group is called the \textbf{centralizer} of $H$ in $G$.}
 \sol
 
-\qs{54}{Prove}
+\qs{54}{Let $H$ be a subgroup of $G$. If $g \in G$, show that $gHg^{-1} = \{ ghg^{-1} : h \in H\}$ is also a subgroup of $G$. }
 \sol
 
 \end{document}
