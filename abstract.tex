@@ -347,6 +347,20 @@ To show that $x^{-1}$, consider $z = x \circ x^{-1}$. Left multiply by $x^{-1}$ 
 	\item $\ZZ_{10} = \langle 1 \rangle, \langle 7 \rangle$
 \end{itemize}}
 
+\mprop{}{Every subgroup of $\ZZ$ is cyclic.}
+
+\mpf{Addendum}{Any subgroup of any cyclic subgroup is itself cyclic.}
+
+\nt{Some $U(n)$ groups are cyclic while others are not. They are cyclic if $n$ has primitive roots.}
+
+\mlenma{}{Let $a \in G$, order of $a=n$. Then order of $a^k = \frac{n}{\text{gcd}(a,k)}$}
+
+\mpf{Proof}{Let $b = a^k$. Order is the smallest number we can find such that $b^s = e$. Note that $b^s = a^{ks}$, so we need $n|ks$. Let $d = \text{gcd}(n, k)$. Then $n = dn'$ and $k =dk'$. Then we need $dn'$ to be a divisor of $sdk'$. So, $n'|sk'$. Since $n'$ and $k'$ are coprime, $n'|s$. Therefore, the smallest possible $s$ is $n' = n/\text{gcd}(a, k)$.}
+
+\thm{}{A group has no proper nontrivial subgroups is and only if it is a cyclic group of prime order.}
+
+\mpf{Proof}{Let $G = \langle a \rangle$ for any $a \in G$. What is the oder of $a$? If $a$ isn't prime, $a=xy$ and $y \neq 1$. Then $a^x$ has order $y$.}
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}

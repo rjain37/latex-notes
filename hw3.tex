@@ -36,7 +36,11 @@ The subgroups of $\ZZ_9$ are:
 \noindent Since these groups have different sets of subgroups, they are not isomorphic. In other words, $\ZZ_3 \times \ZZ_3 \not \cong \ZZ_9$.
 
 \qs{35}{Find all the subgroups of the symmetry group of an equilateral triangle}
-\sol
+\sol There are 4 things we have to check for: closed under the operation, identity, inverse, and associativity:
+
+\textbf{Closed}: If we have $a + b\sqrt{2} \in G$ and $c + d\sqrt{2} \in G$, then their product is $(ac + 2bd) + (ad + bc)\sqrt{2}$. We know that this is in $G$ because if $a,b,c,d \in \QQ$, then we know that $(ac+2bd),(ad+bc) \in \QQ$ too because of closure of rationals. Therefore $G$ is closed under the operation of multiplication.
+
+\textbf{Identity} The identity for $G$ is 1. We know that 1 is in $G$ because $0,1 \in \QQ$ and if $a,b \in \QQ$, then $a + b\sqrt{2}$ is in $G$.
 
 \qs{41}{Prove that $$G = \{a + b\sqrt{2} : a,b \in \QQ \land a,b \neq 0 \}$$
 
