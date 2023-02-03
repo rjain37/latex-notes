@@ -361,6 +361,58 @@ To show that $x^{-1}$, consider $z = x \circ x^{-1}$. Left multiply by $x^{-1}$ 
 
 \mpf{Proof}{Let $G = \langle a \rangle$ for any $a \in G$. What is the oder of $a$? If $a$ isn't prime, $a=xy$ and $y \neq 1$. Then $a^x$ has order $y$.}
 
+\subsection{Permutations}
+
+\dfn{Permutation}{A permutation is a bijection from a set $S$ to itself.}
+
+\nt{All permutations of a set $A$ forms a group called $S_A$. This can be called either ``permutation on A'' or ``symmetric group of A''.
+
+$|S_n| = n!$.}
+
+\ex{Compositions and Cycles}{Given two permutations, it is not hard to multiply then. For example:
+
+$$\begin{pmatrix} 1&2&3&4&5&6 \\ 2&4&3&6&5&1\end{pmatrix}
+\begin{pmatrix} 1&2&3&4&5&6 \\ 4&3&5&1&6&2\end{pmatrix} = \begin{pmatrix} 1&2&3&4&5&6 \\ 4&5&3&2&6&1\end{pmatrix}$$}
+
+\nt{This notation can be seen as quite cumbersome and redundant given the fact that the first row is always the same. To simplify this, we can use the following \emph{cycle} notation:
+
+$$\begin{pmatrix} 1&2&3&4&5&6 \\ 4&5&3&2&6&1\end{pmatrix} = \begin{pmatrix}1&4&2&5&6 \end{pmatrix} \begin{pmatrix} 3 \end{pmatrix}$$
+
+This is read as the permutation that sends 1 to 4 to 2 to 5 to 6 and 3 to 3.
+
+The identity permutation is $\begin{pmatrix} 1&2&3&4&5&6 \end{pmatrix}$, which is annoying so mathematicians just say $e$. }
+
+\mlenma{}{Disjoint cycles commute.}
+
+\thm{}{Every permutation can be written as a product of disjoint cycles.}
+
+\mpf{Proof}{Strong Induction:
+
+Assume any permutation that moves $<n$ elements can be written. Consider $\sigma$ which has $n$ elements. Consider the set, which is called the orbit, of $\sigma$: $1, \sigma(1), \sigma^2(1) \ldots$. By the pigeonhole principle, this repeats. Cut off this set at the repeat of 1 and removed the curly braces and commas to get a cycle that 1 belongs to. }
+
+\nt{The inverse of a cyclic is just the cycle backwards.}
+
+\dfn{Transposition}{A transposition is a permutation that swaps just two elements. Also known as a ``swap'' or ``2-cycle''}
+
+\mlenma{}{Any permutation may be written as a product of not disjoint transpositions.}
+
+\mpf{Proof}{The cycle $\begin{pmatrix}A & B & C & \ldots & Y & Z \end{pmatrix} = (AZ)(AY)\ldots(AC)(AB)$.}
+
+\mlenma{}{The following are true:
+
+\begin{enumerate}
+	\item $(AB) = (BA)$.
+	\item $(AB)(AC) = (A \; B \; C)$
+	\item $(AB)(CD) = (CD)(AB)$
+	\item $(\ldots X \; Y \; Z \ldots)(AY) = (\ldots X \; Y \; A \; Z)$
+	\item $(AY)(\ldots X \; Y \; Z \ldots) = (\ldots X \; A \; Y \; Z)$
+	\item $(\ldots P \; Q  \; R \ldots X \; Y \; Z)(QY) = (\ldots P \; Q \; Z \ldots)(\; R \ldots X \; Y)$
+	\item $\begin{pmatrix}A & B & C & \ldots & Y & Z \end{pmatrix} = (AZ)(AY)\ldots(AC)(AB)$
+\end{enumerate}
+}
+
+
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}
