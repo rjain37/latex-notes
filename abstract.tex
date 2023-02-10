@@ -322,6 +322,7 @@ Let $y = xe$. Then $x^{-1}y = x^{-1}(xe) = (x^{-1}x)e = e$. So $x^{-1}y  = e = x
 
 To show that $x^{-1}$, consider $z = x \circ x^{-1}$. Left multiply by $x^{-1}$ to get $x^{-1} \circ z = x^{-1} \circ (x \circ x^{-1}) = (x^{-1} \circ x) \circ x^{-1} = x^{-1}$. Left multiply both sides by $x^{-1^{-1}}$ to see that $e \circ z = z = e$. Therefore, $x^{-1}$ is a left inverse and $G$ is a group.}
 
+\subsection{Subgroups}
 \dfn{Subgroups}{Let $(G, \circ, e)$ be a group and let $H \subset G$. If $H$ is a group under the same operation $\circ$, then $H$ is a \emph{subgroup} of $G$. This is denoted as $H < G$. }
 
 \nt{Having the same operation is critical. For example $GL(2) \subset \RR^{2\times 2}$, but $GL(2)$ is not a subgroup of $\RR^{2\times 2}$ because the operation is matrix multiplication, not addition.}
@@ -452,6 +453,49 @@ Assume any permutation that moves $<n$ elements can be written. Consider $\sigma
 	\item $\ZZ_6 = \langle a | a^6 \rangle$
 	\item $D_4 = \langle r_{90}, f_v | r_{90}^4, f_v^2, r_{90}f_vr_{90}f_v\rangle$
 \end{itemize}}
+
+\subsection{Cosets}
+
+\dfn{Cosets}{Let $H < G$ and $g \in G$. The \emph{left coset} of $H$ with representative $g$ is the set $gH = \{gh: h \in H\}$. The \emph{right coset} of $H$ with representative $g$ is the set $Hg = \{hg: h \in H\}$.}
+
+\ex{Cosets}{
+	Let $G = D_4$ and $H = \{e, f_1\}$. Then there are eight left cosets and eight right cosets of $H$, according to the eight elements of $D_4$, that could be the representative. They are listed out below:
+	\begin{center}
+		\includegraphics[width=8cm]{coset.png}
+	\end{center}
+}
+
+\mlenma{}{Let $H<G$, then $H$ is a subgroup of $G$ and let $g_1,g_2$ be arbitrary elements of $G$. Then the following are equivalent:
+\begin{enumerate}
+	\item $g_1H = g_2H$
+	\item $Hg_1^{-1} = Hg_2^{-1}$
+	\item $g_1H \subset g_2H$
+	\item $g_1 \in g_2H$
+	\item $g_1^{-1}g_2 \in H$
+\end{enumerate}}
+
+\mpf{Proof}{We will prove that $1 \Longrightarrow 2 \Longrightarrow 3 \Longrightarrow 4 \Longrightarrow 5 \Longrightarrow 1$ so that the statements prove each other in a circular manner, so if any is true the rest become true.
+
+$(1 \Longrightarrow 2)$ Consider a typical element $h g_1^{-1}$ of $H g_1^{-1}$. Its inverse is $g_1 h^{-1}$. Since $h \in H$ and $H$ is a subgroup, $h^{-1} \in H$, so $g_1 h^{-1} \in g_1 H$. Thus it is also in $g_2 H$, so can be written in the form $g_2 h^{\prime}$. So we have $\left(h g_1^{-1}\right)^{-1}=g_2 h^{\prime}$. Take the inverse on both sides, to find $h g_1^{-1}=h^{-1} g_2^{-1}$. Since $h^{\prime} \in H$ we also have $h^{\prime-1} \in H$, so this is a member of $H g_2^{-1}$. In other words, any member of $H g_1^{-1}$ is in $H g_2^{-1}$. The reverse inclusion is proven the same way, so the two sets must be equal to each other.
+
+$(2 \Longrightarrow 3)$ Consider a typical element $g_1 h$ of $g_1 H$. Its inverse is $h^{-1} g_1^{-1} \in H g_1^{-1}=H g_2^{-1}$. So the inverse can be written as $h^{\prime} g_2^{-1}$. Then, reinverting both of these, $g_1 h=g_2 h^{\prime-1} \in g_2 H$. 
+
+$(3 \Longrightarrow 4)$ Since $H$ is a subgroup, $e \in H$, so $g_1 e=g_1 \in g_1 H$. By subsets, it must be in $g_2 H$. 
+
+$(4 \Longrightarrow 5)$ Since $g_1 \in g_2 H$ we know that we can write $g_1=g_2 h$. Rearranging this gives $g_1^{-1} g_2 h=e$ or $g_1^{-1} g_2=h^{-1}$. Since $H$ is a subgroups and $h \in H$, of course $h^{-1} \in H$.
+
+$(5 \Longrightarrow 1)$ Let $g_2 h \in g_2 H$ be a typical element. Since $g_1^{-1} g_2 \in H$ we can choose $k \in H$ so that $g_1^{-1} g_2=k$. Then $g_1^{-1} g_2 h=k h$, or $g_2 h=g_1(k h) . H$ is a subgroup so contains product of its elements, and thus $g_1(k h) \in g_1 H$. Thus any element of $g_2 H$ is in $g_1 H$, or $g_2 H \subset g_1 H$.
+Since $g_1^{-1} g_2$ is in $H$, so is its inverse $g_2^{-1} g_1$ so the argument of the previous paragraph may be repeated to show $g_1 H \subset g_2 H$.}
+
+\thm{}{Left cosets $g_1H$ and $g_2H$ are either identical or disjoint.}
+
+\mpf{Proof}{Let $x \in g_1H \cap g_2H$. Then $x \in g_1H$ so therefore $xH = g_1H$. Same argument for $xH = g_2H$. }
+
+\mlenma{}{There is a one-to-one correspondence between left and right cosets.}
+
+\mlenma{}{The function $f_g :H \to gH$ given by $f_g(x) = gx$ is a bijection between the elements of $H$ and the elements of $gH$.}
+
+\thm{Lagrange's Theorem}{If $G$ is a finite group and $H$ is a subgroup of $G$, then $|H|$ divides $|G|$. }
 
 
 % \section{Random Examples}
