@@ -446,7 +446,7 @@ Assume any permutation that moves $<n$ elements can be written. Consider $\sigma
 
 \thm{}{The transposition $\tau = (1 \; 2)$ and the cycle $\sigma = (1 \; 2 \; \ldots \; n)$ generate $S_n$. }
 
-\dfn{Group Presentation}{A group presentation, $\langle g_1, g_2 \ldots, g_k | r_1, r_2, \ldots, r_k \rangle$ is a set of generators and relations. Each relation, $r_i$ is meant to simplify to $e$. }
+\dfn{Group Presentation}{A group presentation, $\langle g_1, g_2 \ldots, g_j | r_1, r_2, \ldots, r_k \rangle$ is a set of generators and relations. Each relation, $r_i$ is meant to simplify to $e$. }
 
 \ex{Group Presentations}{
 \begin{itemize}
@@ -487,16 +487,45 @@ $(4 \Longrightarrow 5)$ Since $g_1 \in g_2 H$ we know that we can write $g_1=g_2
 $(5 \Longrightarrow 1)$ Let $g_2 h \in g_2 H$ be a typical element. Since $g_1^{-1} g_2 \in H$ we can choose $k \in H$ so that $g_1^{-1} g_2=k$. Then $g_1^{-1} g_2 h=k h$, or $g_2 h=g_1(k h) . H$ is a subgroup so contains product of its elements, and thus $g_1(k h) \in g_1 H$. Thus any element of $g_2 H$ is in $g_1 H$, or $g_2 H \subset g_1 H$.
 Since $g_1^{-1} g_2$ is in $H$, so is its inverse $g_2^{-1} g_1$ so the argument of the previous paragraph may be repeated to show $g_1 H \subset g_2 H$.}
 
-\thm{}{Left cosets $g_1H$ and $g_2H$ are either identical or disjoint.}
+\thm{}{Left cosets $g_1H$ and $g_2H$ are either identical or disjoint. Also true for right cosets.}
 
 \mpf{Proof}{Let $x \in g_1H \cap g_2H$. Then $x \in g_1H$ so therefore $xH = g_1H$. Same argument for $xH = g_2H$. }
 
 \mlenma{}{There is a one-to-one correspondence between left and right cosets.}
 
+\mpf{Proof}{Consider the map $gH \to Hg^{-1}$. It is a well-defined map by statements 1 and 2 of the lemma which also show why this map is one-to-one and onto.}
+
+\nt{$xH = yH \not\Leftrightarrow Hx = Hy$}
+
+\dfn{Index}{The number of cosets of H in G (right or left, since these numbers are the same by the lemma) is called the index of $H$ in $G$ and is denoted by $[G:H]$.}
+
 \mlenma{}{The function $f_g :H \to gH$ given by $f_g(x) = gx$ is a bijection between the elements of $H$ and the elements of $gH$.}
 
-\thm{Lagrange's Theorem}{If $G$ is a finite group and $H$ is a subgroup of $G$, then $|H|$ divides $|G|$. }
+\thm{Lagrange's Theorem}{If $G$ is a finite group and $H$ is a subgroup of $G$, then the following equation is satisfied: $$|G| = [G : H] |H|.$$ }
 
+\mpf{Proof}{Cosets are equinumerous with $H$ and either identical or disjoint, we're done!}
+
+\cor{}{$|H|$ divides $|G|$. }
+
+\cor{}{Groups of prime order are necessarily cyclic, and each non-identity elements are the generators.}
+
+\thm{}{Let $K<H<G$. Then $K < G$, and $[G:K] = [G:H][H:K]$.}
+
+\thm{}{If you have an abelian group $G$ whose order is the product $mn$ where $m$ and $n$ are relativity prime, then $G$ is cyclic. Its generator is $ab$ where $a$ is an element with order $m$ and $b$ is an element with order $n$. }
+
+\thm{Euler}{If $a$ is relatively prime to $n$, then $a^{\phi(n)} \equiv 1 \pmod{n}.$}
+
+\mpf{Proof}{$|U(n)| = \phi(n)$ so the order of every element is a divisor of $\phi(n)$.}
+
+\thm{Fermat's Little Theorem}{If $p$ is a prime number, then $a^p \equiv a \pmod{p}$.}
+
+\mpf{Proof}{If $p$ is a divisor of $a$ then both sides are congruent to zero modulo $p$. Otherwise $\phi(p) = p-1$ and the result obtains by multiplying both sides of the result of Euler's Theorem by $a$.}
+
+\nt{While Lagrange eliminates subgroups of certain orders (order that is relatively prime to the order of the parent group), it does not guarantee the existence of any order. }
+
+\ex{$A_4$}{$A_4$ has 12 elements, but does not have any subgroups of size six. For assume there were such a subgroup $H$. Now $H$ would have only two left cosets-itself and $g H$ for some $g$ not in $H$. But it also only has two right cosets. Since cosets are either disjoint or identical, the right coset of $H$ other then $H$ itself must also be the left coset. That is, $g H=H g$. So for any $h \in H$, there is an $h^{\prime}$ so that $g h=h^{\prime} g$. Another way of saying this is that $g h g^{-1}=h^{\prime} \in H$ for any $h \in H$ and any $g \in G$.
+
+Now consider the three-cycles in $A_4$. There are eight of them. So by the pigeonhole principle, there must be a three-cycle in $H$. Without loss of generality assume $(123) \in H$. By the result of the previous paragraph, $(124)(123)(142)=(243) \in H$. Also, (234) $(123)(243)=$ $(134) \in H$. In fact, all three-cycles must be in $H$. But then $H$ has more than just six elements!}
 
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
