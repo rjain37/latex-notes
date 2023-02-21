@@ -527,6 +527,29 @@ Since $g_1^{-1} g_2$ is in $H$, so is its inverse $g_2^{-1} g_1$ so the argument
 
 Now consider the three-cycles in $A_4$. There are eight of them. So by the pigeonhole principle, there must be a three-cycle in $H$. Without loss of generality assume $(123) \in H$. By the result of the previous paragraph, $(124)(123)(142)=(243) \in H$. Also, (234) $(123)(243)=$ $(134) \in H$. In fact, all three-cycles must be in $H$. But then $H$ has more than just six elements!}
 
+\thm{}{If $\sigma \in S_n$ is a cycle of length $k$, then $\tau \in S_n$ is also a cycle of length $k$ iff $\tau = g\sigma g^{-1}$ for some $g \in S_n$. }
+
+\cor{}{Two permutations have the same cycle structure if and only if they are conjugates.}
+
+\section{Group Theory}
+\subsection{Isomorphisms}
+\dfn{Isomorphic}{Let $(G, \cdot)$ and $(H, \circ)$ be groups. We say that $G$ and $H$ are isomorphic if there is a bijection $f:G \to H$ such that $f(g_1 \cdot g_2) = f(g_1) \circ f(g_2)$ for all $g_1, g_2 \in G$.}
+
+\ex{}{$\phi: \ZZ_4 \to \{i, -1, -i, 1\}$ defined by $\phi(n) = i^n$. This is obviously a one-to-one and onto mapping, and trades addition in $\ZZ_4$ for multiplication in $\CC$. }
+
+\thm{}{If $\phi$ is an isomorphism, then so is $\phi^{-1}$.}
+
+\cor{}{If $\phi: G \to H$ is an isomorphism, then:
+\begin{itemize}
+	\item $\phi(e_G) = e_H$
+	\item $\phi(g^{-1}) = \phi(g)^{-1}$
+	\item $\phi(g^k) = (\phi(g))^k$
+\end{itemize}}
+
+\thm{Cayley's Theorem}{Every group is isomorphic to a permutation group.}
+
+\mpf{Proof}{Let $G$ be a group. Let $S_G$ be the set of all permutations of $G$. Then $S_G$ is a group under composition of permutations. The map $f:G \to S_G$ defined by $f(g) = \sigma$ where $\sigma(g) = g$ is a bijection.}
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}
