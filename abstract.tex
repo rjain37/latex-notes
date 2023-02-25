@@ -548,7 +548,20 @@ Now consider the three-cycles in $A_4$. There are eight of them. So by the pigeo
 
 \thm{Cayley's Theorem}{Every group is isomorphic to a permutation group.}
 
-\mpf{Proof}{Let $G$ be a group. Let $S_G$ be the set of all permutations of $G$. Then $S_G$ is a group under composition of permutations. The map $f:G \to S_G$ defined by $f(g) = \sigma$ where $\sigma(g) = g$ is a bijection.}
+\dfn{Direct Product}{Let $(G, \cdot, e)$ and $(H, \circ, i)$ be groups. The \emph{direct product} of $G$ and $H$, denoted as $G \times H$, is the group whose elements take the form $(g, h)$ for $g \in G$ and $h \in H$. The operation is defined as $(g_1, h_1)(g_2, h_2) = (g_1 \cdot g_2, h_1 \circ h_2)$. The identity element is $(e, i)$.}
+
+\mlenma{}{If $g$ has order $m$ in $G$ and $h$ has order $n$ in $H$, then $(g, h)$ has order lcm($m,n$) in $G \times H$.}
+
+\cor{}{If $m$ and $n$ are relatively prime, then $\ZZ_m \times \ZZ_n$ is isomorphic to $\ZZ_{mn}$.}
+
+\dfn{Internal Direct Product}{Let $G$ be a group with subgroups $H$ and $K$ that fit together as follows:
+\begin{itemize}
+	\item $H \cap K = \{e\}$
+	\item $G = HK = \{hk : h \in H, k \in K\}$
+	\item $hk = kh$ for any $h \in H$ and $k \in K$
+\end{itemize}
+Then $G$ is called the \emph{internal direct product} of $H$ and $K$, and is isomorphic to $H \times K$.
+}
 
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
