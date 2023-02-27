@@ -563,6 +563,27 @@ Now consider the three-cycles in $A_4$. There are eight of them. So by the pigeo
 Then $G$ is called the \emph{internal direct product} of $H$ and $K$, and is isomorphic to $H \times K$.
 }
 
+\dfn{Normal Subgroup}{A subgroup $H$ of $G$ is called \emph{normal} if $gH = Hg$ for all $g \in G$. }
+
+\thm{}{Let $H$ be a subgroup of $G$. Then the following assertions are equivalent:
+
+\begin{enumerate}
+	\item $H$ is normal in $G$.
+	\item For any $g \in G$, $gHg^{-1} \subset H$.
+	\item For any $g \in G$, $gHg^{-1} = H$.
+\end{enumerate}}
+
+\thm{}{Let $N$ be a normal subgroup of $G$. Then the cosets of $N$ form a group denoted $G/N$.}
+
+\ex{$D_5 / R$}{The quotient group $D_5/R = \{\text{rotations}, \text{reflections}\}$. }
+
+\ex{$\ZZ / 8\ZZ$}{$\ZZ / 8\ZZ = \ZZ_8$}
+
+\ex{$D_6$ with the 120 degree rotations}{If we have $N = \{e, r_{120}, r_{240}\}$, then $N$ is normal so we can analyze $D_6 / N$, which we see is the same as $V$. }
+
+\thm{}{If $N$ is normal in $G$ and $H < G$, show that $H \cap N$ is normal in $H$. }
+
+\mpf{Proof}{}
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}
@@ -590,8 +611,6 @@ Then $G$ is called the \emph{internal direct product} of $H$ and $K$, and is iso
 % 	\end{enumerate}And $V$ is called a normed linear space.
 
 % 	$\bullet $ Same definition works with $V$ a vector space over $\bbC$ (again $\|\cdot\|\to\bbR_{\geq 0}$) where \ref{n:2} becomes $\|\lambda x\|=|\lambda|\|x\|$ $\forall$ $\lambda\in\bbC$, $x\in V$, where for $\lambda=a+ib$, $|\lambda|=\sqrt{a^2+b^2}$ }
-
-
 
 
 % \section{Algorithms}

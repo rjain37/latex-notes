@@ -83,7 +83,7 @@ $\phi$ is onto iff for all $(m, n)$, there exists a $2^m3^n$ such that $\phi(2^m
 As such, $S \cong \ZZ \times \ZZ$. $\qed$
 
 \qs{23}{Prove or disprove the following assertion. Let $G, H,$ and  $K$ be groups. If $ G \times K \cong H \times K$ then $G \cong H$.}
-\sol Counterexample: $K = \displaystyle \prod_{i=0}^\infty \ZZ$, $G = \ZZ$, $H = \ZZ \times \ZZ$. $G \times K = K = H \times K$, but $G \not\cong H$. $\qed$
+\sol Counterexample: $K = \displaystyle \prod_{i=0}^\infty \ZZ$, $G = \ZZ$, $H = \{e\}$. $G \times K = K = H \times K$, but $G \not\cong H$. $\qed$
 
 \qs{29}{Show that $S_n$ is isomorphic to a subgroup of $A_{n+2}$. }
 \sol Define $\tau = (n+1 \; n+2) \in S_{n+2}$. Then, we define our $\phi$ as $\phi : S_n \to A_{n+2}$ as $\phi(\sigma) = \sigma \tau$ if $n$ is odd and $\phi(\sigma) = \sigma$ if $n$ is even. This is obviously injective and satisfies $\phi(\sigma\tau) = \phi(\sigma_1)\phi(\sigma_2)$ for all $\sigma_1, \sigma_2 \in S_n$. Now we use the fact that $\tau$ commutes with all of $S_n$ and that $\tau^2 = e$ to show that 
@@ -104,11 +104,11 @@ So $\phi$ is a homomorphism.
 
 To show that $\phi$ is one-to-one, we say that if $\phi(A) = \phi(C)$, then:
 
-$$B^{-1}AB = B^{-1}CB \Longleftrightarrow B(B^{-1}AB)B^{-1} = B(B^{-1}CB)B^{-1} \Longleftarrow A = C,$$ meaning $\phi$ is one-to-one.
+$$B^{-1}AB = B^{-1}CB \Longleftrightarrow B(B^{-1}AB)B^{-1} = B(B^{-1}CB)B^{-1} \Longleftrightarrow A = C,$$ meaning $\phi$ is one-to-one.
 
 Now see that
-$$\det(\phi(A))=\det(B^{-1}AB)=\det(B^{-1})\det(A)\det(B)=\det(B)\det(A)\frac{1}{\det(B)}=\det(A)=\pm 1,$$
-so $\phi$ is onto.
+$$\det(\phi(A))=\det(B^{-1}AB)=\det(B^{-1})\det(A)\det(B)=\det(B)\det(A)\frac{1}{\det(B)}=\det(A)= 1,$$
+so $\phi$ is onto because every $\phi(A)$ maps to an $A$ in $SL_2(\RR)$.
 
 Therefore, since $\phi$ is a bijective homomorphism from a group to itself, it is an automorphism. $\qed$
 \end{document}
