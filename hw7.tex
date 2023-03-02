@@ -23,6 +23,24 @@ Assignment x}
     \item $G = \ZZ$ and $H = 5\ZZ$
 \end{enumerate}}
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item D
+    \item D
+    \item D
+    \item D
+    \item $H$ is normal in $G$ because $G = \ZZ$ is abelian and all subgroups of abelian groups are normal. 
+    \begin{center}
+        \noindent\begin{tabular}{c | c c c c c}
+        $+$ & 0 & 1 & 2 & 3 & 4  \\
+        \cline{1-6}
+        0 & 0 & 1 & 2 & 3 & 4 \\
+        1 & 1 & 2 & 3 & 4 & 0\\
+        2 & 2 & 3 & 4 & 0 & 1 \\
+        3 & 3 & 4 & 0 & 1 & 2\\
+        4 & 4 & 0 & 1 & 2 & 3\\
+        \end{tabular}
+    \end{center}
+\end{enumerate}
 
 \qs{4}{Let $T$ be the group of nonsingular upper triangular $2 \times 2$ matrices with entries in $\RR$; that is, in the form 
 $$
@@ -57,6 +75,30 @@ $$
     \item If $G/Z(G)$ is cyclic, show that $G$ is abelian.
 \end{enumerate}}
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item $Z(S_3) = \{ (e) \}$
+    \item If we have $A = \begin{pmatrix}
+        a & b \\
+        c & d
+    \end{pmatrix}$ and $B =\begin{pmatrix}
+        e & f \\
+        g & h
+    \end{pmatrix}$, we can multiply out $AB$ and $BA$ to see the following equality:
+    $$ae + bg = ae + cf \Rightarrow bg = cf$$
+    However, this equality needs to hold true for all choices of $g,f$ because our $B$ was arbitrary and not related to $A$. This means that $b= c =0$. This means that the equation
+
+    $$af + bh = be + df$$
+
+    reduces to $af = df$ or $a=d$. This means that we can say 
+
+    $$Z(GL_2(\RR)) = \left\{\begin{pmatrix}
+        a & 0 \\
+        0 & a
+    \end{pmatrix} : a \in \RR \backslash \{0\} \right\}.$$
+    \item By definition, for any $z \in Z(G)$, the following equation will hold true, $zG=Gz$. By the definition of a normal subgroup, $Z(G)$ is normal in $G$. 
+    \item 
+
+\end{enumerate}
 
 \qs{14}{Let $G$ be a group and let $G' = \langle aba^{- 1} b^{-1} \rangle\text{;}$ that is, $G'$ is the subgroup of all finite products of elements in $G$ of the form $aba^{-1}b^{-1}\text{.}$ The subgroup $G'$ is called the \textbf{commutator subgroup} of $G$.
 \begin{enumerate}[label=\alph*.]
@@ -64,5 +106,8 @@ $$
     \item Let $N$ be a normal subgroup of $G$. Prove that $G/N$ is abelian iff $N$ contains the commutator subgroup of $G$.
 \end{enumerate}}
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item 
+\end{enumerate}
 
 \end{document}

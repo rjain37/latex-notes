@@ -609,6 +609,33 @@ in H, hK = Kh$ if we call $K = H \cap N$. Or $hKh^{-1} \subset K$. First we clai
 	\item $N$ contains an element that is a product of an even number of transpositions and no other cycles. So $N$ contains an element like $\mu\left(a_1 a_2\right)\left(a_3 a_4\right)$. Conjugate by $\left(a_1 a_2 a_3\right)$ to obtain $\mu\left(a_1 a_4\right)\left(a_2 a_3\right)$. Now multiply this by $\sigma^{-1}$ to obtain $\left(a_1 a_2\right)\left(a_3 a_4\right)\left(a_1 a_4\right)\left(a_2 a_3\right)=$ $\left(a_1 a_3\right)\left(a_2 a_4\right)$. We finally use the fact that $n \geq 5$ to conjugate this by $\left(a_1 a_2 a_5\right)$ yielding $\left(a_2 a_3\right)\left(a_4 a_5\right)$ is also in $N$. Then $N$ contains the product of these last two elements, which is $\left(a_1 a_3 a_4 a_5 a_2\right)$. Since this is a 5 -cycle, we are done by Case 2.
 \end{enumerate}}
 
+\dfn{Homomorphism}{Let $(G, \cdot)$ and $(H, *)$ be groups. A \emph{homomorphism} from $G$ to $H$ is a map $\phi: G \to H$ that satisfies $\phi(g\cdot h)=\phi(g)* \phi(h)$ for all $g,h \in G$.}
+
+\ex{Determinants}{The function $\text{det} : GL_n(\RR) \to \RR^*$ is a homomorphism because of the multiplicative property of determinants.}
+
+\ex{Projection Homomorphisms}{Let $G, H$ be any two groups. Then there are two \emph{projection homormorphisms}. Namely, they are $\pi_1(g,h) = g$ and $\pi_2(g,h) = h$ for all $g,h \in G \times H$.}
+
+\ex{Inclusion Homomorphism}{We say that $D_4$ is included in $S_4$ because any symmetry of a square is definitely a permutation of its vertices.}
+
+\ex{Canonical Map}{Let $N \trianglelefteq G$. Then, the \emph{natural map}(or \emph{canonical map}) is the homomorphism $\phi: G \to G/N$ given by $\phi(g) = gN$. }
+
+\nt{\begin{itemize}
+	\item An onto map is called a \emph{surjection}.
+	\item A one-to-one map is called an \emph{injection}.
+	\item A surjective homomorphism is called a \emph{epimorphism}.
+	\item An injective homomorphism is called a \emph{monomorphism}.
+\end{itemize}}
+
+\thm{}{Let $\phi : G_1 \to G_2$ be a homomorphism. 
+\begin{enumerate}
+	\item $\phi(e_1) = e_2$.
+	\item For $g \in G_1$, $\phi(g^{-1}) = (\phi(g))^{-1}$.
+	\item If $H < G$, then $\phi(H) < G_2$. If $H \trianglelefteq G_1$, then $\phi(H)$ is normal in $\phi(G_1)$.
+	\item If $H_2 < G_2$, then $\phi^{-1}(H_2) < G_1$. If $H_2 \trianglelefteq G_2$, then $\phi^{-1}(H_2)$ is normal in $\phi^{-1}(G_1)$.
+\end{enumerate}}
+
+\dfn{Kernel}{Given a homomorphism $\phi: G_1 \to G_2$. Then, $\{e_2\}$ is normal in $G_2$. By the previous theorem, $\phi^{-1}(\{e_2\})$ is normal in $G_1$. The inverse image is called the \emph{kernel} of $\phi$.}
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}
