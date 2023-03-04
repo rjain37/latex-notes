@@ -581,7 +581,7 @@ Then $G$ is called the \emph{internal direct product} of $H$ and $K$, and is iso
 
 \ex{$D_6$ with the 120 degree rotations}{If we have $N = \{e, r_{120}, r_{240}\}$, then $N$ is normal so we can analyze $D_6 / N$, which we see is the same as $V$. }
 
-\thm{}{If $N$ is normal in $G$ and $H < G$, show that $H \cap N$ is normal in $H$. }
+\thm{}{If $N$ is normal in $G$ and $H < G$, then $H \cap N$ is normal in $H$. }
 
 \mpf{Proof}{Need to show that for all $h 
 in H, hK = Kh$ if we call $K = H \cap N$. Or $hKh^{-1} \subset K$. First we claim that $hkh^{-1} \in H$ because all the elements are in $H$ and groups are closed. Then we claim that $hkh^{-1} \in K$ because $k \in N$, so $hkh^{-1} \in N$ because $N$ is normal in $G$. So, $hkh^{-1} \in H \cap N$.}
@@ -635,6 +635,8 @@ in H, hK = Kh$ if we call $K = H \cap N$. Or $hKh^{-1} \subset K$. First we clai
 \end{enumerate}}
 
 \dfn{Kernel}{Given a homomorphism $\phi: G_1 \to G_2$. Then, $\{e_2\}$ is normal in $G_2$. By the previous theorem, $\phi^{-1}(\{e_2\})$ is normal in $G_1$. The inverse image is called the \emph{kernel} of $\phi$.}
+
+\ex{}{}
 
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
