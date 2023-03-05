@@ -24,12 +24,7 @@ Assignment 7}
 \end{enumerate}}
 \sol
 \begin{enumerate}[label=\alph*.]
-    \item $|G/H| = 4/12$ which is not an integer. Therefore, $H$ can't be normal in $G$.
-    \item Counterexample: $(1 \; 5)(2 \; 3)(1 \; 2 \; 3) = (1 \; 3 \; 5) \neq (1 \; 2 \; 3)(1 \; 5)(2 \; 3) = (1 \; 5 \; 2)$. 
-    \item $|G/H| = 4/8$ which is not an integer. Therefore, $H$ can't be normal in $G$.
-    \item Since $|G| / |H| = 2$, we know that $|G:H| = 2$. So if we take any $g \in G$, then if $g \in H$, we have that $gH = H = Hg$. If $g \not\in H$, then since there are  two left cosets of $H$ in $G$ and $g$ isn't in $H$, the two cosets should be $H$ and $gH$. Left cosets are disjoint, so we can determine that $gH = G - H$. Right cosets are also disjoint, though, so $Hg = G-H = gH$, so $gH = Hg$ for all $g \in G$, so $H$ is normal in $G$ because its index is 2. 
-    
-    Since we know there is only one subgroup of order 2, we know that this is isomorphic to $\ZZ_2$, which has the following Cayley table.
+    \item $|G/H| = 2$, so the only group that $G/H$ could be is $\ZZ_2$. Here is the Cayley table:
     \begin{center}
         \noindent\begin{tabular}{c | c c}
         $+$ & 0 & 1  \\
@@ -38,6 +33,30 @@ Assignment 7}
         1 & 1 & 0
         \end{tabular}
     \end{center}
+    \item Counterexample: $(1 \; 5)(2 \; 3)(1 \; 2 \; 3) = (1 \; 3 \; 5) \neq (1 \; 2 \; 3)(1 \; 5)(2 \; 3) = (1 \; 5 \; 2)$. 
+    \item $|G/H| = 15$ and there is only one group of order 15 which is $\ZZ_{15}$. Here is the Cayley table:
+    \begin{center}
+        \noindent\begin{tabular}{c | c c c c c c c c c c c c c c c}
+        $+$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14  \\
+        \cline{1-16}
+        0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 \\
+        1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 \\
+        2 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 \\
+        3 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 \\
+        4 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 \\
+        5 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 \\
+        6 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 \\
+        7 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+        8 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+        9 & 9 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+        10 & 10 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+        11 & 11 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+        12 & 12 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+        13 & 13 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+        14 & 14 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 \\
+        \end{tabular}
+    \end{center}
+    \item Same as part a.
     \item $H$ is normal in $G$ because $G = \ZZ$ is abelian and all subgroups of abelian groups are normal. 
     \begin{center}
         \noindent\begin{tabular}{c | c c c c c}
@@ -51,8 +70,6 @@ Assignment 7}
         \end{tabular}
     \end{center}
 \end{enumerate}
-
-\newpage
 
 \qs{4}{Let $T$ be the group of nonsingular upper triangular $2 \times 2$ matrices with entries in $\RR$; that is, in the form 
 $$
