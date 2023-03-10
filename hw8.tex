@@ -10,20 +10,68 @@
 \cfoot{}
 \rhead{\bf
 Abstract Algebra \\
-Assignment x}
+Assignment 9}
 
 \begin{document}
 
-\qs{2}{Prove}
+\qs{2}{Which of the following maps are homomorphisms? If the map is a homomorphism, what is the kernel?
+\begin{enumerate}[label=\alph*.]
+    \item $\phi: \RR^* \to GL_2(\RR)$ defined by $$\phi(a) = \begin{pmatrix} 1 & 0 \\ 0 & a \end{pmatrix}.$$
+    \item $\phi: \RR \to GL_2(\RR)$ defined by $$\phi(a) = \begin{pmatrix} 1 & 0 \\ a & 1 \end{pmatrix}.$$
+    \item $\phi : GL_2 ({\mathbb R})   \rightarrow {\mathbb R}$ defined by $$\phi\left(
+        \begin{pmatrix}
+        a & b \\
+        c & d
+        \end{pmatrix}
+        \right)
+        = a + d.$$
+    \item $\phi : GL_2 ( {\mathbb R})   \rightarrow {\mathbb R}^\ast$ defined by $$\phi\left(
+        \begin{pmatrix}
+        a & b \\
+        c & d
+        \end{pmatrix}
+        \right)
+        = ad-bc.$$
+    \item $\phi : {\mathbb M}_2( {\mathbb R}) \rightarrow {\mathbb R}$ defined by $$\phi
+    \left(
+    \begin{pmatrix}
+    a & b \\
+    c & d
+    \end{pmatrix}
+    \right)
+    = b.$$
+\end{enumerate}}
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item $\phi(a)\phi(b) = \phi(ab)$. $Ker(\phi)=\phi^{-1}(I_2)= {1}$
+    \item $\phi(a)\phi(b) = \phi(a+b)$. $Ker(\phi)=\phi^{-1}(I_2)= {0}$
+    \item Trace is known to not be a group homomorphism.
+    \item $\phi(a)\phi(b) = \phi(ab)$. $Ker(\phi)=SL_2(\RR)$.
+    \item $\phi(a) + \phi(b) = \phi(a+b)$. $Ker(\phi)=\left\{ \begin{pmatrix}
+        a & 0 \\
+        b & c
+    \end{pmatrix}: a,b,c \in \RR \right\}$ . 
+\end{enumerate}
 
-\qs{9}{Prove}
-\sol
+\qs{9}{If $\phi: G \to H$ is a group homomorphism and $G$ is abelian, prove that $\phi(G)$ is also abelian.}
+\sol If $x, y \in \phi(G)$, then there exist $g, h \in G$ with $x = \phi(g)$ and $y=\phi(h)$. So, $xy = \phi(g)\phi(h) = \phi(gh) = \phi(hg) = \phi(h)\phi(g) = yx$, so $\phi(G)$ is abelian. $\qed$
 
-\qs{11}{Prove}
-\sol
+\qs{11}{Show that a homomorphism defined on a cyclic group is completely determined by its action on the generator of the group.}
+\sol Let $G = \langle g \rangle$ for some $g \in G$, a cyclic group. Now, let $\phi$ be a homomorphism on $G$. $\phi(\langle g \rangle)$ is a cyclic group and we need to show that $\phi(\langle g \rangle) = \langle \phi(g) \rangle$. If $|G| = n$, then we have the following:
 
-\qs{14}{idk}
+\begin{align*}
+    \phi(\langle g \rangle) &= \phi\{e, g, \ldots, g^{n-1}\}\\
+    &= \{\phi(e), \phi(g), \ldots, \phi(g^{n-1})\} \\
+    &= \{\phi(e), \phi(g), \ldots, \phi(g)^{n-1}\} \\
+    &= \langle \phi(g) \rangle
+\end{align*}
+
+Therfore, our claim is true.
+
+\qs{14}{Let $G$ be a finite group and $N$ a normal subgroup of $G$. If $H$ is a subgroup of $G/N$, prove that $\phi^{-1}(H)$ is a subgroup of $G$ of order $|H|\cdot|N|$, where $\phi : G \rightarrow G/N$ is the canonical homomorphism.}
+\sol Let $a,b \in \phi^{-1}(H)$, then $\phi(a) = aN$ is an element of $H$ and $a^{-1}N$ is also an element of $H$. Then we also have that $\phi(a)\phi(b) = aNbN = abN = \phi(ab)$ since $N$ is normal. Hence, $\phi(ab)$ is an element of $H \Rightarrow ab \in \phi^{-1}(H)$, so  $\phi^{-1}(H)$ is a subgroup. 
+
+To determine the order of this group, we analyze the cosets. For each $h \in H$, we can have $hN$. Since there are $|N|$ elements in each coset, $|H|$ cosets, and cosets are disjoint, we have that $|H|\cdot|N|$ elements exist in $\phi^{-1}(H)$. $\qed$
 
 \qs{P1}{Let $T$ be the circle group as defined in the text: the set of all complex numbers of modulus one, with operation being multiplication. Let $\psi: T \to T$ be the map defined by $\psi(z) = z^2$.
 \begin{enumerate}[label=\alph*.]
@@ -31,5 +79,20 @@ Assignment x}
     \item Determine the kernel $K$ of $\psi$. 
     \item Show that $T/K \cong T$. 
 \end{enumerate}}
+\sol
+\begin{enumerate}[label=\alph*.]
+    \item This is a homomorphism because $\psi(xy) = \psi(x)\psi(y)$. 
+    \item The kernel is the set of all complex numbers $z$ such that $z^2 = 1$. This is the set of all complex numbers $z$ such that $z = \pm 1$.
+    \item Trivial by First Isomorphism Theorem.
+\end{enumerate}
+
+\qs{P2}{Determine which, if either, of the diagrams below are correct commutative diagrams. Explain. The map $\i: G \to G$ represents the identity map where $\i(x) = x$ and $\pi_1$ and $\pi_2$ are projection maps.
+
+\includegraphics[width=8.5cm]{8p21.png}
+\includegraphics[width=8cm]{8p22.png}}
+
+\sol A diagram is commutative if all paths lead to the same place. So, for the first diagram, if we start at $(g, h)$, we see that the first path will yield us $(g, e)$ while the second path yields $(e, h)$. Therefore, this diagram is not commutative.
+
+For the second diagram, we see that the path from $G \to G$ for any $g \in G$ will yield $g$. Additionally, the path from $G \to G \times H \to G$ for any $g \in G$ will also yield $g$. Therefore, this diagram is commutative.
 
 \end{document}
