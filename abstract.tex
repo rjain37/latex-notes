@@ -664,6 +664,28 @@ in H, hK = Kh$ if we call $K = H \cap N$. Or $hKh^{-1} \subset K$. First we clai
 
 \dfn{Rank}{The \emph{rank} of a free abelian group with a finite basis is the number of elements in a basis.}
 
+\dfn{G-equivalent}{$x \sim_G y$ if $y = gx$ for some $g \in G$ and $x,y \in X$.}
+
+\dfn{Orbit}{The \emph{orbit}, $O_x$ is all $y$ such that $x \sim_G y$.}
+
+\dfn{Fixed-point set}{Let $G$ act on $X$. Choose a particular element $g \in G$. The set $X_g = \{x \in X : gx = x\}$ is called the \emph{fixed-point set} of $g$. }
+
+\dfn{Stabilizer}{Let $G$ act on $X$. Choose a particular element $x \in X$. The set $G_x = \{g \in G : gx = x\}$ is called the \emph{stabilizer} of $x$. }
+
+\mlenma{}{The stabilizer of any element of $X$ is a subgroup of $G$.}
+
+\mpf{Proof}{The proof is by direct computation. The stabilizer is also called the stabilizer subgroup, or sometimes the \emph{isotropy} group.}
+
+\thm{}{For any finite group $G$ and finite $G$-set $X$, given $x \in X$, then $|O_x| = [G:G_x]$.}
+
+\dfn{$X_G$}{$X_G = \{x \in X : gx =x \forall g \in G\}$}
+
+\nt{If $x \in X_G$, then $|O_x| = 1$. Thie yields us a simple equation for the order of $X$:
+$$|X| = |X_G| + \sum_{i=1}^{k}|O_{x_i}|$$}
+
+\dfn{Class Equation}{$$|G| = |Z(G)| + \sum_{i=1}^k[G:C(x_i)]$$}
+
+\cor{}{The order of any conjugacy class must divide the order of the group.}
 
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
