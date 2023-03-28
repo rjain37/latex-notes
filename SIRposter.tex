@@ -1,0 +1,185 @@
+\documentclass[final]{beamer}
+
+% ====================
+% Packages
+% ====================
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[size=custom,width=120,height=88,scale=1.0]{beamerposter}
+\usetheme{gemini}
+\usecolortheme{imsa}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{fancyhdr}
+
+
+% ====================
+% Lengths
+% ====================
+
+% If you have N columns, choose \sepwidth and \colwidth such that
+% (N+1)*\sepwidth + N*\colwidth = \paperwidth
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.025\paperwidth}
+\setlength{\colwidth}{0.3\paperwidth}
+
+
+
+\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+
+% ====================
+% Title
+% ====================
+
+
+\title{Optimizing Trigger Selection for Detection of Doubly Charged Higgs Bosons at the LHC}
+
+\author{Rohan Jain}
+
+\institute[shortinst]{ {\texttt{rjain@imsa.edu} \\
+
+Illinois Mathematics and Science Academy
+}}
+\logo{
+\includegraphics[width=0.15\textwidth]{IMSAlogo.png}
+\hspace{1.5cm}
+\includegraphics[]{CMSlogo.png}
+}
+
+% ====================
+% Body
+% ====================
+
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\begin{frame}[t]
+\begin{columns}[t]
+\separatorcolumn
+
+\begin{column}{\colwidth}
+  \begin{block}{Abstract}
+    In this project, we aim to programmatically find the most efficient triggers for selecting H++ events for application in the Compact Muon Solenoid experiment. Highly efficient triggers are defined as those with high signal efficiency and low background efficiency to give as much signal and as little background as possible. The types of events analyzed were H++, Drell-Yan, and QCD. The initial process started with finding the most efficient triggers on the three sets of events independently, then pairwise comparing the differences, and then finally creating a new figure of merit which was the harmonic mean of all the differences. 
+  \end{block}
+  \begin{block}{Process}
+    We start by running Monte Carlo data through a trigger simulation, enabling all triggers individually.
+    \begin{itemize}
+        \item H++
+        \begin{itemize}
+            \item Higgs900.txt
+            \begin{itemize}
+                \item $m$ of at least 900 GeV
+            \end{itemize}
+        \end{itemize}
+        \item QCD
+        \begin{itemize}
+            \item QCD500-700.txt
+            \begin{itemize}
+                \item $H_T$ between 500-700 GeV
+            \end{itemize}
+        \end{itemize}
+        \item Drell-Yan
+        \begin{itemize}
+            \item DY50.txt
+            \begin{itemize}
+                \item $m$ of at least 50 GeV
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Signal}
+    
+    We are researching the decay of dark photons into standard model particles. For this to happen, we assume there is some type of kinematic mixing between the dark sector and the Standard Model. In our research, we assumed the dark photon had a mass of 0.5 GeV, and used Monte Carlo statistics to simulate events.
+    
+    See Figure 1 for Feynman diagrams which correspond to our signal interaction.
+    
+
+  \end{block}
+
+  \begin{block}{Background}
+
+    Background interactions which can result in four leptons include 
+
+    \begin{itemize}
+      \item Quantum Chromodyanmics (QCD). QCD interactions are a strong interaction between quarks that are done through gluons. 
+      \item Drell-Yan (DY). DY interactions occur when a quark and an antiquark of distinct hadrons annilhate, form a Z-boson, then decay into oppositely charged leptons.
+      \item top antitop (\textbf{$t\overline{t}$}). This is when a top quark and an antiquark collide, and it is typically observed in proton-proton collisions. 
+      \item Diboson interactions - mainly ZZ, are generally the product of a proton-antiproton collision. They are a type of gauge boson which means they are force carrying.
+    \end{itemize}
+
+    
+    Background events are unwanted because they are easily confused for data from . The objective of our research is to find cuts on different properties of collisions, such as transverse momentum or mass, that allow us to observe our desired particle, the dark photon, more.
+
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  \begin{block}{Histograms}
+
+    Below are superimposed histograms of the number of signal and background events with respect to transverse momentum of first and second leptons, and relative isolation of leptons. These histograms were used as a starting point for our lepton selection analysis.
+    
+    %have histograms with captions only, no title at the top
+    
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  \begin{block}{Calculating Significance}
+
+    The significance of cuts that are made can be calculated with the following equation:
+
+    $$
+    \text{Significance} = \frac{s}{\sqrt{b}}
+    $$
+    
+    where $s = number\ of\ signal\ events$ and $b = number\ of\ background\ events$. $s$ is calculated as the product of a predetermined cross-section, luminosity, and efficiency (fraction of selected over generated events). We use this value in our code while looping through our different variables to determine how much impact a change in one or more variables can have.
+
+
+  \end{block}
+  \begin{block}{Methodology}
+    The variables which we considered applying cuts to were:
+    \begin{itemize}
+        \item Leading, second, and third lepton transverse momentum
+        \item Relative isolation
+        \item Invariant mass
+    \end{itemize}
+    We looped through all possible cuts on these variables and found the cuts with the greatest sensitivity. Then, we applied the cut which had the best sensitivity out of all variables, and repeated the process with the variables left over. 
+  \end{block}
+  \begin{block}{Results}
+    The default sensitivity, without any performing any cuts, was $0.0131968$.
+    We discovered that the optimal cuts to find dark photons were:
+    \begin{itemize}
+        \item Leading lepton $p_{T}$: $>117$ GeV (sensitivity: $0.0307187$)
+        \item Relative isolation: $>0.0145$ (sensitivity: $0.075534$)
+    \end{itemize}
+    Many of the cuts did not significantly improve sensitivity or make sense in the context of the previous cuts. For instance, applying a cut to invariant mass after the first two cuts barely improved the sensitivity from the default. Thus, we decided not to apply these cuts, and were left with the aforementioned cuts.
+  \end{block}
+
+
+ % \begin{block}{References}
+
+    %\nocite{*}
+    %\footnotesize{\bibliographystyle{plain}\bibliography{poster}}
+
+  %\end{block}
+
+\end{column}
+
+\separatorcolumn
+\end{columns}
+\end{frame}
+
+\end{document}
