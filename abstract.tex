@@ -691,6 +691,23 @@ $$|X| = |X_G| + \sum_{i=1}^{k}|O_{x_i}|$$}
 
 \thm{Cauchy's Theorem}{If $p$ is prime and divides $|G|$, then $G$ has a subgroup of order $p$.}
 
+\mlenma{}{Let $X$ be a $G$-set and $x \sim_G y$. Then $G_x$ and $G_y$ are isomorphic.}
+
+\thm{Burnside's Theorem}{Let $G$ be a finite group and $X$ a finite $G$-set. If $k$ is the number of orbits of $G$, then
+$$k = \frac{1}{|G|}\sum_{g \in G}|X_g|.$$ }
+
+\mpf{Proof}{First we have to understand that the following equation:
+$$\sum_{g \in G}|X_g| = \sum_{x \in X}|G_x|$$
+
+Both of these go through all the elements of $X$ and count each one a number of times equal to the number of elements of $G$ that fix it, so these sums must be equal.
+
+Now, within any orbit, all the $|G_y|$ for $y$ in that orbit are equal (all such stabilizers are isomorphic, so trivially they are equinumerous). So for each orbit $\mathcal{O}_x$, the portion of the sum relating to it is given as follows:
+$$\sum_{y \in \mathcal{O}_x}|G_y| = |\mathcal{O}_x||G_x|.$$
+
+Now we know that $|\mathcal{O}_x| = [G : G_x] = |G|/|G_x|$. So each orbit contributes $|G|$ to the sum of $\sum_{x \in X}|G_x|$. Since there are $k$ orbits, the final sum must be $k|G|$, and the theorem follows.
+}
+
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}

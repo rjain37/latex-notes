@@ -66,8 +66,28 @@ Illinois Mathematics and Science Academy
   \begin{block}{Abstract}
     In this project, we aim to programmatically find the most efficient triggers for selecting H++ events for application in the Compact Muon Solenoid experiment. Highly efficient triggers are defined as those with high signal efficiency and low background efficiency to give as much signal and as little background as possible. The types of events analyzed were H++, Drell-Yan, and QCD. The initial process started with finding the most efficient triggers on the three sets of events independently, then pairwise comparing the differences, and then finally creating a new figure of merit which was the harmonic mean of all the differences. 
   \end{block}
+
+\begin{block}{Signal}
+  The signal interaction we are searching for is activity of the double charged Higgs boson:
+
+  \begin{itemize}
+    \item H++: 
+  \end{itemize}
+\end{block}
+
+  \begin{block}{Background}
+
+    Background interactions include the following:
+
+    \begin{itemize}
+      \item Quantum Chromodynamics (QCD). QCD interactions are a strong interaction between quarks that are done through gluons. 
+      \item Drell-Yan (DY). DY interactions occur when a quark and an antiquark of distinct hadrons annilhate, form a Z-boson, then decay into oppositely charged leptons.
+    \end{itemize}
+  \end{block}
+
   \begin{block}{Process}
     We start by running Monte Carlo data through a trigger simulation, enabling all triggers individually.
+
     \begin{itemize}
         \item H++
         \begin{itemize}
@@ -92,28 +112,53 @@ Illinois Mathematics and Science Academy
         \end{itemize}
     \end{itemize}
   \end{block}
-  \begin{block}{Signal}
+
+  \begin{block}{Preliminary Results}
+    The tables below show the results for the top 5 triggers (highest efficiencies) for each of the three types of events.
+
+    \begin{table}[]
+      \begin{center}
+           \caption{\label{table:1}Trigger Results for H++}
+     \begin{tabular}[t]{c|c}
+          \hline
+          \textbf{Trigger Name} & \textbf{Efficiency}\\
+          \hline
+          HLT\_AK8PFJet40 & 0.999155\\
+          HLT\_HcalPhiSym & 0.999 \\
+          HLT\_AK4PFJet30 & 0.99879 \\
+          HLT\_AK4CaloJet30 & 0.993445 \\
+          HLT\_DiPFJetAve40  & 0.991245
+      \end{tabular}
+    \end{center}
+    \end{table}
+    \begin{table}
+      \caption{\label{table:2}Trigger Results for QCD}
+          \begin{tabular}[t]{c|c}
+              \hline
+              \textbf{Trigger Name} & \textbf{Efficiency}\\
+              \hline
+              HLT\_HcalPhiSym & 0.862971\\
+              HLT\_AK8PFJet40 & 0.688192 \\
+              HLT\_AK4CaloJet30 & 0.619257 \\
+              HLT\_AK4PFJet30 & 0.598404 \\
+              HLT\_PFJet40 & 0.465758
+          \end{tabular}
+  \end{table}
+
+  \begin{table}[h!]
+    \caption{\label{table:3}Trigger Results for DY}
+        \begin{tabular}[t]{c|c}
+            \hline
+            \textbf{Trigger Name} & \textbf{Efficiency}\\
+            \hline
+            HLT\_HcalPhiSym & 0.884871\\
+            HLT\_AK8PFJet200 & 0.882028 \\
+            HLT\_HT425 & 0.872316 \\
+            HLT\_PFJet200 & 0.773207 \\
+            HLT\_DiPFJetAve200 & 0.546264
+        \end{tabular}
+\end{table}
     
-    We are researching the decay of dark photons into standard model particles. For this to happen, we assume there is some type of kinematic mixing between the dark sector and the Standard Model. In our research, we assumed the dark photon had a mass of 0.5 GeV, and used Monte Carlo statistics to simulate events.
-    
-    See Figure 1 for Feynman diagrams which correspond to our signal interaction.
-    
-
-  \end{block}
-
-  \begin{block}{Background}
-
-    Background interactions which can result in four leptons include 
-
-    \begin{itemize}
-      \item Quantum Chromodyanmics (QCD). QCD interactions are a strong interaction between quarks that are done through gluons. 
-      \item Drell-Yan (DY). DY interactions occur when a quark and an antiquark of distinct hadrons annilhate, form a Z-boson, then decay into oppositely charged leptons.
-      \item top antitop (\textbf{$t\overline{t}$}). This is when a top quark and an antiquark collide, and it is typically observed in proton-proton collisions. 
-      \item Diboson interactions - mainly ZZ, are generally the product of a proton-antiproton collision. They are a type of gauge boson which means they are force carrying.
-    \end{itemize}
-
-    
-    Background events are unwanted because they are easily confused for data from . The objective of our research is to find cuts on different properties of collisions, such as transverse momentum or mass, that allow us to observe our desired particle, the dark photon, more.
 
   \end{block}
 
@@ -123,12 +168,81 @@ Illinois Mathematics and Science Academy
 
 \begin{column}{\colwidth}
 
-  \begin{block}{Histograms}
+  \begin{block}{Redefining Efficiency}
 
-    Below are superimposed histograms of the number of signal and background events with respect to transverse momentum of first and second leptons, and relative isolation of leptons. These histograms were used as a starting point for our lepton selection analysis.
+    Since we need to compare the efficiency of the same trigger across different events, we need to redefine the efficiency of a trigger. So when comparing H++ to any background, we will use the difference of efficiencies across mutual triggers. This can effectively be summarized with the following equation 
+
+    $$i dont remmeber ngl$$
     
-    %have histograms with captions only, no title at the top
-    
+  \end{block}
+
+  \begin{block}{Intermediary Results}
+    The tables below show the results for the top 5 triggers (highest difference in efficiencies) for the pairwise comparisons of the three types of events.
+    \begin{table}[h!]
+      \caption{\label{table:4}Trigger Results for H++ vs. QCD}
+          \begin{tabular}[t]{c|c}
+              \hline
+              \textbf{Trigger Name} & \textbf{Efficiency}\\
+              \hline
+              HLT\_DiPFJetAve320 & 0.81028139\\
+              HLT\_PFJet320 & 0.8088902\\
+              HLT\_PFMETNoMu110\_PFMHTNoMu110\_IDTight & 0.8054678 \\
+              HLT\_Photon75 & 0.8039625 \\
+              HLT\_Photon90 & 0.8035066 
+          \end{tabular}
+    \end{table}
+
+    \begin{table}[h!]
+      \caption{\label{table:5}Trigger Results for H++ vs. DY}
+          \begin{tabular}[t]{c|c}
+              \hline
+              \textbf{Trigger Name} & \textbf{Efficiency}\\
+              \hline
+              HLT\_AK8PFJet140 & 0.94992018\\
+              HLT\_DiPFJetAve80 & 0.9497367\\
+              HLT\_PFJet140 & 0.94761912 \\
+              HLT\_PFHT250 & 0.94691313 \\
+              HLT\_DiPFJetAve140 & 0.94661373
+          \end{tabular}
+    \end{table}
+  \end{block}
+
+  \begin{block}{Redefining Efficiency (pt. 2)}
+    To compare values in the two tables above, we need to redefine efficiency again. This time, we will use the following equation:
+
+    $$Efficiency = \frac{1}{\frac{1}{Eff_{H++ vs. QCD}} + \frac{1}{Eff_{H++ vs. DY}}}$$
+  \end{block}
+
+  \begin{block}{Final Results}
+    The tables below shows the (i honestly dont remember)
+
+    \begin{table}[h!]
+      \caption{\label{table:6}Trigger Results for H++ vs. DY \& QCD}
+          \begin{tabular}[t]{c|c}
+              \hline
+              \textbf{Trigger Name} & \textbf{Efficiency}\\
+              \hline
+              HLT\_PFJet320 & 1.6658838 \\
+              HLT\_Photon75 & 1.6451807 \\
+              HLT\_AK8PFJet320 & 1.6429796 \\
+              HLT\_Photon90 & 1.64207 \\
+              HLT\_DiPFJetAve260 & 1.632191
+          \end{tabular}
+  \end{table}
+
+  \begin{table}[h!]
+    \caption{\label{table:6}Trigger Results for H++ vs. DY \& QCD}
+        \begin{tabular}[t]{c|c}
+            \hline
+            \textbf{Trigger Name} & \textbf{Harmonic Mean $/$ $n$}\\
+            \hline
+                HLT\_PFJet500 & 9591.97113454199 \\
+                HLT\_CaloJet500\_NoJetID & 9304.47172437449 \\
+                HLT\_DiPFJetAve400 & 8315.637583350732 \\
+                HLT\_AK8PFJet500 & 7420.99538836046 \\
+                HLT\_Ele300\_CaloIdVT\_GsfTrkIdT & 6862.191246355468
+        \end{tabular}
+\end{table}
   \end{block}
 
 \end{column}
@@ -137,35 +251,16 @@ Illinois Mathematics and Science Academy
 
 \begin{column}{\colwidth}
 
-  \begin{block}{Calculating Significance}
+  \begin{block}{Questions}
 
-    The significance of cuts that are made can be calculated with the following equation:
-
-    $$
-    \text{Significance} = \frac{s}{\sqrt{b}}
-    $$
-    
-    where $s = number\ of\ signal\ events$ and $b = number\ of\ background\ events$. $s$ is calculated as the product of a predetermined cross-section, luminosity, and efficiency (fraction of selected over generated events). We use this value in our code while looping through our different variables to determine how much impact a change in one or more variables can have.
 
 
   \end{block}
-  \begin{block}{Methodology}
-    The variables which we considered applying cuts to were:
-    \begin{itemize}
-        \item Leading, second, and third lepton transverse momentum
-        \item Relative isolation
-        \item Invariant mass
-    \end{itemize}
-    We looped through all possible cuts on these variables and found the cuts with the greatest sensitivity. Then, we applied the cut which had the best sensitivity out of all variables, and repeated the process with the variables left over. 
+  \begin{block}{Next Steps}
+
   \end{block}
-  \begin{block}{Results}
-    The default sensitivity, without any performing any cuts, was $0.0131968$.
-    We discovered that the optimal cuts to find dark photons were:
-    \begin{itemize}
-        \item Leading lepton $p_{T}$: $>117$ GeV (sensitivity: $0.0307187$)
-        \item Relative isolation: $>0.0145$ (sensitivity: $0.075534$)
-    \end{itemize}
-    Many of the cuts did not significantly improve sensitivity or make sense in the context of the previous cuts. For instance, applying a cut to invariant mass after the first two cuts barely improved the sensitivity from the default. Thus, we decided not to apply these cuts, and were left with the aforementioned cuts.
+  \begin{block}{Conclusions}
+
   \end{block}
 
 
