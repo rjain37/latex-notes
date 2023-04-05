@@ -662,6 +662,7 @@ in H, hK = Kh$ if we call $K = H \cap N$. Or $hKh^{-1} \subset K$. First we clai
 
 \thm{}{If $G$ is a free abelian group with finite bases, then all bases for $G$ are finite with the same number of elements.}
 
+\section{Counting}
 \dfn{Rank}{The \emph{rank} of a free abelian group with a finite basis is the number of elements in a basis.}
 
 \dfn{G-equivalent}{$x \sim_G y$ if $y = gx$ for some $g \in G$ and $x,y \in X$.}
@@ -707,6 +708,43 @@ $$\sum_{y \in \mathcal{O}_x}|G_y| = |\mathcal{O}_x||G_x|.$$
 Now we know that $|\mathcal{O}_x| = [G : G_x] = |G|/|G_x|$. So each orbit contributes $|G|$ to the sum of $\sum_{x \in X}|G_x|$. Since there are $k$ orbits, the final sum must be $k|G|$, and the theorem follows.
 }
 
+\section{Rings}
+\dfn{Ring}{A \emph{ring} is a set $R$ with two binary operations and is denoted as $(R, +, \cdot)$, that satisfies the following conditions:
+\begin{itemize}
+	\item $(R, +)$ is an abelian group.
+	\item $(R, \cdot)$ is associative.
+	\item $\cdot$ distributes over $+$.
+\end{itemize}}
+
+\mlenma{}{If $R$ is a ring, then 
+\begin{itemize}
+	\item $0x = x0 = 0$ for all $x \in R$
+	\item $(x)(-y) = (-a)(b) = -(ab)$ for all $a,b \in R$
+	\item $(-a)(-b) = ab$ for all $a,b \in R$
+\end{itemize}}
+\mpf{Proof}{Note that $a0 = a(0 + 0) = a0 +a0$ and the result is obtained by additive cancellation.
+
+The same works for $0a = (0 + 0)a = 0a + 0a$.
+
+Then $0 = a0 = a(b+ (-b)) = ab+a(-b)$. Adding the opposite $-(ab)$ to both sides yields $a(-b) = -(ab)$. The other half is similar using $0b = (a + (-a))b$.
+
+The third bullet comes from the second and the fact that the inverse of the inverse is the original element by uniqueness of inverses.}
+
+\dfn{Ring with unity}{If a ring has a multiplicative identity (which will usually be notated 1, though
+note that matrices often use I for the identity), it is called a \emph{ring with unity}.}
+
+\dfn{Unit}{In a ring with unity, any element with an inverse is called  an \emph{unit}.}
+
+\dfn{Division Ring}{A ring with unity in which each non-zero element is a unit is called a \emph{division ring} (or a \emph{skew field}).}
+
+\dfn{Field}{A commutative division ring is called a \emph{field}.}
+
+\dfn{Zero Divisor}{In any ring, non-zero elements $a$ and $b$ are called \emph{zero divisors} if $ab = 0$. $a$ is the left zero divisor while $b$ is the right zero divisor.}
+
+\mlenma{Left Cancellation}{If $a$ is not a left zero divisor and $ab=ac$, then $b=c$. }
+\mlenma{Right Cancellation}{If $a$ is not a right zero divisor and $ba=ca$, then $b=c$. }
+
+\dfn{Integral Domain}{A commutative ring with no zero divisors is called an integral domain.}
 
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
