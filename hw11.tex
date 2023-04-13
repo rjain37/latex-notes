@@ -14,13 +14,60 @@ Assignment x}
 
 \begin{document}
 
-\qs{}{Prove}
-\sol
+The direct product of two groups $G$ and $H$ is denoted by $G \times H$ and consists of all ordered pairs $(g,h)$ with $g \in G$ and $h \in H$, where the group operation is defined componentwise.
+
+The class equation of a finite group $G$ is the equation that relates the order of $G$ to the sum of the orders of its conjugacy classes. More formally, if $g \in G$ and $C_g$ denotes the conjugacy class of $g$ in $G$, then the class equation of $G$ is:
+
+$$|G| = \sum_{g \in G} |C_g|$$
+
+Now, to write the class equation for the direct product of $A_4$ and $Z_2$, we need to find the conjugacy classes of the elements in $A_4 \times Z_2$.
+
+First, note that $Z_2$ is the cyclic group of order $2$ and has only two elements: the identity element and a non-identity element.
+
+Next, recall that $A_4$ is the alternating group of degree $4$ and has $12$ elements. We can list its elements as:
+
+\begin{align*}
+A_4 = \{&(1), (12)(34), (13)(24), (14)(23), \\
+&(123), (132), (124), (142), (134), (143), (234), (243)\}
+\end{align*}
+
+Now, we can form the elements of $A_4 \times Z_2$ by taking the direct product of each element in $A_4$ with both the identity element and the non-identity element of $Z_2$. This gives us $24$ elements, which we can list as:
+\begin{align*}
+&(1,0), (1,1), \\
+&((12)(34),0), ((12)(34),1), \\
+&((13)(24),0), ((13)(24),1), \\
+&((14)(23),0), ((14)(23),1), \\
+&((123),0), ((123),1), \\
+&((132),0), ((132),1), \\
+&((124),0), ((124),1), \\
+&((142),0), ((142),1), \\
+&((134),0), ((134),1), \\
+&((143),0), ((143),1), \\
+&((234),0), ((234),1), \\
+&((243),0), ((243),1)
+\end{align*}
+To find the conjugacy classes of $A_4 \times Z_2$, we need to determine which elements are conjugate to each other under the group operation. Two elements $(g,h)$ and $(g',h')$ are conjugate if there exists an element $(x,y) \in A_4 \times Z_2$ such that $(g,h) = (x,y)(g',h')(x^{-1},y^{-1})$.
+Since the group operation in $A_4 \times Z_2$ is defined componentwise, we can write this condition as:
+$$(gxg^{-1}, hyh^{-1}) = (g',h')(x,y)(g'^{-1},h'^{-1})$$
+This gives us two conditions: $gxg^{-1} = g'$ and $hyh^{-1} = h'$.
+Using these conditions, we can form the following conjugacy classes:
+
+
+Therefore, the class equation for $A_4 \times Z_2$ is:
+
+$$|A_4 \times Z_2| = 1 + 2 + 2 + 4 + 4 + 1 + 2 + 2 + 4 + 4 = 24$$
+
+Note that each conjugacy class has either one or two elements, and the sum of the orders of the conjugacy classes equals the order of the group, as expected.
 
 \qs{}{Prove}
 \sol
 
 \qs{}{Prove}
 \sol
+
+\qs{}{Prove}
+\sol
+
+
 
 \end{document}

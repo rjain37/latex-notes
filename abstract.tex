@@ -746,6 +746,33 @@ note that matrices often use I for the identity), it is called a \emph{ring with
 
 \dfn{Integral Domain}{A commutative ring with no zero divisors is called an integral domain.}
 
+\thm{Wedderburn}{Every finite division ring is a field.}
+
+\dfn{Characteristic}{The \emph{characteristic} of a ring is the smallest positive integer $n$ such that $n1 = 0$. If no such $n$ exists, the characteristic is 0. This is denoted $char(R)$.}
+
+\mlenma{}{Let $R$ be a ring with unity and a unity element of 1. Then, the characteristic of $R$ is the order of 1. }
+
+\mpf{Proof}{The characteristic can't be smaller than $n$ since that's the minimum number of 1s that need to be added to get 0. If it's larger, $nx = (x + x + \cdots  + x) = x(1 + 1 + \cdots + 1)= x(0) = 0$.}
+
+\cor{}{The characteristic of any integral domain is either zero or a prime.}
+
+\mpf{Proof}{Assume the characteristic is composite and equal to $ab$. Then $a1 \neq 0$ and $b1 \neq 0$, but $(a1)(b1) = 0$. Then, the ring has zero divisors and is therefore not an integral domain.}
+
+\cor{}{The additive group structure underlying any finite field is isomorphic to $\ZZ_p^k$.}
+
+\dfn{Ring Homomorphism}{Let $R$ and $S$ be rings with a map $\phi : R \to S$. Then, $\phi$ is a \emph{ring homormophism} if
+\begin{align*}
+	\phi(ab) &= \phi(a)\phi(b)\\
+	\phi(a+b) &= \phi(a) + \phi(b)
+\end{align*}
+for all $a,b \in R$. Additionally, if $\phi$ is a bijection, it is a \emph{ring isomorphism}.}
+
+\ex{Evaluation Homomorphism}{$\phi_x : \RR [x] \to \RR$ where $\phi_x(p(y)) = p(x)$ is called the \emph{evaluation homomorphism} and it is not hard to check that this is indeed a homomorphism.}
+
+\dfn{Ideal}{Let $R$ be a ring. An \emph{ideal} of $R$ is a subring $I$ of $R$ such that for $r\in R$ and $i\in I$, we have that $ri\in I$ and $ir\in I$. We often write this as $Ia \subseteq I$ and $aI \subseteq I$.}
+
+\qs{1}{Write the class equation for the group $A_4 \times \ZZ_2$.}
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}

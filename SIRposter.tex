@@ -38,9 +38,9 @@
 
 \title{Optimizing Trigger Selection for Detection of Doubly Charged Higgs Bosons at the LHC}
 
-\author{Rohan Jain}
+\author{Rohan Jain \and Dr. Peter J. Dong}
 
-\institute[shortinst]{ {\texttt{rjain@imsa.edu} \\
+\institute[shortinst]{ {\texttt{rjain@imsa.edu} \samelineand  \texttt{pdong@imsa.edu} \\
 
 Illinois Mathematics and Science Academy
 }}
@@ -71,7 +71,7 @@ Illinois Mathematics and Science Academy
   The signal interaction we are searching for is activity of the double charged Higgs boson:
 
   \begin{itemize}
-    \item H++: 
+    \item H++: The doubly charged Higgs boson is our signal and is a hypothetical particle that we believe exists and are therefore trying to prove its existence within Monte Carlo events.
   \end{itemize}
 \end{block}
 
@@ -131,6 +131,17 @@ Illinois Mathematics and Science Academy
       \end{tabular}
     \end{center}
     \end{table}
+    Best Electron Trigger: HLT\_Ele8\_CaloIdL\_TrackIdL\_IsoVL\_PFJet30 | 0.83359
+
+    Best Muon Trigger: HLT\_Mu8\_TrkIsoVVL | 0.78888
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+  \begin{block}{Preliminary Results (cont.)}
     \begin{table}
       \caption{\label{table:2}Trigger Results for QCD}
           \begin{tabular}[t]{c|c}
@@ -144,40 +155,34 @@ Illinois Mathematics and Science Academy
               HLT\_PFJet40 & 0.465758
           \end{tabular}
   \end{table}
+  Best Electron Trigger: HLT\_Ele8\_CaloIdM\_TrackIdM\_PFJet30 | 0.0633013
 
-  \begin{table}[h!]
-    \caption{\label{table:3}Trigger Results for DY}
-        \begin{tabular}[t]{c|c}
-            \hline
-            \textbf{Trigger Name} & \textbf{Efficiency}\\
-            \hline
-            HLT\_HcalPhiSym & 0.884871\\
-            HLT\_AK8PFJet200 & 0.882028 \\
-            HLT\_HT425 & 0.872316 \\
-            HLT\_PFJet200 & 0.773207 \\
-            HLT\_DiPFJetAve200 & 0.546264
-        \end{tabular}
+Best Muon Trigger: HLT\_Mu3\_PFJet40 | 0.277873
+\begin{table}[h!]
+  \caption{\label{table:3}Trigger Results for DY}
+      \begin{tabular}[t]{c|c}
+          \hline
+          \textbf{Trigger Name} & \textbf{Efficiency}\\
+          \hline
+          HLT\_HcalPhiSym & 0.884871\\
+          HLT\_AK8PFJet200 & 0.882028 \\
+          HLT\_HT425 & 0.872316 \\
+          HLT\_PFJet200 & 0.773207 \\
+          HLT\_DiPFJetAve200 & 0.546264
+      \end{tabular}
 \end{table}
-    
+Best Electron Trigger: HLT\_Ele20\_WPLoose\_Gsf | 0.217682
 
+Best Muon Trigger: HLT\_L1SingleMu18 | 0.277113
   \end{block}
-
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
-
   \begin{block}{Redefining Efficiency}
 
-    Since we need to compare the efficiency of the same trigger across different events, we need to redefine the efficiency of a trigger. So when comparing H++ to any background, we will use the difference of efficiencies across mutual triggers. This can effectively be summarized with the following equation 
-
-    $$i dont remmeber ngl$$
-    
+    To account for comparing multiple efficiencies, we redefine the efficiency as follows:
+    $$Eff = Eff_{Signal} - Eff_{Background}$$
   \end{block}
 
   \begin{block}{Intermediary Results}
-    The tables below show the results for the top 5 triggers (highest difference in efficiencies) for the pairwise comparisons of the three types of events.
+    The tables below show the results for the top 5 triggers for the pairwise comparisons
     \begin{table}[h!]
       \caption{\label{table:4}Trigger Results for H++ vs. QCD}
           \begin{tabular}[t]{c|c}
@@ -191,7 +196,9 @@ Illinois Mathematics and Science Academy
               HLT\_Photon90 & 0.8035066 
           \end{tabular}
     \end{table}
+    Best Electron Trigger: HLT\_Ele12\_CaloIdL\_TrackIdL\_IsoVL\_PFJet30 | 0.7971663
 
+    Best Muon Trigger: HLT\_IsoMu20 | 0.75249405
     \begin{table}[h!]
       \caption{\label{table:5}Trigger Results for H++ vs. DY}
           \begin{tabular}[t]{c|c}
@@ -205,16 +212,23 @@ Illinois Mathematics and Science Academy
               HLT\_DiPFJetAve140 & 0.94661373
           \end{tabular}
     \end{table}
+    Best Electron Trigger: HLT\_Ele50\_CaloIdVT\_GsfTrkIdT\_PFJet165 | 0.79523
+
+Best Muon Trigger: HLT\_Mu15\_IsoVVVL\_PFHT600 | 0.742399778
   \end{block}
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
 
   \begin{block}{Redefining Efficiency (pt. 2)}
     To compare values in the two tables above, we need to redefine efficiency again. This time, we will use the following equation:
 
-    $$Efficiency = \frac{1}{\frac{1}{Eff_{H++ vs. QCD}} + \frac{1}{Eff_{H++ vs. DY}}}$$
+    $$Eff = Eff_{H++ vs. QCD} + Eff_{H++ vs. DY}$$
   \end{block}
-
   \begin{block}{Final Results}
-    The tables below shows the (i honestly dont remember)
+    The tables below shows the sum of pairwise compared efficiencies.
 
     \begin{table}[h!]
       \caption{\label{table:6}Trigger Results for H++ vs. DY \& QCD}
@@ -229,38 +243,27 @@ Illinois Mathematics and Science Academy
               HLT\_DiPFJetAve260 & 1.632191
           \end{tabular}
   \end{table}
+  Best Electron Trigger: HLT\_Ele50\_CaloIdVT\_GsfTrkIdT\_PFJet165 | 1.58410567
 
-  \begin{table}[h!]
-    \caption{\label{table:6}Trigger Results for H++ vs. DY \& QCD}
-        \begin{tabular}[t]{c|c}
-            \hline
-            \textbf{Trigger Name} & \textbf{Harmonic Mean $/$ $n$}\\
-            \hline
-                HLT\_PFJet500 & 9591.97113454199 \\
-                HLT\_CaloJet500\_NoJetID & 9304.47172437449 \\
-                HLT\_DiPFJetAve400 & 8315.637583350732 \\
-                HLT\_AK8PFJet500 & 7420.99538836046 \\
-                HLT\_Ele300\_CaloIdVT\_GsfTrkIdT & 6862.191246355468
-        \end{tabular}
-\end{table}
+  Best Muon Trigger: HLT\_Mu15\_IsoVVVL\_PFHT600 | 1.4755256380000001
   \end{block}
-
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
 
   \begin{block}{Questions}
-
-
-
+    \begin{itemize}
+      \item Why do photon triggers perform so well?
+      \item How do we optimize using multiple triggers at once?
+      \item How can we account for the fact that we are using Monte Carlo events instead of real data?
+      \item How can we account for high energy collisions that wrongly set off triggers?
+    \end{itemize}
   \end{block}
   \begin{block}{Next Steps}
-
+    \begin{enumerate}
+      \item Optimize for multiple triggers.
+      \item Use these triggers on real data instead of just Monte Carlo events.
+    \end{enumerate}
   \end{block}
   \begin{block}{Conclusions}
-
+    By the process of comparing various triggers against each other and on different types of Monte Carlo events, we have narrowed down our selection of triggers to a few of the most efficient, which can be found in the "Final Results" section. 
   \end{block}
 
 
