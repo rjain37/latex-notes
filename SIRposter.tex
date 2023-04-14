@@ -6,7 +6,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[size=custom,width=120,height=88,scale=1.0]{beamerposter}
+\usepackage[size=custom,width=120,height=60,scale=1.0]{beamerposter}
 \usetheme{gemini}
 \usecolortheme{imsa}
 \usepackage{graphicx}
@@ -45,9 +45,9 @@
 Illinois Mathematics and Science Academy
 }}
 \logo{
-\includegraphics[width=0.15\textwidth]{IMSAlogo.png}
+\includegraphics[width=0.13\textwidth]{IMSAlogo.png}
 \hspace{1.5cm}
-\includegraphics[]{CMSlogo.png}
+\includegraphics[width=0.05\textwidth]{CMSlogo.png}
 }
 
 % ====================
@@ -63,9 +63,6 @@ Illinois Mathematics and Science Academy
 \separatorcolumn
 
 \begin{column}{\colwidth}
-  \begin{block}{Abstract}
-    In this project, we aim to programmatically find the most efficient triggers for selecting H++ events for application in the Compact Muon Solenoid experiment. Highly efficient triggers are defined as those with high signal efficiency and low background efficiency to give as much signal and as little background as possible. The types of events analyzed were H++, Drell-Yan, and QCD. The initial process started with finding the most efficient triggers on the three sets of events independently, then pairwise comparing the differences, and then finally creating a new figure of merit which was the harmonic mean of all the differences. 
-  \end{block}
 
 \begin{block}{Signal}
   The signal interaction we are searching for is activity of the double charged Higgs boson:
@@ -91,24 +88,15 @@ Illinois Mathematics and Science Academy
     \begin{itemize}
         \item H++
         \begin{itemize}
-            \item Higgs900.txt
-            \begin{itemize}
-                \item $m$ of at least 900 GeV
-            \end{itemize}
+              \item $m$ of at least 900 GeV
         \end{itemize}
         \item QCD
         \begin{itemize}
-            \item QCD500-700.txt
-            \begin{itemize}
                 \item $H_T$ between 500-700 GeV
-            \end{itemize}
         \end{itemize}
         \item Drell-Yan
         \begin{itemize}
-            \item DY50.txt
-            \begin{itemize}
                 \item $m$ of at least 50 GeV
-            \end{itemize}
         \end{itemize}
     \end{itemize}
   \end{block}
@@ -150,9 +138,7 @@ Illinois Mathematics and Science Academy
               \hline
               HLT\_HcalPhiSym & 0.862971\\
               HLT\_AK8PFJet40 & 0.688192 \\
-              HLT\_AK4CaloJet30 & 0.619257 \\
-              HLT\_AK4PFJet30 & 0.598404 \\
-              HLT\_PFJet40 & 0.465758
+              HLT\_AK4CaloJet30 & 0.619257
           \end{tabular}
   \end{table}
   Best Electron Trigger: HLT\_Ele8\_CaloIdM\_TrackIdM\_PFJet30 | 0.0633013
@@ -166,23 +152,16 @@ Best Muon Trigger: HLT\_Mu3\_PFJet40 | 0.277873
           \hline
           HLT\_HcalPhiSym & 0.884871\\
           HLT\_AK8PFJet200 & 0.882028 \\
-          HLT\_HT425 & 0.872316 \\
-          HLT\_PFJet200 & 0.773207 \\
-          HLT\_DiPFJetAve200 & 0.546264
+          HLT\_HT425 & 0.872316
       \end{tabular}
 \end{table}
 Best Electron Trigger: HLT\_Ele20\_WPLoose\_Gsf | 0.217682
 
 Best Muon Trigger: HLT\_L1SingleMu18 | 0.277113
   \end{block}
-  \begin{block}{Redefining Efficiency}
-
-    To account for comparing multiple efficiencies, we redefine the efficiency as follows:
-    $$Eff = Eff_{Signal} - Eff_{Background}$$
-  \end{block}
 
   \begin{block}{Intermediary Results}
-    The tables below show the results for the top 5 triggers for the pairwise comparisons
+    The tables below show the results for the top 5 triggers for the pairwise comparisons. Efficiency is now the differenc between signal and background efficiencies.
     \begin{table}[h!]
       \caption{\label{table:4}Trigger Results for H++ vs. QCD}
           \begin{tabular}[t]{c|c}
@@ -191,44 +170,36 @@ Best Muon Trigger: HLT\_L1SingleMu18 | 0.277113
               \hline
               HLT\_DiPFJetAve320 & 0.81028139\\
               HLT\_PFJet320 & 0.8088902\\
-              HLT\_PFMETNoMu110\_PFMHTNoMu110\_IDTight & 0.8054678 \\
-              HLT\_Photon75 & 0.8039625 \\
-              HLT\_Photon90 & 0.8035066 
+              HLT\_PFMETNoMu110\_PFMHTNoMu110\_IDTight & 0.8054678
           \end{tabular}
     \end{table}
     Best Electron Trigger: HLT\_Ele12\_CaloIdL\_TrackIdL\_IsoVL\_PFJet30 | 0.7971663
 
     Best Muon Trigger: HLT\_IsoMu20 | 0.75249405
-    \begin{table}[h!]
-      \caption{\label{table:5}Trigger Results for H++ vs. DY}
-          \begin{tabular}[t]{c|c}
-              \hline
-              \textbf{Trigger Name} & \textbf{Efficiency}\\
-              \hline
-              HLT\_AK8PFJet140 & 0.94992018\\
-              HLT\_DiPFJetAve80 & 0.9497367\\
-              HLT\_PFJet140 & 0.94761912 \\
-              HLT\_PFHT250 & 0.94691313 \\
-              HLT\_DiPFJetAve140 & 0.94661373
-          \end{tabular}
-    \end{table}
-    Best Electron Trigger: HLT\_Ele50\_CaloIdVT\_GsfTrkIdT\_PFJet165 | 0.79523
-
-Best Muon Trigger: HLT\_Mu15\_IsoVVVL\_PFHT600 | 0.742399778
   \end{block}
 \end{column}
 
 \separatorcolumn
 
 \begin{column}{\colwidth}
+\begin{block}{Intermediary Results (cont.)}
+  \begin{table}[h!]
+    \caption{\label{table:5}Trigger Results for H++ vs. DY}
+        \begin{tabular}[t]{c|c}
+            \hline
+            \textbf{Trigger Name} & \textbf{Efficiency}\\
+            \hline
+            HLT\_AK8PFJet140 & 0.94992018\\
+            HLT\_DiPFJetAve80 & 0.9497367\\
+            HLT\_PFJet140 & 0.94761912
+        \end{tabular}
+  \end{table}
+  Best Electron Trigger: HLT\_Ele50\_CaloIdVT\_GsfTrkIdT\_PFJet165 | 0.79523
 
-  \begin{block}{Redefining Efficiency (pt. 2)}
-    To compare values in the two tables above, we need to redefine efficiency again. This time, we will use the following equation:
-
-    $$Eff = Eff_{H++ vs. QCD} + Eff_{H++ vs. DY}$$
-  \end{block}
+Best Muon Trigger: HLT\_Mu15\_IsoVVVL\_PFHT600 | 0.742399778
+\end{block}
   \begin{block}{Final Results}
-    The tables below shows the sum of pairwise compared efficiencies.
+    The tables below shows the sum of pairwise compared efficiencies. It is now calculated as the sum of the previous two efficiencies.
 
     \begin{table}[h!]
       \caption{\label{table:6}Trigger Results for H++ vs. DY \& QCD}
@@ -238,9 +209,7 @@ Best Muon Trigger: HLT\_Mu15\_IsoVVVL\_PFHT600 | 0.742399778
               \hline
               HLT\_PFJet320 & 1.6658838 \\
               HLT\_Photon75 & 1.6451807 \\
-              HLT\_AK8PFJet320 & 1.6429796 \\
-              HLT\_Photon90 & 1.64207 \\
-              HLT\_DiPFJetAve260 & 1.632191
+              HLT\_AK8PFJet320 & 1.6429796
           \end{tabular}
   \end{table}
   Best Electron Trigger: HLT\_Ele50\_CaloIdVT\_GsfTrkIdT\_PFJet165 | 1.58410567
@@ -252,15 +221,7 @@ Best Muon Trigger: HLT\_Mu15\_IsoVVVL\_PFHT600 | 0.742399778
     \begin{itemize}
       \item Why do photon triggers perform so well?
       \item How do we optimize using multiple triggers at once?
-      \item How can we account for the fact that we are using Monte Carlo events instead of real data?
-      \item How can we account for high energy collisions that wrongly set off triggers?
     \end{itemize}
-  \end{block}
-  \begin{block}{Next Steps}
-    \begin{enumerate}
-      \item Optimize for multiple triggers.
-      \item Use these triggers on real data instead of just Monte Carlo events.
-    \end{enumerate}
   \end{block}
   \begin{block}{Conclusions}
     By the process of comparing various triggers against each other and on different types of Monte Carlo events, we have narrowed down our selection of triggers to a few of the most efficient, which can be found in the "Final Results" section. 
