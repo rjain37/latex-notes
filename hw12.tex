@@ -10,17 +10,53 @@
 \cfoot{}
 \rhead{\bf
 Abstract Algebra \\
-Assignment x}
+Assignment 12}
 
 \begin{document}
 
-\qs{}{Prove}
+\qs{3}{Use the division algorithm to find $q(x)$ and $r(x)$ such that $a(x) = q(x)b(x) + r(x)$ with $\operatorname{deg}r(x) < \operatorname{deg}b(x)$ for each of the following pairs of polynomials.
+\begin{enumerate}[label=\alph*.]
+    \item $a(x) = 5 x^3 + 6x^2 - 3 x + 4$ and $b(x) = x -2$ in $\ZZ_7[x]$
+    \item $a(x) = 6 x^4 - 2 x^3 + x^2 - 3 x + 1$ and $b(x) = x^2 + x -2$ in $\ZZ_7[x]$
+    \item $a(x) = 4 x^5 - x^3 + x^2 + 4$ and $b(x) = x^3 - 2$ in $\ZZ_5[x]$
+    \item $a(x) = x^5 + x^3 -x^2 - x$ and $b(x) = x^3 + x$ in $\ZZ_2[x]$
+\end{enumerate}}
 \sol
 
-\qs{}{Prove}
+\qs{4}{Find the greatest common divisor of each of the following pairs $p(x)$ and $q(x)$ of polynomials. If $d(x) = \operatorname{gcd}(p(x), q(x))$, find two polynomials $a(x)$ and $b(x)$ such that $d(x) = a(x)p(x) + b(x)q(x)$.
+\begin{enumerate}[label=\alph*.]
+    \item $p(x) = x^3 - 6x^2 + 14x - 15$ and $q(x) = x^3 - 8x^2 + 21x - 18\text{,}$ where $p(x), q(x) \in \QQ[x]$. 
+    \item $p(x) = x^3 + x^2 - x + 1$ and $q(x) = x^3 + x - 1$, where $p(x),q(x) \in \ZZ_2[x]$. 
+    \item $p(x) = x^3 + x^2 - 4x + 4$ and $q(x) = x^3 + 3 x -2\text{,}$ where $p(x),q(x) \in \ZZ_5[x]$. 
+    \item $p(x) = x^3 - 2 x + 4$ and $q(x) = 4x^3 + x + 3$, where $p(x), q(x) \in \QQ[x]$. 
+\end{enumerate} }
 \sol
 
-\qs{}{Prove}
+\qs{5}{Find all of the zeros for each of the following polynomials.
+\begin{enumerate}[label=\alph*.]
+    \item $5x^3 + 4x^2 - x + 9$ in $\ZZ_{12}[x]$
+    \item $3x^3 - 4x^2 - x + 4$ in $\ZZ_5[x]$
+    \item $5x^4 + 2x^2 - 3$ in $\ZZ_7[x]$
+    \item $x^3 + x + 1$ in $\ZZ_2[x]$
+\end{enumerate}}
+\sol
+
+\qs{6}{Find all of the units in $\ZZ[x]$.}
+\sol
+
+\qs{7}{Find a unit $p(x)$ in $\ZZ_4[x]$ such that $\operatorname{deg}p(x) > 1$. }
+\sol
+
+\qs{10}{Give two different factorizations of $x^2 + x + 8$ in $\ZZ_{10}[x]$. }\sol
+
+\qs{25}{Let $F$ be a field and $f(x) = a_0  +a_1x + \cdots + a^nx^n$ be in $F[x]$. Define $f'(x) = a_1 + 2a_2x + \cdots + na_nx^{n-1}$ to be the \textbf{\emph{derivative}} of $f(x)$.
+\begin{enumerate}[label=\alph*.]
+    \item Prove that $$(f+g)'(x) = f'(x) + g'(x)$$ Conclude that we can define a homomorphism of abelian groups $D : F[x] \rightarrow F[x]$ by $D(f(x)) = f'(x)$.
+    \item Calculate the kernel of $D$ if $\operatorname{char}F = 0$.
+    \item Calculate the kernel of $D$ if $\operatorname{char}F = p$.
+    \item Prove that $$(fg)'(x) = f'(x)g(x) + f(x) g'(x)\text{.}$$
+    \item Suppose that we can factor a polynomial $f(x) \in F[x]$ into linear factors, say $$f(x) = a(x - a_1)(x-a_2) \cdots (x-a_n).$$ Prove that $f(x)$ has no repeated factors if and only if $f(x)$ and $f'(x)$ are relatively prime.
+\end{enumerate}}
 \sol
 
 \end{document}
