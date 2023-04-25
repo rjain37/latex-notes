@@ -22,8 +22,14 @@ Assignment 12}
     \item $a(x) = x^5 + x^3 -x^2 - x$ and $b(x) = x^3 + x$ in $\ZZ_2[x]$
 \end{enumerate}}
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item $5 x^3 + 6x^2 - 3 x + 4 = (5x^2 + 4x + 6)(x-2) + (2x + 5)\pmod{7}$.
+    \item $ 6 x^4 - 2 x^3 + x^2 - 3 x + 1 = (6x^2 -8x + 21)(x^2+x-2) + (-40x +43) = (6x^2 - x)(x^2+x-2) + (2x+1) \pmod{7}$.
+    \item $ 4 x^5 - x^3 + x^2 + 4 = (4x^2 + 3x + 1)(x^3 - 2) + (3x^2 + 3x + 2) \pmod{5}$. %check
+    \item $ x^5 + x^3 -x^2 - x = $
+\end{enumerate}
 
-\qs{4}{Find the greatest common divisor of each of the following pairs $p(x)$ and $q(x)$ of polynomials. If $d(x) = \operatorname{gcd}(p(x), q(x))$, find two polynomials $a(x)$ and $b(x)$ such that $d(x) = a(x)p(x) + b(x)q(x)$.
+\qs{4}{Find the greatest common divisor of each of the following pairs $p(x)$ and $q(x)$ of polynomials. If $d(x) = \operatorname{gcd}(p(x), q(x))$, find two polynomials $a(x)$ and $b(x)$ such that $d(x)=a(x)p(x) + b(x)q(x)$.
 \begin{enumerate}[label=\alph*.]
     \item $p(x) = x^3 - 6x^2 + 14x - 15$ and $q(x) = x^3 - 8x^2 + 21x - 18\text{,}$ where $p(x), q(x) \in \QQ[x]$. 
     \item $p(x) = x^3 + x^2 - x + 1$ and $q(x) = x^3 + x - 1$, where $p(x),q(x) \in \ZZ_2[x]$. 
@@ -31,6 +37,11 @@ Assignment 12}
     \item $p(x) = x^3 - 2 x + 4$ and $q(x) = 4x^3 + x + 3$, where $p(x), q(x) \in \QQ[x]$. 
 \end{enumerate} }
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item d
+    \item d 
+    \item 
+\end{enumerate}
 
 \qs{5}{Find all of the zeros for each of the following polynomials.
 \begin{enumerate}[label=\alph*.]
@@ -39,16 +50,26 @@ Assignment 12}
     \item $5x^4 + 2x^2 - 3$ in $\ZZ_7[x]$
     \item $x^3 + x + 1$ in $\ZZ_2[x]$
 \end{enumerate}}
-\sol
+\sol You just have to plug all the numbers from $0$ to $n-1$ in $\ZZ_n$ to see if there are any zeros $\pmod{n}$.
+\begin{enumerate}[label=\alph*.]
+    \item There are no zeroes.
+    \item $x \cong 2 \pmod{5}$.
+    \item $x \cong 3,4 \pmod{7}$.
+    \item There are no zeroes.
+\end{enumerate}
 
 \qs{6}{Find all of the units in $\ZZ[x]$.}
 \sol
 
 \qs{7}{Find a unit $p(x)$ in $\ZZ_4[x]$ such that $\operatorname{deg}p(x) > 1$. }
-\sol
+\sol If we look at $p(x) = (2x+1)^2 = 4x^2 + 4x + 1 = 1 \pmod{4}$, we have found at degree 2 unit.
 
-\qs{10}{Give two different factorizations of $x^2 + x + 8$ in $\ZZ_{10}[x]$. }\sol
-
+\qs{10}{Give two different factorizations of $x^2 + x + 8$ in $\ZZ_{10}[x]$. }
+\sol Testing all values of $x$ from $0$ to $9$, we see that the zeroes $ x \cong 1, 3, 6, 8$. Pairing these numbers to add up to $-1$, we see that they can't. Therefore, we have to make two of these values negative. So, we can say that $x \cong 1, 3, -4, -2$ and pair as follows:
+\begin{align*}
+    x^2 + x + 8 &= (x-1)(x+2) \\
+    &= (x-3)(x+4). \\
+\end{align*}
 \qs{25}{Let $F$ be a field and $f(x) = a_0  +a_1x + \cdots + a^nx^n$ be in $F[x]$. Define $f'(x) = a_1 + 2a_2x + \cdots + na_nx^{n-1}$ to be the \textbf{\emph{derivative}} of $f(x)$.
 \begin{enumerate}[label=\alph*.]
     \item Prove that $$(f+g)'(x) = f'(x) + g'(x)$$ Conclude that we can define a homomorphism of abelian groups $D : F[x] \rightarrow F[x]$ by $D(f(x)) = f'(x)$.
@@ -58,5 +79,8 @@ Assignment 12}
     \item Suppose that we can factor a polynomial $f(x) \in F[x]$ into linear factors, say $$f(x) = a(x - a_1)(x-a_2) \cdots (x-a_n).$$ Prove that $f(x)$ has no repeated factors if and only if $f(x)$ and $f'(x)$ are relatively prime.
 \end{enumerate}}
 \sol
+\begin{enumerate}[label=\alph*.]
+    \item 
+\end{enumerate}
 
 \end{document}
