@@ -44,7 +44,7 @@ Assignment 12}
         \frac{1}{2}x - \frac{9}{4} &= \left(\frac{15}{4}x - \frac{45}{4}\right)\left(\frac{8}{15}x - \frac{4}{15}\right) \\
         \operatorname{gcd}(p(x), q(x)) &= x - 3
     \end{align*} 
-    what is this called lmao:
+    Second part:
     \begin{align*}
         \left(\frac{15}{4}x - \frac{45}{4}\right) &= (x^3 - 8x^2 + 21x - 18) - (2x^2 - 7x + 3)\left(\frac{1}{2}x - \frac{9}{4}\right) \\
         &=  (x^3 - 8x^2 + 21x - 18) - ((x^3 - 6x^2 + 14x - 15) - (x^3 - 8x^2 + 21x - 18))\left(\frac{1}{2}x - \frac{9}{4}\right) \\
@@ -59,7 +59,7 @@ Assignment 12}
         1 &= (1)(1) \pmod{2} \\
         \operatorname{gcd}(p(x), q(x)) &= 1
     \end{align*} 
-    what is this called!!:
+    Second part:
     \begin{align*}
         1 &= (x-1) - (x)(1) \pmod{2} \\
         &= (x-1) - ((x^2) - (x)(x-1))\pmod{2} \\
@@ -69,14 +69,29 @@ Assignment 12}
         &= (x^3+x-1)(x+1) - ((x^3+x-1) -(x^2+x-1)) (x^2+x+1) \pmod{2} \\
         &= (x^3+x-1)(x^2) - (x^3+x^2-x+1)(x^2+x+1)\pmod{2} \\
     \end{align*}
-    \item Finding $d(x)$:\begin{align*}
+    \item \begin{align*}
         x^3 + x^2 -4x + 4 &= (1)(x^3+3x-2)+(x^2+3x+1) \pmod{5} \\
-        x^3 + 3x -2 &= (x)(x^2+3x+1) + (2x^2+2x-2) \pmod{5} \\
+        x^3 + 3x -2 &= (x)(x^2+3x+1) + (x+1) \pmod{5} \\
+        x^2 + 3x + 1 &= (x+2)(x+1) + (4) \pmod{5} \\
+        4 &= (x^2 + 3x +1) - (x+2)(x+1) \pmod{5} \\
+        &= (x^2 + 3x +1) - (x+2)(( x^3 + 3x -2) - (x)(x^2+3x+1)) \pmod{5} \\
+        &= (x^2 +4x)(x^2+3x+1) -(x+2)(x^3+3x-2) \\
+        &= (x^2 +4x)((x^3 + x^2 -4x + 4) - (x^3+3x-2)) - (x+2)(x^3+3x-2)\pmod{5} \\
+        &= (x^2 +4x)(x^3 + x^2 -4x + 4) - (x^2+2)(x^3+3x-2)
     \end{align*} 
+    Negating this equation gives us 
+    $$1 = (4x^2+x)(x^3+x^2-4x+4) + (x^2+2)(x^3+3x-2)$$
+    meaning that the $\operatorname{gcd}$ is $1$.
     \item \begin{align*}
         4x^3 + x + 3 &= (4)(x^3 - 2 x + 4) + (9x-13) \\
         x^3 - 2 x + 4 &= \left(\frac{1}{9}x^2 + \frac{13}{81}x + \frac{7}{729}\right)(9x-13) + \left(\frac{3007}{729}\right) \\
+        \frac{3007}{729} &= (x^3 - 2 x + 4) - \left(\frac{1}{9}x^2 + \frac{13}{81}x + \frac{7}{729}\right)(9x-13) \\
+        &= (x^3 - 2 x + 4) - \left(\frac{1}{9}x^2 + \frac{13}{81}x + \frac{7}{729}\right)((4x^3 + x + 3) - (4)(x^3 - 2 x + 4))\\
+        &= \left(\frac{4}{9}x^2 + \frac{52}{81}x + \frac{757}{729}\right)(x^3 - 2 x + 4) - \left(\frac{1}{9}x^2 + \frac{13}{81}x + \frac{7}{729}\right)(4x^3 + x + 3) \\
     \end{align*} 
+    Some algebraic manipulation shows the following:
+    $$1 = \frac{729}{3007}\left[ \left(\frac{4}{9}x^2 + \frac{52}{81}x + \frac{757}{729}\right)(x^3 - 2 x + 4) + \left(-\frac{1}{9}x^2 - \frac{13}{81}x - \frac{7}{729}\right)(4x^3 + x + 3)\right]$$
+    revealing that the $\operatorname{gcd}$ is $1$.
 \end{enumerate}
 
 \qs{5}{Find all of the zeros for each of the following polynomials.
