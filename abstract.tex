@@ -803,6 +803,20 @@ for all $a,b \in R$. Additionally, if $\phi$ is a bijection, it is a \emph{ring 
 \cor{}{A polynomial of degree $n$ in $F[x]$ can have at most $n$ roots.}
 
 \thm{}{Given any two polynomials $a(x)$ and $b(x)$, not both zero, in $F[x]$, their gcd exists, is unique, and  and can be written as a combination $s(x)a(x) + t(x)b(x)$ for some polynomials $s$ and $t$ in $F[x]$.}
+
+\dfn{Irreducible}{In a ring $R$, an element $a$ is \emph{irreducible} if its only divisors are units and associates. ($x$ and $y$ are associates if $x = uy$ for some unit $u$.)}
+
+\ex{}{$2x^3 + 2x + 1 = (x+1)(2x^2 +x + 1)$ in $\ZZ_3[x]$. However, if we look at $\ZZ_{11}[x]$, this does not remain true; the polynomial is irreducible.}
+
+\thm{Gauss' Lemma}{The product of two primitive polynomials is primitive. A
+primitive polynomial is irreducible over the integers if and only if it is irreducible over the rational numbers. In particular, if $p(x)$ is a monic polynomial with integer coefficients that factors into two polynomials $\alpha(x)\beta(x)$ with rational coefficients, then it factors into the
+product of two integer monic polynomials $a(x)b(x)$ with the degrees of $a$ and $b$ equalling thoseof $\alpha$ and $\beta$ respectively.}
+
+\cor{}{Let $p(x)$ be a monic polynomial with integer coefficients, and a nonzero constant term. Then any rational root of $p(x)$ must be an integer. Such root divides the constant term.}
+\nt{The above is a baby version of the rational root theorem.}
+\cor{Einsenstein's Criterion}{Let $f(x)$ be a polynomial and let $p$ be prime. Assume that $p \not\mid a_n$ (the leading coefficient) but that $p$ divides every other coefficient. Also assume that $p^2 \not\mid a_0$. Then $f(x)$ is irreducible over $\QQ$.}
+
+
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
 % 	\begin{center}
