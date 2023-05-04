@@ -816,6 +816,19 @@ product of two integer monic polynomials $a(x)b(x)$ with the degrees of $a$ and 
 \nt{The above is a baby version of the rational root theorem.}
 \cor{Einsenstein's Criterion}{Let $f(x)$ be a polynomial and let $p$ be prime. Assume that $p \not\mid a_n$ (the leading coefficient) but that $p$ divides every other coefficient. Also assume that $p^2 \not\mid a_0$. Then $f(x)$ is irreducible over $\QQ$.}
 
+\dfn{Unique Factorization Domain}{An integral domain is an \emph{unique factorization domain} or \emph{UFD} if:
+\begin{enumerate}
+	\item Every element other than zero or a unit can be written as a product of irreducible elements of the integral domain.
+	\item If $a = p_1p_2\ldots p_n = q_1q_2\ldots q_m$ are two factorizations of $a$ into irreducibles, then $n=m$ and there is a permutation $\pi$ of the $q$'s so that $p_i$ and $q_{\pi(i)}$ are associates.
+\end{enumerate}}
+
+\dfn{Principal Ideal Domain}{An integral domain is a \emph{principal ideal domain} or \emph{PID} if every ideal is principal.}
+
+\thm{}{In a PID, an element $a$ is irreducible iff $\langle a \rangle$ is maximal; $a$ is prime $\langle a \rangle$ is a prime ideal.}
+
+\cor{}{In a principal ideal domain all irreducibles are prime.}
+
+\dfn{Noetherian}{A ring satisfies the ascending chain condition (ACC) if, given a chain of ideals $I_1 \subset I_2 \subset \cdots$ the chain eventually becomes stable. That is, there is some positive integer such that $I_n = I_N$ for all $n>N$. Such rings are called \emph{Noetherian}.}
 
 % \section{Random Examples}
 % \begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
