@@ -18,7 +18,12 @@ Assignment 14}
 \sol Let $R \subseteq F$. Suppose $x,y \in R$ such that $xy = 0$. Since the 0 element is the same in $R$ and $F$, either $x=0$ or $y=0$ and as such, $R$ has no zero divisors and therefore, is an integral domain. $\qed$
 
 \qs{6}{Let $F$ be a field of characteristic zero. Prove that $F$ contains a subfield isomorphic to $\QQ$.}
-\sol 
+\sol Let $\phi : \ZZ \to F$ and define $\phi(1_{\ZZ}) = 1_F$. Characteristic 0 means that $\phi$ is injective. We can use this to define $\varphi : \QQ \to F$ such that $\varphi(a/b) = \phi(a)/\phi(b)$ whenever $b \neq 0_{\ZZ}$. This is a homomorphism because:
+
+$$\varphi(1_{\ZZ} / 1_{\ZZ}) = \phi(1_{\ZZ}) / \phi(1_{\ZZ}) = 1_F / 1_F = 1_F,$$
+$$\varphi(\frac{a}{b}\frac{c}{d}) = \varphi({\frac{ac}{bd}}) = \frac{\phi(ac)}{\phi(bd)} = \frac{\phi(a)}{\phi(b)}\frac{\phi(c)}{\phi(d)} = \varphi(\frac{a}{b})\varphi(\frac{c}{d}),$$
+$$\varphi(\frac{a}{b} + \frac{c}{d}) = \varphi(\frac{ad + bc}{bd}) = \frac{\phi(ad + bc)}{\phi(bd)} = \frac{\phi(a)\phi(d) + \phi(b)\phi(c)}{\phi(b)\phi(d)} = \frac{\phi(a)}{\phi(b)} + \frac{\phi(c)}{\phi(d)} = \phi(\frac{a}{b}) + \phi(\frac{c}{d}).$$
+$\varphi$ is also injective because cross-multiplication. This injectiveness means that $ad = bc \implies a/b = c/d$. As such, contains a subfield isomorphic to $\QQ$ that is $\varphi(\QQ) \subseteq F$. $\qed$
 
 \qs{10}{A field $F$ is called a \emph{\textbf{prime field}} if it has no proper subfields. If $E$ is a subfield of $F$ and $E$ is a prime subfield of $F$:
 \begin{enumerate}[label=\alph*.]
@@ -28,8 +33,12 @@ Assignment 14}
 \end{enumerate}}
 \sol
 \begin{enumerate}[label=\alph*.]
-    \item To convince ourselves that $E$ is nonempty, we realize that $0,1 \in E$. For any $a,b \in E$, $a,b \in L$, so $ab$, $a+b$, $a-b$, and $a/b$ are all in $L$, and thus all in $E$. As such, $E$ is a subfield.
-    \item Ok
-    \item Ok
+    \item To convince ourselves that $E$ is nonempty, we realize that $0,1 \in E$. For any $a,b \in E$, $a,b \in L$, so $ab$, $a+b$, $a-b$, and $a/b$ are all in $L$, and thus all in $E$. As such, $E$ is a subfield. 
+    
+    If $L \subset E$ is a proper subfield, it is a subfield of $F$ too. By definition, $E$ is contained in all subfields of $F$. As such, $E$ is a prime field.
+    
+    If $E'$ is another prime subfield, by construction, $E \subseteq E'$. Since $E'$ is prime, $E' = E$. $\qed$
+    \item Define $\phi : \ZZ \to F$ as $\phi(x) = x * 1_F$. $F$ having characteristic 0 means that this definition of $\phi$ is injective, so its image is a subring of $F$ isomorphic to $\ZZ$. By a theorem related to a field of fractions that we covered in class, $F$ contains a subfield isomorphic to $\QQ$. $\QQ$ has no subfields, it is prime, and by part a., it is the unique subfield of $F$. $\qed$
+    \item Define $\phi$ the same as we did in b. Since $\operatorname{char}(F) = p$, the kernel of $\phi$ is $p\ZZ$. By the first isomorphism theorem, the image of $\phi$ is isomorphic to $\ZZ_p$, which is a prime field. By part a., it is the unique prime field of $F$. $\qed$
 \end{enumerate}
 \end{document}
