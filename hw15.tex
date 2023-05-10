@@ -1,0 +1,40 @@
+\documentclass{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 15}
+
+\begin{document}
+
+\qs{11}{Let ${\mathbb Z}[ \sqrt{2}\, ] = \{ a + b \sqrt{2} : a, b \in {\mathbb Z} \}\text{.}$
+\begin{enumerate}[label=\alph*.]
+	\item Prove that ${\mathbb Z}[ \sqrt{2}\, ]$ is an integral domain.
+	\item Find all the units of  ${\mathbb Z}[ \sqrt{2}\, ]$.
+	\item Determine the field of fractions of ${\mathbb Z}[ \sqrt{2}\, ]$.
+	\item Prove that ${\mathbb Z}[ \sqrt{2i}\, ]$ is a Euclidean domain under the Euclidean valuation $\nu( a + b \sqrt{2}\, i) = a^2 + 2b^2\text{.}$
+\end{enumerate}}
+\sol
+\begin{enumerate}[label=\alph*.]
+	\item Consider $(a+b\sqrt{2})(c+d\sqrt{2})=0$. This means that $(a+b\sqrt{2})(a-b\sqrt{2})(c+d\sqrt{2})(c-d\sqrt{2}) =(a^2-2b^2)(c^2-2d^2) = 0$. The irrationality of $\sqrt{2}$ and that fact that $a,b,c,d$ are all integers tells us that either $a=b=0$ or $c=d=0$. $\qed$
+	\item 
+\end{enumerate}
+
+\qs{17}{Prove or disprove: Every subdomain of a UFD is also a UFD.}
+\sol $\ZZ\,[3i] \subseteq \CC$ is a subdomain of a UFD, but is not a UFD. $\qed$
+
+
+\qs{18}{An ideal of a commutative ring $R$ is said to be \emph{\textbf{finitely generated}} if there exist elements $a_1, \ldots, a_n$ in $R$ such that every element $r$ in the ideal can be written as $a_1 r_1 + \cdots + a_n r_n$ for some $r_1, \ldots, r_n$ in $R$. Prove that $R$ satisfies the ascending chain condition if and only if every ideal of $R$ is finitely generated.}
+\sol
+
+\qs{19}{Let $D$ be an integral domain with a descending chain of ideals $I_1 \supset I_2 \supset I_3 \supset \cdots\text{.}$ Suppose that there exists $N$ such that $I_k = I_N$ for all $k \geq N\text{.}$ A ring satisfying this condition is said to satisfy the \textbf{\emph{descending chain condition}}, or DCC. Rings satisfying the DCC are called \textbf{\emph{Artinian rings}}, after Emil Artin. Show that if $D$ satisfies the descending chain condition, it must satisfy the ascending chain condition.}
+\sol
+
+\end{document}
