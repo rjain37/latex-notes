@@ -14,9 +14,9 @@ Assignment 15}
 
 \begin{document}
 
-\qs{11}{Let ${\mathbb Z}[ \sqrt{2}\, ] = \{ a + b \sqrt{2} : a, b \in {\mathbb Z} \}\text{.}$
+\qs{11}{Let $\ZZ[ \sqrt{2} ] = \{ a + b \sqrt{2} : a, b \in {\mathbb Z} \}\text{.}$
 \begin{enumerate}[label=\alph*.]
-	\item Prove that ${\mathbb Z}[ \sqrt{2}\, ]$ is an integral domain.
+	\item Prove that ${\mathbb Z}[ \sqrt{2}\, ]$ is an integral domain. 
 	\item Find all the units of  ${\mathbb Z}[ \sqrt{2}\, ]$.
 	\item Determine the field of fractions of ${\mathbb Z}[ \sqrt{2}\, ]$.
 	\item Prove that ${\mathbb Z}[ \sqrt{2i}\, ]$ is a Euclidean domain under the Euclidean valuation $\nu( a + b \sqrt{2}\, i) = a^2 + 2b^2\text{.}$
@@ -24,7 +24,7 @@ Assignment 15}
 \sol
 \begin{enumerate}[label=\alph*.]
 	\item Consider $(a+b\sqrt{2})(c+d\sqrt{2})=0$. This means that $(a+b\sqrt{2})(a-b\sqrt{2})(c+d\sqrt{2})(c-d\sqrt{2}) =(a^2-2b^2)(c^2-2d^2) = 0$. The irrationality of $\sqrt{2}$ and that fact that $a,b,c,d$ are all integers tells us that either $a=b=0$ or $c=d=0$. $\qed$
-	\item If $u$ is a unit, then so are $-u, 1/u$, and $-1/u$. At least one of these has to be greater than 1 if $u\neq 0$. As such, it is enough to show that if $u<1$, then $u$ is a power of $1+\sqrt{2}$. So, we can write that $(1+\sqrt{2})^k < u < (1+\sqrt{2})^{k+1}$. Dividing by $(1+\sqrt{2})^k$ gives us $1 < u(1+\sqrt{2})^{-k} < 1+\sqrt{2}$. Since $1+\sqrt{2}$ is the smallest unit not equal to 0$, u(1+\sqrt{2})^{-k} = 1 \Rightarrow u = (1+\sqrt{2})^k$. Since norm is multiplicative, we have that all powers of $1+\sqrt{2}$ are units.
+	\item If $u$ is a unit, then so are $-u, 1/u$, and $-1/u$. At least one of these has to be greater than 1 if $u\neq 0, 1$. As such, it is enough to show that if $u<1$, then $u$ is a power of $1+\sqrt{2}$. So, we can write that $(1+\sqrt{2})^k < u < (1+\sqrt{2})^{k+1}$. Dividing by $(1+\sqrt{2})^k$ gives us $1 < u(1+\sqrt{2})^{-k} < 1+\sqrt{2}$. Since $1+\sqrt{2}$ is the smallest unit not equal to 0$, u(1+\sqrt{2})^{-k} = 1 \Rightarrow u = (1+\sqrt{2})^k$. Since norm is multiplicative, we have that all powers of $1+\sqrt{2}$ are units.
 	\item $$Q = \left\{\frac{a+b\sqrt{2}}{c+d\sqrt{2}} : a,b,c,d \in \ZZ, c+d\sqrt{2}\neq 0\right\}$$
 	\item We first need to show that $\nu(xy) = \nu(x)\nu(y)$ for $x,y \in \ZZ\,[\sqrt{2}i]$. 
 	\begin{align*}
