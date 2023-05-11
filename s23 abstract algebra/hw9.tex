@@ -1,0 +1,103 @@
+\documentclass[12pt]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\DeclareMathOperator{\Orb}{Orb}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 9}
+
+\begin{document}
+
+\qs{5}{Let $G = A_4$ and suppose that $G$ acts on itself by conjugation; that is, $(g,h)~\mapsto~ghg^{-1}\text{.}$
+\begin{enumerate}[label=\alph*.]
+    \item Determine the conjugacy classes (orbits) of each element of $G$.
+    \item Determine all of the isotropy subgroups for each element of $G$.
+\end{enumerate}}
+\sol
+To start, it will help to write out all the elements of $A_4$. 
+$$A_4 = \{e, (1 \; 2)(3 \; 4), (1\;2\;3), (1\;2\;4), (1\;3\;2), (1\;3\;4), (1\;3)(2\;4), (1\;4\;2), (1\;4\;3), (1\;4)(2\;3), (2 \; 3 \; 4), (2 \; 4 \; 3)\}$$
+\begin{enumerate}[label=\alph*.]
+    \item Trivially, the orbit of the identity element is $\{e\}$.
+    
+    We continue by finding the orbits of one 3-cycle, $(1\;2\;3)$. We can do this by applying each transposition $\tau \in G$ and conjugating $(1\;2\;3)$ by $\tau$. We have previously shown the following:
+    $$\tau (1\;2\;3) \tau^{-1} = (\tau(1)\;\tau(2)\;\tau(3))$$
+    Plugging in all transpositions, we get the following for the orbit of $(1\;2\;3)$:
+    $$Orb _G((1\;2\;3)) = \{(1\;2\;3), (2\;4\;3), (1\;4\;2), (1\;3\;4)\}$$
+    We can now repeat the process with $(1\; 3\; 2)$.
+    $$Orb _G((1\;3\;2)) = \{(1\;3\;2), (2\;3\;4), (1\;2\;4), (1\;4\;3)\}$$
+
+    Since we have found all 8 3-cycles in $G$, we don't need to look at orbits of other 3-cycles. We will finish finding the last three elements by conjugating $(1\;2)(3\;4)$ by each transposition. We can do this easily by the following fact:
+    $$\tau(1\;2)(3\;4)\tau^{-1} = \tau(1\;2)\tau^{-1}\tau(3\;4)\tau^{-1}=(\tau(1), \tau(2))(\tau(3), \tau(4))$$
+    Doing this, we get the following orbit:
+    $$Orb_G((1\;2)(3\;4)) = \{(1\;2)(3\;4), (1\;3)(2\;4), (1\;4)(2\;3)\}.$$
+    \item By the orbit-stabilizer theorem, we have that $|G| = |Orb_G(x)| \cdot |Stab_G(x)|$. We can use this to find the size of each isotropy subgroup. Since each 3-cycle has an orbit size of 4 and that $|G| = 12$, this means that the respective stabilizer group has a size of 3. For any 3-cycle $\sigma$, $\sigma$ stabilizes itself and $e$ stabilizes $\sigma$, so we have that 
+    $$Stab_G(\sigma) = \{e, \sigma, \sigma^2\}.$$
+    Using similar logic for permutations that look like $(a\;b)(c\;d)$, we can see that the stabilizer group takes the following form:
+    $$Stab_G((a\;b)(c\;d)) = \{e, (a\;b)(c\;d), (a\;c)(b\;d), (a\;d)(b\;c)\}.$$
+
+    Ending with the identity is easy. 
+    $$Stab_G(e) = G.$$
+\end{enumerate}
+
+\qs{6}{Find the conjugacy classes and the class equation for each of the following groups.
+\begin{enumerate}[label=\alph*.]
+    \item $S_4$
+    \item $D_4$
+    \item $\ZZ_9$
+    \item $Q_8$
+\end{enumerate}}
+\sol
+\begin{enumerate}[label=\alph*.]
+    \item The conjugacy classes of $S_4$ are $\{1\}, \{(1\;2), (1\;3), (1\;4), (2\;3), (2\;4), (3\;4)\}, \{(1\;2)(3\;4), (1\;3)(2\;4),$ 
+    
+    $(1\;4)(2\;3)\}, \{(1\;2\;3), (1\;3\;2), (1\;2\;4), (1\;4\;2), (1\;3\;4), (1\;4\;3), (2, \;3 \; 4), (2\;4\;3)\}, \{(1\;2\;3\;4), (1\;2\;4\;3),$
+    
+    $(1\;3\;2\;4), (1\;3\;4\;2), (1\;4\;2\;3), (1\;4\;3\;2)\}$. So, the class equation is $1 + 6 + 3 + 8 + 6 = 24$.
+    \item The conjugacy classes of $D_4$ are $\{1\}, \{r^2\}, \{s, r^2\}, \{r, r^3\}, \{rs, r^3s\}$. So, the class equation is $1 + 1 + 2 + 2 + 2 = 8$.
+    \item For any abelian group, every element is its own conjugacy class. Thus, we have that $|\ZZ_9| = 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 = 9$.
+    \item The conjugacy classes of $Q_8$ are $\{1\}, \{-1\}, \{i, -i\}, \{j, -j\}, \{k, -k\}$. So, the class equation is $1 + 1 + 2 + 2 + 2 = 8$. 
+\end{enumerate}
+
+\qs{10}{Find the number of ways a six-sided die can be constructed if each side is marked differently with $1, \ldots, 6$ dots.}
+\sol Burnside's lemma yields the following:
+$$\frac{6! + 0 + 0 + 0 + 0 + 0}{24} = \boxed{30}$$
+
+\qs{12}{Consider 12 straight wires of equal lengths with their ends soldered together to form the edges of a cube. Either silver or copper wire can be used for each edge. How many different ways can the cube be constructed?
+}
+\sol The motions of the cube is $S_4$ and has an order of 24. 
+\begin{enumerate}[label=\alph*.]
+    \item The group action is acting on the $2^{12}$ element set of 12 edge colorings with 2 possible colors. 
+    \item If $\sigma$ is a transposition, then two edges are fixed with the other ten edges paired, so there are $2^7$ colorings, with 6 different transpositions.
+    \item If $\sigma$ is a 3-cycle, then the edges aren't fixed and the edges are split into four sets of uniform color. So, there are $2^4$ colorings, with 8 different 3-cycles.
+    \item If $\sigma$ is a 4-cycle, then the edges are split into three sets of uniform color. So, there are $2^3$ colorings, with 6 different 4-cycles.
+    \item If $\sigma$ is a double transposition, then there are 6 sets of edges with uniform color. So, there are $2^6$ with 6 different double transpositions.
+\end{enumerate} 
+
+Therefore, we have that our answer is $\frac{1}{24}(2^{12} + 6\cdot2^7 + 8\cdot 2^4 + 6\cdot 2^3+ 3\cdot 2^6) = 218$.
+
+\qs{13}{Suppose that we color each of the eight corners of a cube. Using three different colors, how many ways can the corners be colored up to a rotation of the cube?}
+\sol The motions of the cube is $S_4$ and has an order of 24. However, we have to consier the latter condition of the problem, so we have to count the mirror symmetries. Therefore, there is an order of $24\cdot2 = 48$. For this problem, we have to consider the different types of permutations.
+\begin{enumerate}[label=\alph*.]
+    \item Identity rotation has one type of rotation and $3^8$ ways to color the cube with 1 identity rotation.
+    \item A 90 degree face rotation has 6 types of rotations and $3^2$ ways to color the cube.
+    \item A 180 degree face rotation has 3 types of rotations and $3^4$ ways to color the cube.
+    \item A 120 degree corner rotation has 8 types of rotations and $3^4$ ways to color the cube.
+    \item A 180 degree edge rotation has 6 types of rotations and $3^4$ ways to color the cube.
+    \item There is the no rotation, no reflection case which yields $3^4$ ways to color the cube.
+    \item If we reflect after a 90 degree face rotation, then there are 6 types of rotations and $3^6$ ways to color the cube.
+    \item If we reflect after a 180 degree face rotation, then there are three types of rotations and $3^4$ ways to color the cube.
+    \item If we reflect after a 120 degree corner rotation, then there are 8 types of rotations and $3^2$ ways to color the cube.
+    \item If we reflect after a 180 degree edge rotation, then there are 6 types of rotations and $3^2$ ways to color the cube.
+\end{enumerate}
+
+Therefore, the answer is $\frac{1}{48}(3^8 + 6\cdot 3^2 + 3\cdot 3^4 + 8\cdot 3^4 + 6\cdot 3^4 + 3^4 + 6\cdot3^6 + 3\cdot3^4 + 8\cdot 3^2 + 6\cdot 3^2) = 267$.
+
+\end{document}

@@ -1,0 +1,59 @@
+\documentclass[12pt]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 5}
+
+\begin{document}
+
+\qs{12}{If $ghg^{-1} \in H$ for all $g \in G$ and $h \in H$, show that the left cosets are identical to the right cosets. That is, show $gH = Hg$ for all $g\in G$. }
+\sol If we take any value $x \in gH$, then $x = gh$ for some $g \in G$ and $h \in H$. Then we can look at the value $xg^{-1} = ghg^{-1} \in H$. Therefore, $x = xg^{-1}g \in Hg$. So, we have shown $gH \subseteq Hg$.
+
+Now if we take any $x \in Hg$, then $x = hg^{-1}$ for some $g \in G$ and $h \in H$. We can use $g^{-1}$ instead of $g$ because $G$ is a group and therefore has inverse closure. Then we can look at $gx = ghg^{-1} \in H$. Therefore, $x = g^{-1}gx \in gH$. So, we have shown $Hg \subseteq gH$.
+
+From the above, we can conclude that $gH = Hg$ for all $g \in G$. 
+
+\qs{17}{Suppose that $[G : H] = 2$. If $a$ and $b$ are not in $H$, show that $ab \in H$. }
+\sol We have that $[G : H] = 2$ and that $a,b \in G$ but $a,b \not \in H$. If $a \not\in H$, then $a^{-1} \not\in H$ as well. Since these values aren't in $H$, we can conclude that $a^{-1}H \neq H$ and that $bH \neq H$. But we also know that there are only two cosets of $H$ in $G$, and one of these cosets is $H$ itself. This means that the two left cosets, $a^{-1}H$ and $bH$, are the equal. 
+
+Now we can take any element from $a^{-1}H$, let's just call it $a^{-1}h$. Since the cosets are equal, we know that $a^{-1}h = bh'$ for some $h' \in H$. Pre-multiplying both sides by $a$ and post multiplying by $h'^{-1}$ shows that $ab = hh'^{-1} \in H$, thereby completing the proof. $\qed$
+
+\qs{19}{Let $H$ and $K$ be subgroups of group $G$. Prove that $gH \cap gK$ is a coset of $H \cap K$ in $G$.}
+\sol We can prove this by showing that $gH \cap gK = g(H \cap K)$. 
+
+If we take any $x \in gH \cap gK$, then $x = gh = gk$ for some $g\in G, h \in H,$ and $k\in K$. Since $gh = gk$, we can conclude that $h = k$ by pre-multiplying by $g^{-1}$. Therefore, $h,k \in H \cap K$. Then, $x = gh = gk \in g(H \cap K)$. Therefore, $gH \cap gK \subseteq g(H \cap K)$.
+
+In the opposite direction, if we take any $x \in g(H\cap K)$, then $x = gy$ for some $y \in H \cap K$. Since $y \in H$, then $x = gy \in gH$. And since $ y \in K$, then $x = gk \in gK$. Therefore, $x \in gH \cap gK$ and as such, $g(H \cap K) \subseteq gH \cap gK$.
+
+From the above, we can conclude that $gH \cap gK = g(H \cap K)$ and therefore, $gH \cap gK$ is a coset of $H \cap K$ in $G$. $\qed$
+
+\qs{20}{Let $H$ and $K$ be subgroups of group $G$. Define a relation $\sim$ on $G$ by $a \sim b$ if there exists an $h \in H$ and a $k \in K$ such that $hak = b$. Show that this relation is an equivalence relation. The corresponding equivalence classes are called \emph{\textbf{double cosets}}. Compute the double cosets of $H = \{(1), (1 \; 2 \; 3), (1 \; 3 \; 2)\}$ in $A_4$.}
+\sol First I will show that this is an equivalence relation:
+\begin{itemize}
+	\item \textbf{Reflexivity}: $a \sim a$ for all $a \in G$. This is true because if we take $a \in G$, then we can choose $h = e$ and $k = e$ and then $hak = eae = a$.
+	\item \textbf{Symmetry}: We know that $a \sim b \Longleftrightarrow b \sim a$ because if $hak = b$, then we can show that $h^{-1}bk^{-1} = a$ by left and right multiplying by $h^{-1}$ and $k^{-1}$ respectively. We also know that $h^{-1} \in H$ and that $k^{-1} \in K$ because they are groups and therefore have inverse closure.
+	\item \textbf{Transitivity}: If $a\sim b \land b \sim c$, then we know that $h_1ak_1 = b$ and that $h_2 b k_2 = c$. Then we can do a substitution to see that $h_2h_1 a k_1k_2 = c$. Since $h_2h_1 \in H$ and $k_1k_2 \in K$ by group closure, we can conclude that $a \sim c$.
+\end{itemize}
+
+$A_4$ itself is described by the elements: $$A_4 = \{(1), (1 \; 2)(3 \; 4), (1\; 3)(2\; 4), (1 \; 4)(2 \; 3), (1 \; 2 \; 3), (1 \; 3 \; 2), (1 \; 2 \; 4), $$$$(1 \; 4 \; 2), (1 \; 3 \; 4), (1 \; 4 \; 3), (2 \; 3 \; 4), (2 \; 4 \; 3)\}.$$
+
+Then, for $a \in A_4$,
+$$HaH = \{hak : h,k \in H\}.$$
+
+With this information, we can start listing the double cosets of $H$ in $A_4$.
+
+$$H(1)H = \{(1), (1 \; 2 \; 3), (1 \; 3 \; 2)\}$$
+$$H(1 \; 2)(3 \; 4)H = \{(1)(1 \; 2)(3 \; 4)(1), (1)(1 \; 2)(3 \; 4)(1 \; 2 \; 3), (1)(1 \; 2)(3 \; 4)(1 \; 3\; 2), $$$$(1 \; 2 \; 3)(1 \; 2)(3 \; 4)(1), (1 \; 2 \; 3)(1 \; 2)(3 \; 4)(1 \; 2 \; 3), (1 \; 2 \;3)(1 \; 2)(3 \; 4)(1 \; 3 \; 2), $$$$(1 \; 3 \; 2)(1 \; 2)(3 \; 4)(1), (1 \; 3 \; 2)(1 \; 2)(3 \; 4)(1 \; 2 \; 3), (1 \; 3 \; 2)(1 \; 2)(3 \; 4)(1 \; 3 \; 2)\} $$$$= \{(1 \; 2)(3 \; 4), (2 \; 4 \; 3), (1 \; 4 \; 3), (1 \; 3 \; 4), (1 \;2 \; 4), (1 \; 4)(2 \; 3), (2 \; 3 \; 4), (1 \; 3)( 2 \; 4),(1 \; 4 \; 2)\} $$
+
+Since these two equivalence classes, $[(1)]$ and $[(1 \; 2)(3 \; 4)]$, contain every element in $A_4$, they are the double cosets of $H$ in $A_4$.
+
+
+\end{document}

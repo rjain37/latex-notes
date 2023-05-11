@@ -1,0 +1,185 @@
+\documentclass[12pt]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 10}
+
+\begin{document}
+
+\qs{1}{Which of the following sets are rings with respect to the usual operations of addition and multiplication? If the set is a ring, is it also a field?
+\begin{enumerate}[label=\alph*.]
+    \item $7 \ZZ$
+    \item $\ZZ_{18}$
+    \item $\QQ(\sqrt{2}) = \{ a + b\sqrt{2}: a,b \in \QQ\}$
+    \item $\QQ(\sqrt{2}, \sqrt{3}) = \{ a + b\sqrt{2} + c\sqrt{3} + d\sqrt{6}: a,b,c,d \in \QQ\}$
+    \item $ {\ZZ}[\sqrt{3}\, ] = \{ a + b \sqrt{3} : a, b \in {\ZZ} \}$
+    \item $ R = \{a + b \sqrt[3]{3} : a, b \in {\mathbb Q} \}$
+    \item $ {\mathbb Z}[ i ] = \{ a + b i : a, b \in {\mathbb Z} \text{ and } i^2 = -1 \}$
+    \item $\displaystyle {\mathbb Q}( \sqrt[3]{3}\, ) = \{ a + b \sqrt[3]{3} + c \sqrt[3]{9} : a, b, c \in {\mathbb Q} \}$
+\end{enumerate}}
+\sol
+\begin{enumerate}[label=\alph*.]
+    \item $7 \ZZ$ is a ring since it is a subring of $\ZZ$. This is not hard to show. However, it lacks an identity, so it is a field. 
+    \item $\ZZ_{18}$ is a ring because addition and mulitplcation in modulo 18 are well-defined. However, we can see that it is not a field. $2 \cdot 9 = 0$ in $\ZZ_{18}$, so we have a pair of zero divisors.
+    \item $\QQ(\sqrt{2})$ is a subfield of $\RR$ so it is therefore a ring and a field. The fact that it is a subring is not hard to show.
+    \item Like the last part, $\QQ(\sqrt{2}, \sqrt{3})$ is a subfield of $\RR$ and is therfore a ring and a field.
+    \item $\ZZ[\sqrt{3}]$ is a subring of $\RR$ and is therefore a ring. Now let's analyze $\sqrt{3} \in \ZZ[\sqrt{3}]$. Calculating the inverse of $\sqrt{3}$ gives us $\frac{1}{\sqrt{3}} \not\in \ZZ[\sqrt{3}]$. Therefore, $\ZZ[\sqrt{3}]$ is not a field.
+    \item If $a=0$ and $b=1$, we have that $\sqrt[3]{3} \in R$. However, $\sqrt[3]{3} \cdot \sqrt[3]{3} = \sqrt[3]{9} \not\in R$. Therefore, $R$ is not closed under multiplication and is therefore not a ring.
+    \item $\ZZ[i]$ is a field because it is a subfield of $\CC$. By definition, it is also a ring.
+    \item ${\mathbb Q}( \sqrt[3]{3})$ is a subfield of $\RR$ and is therefore a ring and a field.
+\end{enumerate}
+
+\qs{12}{Prove that ${\mathbb Z}[ \sqrt{3}\, i ] = \{ a + b \sqrt{3}\, i : a, b \in {\mathbb Z} \}$ is an integral domain.}
+\sol A common rule of complex numbers is that for any $z, w \in \CC$, $|z||w| = |zw|$. Also, $\ZZ[\sqrt{3}i] \in \CC$, so we have that $|zw| = |z||w| \forall z,w \in \ZZ[\sqrt{3}i]$. This means that if $z,w \neq 0$, then $|z|, |w| \neq 0$, and therefore $|z||w| = |zw| \neq 0$. So, $\ZZ[\sqrt{3}i]$ has no zero divisors and is therefore an integral domain. $\qed$
+
+\qs{24}{Let $R$ be a ring with a collection of subrings $\{R_\alpha\}$. Prove that $\bigcap R_{\alpha}$ is a subring of $R$. Give an example to show that the union of two subrings is not necessarily a subring.}
+\sol Let $r,s \in \bigcap R_\alpha$. This means that $r,s \in R_\alpha$, so $rs, (r-s) \in R_\alpha$. Thus, $rs, (r-s) \in \bigcap R_\alpha$. So $\bigcap R_\alpha$ is a subring of $R$. $\qed$
+
+An example of the union of two subrings not being a subring is how $2\ZZ$ and $3\ZZ$ are both subrings of $\ZZ$, but $2\ZZ \cup 3\ZZ$ is not a subring of $\ZZ$. We can see this because $2, 3 \in 2\ZZ \cup 3\ZZ$, but $2 + 3 = 5 \not\in 2\ZZ \cup 3\ZZ$. 
+
+\qs{30}{Let $R$ be a ring with the identity $1_R$ and $S$ a subring of $R$ with identity $1_S$. Prove or disprove that $1_R = 1_S$.}
+\sol I will disprove this. Let $R = \ZZ_6$ and $S = \{0, 3\}$. $S$ is a subring of $R$. $S$ is a ring because $a + b$ and $ab$ are both in $S$ for all four combinations of $a$ and $b$. However, we know that $1_R = 1$. But in $S$, we can see that $3\times 0 = 0$ and that $3 \times 3 = 3$. So, $3 = 1_S \neq 1_R$. $\qed$ 
+
+\qs{32}{Let $R$ be a ring. Define the center of $R$ to be $$
+    Z(R) = \{ a \in R : ar = ra \text{ for all } r \in R \}\text{.}$$ Prove that $Z(R)$ is a commutative subring of $R$.}
+\sol Let $a, b \in Z(R)$. We have that $abr = arb = rab \forall r \in R$. We also have that $(a - b)r = ar - br = ra - rb = r(a-b) \forall r \in R$. Therefore, $ab, (a-b) \in Z(R)$. So, $Z(R)$ is a subring of $R$. By definition, the center if a ring is commutative. Therefore, $Z(R)$ is a commutative subring of $R$. $\qed$
+
+\qs{35}{Let $R$ be a ring with identity.
+\begin{enumerate}[label=\alph*.]
+    \item Let $u$ be a unit in $R$. Define a map $i_u : R \rightarrow R$ by $r \mapsto uru^{-1}$. Prove that $i_u$ is an automorphism of $R$. Such an automorphism of $R$ is called an inner automorphism of $R$. Denote the set of all inner automorphisms of $R$ by $\text{Inn}(R)$.
+    \item Denote the set of all automorphisms of $R$ as $\text{Aut}(R)$. Prove that $\text{Inn}(R)$ is a normal subgroup of $\text{Aut}(R)$.
+    \item Let $U(R)$ be the group of units in $R$. Prove that the map $$\phi : U(R) \to \text{Inn}(R)$$ defined by $u \mapsto i_u$ is a homomorphism. Determine the kernel of $\phi$. 
+    \item Compute $\text{Aut}(\ZZ)$, $\text{Inn}(\ZZ)$, and $U(\ZZ)$.
+\end{enumerate}}
+\sol \begin{enumerate}[label=\alph*.]
+    \item $\forall a,b \in R$, we have that 
+    \begin{align*}
+        i_u(a)i_u(b) &= (uau^{-1})(ubu^{-1}) \\
+        &= ua(u^{-1}u)bu^{-1} \\
+        &= uabu^{-1} \\
+        &= i_u(ab)
+    \end{align*}
+    Also,
+    \begin{align*}
+        i_u(a) + i_u(b) &= (uau^{-1}) + (ubu^{-1}) \\
+        &= u(a + b)u^{-1} \\
+        &= i_u(a + b)
+    \end{align*}
+    Now, for injectivity,
+    \begin{align*}
+        i_u(a) &= i_u(b) \\
+        uau^{-1} &= ubu^{-1} \\
+        a &= b \text{ by cancellation laws.}
+    \end{align*}
+    For surjectivity,
+    \begin{align*}
+        \forall a \in R, i_u(u^{-1}au) &= uu^{-1}auu^{-1}\\
+        &= (uu^{-1})a(uu^{-1})\\
+        &= a
+    \end{align*}
+
+    So, $i_u$ is a bijective homomorphism and is therefore an automorphism of $R$. $\qed$
+
+    \item We know that $e = i_e \in \text{Inn}(R)$. For closure and inverse, let $i_u, i_v \in \text{Inn}(R)$ and $r \in R$. Starting with inverse, we can see that
+    \begin{align*}
+        i_u^{-1}(r) &= u^{-1}ru \\
+        = i_{u^{-1}}(r)
+    \end{align*}
+    Then for closure, we have that
+    \begin{align*}
+        i_u \circ i_v (r) &= i_u(vrv^{-1}) \\
+        &= uvrv^{-1}u^{-1}\\
+        &= uvr(uv)^{-1} \\
+        &= i_{uv}(r) \in \text{Inn}(R)
+    \end{align*}
+    To show that $\operatorname{Inn}(R)$ is normal in $\text{Aut}(R)$, we have to show that $i_u \circ i_v \circ i_u^{-1} (x) \in \text{Inn}(R)$ for all $u,v \in U(R)$ and $x \in R$. 
+    \begin{align*}
+        i_u \circ i_v \circ i_u^{-1} (x) &= i_u \circ i_v (u^{-1}xu)\\
+        &= i_u(vu^{-1}xuv^{-1}) \\
+        &= uvu^{-1} x uv^{-1}u^{-1} \\
+        &= i_{uvu^{-1}}(x) \in \text{Inn}(R) \qed
+    \end{align*}
+    \item Let $u,v \in U(R)$. We have that
+    \begin{align*}
+        \phi(u)\circ\phi(v)(r) &= i_u \circ i_v (r)\\
+        &= i_u(vrv^{-1}) \\
+        &= uvrv^{-1}u^{-1} \\
+        &= i_{uv}(r)  \\
+        &= \phi(uv)(r) \qed\\
+    \end{align*}
+    \begin{align*}
+        \ker(\phi) &= \{ u \in U(R) : \phi (u) = i_u = e\} \\
+        &= \{u \in U(R) : uru^{-1} = r \forall r \in R\} \\
+        &= \{u \in U(R) : ur = ru \forall r \in R\} \\
+        &= U(R) \cap Z(R)
+    \end{align*}
+    \item $\ZZ$ is generated by 1 and -1. Therefore, $\operatorname{Aut}(\ZZ) = \{x\mapsto x, x\mapsto -x\}$.
+
+    Analyzing both automorphisms, we see that their inner automorphisms are the same. As such, $\operatorname{Inn}(\ZZ) = \{x \mapsto x\}$. Trivially, ${U}(\ZZ) = \{1, -1\}$.
+\end{enumerate}
+
+
+
+\qs{36}{Let $R$ and $S$ be arbitrary rings. Show that their Cartesian product is a ring if we define addition and multiplication in $R\times S$ by \begin{enumerate}[label=\alph*.]
+    \item $(r, s) + (r', s') = (r + r', s + s')$
+    \item $(r,s)(r',s') = (rr', ss')$
+\end{enumerate}}
+\sol Let $T = R \times S$ and let $(a,b), (c,d), (e,f) \in T$. To start, we know that $a+ c \in R$ and $b+d \in S$. So we can demonstrate cloure.
+$$(a, b) + (c, d) = (a + c, b + d) \in T,$$
+Now we should show associativity with addition:
+\begin{align*}
+    (a, b) + [(c, d) + (e, f)] &= (a, b) + (c + e, d + f) \\
+    &= (a + c + e, b + d + f) \\
+    &= (a + c, b + d) + (e, f) \\
+    &= [(a, b) + (c, d)] + (e, f) \\
+\end{align*}
+If $0_R \in R$ and $0_S \in S$ and they are the identities, then we have the following:
+\begin{align*}
+    (a, b) + (0_R, 0_S) &= (a + 0_R, b + 0_S) \\
+    &= (a, b) \\
+    (0_R, 0_S) + (a, b) &= (0_R + a, 0_S + b) \\
+    &= (a, b)
+\end{align*}
+
+Now, we will show that addition is commutative. 
+\begin{align*}
+    (a,b) + (c,d) &= (a + c, b + d) \\
+    &= (c + a, d + b) \\
+    &= (c,d) + (a,b)
+\end{align*}
+Next, we will show that multiplication is closed.
+\begin{align*}
+    (a,b)(c, d) &= (ac, bd) \in T
+\end{align*}
+
+Next, we will show that multiplication is associative.
+\begin{align*}
+    (a,b)[(c,d)(e,f)] &= (a,b)(ce, df) \\
+    &= (a[ce], b[df]) \\
+    &= ([ac]e, [bd]f) \\
+    &= [(a,b)(c,d)](e,f)
+\end{align*}
+
+Now we just need to prove left and right distributivity of multiplication over addition.
+\begin{align*}
+    (a,b)[(c,d) + (e,f)] &= (a,b)(c + e, d + f) \\
+    &= (a[c + e], b[d + f]) \\
+    &= ([ac] + [ae], [bd] + [bf]) \\
+    &= (a,b)(e,f) + (c,d)(e,f)
+\end{align*}
+\begin{align*}
+    [(a,b) + (c,d)](e,f) &= (a + c, b + d)(e,f) \\
+    &= ([a + c]e, [b + d]f) \\
+    &= ([ae] + [ce], [bf] + [df]) \\
+    &= (a,b)(e,f) + (c,d)(e,f)
+\end{align*}
+
+\end{document}

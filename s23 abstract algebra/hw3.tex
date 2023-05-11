@@ -1,0 +1,134 @@
+\documentclass[12pt]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 3}
+
+\begin{document}
+
+\qs{34}{Find all the subgroups of $\ZZ_3 \times \ZZ_3$. Use this information to show that $\ZZ_3 \times \ZZ_3 \not \cong \ZZ_9$. }
+\sol The subgroups of $\ZZ_3 \times \ZZ_3$ are:
+\begin{itemize}
+    \item $\ZZ_3 \times \ZZ_3$
+    \item $\{ (0,0) \}$
+    \item $\{ (0,0), (1, 0), (2, 0)\}$
+    \item $\{ (0,0), (0, 1), (0, 2)\}$
+    \item $\{ (0,0), (1, 1), (2, 2)\}$
+    \item $\{ (0,0), (1, 2), (2, 1)\}$
+\end{itemize}
+
+The subgroups of $\ZZ_9$ are: 
+\begin{itemize}
+    \item $\ZZ_9$
+    \item $\{ 0 \}$
+    \item $\{ 0, 3, 6 \}$
+\end{itemize}
+
+\noindent Since these groups have different sets of subgroups, they are not isomorphic. In other words, $\ZZ_3 \times \ZZ_3 \not \cong \ZZ_9$.
+
+\qs{35}{Find all the subgroups of the symmetry group of an equilateral triangle.}
+\sol The subgroups of $D_3$ are:
+\begin{itemize}
+    \item $D_3$
+    \item $\{ e \}$
+    \item $\{e, f_A \}$
+    \item $\{e, f_B \}$
+    \item $\{e, f_C \}$
+    \item ${\{ e, \rho_{120}, \rho_{240} \}}$
+\end{itemize}
+
+\noindent The solutions to questions 34 and 35 somewhat demonstrate an important theorem, Lagrange's Theorem, which says that the order of the subgroups of $G$ should divide $|G|$. 
+
+\qs{41}{Prove that $$G = \{a + b\sqrt{2} : a,b \in \QQ \land a,b \neq 0 \}$$
+
+is a subgroup of $\RR^*$ under the group operation of multiplication. }
+\sol There are 4 things we have to check for: closed under the operation, identity, and inverse:
+
+\textbf{Closure}: If we have $a + b\sqrt{2} \in G$ and $c + d\sqrt{2} \in G$, then their product is $(ac + 2bd) + (ad + bc)\sqrt{2}$. We know that this is in $G$ because if $a,b,c,d \in \QQ$, then we know that $(ac+2bd),(ad+bc) \in \QQ$ too because of closure of rationals. Therefore $G$ is closed under the operation of multiplication.
+
+\textbf{Identity}: The identity for $G$ is 1. We know that 1 is in $G$ because $0,1 \in \QQ$ and if $a,b \in \QQ$, then $a + b\sqrt{2}$ is in $G$.
+
+\textbf{Inverse}: If $a + b\sqrt{2} \in G$, then $a - b\sqrt{2} \in G$ because if $a,b \in \QQ$, then $a - b\sqrt{2} \in \QQ$. So, we can calculate the inverse of $a+b\sqrt{2}$. 
+
+\begin{equation} 
+    \begin{split}
+        \frac{1}{a+b\sqrt{2}} & = \frac{1}{a+b\sqrt{2}} \cdot \frac{a-b\sqrt{2}}{a-b\sqrt{2}}\\
+        & = \frac{a-b\sqrt{2}}{a^2-2b^2}\\
+        & =\frac{a}{a^2-2b^2} - \frac{b}{a^2-2b^2}\sqrt{2}
+    \end{split}
+\end{equation}
+
+This is an element of $G$ because both quantities, $\frac{a}{a^2-2b^2}$ and $\frac{b}{a^2-2b^2}$ are in $\QQ$ if $a,b \in \QQ$. 
+
+From the above, we can conclude that $G < \RR^*$. $\qed$
+
+\qs{45}{Prove that the intersection of two subgroups of a group $G$ is also a subgroup of $G$.}
+\sol Let's call the two subgroups $H$ and $K$, so the intersection is $H \cap K$.
+
+\begin{enumerate}
+    \item \textbf{Closure}: If $a,b \in H \cap K$, then $a,b \in H$ and $a,b \in K$. So $ab \in H$ and $ab \in K$. Therefore $ab \in H \cap K$.
+    \item \textbf{Identity}: The identity of $G$ is the identity of $H$ and the identity of $K$, since subgroups contain the identity of their parent group. Since this identity is in $H$ and $K$, it is also in $H \cap K$.
+    \item \textbf{Inverse}: If $a \in H \cap K$, then $a \in H \Rightarrow a^{-1} \in H$ and $a \in K \Rightarrow a^{-1} \in K$. So $a^{-1} \in H \cap K$.
+\end{enumerate}
+
+From the above, we can conclude that $H \cap K$ is a subgroup of $G$. $\qed$
+
+\qs{46}{Prove or disprove: If $H$ and $K$ are subgroups of a group $G$, then $H \cup K$ is a subgroup of $G$.}
+\sol FSOC, assume $H \not\subset K$ and $K\not\subset H$ and that $H \cup K$ is a group. Since the sets don't contain themselves, there exists an element $h \in H$ and $k \in K$ such that $h \not\in K$ and $k \not\in H$. However, since we are assuming that $H \cup K$ is a group,  $hk \in H \cup K$. Therefore, either $hk \in H$ or $hk \in K$. 
+
+If $hk \in H$, then $h^{-1}(hk) = k \in H$, $\rightarrow \leftarrow$. A similar case can be made for $hk \in K$.  Therefore, $H \cup K$ is not always a subgroup of $G$. $\qed$
+
+\textbf{Addendum}: If $H \cong K$, then $H \cup K = H = K < G$.
+
+\qs{47}{Prove or disprove: If $H$ and $K$ are subgroups of a group $G$, then $HK = \{hk : h \in H \land k \in K \}$ is a subgroup of $G$. What if $G$ is abelian?}
+\sol Two cases: non-abelian and abelian.
+\begin{itemize}
+    \item \textbf{non-abelian}: If $G$ is not abelian, then $HK$ is not a subgroup of $G$. Let $h_1k_1, h_2k_2 \in HK$. Then $(h_1k_1)(h_2k_2) = h_1k_1h_2k_2$ is not guaranteed to be in $HK$. $\qed$
+    \item \textbf{abelian}: If $G$ is abelian, then $HK$ is a subgroup of $G$.
+    \begin{itemize}
+        \item \textbf{Closure}:  Let $h_1k_1, h_2k_2 \in HK$. Then $(h_1k_1)(h_2k_2) = h_1k_1h_2k_2 = h_1h_2k_1k_1 = (h_1h_2)(k_1k_2) \in HK$. This works because $H$ and $K$ are abelian since $G$ is abelian.
+        \item \textbf{Identity}: Since $e \in H$ and $e \in K$, $ee = e \in HK$.
+        \item \textbf{Inverse}: Choose any $h \in H$ and $k \in K$. Then say $h^{-1} = x \in H$ and $k^{-1} = y \in K$. Then $hk, xy \in HK$. $(hk)^{-1} = yx$, but since $G$ is abelian, $yx = xy$. Therefore, $hk^{-1} = xy \in HK$. Therefore, inverses exist in $HK$.
+    \end{itemize}
+    Therefore $HK$ is a subgroup of $G$ if $G$ is abelian. $\qed$
+\end{itemize}
+
+\qs{48}{Let $G$ be a group and $g \in G$. Show that $$Z(G) = \{ x \in G : gx = xg \text{ for all } g \in G\}$$ is a subgroup of $G$. This subgroup is called the \textbf{center} of $G$.}
+\sol 
+\begin{itemize}
+    \item \textbf{Closure}: If $x,y \in Z(G)$, then $\exists g \in G : (xy)g = x(yg) = x(gy) = (xg)y = (gx)y = g(xy) \in Z(G)$. Therefore, $Z(G)$ is closed. 
+    \item \textbf{Identity}: The identity of $G$, call it $e$, obviously satifies $eg = ge$ for all $g \in G$. Therefore, $e \in Z(G)$.
+    \item \textbf{Inverse}: If $x \in Z(G)$, then $\exists g \in G : gx = xg \forall g \in G \Rightarrow gx^{-1} = x^{-1}g \forall g \in G$. Therefore, $x^{-1} \in Z(G)$.
+\end{itemize}
+Therefore, $Z(G)$ is a subgroup of $G$. $\qed$
+
+\qs{53}{Let $H$ be a subgroup of $G$ and $$C(H) = \{g \in G : gh = hg \text{ for all } h \in H \}.$$ Prove that $C(H)$ is a subgroup of $G$. This group is called the \textbf{centralizer} of $H$ in $G$.}
+\sol
+\begin{itemize}
+    \item \textbf{Closure}: If $x,y \in C(H)$, then $\exists h \in H : (xy)h = x(yh) = x(hy) = (xh)y = (hx)y = h(xy) \in C(H)$. Therefore, $C(H)$ is closed. 
+    \item \textbf{Identity}: Have $e$ be the identity of $G$. Then $e \in H$ so we have $eh = he \forall h \in H$. Therefore, $e \in C(H)$.
+    \item \textbf{Inverse}: Let $c \in C(H) \Rightarrow ch = hc \forall h \in H$. If we pre and post multiply by $c^{-1}$, we get $c^{-1}chc^{-1} =c^{-1}hcc^{-1} = hc^{-1} = c^{-1}h \forall h \in H$. Therefore, $c^{-1} \in C(H)$.
+\end{itemize}
+
+As such, $C(H)$ is a subgroup of $G$. $\qed$
+
+\qs{54}{Let $H$ be a subgroup of $G$. If $g \in G$, show that $gHg^{-1} = \{ ghg^{-1} : h \in H\}$ is also a subgroup of $G$. }
+\sol
+\begin{enumerate}
+    \item \textbf{Closure}: If we let $h_1, h_2 \in H$, then $gh_1g^{-1}gh_2g^{-1} = gh_1h_2g^{-1} \in gHg^{-1}$, demonstrating closure.
+    \item \textbf{Identity}: Since subgroups have their parent group's identity, it is in $H$. As such, $geg^{-1} = e \in gHg^{-1}$.
+    \item \textbf{Inverse}: If $h \in H$, then we can use the fact that $H$ is a subgroup and contains inverses to show that $ghg^{-1}$ has an inverse. $(ghg^{-1})^{-1} = (g^{-1^{-1}})h^{-1}g^{1} = gh^{1}g^{-1} \in gHg^{-1}$. 
+\end{enumerate}
+
+Therefore, $gHg^{-1}$ is a subgroup of $G$. $\qed$
+
+\end{document}

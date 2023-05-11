@@ -1,0 +1,114 @@
+\documentclass[12pt]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 6}
+
+\begin{document}
+
+\qs{2}{Prove that $\CC^*$ is isomorphic to the subgroup of $GL_2(\RR)$ consisting of matrices of the form $$\begin{pmatrix}a & b \\ -b & a\end{pmatrix}.$$}
+\sol
+
+We define our isomorphism as $\phi(z) = \phi(a+bi) = \begin{pmatrix}
+a & b \\
+-b & a
+\end{pmatrix}$. 
+
+We start by showing that this function is one-to-one. So, if we have two complex numbers, $a+bi, c+di$, then we have to show that $\phi(a+bi) = \phi(c+di)$ implies $a+bi = c+di$. We have that $\phi(a+bi) = \begin{pmatrix}
+    a & b \\
+    -b & a
+\end{pmatrix}$ and that $\phi(c+di) = \begin{pmatrix}
+    c & d \\
+    -d & c
+\end{pmatrix}$. Since matrices are equal if and only if their entries are equal, we have that $a = c$ from the entries $1, 1$ and $2, 2$, and we have that $b = d$ from the entires $1, 2$ and $2, 1$. Therefore, we have that $a+bi = c+di$ and that $\phi$ is one-to-one. 
+
+This function is clearly onto as well. For any $\begin{pmatrix}
+    a & b \\
+    -b & a
+\end{pmatrix}$, the corresponding value in $\CC^*$ is $a+bi$.
+
+Therefore, since $\phi$ is one-to-one and onto, it is an isomorphism. $\qed$
+
+\qs{13}{Let $\omega = \cis(2 \pi /n)$ be the primitive $n$th root of unity. Prove that matrices \begin{equation*}
+    A =
+    \begin{pmatrix}
+    \omega & 0 \\
+    0 & \omega^{-1}
+    \end{pmatrix}
+    \quad \text{and} \quad
+    B =
+    \begin{pmatrix}
+    0 & 1 \\
+    1 & 0
+    \end{pmatrix}
+    \end{equation*}
+generate a multiplicative group isomorphic to $D_n$. }
+\sol We start by realizing that $A^n = B^2 = I_2$. We also see that $(BA)^2 =  \left(\begin{pmatrix}
+        0 & 1 \\
+        1 & 0
+        \end{pmatrix}\begin{pmatrix}
+            \omega & 0 \\
+            0 & \omega^{-1}
+            \end{pmatrix}\right)^2 = I_2$. 
+
+Therefore, we can create the group presentation $ \langle A, B | A^n = B^2 = (BA)^2= I_2 \rangle$, which is a definition for $D_n$. $\qed$ 
+
+\qs{18}{Prove that the subgroup of $\QQ^*$ consisting of elements of the form $2^m3^n$ for $m,n \in \ZZ$ is an internal direct product isomorphic to $\ZZ \times \ZZ$.}
+\sol Let's first define our groups:
+
+$$H = \{2^m : m \in \ZZ\}$$
+$$K = \{3^n : n \in \ZZ\}$$
+$$S = \{2^m3^n : m, n \in \ZZ\} = HK$$
+
+The line above shows one step of showing that $S$ is the internal direct product of $H$ and $K$. The next step is to show that $2^m \neq 3^n$ for any $m, n \neq 0$. This is true because all numbers have a unique prime factorization by the fundamental theorem of arithmetic and therefore $2^m \neq 3^n$ for any $m, n \neq 0$ since they have different prime factorization. However, when $m = n = 0$, we have that $2^0 = 1 = 3^0$, which is the identity. Therefore, $H \cap K = \{1\} = \{e\}$.
+
+To show commutativity, we have that $2^m3^n = 3^n2^m$ for any $m, n \in \ZZ$ because integers are abelian. 
+
+Therefore, $S$ is an internal direct product of $H$ and $K$.
+
+Now for isomorphism to $\ZZ \times \ZZ$. We start by defining our function as $\phi(2^m3^n) = (m, n)$. We have to show that this function is one-to-one and onto. 
+
+To show that this is one-to-one, assume we have $\phi(2^{m_1}3^{n_1}) = \phi(2^{m_2}3^{n_2})$. We have that $(m_1, n_1) = (m_2, n_2)$, which means $m_1 = m_2$ and $n_1 = n_2$. Therefore, we have that $2^{m_1}3^{n_1} = 2^{m_2}3^{n_2}$, and as such, this function is one-to-one.
+
+$\phi$ is onto iff for all $(m, n)$, there exists a $2^m3^n$ such that $\phi(2^m3^n) = (m, n)$. By construction of $\phi$, it is clearly onto. 
+
+As such, $S \cong \ZZ \times \ZZ$. $\qed$
+
+\qs{23}{Prove or disprove the following assertion. Let $G, H,$ and  $K$ be groups. If $ G \times K \cong H \times K$ then $G \cong H$.}
+\sol Counterexample: $K = \displaystyle \prod_{i=0}^\infty \ZZ$, $G = \ZZ$, $H = \{e\}$. $G \times K = K = H \times K$, but $G \not\cong H$. $\qed$
+
+\qs{29}{Show that $S_n$ is isomorphic to a subgroup of $A_{n+2}$. }
+\sol Define $\tau = (n+1 \; n+2) \in S_{n+2}$. Then, we define our $\phi$ as $\phi : S_n \to A_{n+2}$ as $\phi(\sigma) = \sigma \tau$ if $n$ is odd and $\phi(\sigma) = \sigma$ if $n$ is even. This is obviously injective and satisfies $\phi(\sigma\tau) = \phi(\sigma_1)\phi(\sigma_2)$ for all $\sigma_1, \sigma_2 \in S_n$. Now we use the fact that $\tau$ commutes with all of $S_n$ and that $\tau^2 = e$ to show that 
+
+$$\phi(\sigma_1)\phi(\sigma_2) =  \begin{cases} 
+    \sigma_1\sigma_2 & \text{if both are even or both are odd} \\
+    \sigma_1\sigma_2\tau & \text{if only one is even}
+ \end{cases}
+$$
+
+Showing this tells us that $\phi$ is an injective homomorphism. Therefore, $\phi$ is an isomorphism from $S_n$ with an image that is a subgroup of $A_{n+2}$. $\qed$
+
+\qs{36}{Prove that $A \mapsto B^{-1}AB$ is an automorphism of $SL_2(\RR)$ for all $B$ in $GL_2(\RR)$.}
+\sol We define our function $\phi : SL_2(\RR) \to SL_2(\RR)$ as $\phi(A) = B^{-1}AB$. 
+
+$$\phi(AC) = B^{-1}ACB = B^{-1}AICB = B^{-1}ABB^{-1}CB = (B^{-1}AB)(B^{-1}CB) = \phi(A)\phi(C)$$
+So $\phi$ is a homomorphism.
+
+To show that $\phi$ is one-to-one, we say that if $\phi(A) = \phi(C)$, then:
+
+$$B^{-1}AB = B^{-1}CB \Longleftrightarrow B(B^{-1}AB)B^{-1} = B(B^{-1}CB)B^{-1} \Longleftrightarrow A = C,$$ meaning $\phi$ is one-to-one.
+
+Now see that
+$$\det(\phi(A))=\det(B^{-1}AB)=\det(B^{-1})\det(A)\det(B)=\det(B)\det(A)\frac{1}{\det(B)}=\det(A)= 1,$$
+so $\phi$ is onto because every $\phi(A)$ maps to an $A$ in $SL_2(\RR)$.
+
+Therefore, since $\phi$ is a bijective homomorphism from a group to itself, it is an automorphism. $\qed$
+\end{document}

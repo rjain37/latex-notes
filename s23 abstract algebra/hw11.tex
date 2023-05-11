@@ -1,0 +1,101 @@
+\documentclass[12pt]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Abstract Algebra \\
+Assignment 11}
+
+\begin{document}
+
+
+\qs{5}{For each of the following rings $R$ with ideal $I$, give an addition table and a multiplication table for $R/I$.
+\begin{enumerate}[label=\alph*.]
+    \item $R = \ZZ$ and $I = 6\ZZ$
+    \item $R = \ZZ_{12}$ and $I = \{0, 3, 6, 9\}$
+\end{enumerate}}
+\sol
+\begin{enumerate}[label=\alph*.]
+    \item \begin{tabular}{l | c c c c c c}
+        $+$ & 0 & 1 & 2 & 3 & 4 & 5 \\
+        \hline
+        0 & 0 & 1 & 2 & 3 & 4 & 5 \\
+        1 & 1 & 2 & 3 & 4 & 5 & 0 \\
+        2 & 2 & 3 & 4 & 5 & 0 & 1 \\
+        3 & 3 & 4 & 5 & 0 & 1 & 2 \\
+        4 & 4 & 5 & 0 & 1 & 2 & 3 \\
+        5 & 5 & 0 & 1 & 2 & 3 & 4
+    \end{tabular}
+    \quad
+    \begin{tabular}{l | c c c c c c}
+        $*$ & 0 & 1 & 2 & 3 & 4 & 5 \\
+        \hline
+        0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        1 & 0 & 1 & 2 & 3 & 4 & 5\\
+        2 & 0 & 2 & 4 & 0 & 2 & 4\\
+        3 & 0 & 3 & 0 & 3 & 0 & 3\\
+        4 & 0 & 4 & 2 & 0 & 4 & 2\\
+        5 & 0 & 5 & 4 & 3 & 2 & 1
+    \end{tabular}
+    \item     \begin{tabular}{l | c c c }
+        $+$ & $\widetilde{0}$ & $\widetilde{1}$ & $\widetilde{2}$ \\
+        \hline
+       $\widetilde{0}$ & $\widetilde{0}$ & $\widetilde{1}$ &$ \widetilde{2}$ \\
+       $\widetilde{1}$ & $\widetilde{1}$ & $\widetilde{2}$ & $\widetilde{0}$ \\
+       $\widetilde{2}$ & $\widetilde{2}$ & $\widetilde{0}$ & $\widetilde{1}$
+    \end{tabular}
+    \quad
+    \begin{tabular}{l | c c c }
+        $*$ & $\widetilde{0}$ & $\widetilde{1}$ & $\widetilde{2}$ \\
+        \hline
+       $\widetilde{0}$ & $\widetilde{0}$ & $\widetilde{0}$ & $\widetilde{0}$ \\
+      $ \widetilde{1}$ & $\widetilde{0}$ & $\widetilde{1}$ & $\widetilde{2} $\\
+      $ \widetilde{2}$ & $\widetilde{0}$ & $\widetilde{2}$ & $\widetilde{1}$
+    \end{tabular}
+\end{enumerate}
+
+\qs{6}{Find all the homomorphisms $\phi : \ZZ/6\ZZ \to \ZZ/15\ZZ$.}
+\sol Let $\phi : \ZZ/6\ZZ \to \ZZ / 15\ZZ$ be a ring homomorphism. We know that the image of $\phi$ has to be a subgroup of $\ZZ_{15}$. This gives us important properties of the image such as being an additive group and knowing the orders of the elements. The only subgroups that the image could be are the trivial subgroup and $\{0, 5, 10\}$. The multiples of 3 wouldn't work because of the order of the group as well as the elements and the whole group wouldn't work because of the order. 
+
+$\phi(a) = 0$ works for mapping $\ZZ/6\ZZ$ to $\{0\}$. For $\ZZ/6\ZZ$ to $\{0, 5, 10\}$, we have $\phi(a) = 0$ for $a = 0 \pmod{5}$. From there we can either have $\phi(a) = 5$ or $\phi(a) = 10$ for $a = 1 \pmod{5}$. If $a = 2 \pmod{5}$, then opposite must be true. So, there are three possibilities for $\phi$.
+
+
+
+\qs{7}{Prove that $\RR$ is not isomorphic to $\CC$.}
+\sol Let $\phi : \CC \to \RR$ be an isomorphism. Then we have $\phi(1) = 1$ and that $\phi(-1) = -1$. 
+
+An issue arrises when we consider $\phi(i)$. If we let $\phi(i) = a$, then we have that $\phi(i^2) = \phi(-1) = -1$. However, this would also mean that $\phi(i^2) = a^2 \neq -1$. As such, it is impossible to have an isomorphism between $\RR$ and $\CC$, meaning that they are not isomorphic to each other. $\qed$
+
+
+\qs{8}{Prove or disprove: The ring ${\mathbb Q}( \sqrt{2}\, ) = \{ a + b \sqrt{2} : a, b \in {\mathbb Q} \}$ is isomorphic to the ring ${\mathbb Q}( \sqrt{3}\, ) = \{a + b \sqrt{3} : a, b \in {\mathbb Q} \}\text{.}$}
+\sol We must first recognize that if we have $\phi : R \to S$, then $\phi(1_R) = 1_S$. This is a fact we proved for homomorphisms earlier in the semester. This also implies that $\phi(2) = \phi(1+1) = \phi(1) + \phi(1) = 2$. This can be extended to say that for any rational $a = a + \sqrt{2}$, we have that $\phi(a) = a$. 
+
+Let us have that $\phi : \QQ(\sqrt{2}) \to \QQ(\sqrt{3})$. If $\phi$ were an isomorphism, this would imply that $\phi(\sqrt{2}) = x$ for some $x = a+b\sqrt{3}$. This would then imply that $\phi(2) = \phi(\sqrt{2}\sqrt{2}) = \phi(\sqrt{2})\phi(\sqrt{2}) = x\cdot x = (a+b\sqrt{3})(a+b\sqrt{3}) = 2$. 
+
+If $(a+b\sqrt{3})^2 = 2$, then we can expand to see that $(a^2+3b^2) + (2ab)\sqrt{3}$. This is an issue because $(a^2+3b^2) \in \QQ$ but $(2ab)\sqrt{3} \not\in \QQ$ unless $a$ or $b$ is 0. 
+
+But if $a=0$, then $3b^2 = 2$ and therefore $b \not\in\QQ$. If $b = 0$, then $a^2 = 2$ and therefore $a \not\in\QQ$. As such, these two rings are not isomorphic to each other. $\qed$
+
+\qs{25}{Let $\{ I_{\alpha} \}_{\alpha \in A}$ be a collection of ideals in a ring $R$. Prove that $\bigcap_{\alpha \in A} I_{\alpha}$ is also an ideal in $R$. Give an example to show that if $I_1$ and $I_2$ are ideals in $R$, then $I_1 \cup I_2$ may not be an ideal.}
+\sol Let $I = \{I_\alpha\}_{\alpha \in A}$. $I$ isn't empty because 0 is in every ideal. If we have that $x,y \in I$, then we have $x,y \in I_\alpha$ for a fixed $\alpha$. Then, $rx -y \in I_\alpha$ because it is an ideal. But this is true for all $\alpha$, so $rx -y \in I$. It is not hard to see that this makes $I$ an ideal. 
+
+Let's have $R = \ZZ$, $I_1 = \{0, 1, 2, 3\}$, and $I_2 = \{0, 1, 2, 3, 4\}$. Then we may have $3+4= 7 \not\in I_1 \cup I_2$, so therefore $I_1 \cup I_2$ is not an ideal.
+
+\qs{26}{Let $R$ be an integral domain. Show that if the only ideals in $R$ are $\{0\}$ and $R$ itself, $R$ must be a field.}
+\sol It's enough to show that every nonzero $a \in R$ has an inverse. Let $a \neq 0$ and consider the ideal $\langle a\rangle$. Since $a\neq 0$, this ideal is nonzero and is all of $R$ by assumption. As such, it contains 1 and by definition of principal ideal, there is some $b \in R$ with $ab = 1$, proving that $a$ has an inverse. $\qed$
+
+\qs{27}{Let $R$ be a commutative ring. An element $a$ in $R$ is nilpotent if $a^n = 0$ for some positive integer $n$. Show that the set of all nilpotent elements forms an ideal in $R$. }
+\sol Call the set of all nilpotent elements $N$. We know that $N$ isn't empty because $0 \in N$ trivially. If we have that $a \in N$ and that $a^n = 0$, then $\forall r \in R$, we have that $(ar)^n = a^nr^n = 0$, so $ra \in N$ as well. Now suppose we have $x,y \in N$ such that $x^m=0$ and $y^n = 0$. Now consider the value $x^jy^{m+n-j}$. If $j \geq m$, then $x^j = 0$ and therefore $x^jy^{m+n-j} = 0$. If $j < m$, then $y^{m+n-j} = 0$ and therefore $x^jy^{m+n-j} = 0$. So by binomial theorem, it follows that $(x+y)^{m+n} = 0$ and that $x+y \in N$. As such, $N$ is an ideal. 
+
+\qs{37}{An element $x$ in a ring is called an idempotent if $x^2 = x$. Prove that the only idempotents in an integral domain are 0 and 1. Find a ring with a idempotent $x$ not equal to 0 or 1.}
+\sol $x^2 = x \Rightarrow x(x - 1) = 0$. Since an integral domain has no zero divisors, $x =0$ or $x= 1$. $\qed$. 
+
+$3$ is an idempotent in $\ZZ_6$ that isn't 0 or 1. 
+
+\end{document}
