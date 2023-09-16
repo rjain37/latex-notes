@@ -1,0 +1,29 @@
+\documentclass{report}
+
+\input{../preamble}
+\input{../macros}
+\input{../letterfonts}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Putnam Seminar\\
+Homework 1}
+
+\begin{document}
+
+\qs{1}{Find a polynomial with integer coefficients that has the root $\sqrt{2} + \sqrt[3]{3}$.}
+\sol We can easily construct a polynomial that has the desired zero. An example would be $(x - (\sqrt{2} + \sqrt[3]{3}))$, but obviously this doesn't have integer coefficients. We can try something different like $(x - \sqrt{2})^3 - 3$, which removes the $\sqrt{2}$ inside the parentheses and cubes the cuberoot then subtracts it. This seems more promising, so we can try to multiply by its conjugate to maybe get integer coefficients. Turns out:
+$$((x - \sqrt{2})^3 - 3)((x + \sqrt{2})^3 - 3) = x^6 -6x^4 -6x^3+12x^2-36x+1.$$
+
+So, the problem is done.
+
+\qs{3}{Let $a_1, a_2, \ldots, a_n$ be positive real numbers. Show that $P(x) = x^n - a_1x^{n-1} - a_2x^{n-2} - \cdots - a^n$ has a unique positive zero.}
+\sol By Descartes's Rule of Signs, there is exactly $1$ positive zero. 	
+
+
+
+\end{document}
