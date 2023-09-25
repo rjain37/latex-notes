@@ -14,12 +14,12 @@ Putnam Seminar\\
 Homework 3}
 
 \begin{document}
-
-\qs{1}{}
-\sol 
+sorry i got lazy
+\qs{2}{Let $f(1) = 3$ and $f(n+1) = 3^{f(n)}$. Find the last digit of $f(2012)$.}
+\sol We claim that $3$ raised to any odd number is equal to $1 \pmod{4}$. This is very easy to show with modular arithmetic. As such, we take the exponent $\pmod{4}$ to find the last digit. We know that the exponent has to end in a $7$ and that it is equal to $3 \pmod{4}$, which means that the exponent $\pmod{4}$ is $3$. Thus, we have that $f(2012) \equiv 3^3 \equiv 27 \equiv 7 \pmod{10}$.
 
 \qs{3}{Let $f(1) = 3$ and $f(n+1) = 3^{f(n)}$. Find the last two digits of $f(2012)$.}
-\sol We claim that $3^{20} = 1 \pmod{100}$, which is trivially shown by Fermat's or Euler's. As such, we take the exponent $\pmod{20}$ to find the last two digits in this cyclic 
+\sol We claim that $3^{20} = 1 \pmod{100}$, which is trivially shown by Fermat's or Euler's. As such, we take the exponent $\pmod{20}$ to find the last two digits. We know that the exponent has to end in a $7$ and that it is equal to $3 \pmod{4}$, which means that the exponent $\pmod{20}$ is $7$. Thus, we have that $f(2012) \equiv 3^7 \equiv 2187 \equiv 87 \pmod{100}$.
 
 
 
