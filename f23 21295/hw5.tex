@@ -1,0 +1,33 @@
+\documentclass{report}
+
+\input{../preamble}
+\input{../macros}
+\input{../letterfonts}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Putnam Seminar\\
+Homework 5}
+
+\begin{document}
+\qs{1}{Let $f: \RR \to \RR$ be a continuous function such that $f(x) = f(x^2)$. Prove that $f$ is constant.}
+\sol We will start by contradiction. That is, assume $f$ is non constant and that $\exists a, b > 1: f(a) \neq f(b)$. Then take a very large amount of square roots of $a$, which tends to 1. Then by definition of the limit, the limit of $f(x)$ as $x$ tends to 1 is $f(a)$. But by definition of continuity, it's also $f(1)$. We can apply this to any positive $a \geq 1$ 
+
+If $0 \leq a < 1$, then the case is the same except everything tends to 0.
+
+Negatives follow trivially. $\qed$
+
+
+\qs{11}{Prove that there is no function $f$ from the set of non negative integers to itself such that $f(f(n)) = n + 1987$ for every $n$.}
+\sol First, we analyze the fact that $f$ is injective. This is because, if $f(m) = f(n)$, then $f(f(n)) = f(f(m)) = n + 1987 = m + 1987 \Longrightarrow n = m$. 
+
+Consider the set of natural numbers that are not in the image of $f$. Namely, $A = \NN \setminus f(\NN)$. Now consider $f(A)$. It is not hard to see that $f(A) = f(\NN) \setminus f(f(\NN))$. This is because $f(\NN) \in f(A)$ and if any value $x$ is in $f(\NN)$, then it can't be in $f(f(\NN))$ because of injectivity.
+
+Since $A$ subtracts $f(\NN)$, $A \cap f(A) = \emptyset$. On the other hand, $A \cup f(A) = \NN \setminus f(f(\NN))$, which is the set of integers from 0 to 1986 inclusive. But $f$ is injective so it must have the same number of elements, which doesn't work because the previous union has an odd number of elements. $\qed$
+
+
+\end{document}

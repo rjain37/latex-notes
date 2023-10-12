@@ -1,0 +1,31 @@
+\documentclass{report}
+
+\input{../preamble}
+\input{../macros}
+\input{../letterfonts}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{\bf Rohan Jain}
+\cfoot{}
+\rhead{\bf
+Putnam Seminar\\
+Homework 6}
+
+\begin{document}
+\qs{1}{ Several gas stations are located along a circular road. Among them, there is just enough gas for one
+car to complete a single trip around the circle. Is it always true that there is always a place where you
+can start, so that your car can make it all the way around once?}
+\sol This can be done with induction on the number of gas stations. If we say that we have one gas station, then a necessary condition is that the gas station has enough gas to make it around the circle. This is true, so we can start at the gas station and make it around the circle. Now, we assume that this is true for $n$ gas stations. We then add another gas station. 
+
+Consider a circular arrangement of $n+1$ gas stations. The total amount of gas in the tanks is sufficient to travel around the track, so at least one of the cans has enough gas to make it to the next station. Otherwise, the total distance covered would be strictly less than the distance of the circle's circumference. 
+
+Let's call one of these stations where you can reach the next can $A$ and call the station after it $B$. If we somehow added all the gas at $B$ into $A$, then we have a problem with $n$ gas stations in which we know the inductive hypothesis is true. Analyzing this gives us proof of the inductive step. $\qed$
+
+
+\qs{4}{ We have $2^m$ sheets of paper, with the number 1 written on each of them. We perform the following operation. In every step we choose two distinct sheets; if the numbers on the two sheets are $a$ and $b$, then we erase these numbers and write the number $a + b$ on both sheets. Prove that after $m2^{m-1}$ steps, the sum of the numbers on all the sheets is at least $4^m$.}
+\sol Consider the product of all $2^m$ sheets of paper. Since $(a+b) \geq 4ab$, we see that each step increase the product by at least 4. So, the end product is at least $4^{m\cdot 2^{m-1}}$. By AM-GM, the must then at least be $2^m \sqrt[2^m]{4^{m\cdot 2^{m-1}}} = 4^m$. $\qed$
+
+
+\end{document}
