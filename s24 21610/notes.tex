@@ -1,0 +1,163 @@
+\documentclass{report}
+
+\input{../preamble}
+\input{../macros}
+\input{../letterfonts}
+\usepackage{fix-cm}
+\usepackage[T1]{fontenc}
+
+\title{\Huge{21-610}\\Algebra I}
+\author{\huge{Rohan Jain}}
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+
+\pagebreak
+
+\chapter{}
+\section{1/17 - Group Actions}
+
+\dfn{Action}{With a group $G$ and set $X$, an \emph{action} of $G$ on $X$ is a HM from $G$ to $\Sigma_X$ (the group of permutations of $X$).}
+
+\dfn{$g \cdot x$}{If $\phi : G \to \Sigma_X$ is an action, then for $g \in G$ and $x \in X$, we write $g \cdot x$ for $\phi(g)(x)$.}
+\nt{People will eventually lose the $\cdot$. So, $g \cdot x$ will be written as $gx$.}
+\ex{actions}{\begin{itemize}
+    \item $1 \cdot x = x$ $(*)$
+    \item $g \cdot (h \cdot x) = \phi(g)(\phi(h)(x)) = (\phi(g) \circ \phi(h))(x) = \phi(gh)(x) = (gh) \cdot x$ $(**)$
+\end{itemize}}
+If $\cdot : G \times X \to X$ satisfies $(*)\cdot \& (**)$, then there's unique action $\phi : G \to \Sigma_X$ such that $g \cdot x = \phi(g)(x)$.
+\begin{proof}
+    Define $\phi: G \to ^X X$ by $\phi(g)(x) = g \cdot x$. 
+
+    $\phi(g^{-1})$ is 2-sided inverse of $\phi(g)$, $\phi(g) \in \Sigma_X$. So $\phi$ is an HM by $(**)$.
+\end{proof}
+
+\dfn{Orbit Equivalence Relation}{Let $G$ act on $X$. The \emph{orbit equivalence relation} on $X$ is induced by action: $x \sim y$ if $\exists g \in G$ such that $g \cdot x = y$.}
+\dfn{Orbits}{The equivalence classes of this relation are called \emph{orbits}. They are defined as \[O_x = \{y : x \sim y\} = \{y : \exists g, g\cdot x = y\}\]}
+
+\dfn{Stabilizer}{Let $G$ act on $X$. The \emph{stabilizer} of $x \in X$ is the subgroup of $G$ defined as \[G_x = \{g \in G : g \cdot x = x\}\]}
+\newpage
+Note that $G_x \leq G$.
+
+\begin{proof}
+    We need to show that $G_x$ is a subgroup of $G$.
+    \begin{itemize}
+        \item $1 \cdot x = x$, so $1 \in G_x$.
+        \item $g \in G_x \implies g \cdot x = x \implies g^{-1} \cdot x = x \implies g^{-1} \in G_x$.
+        \item $g,h \in G_x$. $(gh) \cdot x = g \cdot (h \cdot x) = g \cdot x = x$, so $gh \in G_x$.
+    \end{itemize}
+\end{proof}
+A calculation:
+\begin{align*}
+    g_1 \cdot x = g_2 \cdot x &\iff g_2^{-1} \cdot (g_1 \cdot x) = x \\
+    &\iff (g_2^{-1}g_1) \cdot x = x \\
+    &\iff g_2^{-1}g_1 \in G_x \\
+    &\iff g_1 \in g_2G_x \\
+    &\iff g_1G_x = g_2G_x
+\end{align*}
+This gives a bijection between $O_x$ and set of left cosets of $G_x$. So, we have the orbit-stabilizer theorem:
+\thm{Orbit-Stabilizer Theorem}{Let $G$ act on $X$. Then for all $x \in X$, $|O_x| = [G : G_x]$.}
+\dfn{Fixed Point}{Let $G$ act on $X$. A \emph{fixed point} of the action is an $x \in X$ such that $g \cdot x = x$ for all $g \in G$. That is, $G_x = G$.}
+\dfn{Fixed-Point Set}{Let $G$ act on $X$. Choose a $g \in G$. The \emph{fixed-point set} of $g$ is the set of all $x \in X$ such that $g \cdot x = x$ and is denoted $X_g$.}
+\section{1/19 - Group Actions}
+\ex{Automorphism Groups}{$$\Aut(G) = \{f : G \to G : f \text{ is an isomorphism}\}$$
+$\phi \in \Sigma_G$, $\phi(ab) = \phi(a)\phi(b)$. Recall conjugate of $h$ by $g$ is $h^g = ghg^{-1}$.
+
+Fact 1: For any $g \in G$, $h \mapsto h^g$ is an automorphism of $G$.
+
+Fact 2: If $\phi : G \to \Aut(G)$, $\phi : g \mapsto (h \mapsto h^g)$, then $\phi$ is an HM for $G$ to $\Aut(G)$.
+
+$G$ acts on $G$ by automorphisms. $g \cdot h = h^g = ghg^{-1}$.
+
+In this setting:
+\begin{enumerate}
+    \item Orbit equivalence relation is conjugacy.
+    \item Orbits are conjugacy classes.
+    \item For $h \in G$, the stabilizer of $h$ for conjugation action $= \{g : h^g = g\}$. \begin{align*}
+        h^g = h &\iff ghg^{-1} = h \\
+        &\iff gh = hg \\
+        &\iff g \in C_G(h)
+    \end{align*}
+\end{enumerate}
+}
+
+\dfn{Centralizer}{Let $G$ act on $X$. The \emph{centralizer} of $x \in X$ is the subgroup of $G$ defined as \[C_G(x) = \{g \in G : g \cdot x = x \cdot g\}\]}
+
+\thm{Orbit-Stablizer Equation for conjugation action}{$$|\text{conj class of }h| = [G : C_G(h)]$$}
+$$|G| = \sum_{C \text{ conj. class} }|C|$$
+So, if $C = $ class of $h$, $|C| = [G : C_G(h)]$.
+
+Recall the definition of a fixed-point. So, for $G$ acting on $G$ by conjugation, $X_g = C_G(g)$. That is,
+\begin{align*}
+    h \text{ fixed point} \iff h^g = h \iff hg = gh \tag{for all $g$}
+\end{align*}
+\dfn{Center}{The \emph{center} of $G$ is $Z(G) = \{g \in G : gh = hg \text{ for all } h \in G\}$. In fact, $Z(G)$ is normal in $G$. That is, $Z(G) \trianglelefteq G$.}
+\thm{}{Let $p$ be prime. Let $G$ be a group of order $p^n$. Then $Z(G) \neq 1$.}
+\begin{proof}
+    Let $G$ act on $G$ by conjugation. $G$ is partitioned into orbits (i.e. conjugacy classes). 
+
+    For any $h$, we know that the size of the class of $h$ is $[G : C_G(h)]= \dfrac{p^n}{|C_G(h)|}$. Each orbit has size $1$ or a power of $p$. So, $|C_G(h)|$ is a power of $p$.
+
+    Note in any action of $G$ onto $X$, $x$ being a fixed point implies $O_x = \{x\}$. So, $|O_x| = 1$.
+
+    So, $|G| = A + B$ where $A$ is the number of orbits of size 1 and $B = \sum |C|$ where $C$ is a conjugacy class of size $p^n$ for $n > 0$. 
+
+    So, $A = p^n - B$. So $p | A$. As $Z(G) \neq \emptyset$, $|Z(G)| > 0, p | |Z(G)|$. So, $|Z(G)| \geq p$, which is at least 2, so $Z(G) \neq 1$.
+\end{proof}
+\thm{Cauchy's Theorem}{Let $G$ be a finite group. If $p$ is a prime dividing $|G|$, then $G$ has an element or subgroup of order $p$.}
+
+Facts to remember from undergraduate group theory:
+\begin{itemize}
+    \item Let $N \trianglelefteq G$. Then subgroups of $G/N$ are in bijection with $\{H : N \leq H \leq G\}$. In fact $H \mapsto H/N$ is a bijection.
+    \item Normal subgroups of $G/N$ are uniquely of the form $H/N$ where $H \trianglelefteq G$ and $N \leq H$.
+    \item $H/N \trianglelefteq G/N$ , $\frac{G/N}{H/N} \cong G/H$.
+\end{itemize}
+\newpage
+\section{1/22 - Using Group Actions to Prove Theorems}
+Now we prove Cauchy's Theorem:
+\begin{proof}
+    Let $X = \{ (g_1, \ldots, g_p) \in G^p : g_1 \cdots g_p = 1\}$. Some remarks:
+    \begin{itemize}
+        \item $(g_1, \ldots, g_p) \in X \iff (g_1\ldots g_{p-1})g_p = 1$. So, $g_p = (g_1\ldots g_{p-1})^{-1}$ and $(g_p, g_1, \ldots, g_{p-1}) \in X$. So, $|X| = |G|^{p-1}$.
+        \item $X \neq \emptyset$ as $(1, \ldots, 1) \in X$.
+    \end{itemize}
+    So now it's easy to define an action of $C_p$(cyclic group of order $p$) on $X$. Explicitly, if $C_p = \langle a \rangle>$, then $a \cdot (g_1, \ldots, g_p) = (g_2, \ldots, g_p, g_1)$. 
+
+    Now we analyze the fixed-points. $(g_1, \ldots, g_p)$ if and only if all the $g_i$ are equal. So, fixed points in the action of $C_p$ on $X$ are $(g, \ldots, g) \in X$ where $g^p = 1$. 
+
+    As $p \mid |G|$, $p \mid |X| = |G|^{p-1}$. As $p$ is prime, $|C_p| = p$. So all orbits have size 1 or $p$. $X$ is partitioned into orbits, say $$|X| = C + D_p$$
+    So $p | C$ where $C$ is the number of fixed-points for this action. As $(1, \ldots, 1)$ is a fixed-point, $C>0$, so $C \geq p > 1$. So, there is a fixed-point $(g, \ldots, g) \in X$ where $g^p = 1$. So, $g$ has order $p$.
+\end{proof}
+\dfn{$\Syl_p(G)$}{$\Syl_p(G) = \{H : H \leq G, |H| = p^k \text{ for some } k \geq 1 \text{ for largest } k\}$}
+\nt{If $p \nmid |G|$, then $\Syl_p(G) = \{1\}$.}
+\thm{Sylow's Theorem}{Let $G$ be a finite group. Let $p$ be a prime dividing $|G|$. \begin{enumerate}
+    \item If $H \leq G$ and $|H|$ is a power of $p$, there is $K \in \Syl_p(G)$ such that $H \leq K$.
+    \item If $K_1, K_2 \in \Syl_p(G)$, then $K_1$ and $K_2$ are conjugate.
+    \item $|\Syl_p(G)| \equiv 1 \pmod{p}$ and divides $|G|$.
+\end{enumerate}}
+\noindent Notes before proof:
+\begin{itemize}
+    \item Let $G$ be a group. $\alpha \in \Aut(G), H\leq G$. Then $\alpha [H] = \{\alpha(h) : h \in H\}$ is a subgroup of $G$  and $\alpha[H] \cong H$. $\alpha$ is a bijection from $H$ to $\alpha[H]$. 
+    \item In particular, for $g \in G$, if $\alpha$ is ``conjugation by $g$'', then $\alpha[H] = gHg^{-1}$ or $H$ goes to $H^g$. We can check: $G$ acts on $\{H : H \leq G\}$. $g\cdot H = H^g = gHg^{-1}$.
+    \item $H$ is a fixed point of this action if and only if $H^g = H$ for all $g \in G$. That is, $H \trianglelefteq G$.
+    \item For any $H$, stabilizer of $H$ for this action is $N_G(H) = \{g \in G : gHg^{-1} = H\}$.
+\end{itemize}
+\dfn{Normalizer}{Let $H \leq G$. The \emph{normalizer} of $H$ in $G$ is $N_G(H) = \{g \in G : gHg^{-1} = H\}$.}
+\begin{itemize}
+    \item Let $G$ act on $X$. Then we know that if $Y \subseteq X$, and $g \cdot y \in Y$ for all $g \in G$ and $y \in Y$, then $Y$ is a union of orbits and we then get an action for $G$ onto $Y$.
+    \item Let $G$ act on $X$. Let $H \leq G$, now easily $H$ acts on $X$. Each $G$-orbit breaks up as a union of $H$-orbits.
+\end{itemize}
+\newpage
+\section{1/29 - Using Group Actions to Prove Theorems}
+Now we finally prove Sylow's.
+\begin{proof}
+    
+\end{proof}
+
+\end{document}

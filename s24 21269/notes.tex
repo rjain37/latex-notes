@@ -1,0 +1,326 @@
+\documentclass{report}
+
+\input{../preamble}
+\input{../macros}
+\input{../letterfonts}
+
+\title{\Huge{21-269}\\Vector Analysis}
+\author{\huge{Rohan Jain}}
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+
+\pagebreak
+
+\chapter{}
+\section{The Real Numbers}
+\dfn{Partial Order}{Let $X$ be a set with a binary relation $\leq$. $\leq$ is a \emph{partial order} if:
+\begin{enumerate}
+    \item $x \leq x$ for all $x \in X$ (reflexivity)
+    \item $x \leq y$ and $y \leq z$ implies $x \leq z$ for all $x, y, z \in X$ (transitivity)
+    \item $x \leq y$ and $y \leq x$ implies $x = y$ for all $x,y \in X$ (antisymmetry)
+\end{enumerate} }
+
+\dfn{Partially Ordered Set (poset)}{A set $X$ with a partial order $\leq$ is called a \emph{partially ordered set} or \emph{poset}. It is notated as $(X, \leq)$.}
+
+\dfn{Total Order}{A partial order $\leq$ is a \emph{total order} if for all $x,y \in X$, we have $x \leq y$ or $y \leq x$.}
+
+\ex{poset}{Let $Y$ be a set. Define $X = \{\text{all subsets of } Y\} = \mathcal{P}(Y)$. Let $E, F \in Y$, we say that $E \leq F$ if $E \subseteq F$. Then $(X, \leq)$ is a poset. This is not a total order.}
+
+\dfn{Upper Bound, Bounded Above, Supremum, Maximum}{Let $(X, \leq)$ be a poset. Let $E \subseteq X$.
+\begin{enumerate}
+    \item $y \in X$ is an \emph{upper bound} of $E$ if $x \leq y$ for all $x \in E$.
+    \item $E$ is \emph{bounded above} if it has at least one upper bound.
+    \item If $E$ is nonempty and bounded above, then the \emph{supremum}, if it exists, of $E$, denoted $\sup E$, is the least upper bound of $E$.
+    \item $E$ has a \emph{maximum} if there is $y \in E$ such that $ x \leq y$ for all $x \in E$.
+\end{enumerate}}
+
+Properties worth mentioning:
+\begin{enumerate}
+    \item If $E$ has a maximum, then $\sup E$ exists and is equal to the maximum.
+    \begin{proof}
+        Let $y$ be the maximum of $E$. If $z \in X$, is an upper bound of $E$, then $z \geq y$ because $y \in E$. Since $z$ was arbitrary, this is true for any upper bound. Thus, $y$ is the least upper bound of $E$.
+    \end{proof}
+\end{enumerate}
+
+\ex{}{Let $Y$ be a nonempty set, $(\mathcal{P}(Y), \leq)$ poset.
+
+Fix nonempty $Z \subseteq Y$. $$E = \{ W \subseteq Y : W \subset Z\}$$
+Trivially, $Z$ is an upper bound of $E$. Realize that any superset of $Z$ is an upper bound as well. We can postulate that the supremum of $E$ is $Z$. We will now prove it:
+\begin{proof}
+    Need to show that if $F$ is an upper bound of $E$, then $F \supseteq Z$. If $x \in Z$, then $\{x\} \in E$ by definition of $E$, so $F \supseteq {x}$ for all $x \in Z$. Thus, $F \supseteq Z$.
+\end{proof}
+Note that there is no maximum of $E$. 
+}
+
+\dfn{Lower Bound, Bounded Below, Infimum, Minimum}{Let $(X, \leq)$ be a poset. Let $E \subseteq X$.
+\begin{enumerate}
+    \item $y \in X$ is a \emph{lower bound} of $E$ if $y \leq x$ for all $x \in E$.
+    \item $E$ is \emph{bounded below} if it has at least one lower bound.
+    \item If $E$ is nonempty and bounded below, then the \emph{infimum}, if it exists, of $E$, denoted $\inf E$, is the greatest lower bound of $E$.
+    \item $E$ has a \emph{minimum} if there is $y \in E$ such that $ y \leq x$ for all $x \in E$.
+\end{enumerate}
+}
+Going back to example 1.1.2, we can see that $E$ is bounded below by $\emptyset$. The infimum of $E$ is $\emptyset$. The minimum of $E$ is also $\emptyset$.
+\dfn{Complete}{Let $(X, \leq)$ poset. $X$ is \emph{complete} if every nonempty subset of $X$ that is bounded above has a supremum.}
+\ex{$\QQ$}{$(\QQ, \leq)$ is not complete.}
+\clm{$\RR$}{There is a complete ordered field $(\RR, +, \cdot, \leq)$. Its elements are called real numbers.}
+\section{First Recitation, 1/18}
+\exer{Function Example}{Let $X$ be the set of all functions $f : D_f \to Z$ with $D_f \subseteq Y$. We say that $f \leq g$ if $D_f \subseteq D_g$ and $f(x) = g(x)$ for all $x \in D_f$. Is $(X, \leq)$ a poset? Is it complete?
+\begin{proof}
+    To show that $(X, \leq)$ is complete, we need to show that every nonempty subset of $X$ that is bounded above has a supremum. Let $E \subseteq X$ be nonempty and bounded above. Let $G = \bigcup_{f \in E} D_f$. $G$ is the union of all the domains of the functions in $E$. $G$ is bounded above by the union of the upper bounds of the domains of the functions in $E$. Let $H = \bigcup_{f \in E} f(D_f)$. $H$ is bounded above by the union of the upper bounds of the ranges of the functions in $E$. Let $F : G \to H$ be defined as $F(x) = f(x)$ for all $x \in D_f$. $F$ is the supremum of $E$.
+\end{proof}}
+\section{Natural Numbers}
+\exer{}{Take $(X, +, \cdot,\leq)$ ordered field. Prove:
+\begin{enumerate}
+    \item If $0 \leq x$, then $-x \leq 0$. 
+    \item If $x \leq y$, and $0 \leq z \neq 0$, then $xz \leq yz$.
+    \item For all $x \in X$, $0 \leq x^2$.
+    \item Prove $0 < 1$. 
+\end{enumerate}}
+\begin{proof}
+    Fields have the following important properties:
+    \begin{itemize}
+        \item If $a \leq b$, then $a + c \leq b + c$.
+        \item If $a, b \geq 0$, then $ab \geq 0$.
+    \end{itemize}
+    \begin{enumerate}
+        \item Take the first property with $a = 0$, $b = x$, and $c = -x$. Then $0 \leq x \implies 0 + (-x) \leq x + (-x) \implies -x \leq 0$.
+        \item If $x \leq y$, then $0 \leq y + (-x)$. By the second property, $0 \leq z \cdot(y + (-x)) = zy + (-zx)$. Then $0 \leq zy + (-zx) \implies zx \leq zy$. 
+        \item We split into the three trichotomy cases:
+        \begin{itemize}
+            \item If $x = 0$, then $0 \leq 0^2$.
+            \item If $x \leq 0$ with $x \neq 0$, then $0 \leq -x$. By the second property, $0 \leq (-x)^2 = (-x)(-x) = x^2$.
+            \item If $x > 0$, then $0 \leq x$. By the second property, $0 \leq x^2$.
+        \end{itemize}
+        \item FSOC, assume $0 > 1$ and multiply both sides by 1. Then we get $0 \cdot 1 > 1 \cdot 1 \Rightarrow 0 > (1)^2$, which is a contradiction to the third property we proved.
+    \end{enumerate}
+\end{proof}
+
+\dfn{Inductive}{Take $E \subseteq \RR$. $E$ is \emph{inductive} if $1 \in E$ and $x \in E$ implies $x+1 \in E$.}
+\ex{Inductive Sets}{\begin{itemize}
+    \item $\RR$ is inductive.
+    \item $\{x \in \RR: 0 \leq x\}$
+    \begin{proof}
+        $1 \in E$ because $1 \geq 0$. If $x \in E$, then $x+1 \geq 0$, so $x+1 \in E$.
+    \end{proof}
+\end{itemize}}
+\dfn{Natural Numbers}{The intersection of all inductive sets is denoted $\NN$. The elements of $\NN$ are called \emph{natural numbers}.}
+\noindent Properties of $\NN$:
+\begin{itemize}
+    \item $\NN \neq \emptyset$. Since $1 \in$ every inductive set, $1 \in \NN$.
+    \item $\NN$ is an inductive set.
+\end{itemize}
+\thm{Induction}{For every $n \in \NN$, let $P(n)$ be a proposition such that:
+\begin{enumerate}
+    \item $P(1)$ is true. 
+    \item If $P(n)$, then $P(n+1)$.
+\end{enumerate}Then $P(n)$ is true for every $n \in \NN$ }
+\begin{proof}
+$E = \{n \in \NN\ :\ P(n)\}$ is inductive by 1. and 2. So, $\NN \subseteq E$, but $E \subseteq \NN$ by definition of $\NN$. Thus, $E = \NN$.
+\end{proof}
+\thm{Archimedean Property}{Let $a, b \in \RR$ with $a > 0$. Then there is $n \in \NN$ such that $na > b$.}
+\begin{proof}
+    If $b \leq 0$, then we take $n = 1$. Assume $b >0$. For sake of contradiction, assume there does not exist $n$ such that $na > b$. Then $E = \{na : n \in \NN\}$ is bounded above by $b$. Let $c = \sup E$. $c - a \leq c$, so $c-a$ is not an upper bound of $E$. Thus, there is $n \in \NN$ such that $c-a \leq na$. Then $c \leq (n+1)a$. But $c$ is an upper bound of $E$, so $c \geq (n+1)a$. Thus, $c = (n+1)a$. But $c \in E$, so $c = na$ for some $n \in \NN$. Thus, $na = (n+1)a$, so $n = n+1$, which is a contradiction.
+\end{proof}
+\dfn{Integers}{$\ZZ := \NN \cup \{0\} \cup \{-n : n \in \NN\}$}
+\thm{Integer Part}{For every $x \in \RR$, there is a unique $k \in \ZZ$ such that $k \leq x < k+1$.}
+\dfn{Integer Part}{The $k$ that satisfies the above theorem is called the \emph{integer part} of $x$, denoted $\lfloor x \rfloor$.}
+\begin{proof}
+    Let $E = \{k \in \ZZ : k \leq x\}$. First we show that $E$ is nonempty.
+    \begin{itemize}
+        \item If $x \geq 0$, then $0 \in E$, so $E$ is nonempty.
+        \item If $x < 0$, then $-x > 0$. By the Archimedean property, there is $n \in \NN$ such that $n > -x$. Thus, $-n < x$. So, $-n \in E$, so $E$ is nonempty.
+    \end{itemize}
+    Now we show that $E$ is bounded from above. Very clearly, $x$ is an upper bound. By supremum property, there is $L = \sup(E)$ and $L \in \RR$. $L-1$ is not an upper bound, which means that there is an element $k \in E$ such that $L-1 < k$. But since $L$ is the supremum, $L \geq k$. Thus, $L-1 < k \leq L$. So, $L < k+1$ so $k + 1 \notin E$. Now, $k \leq x$ since $k \in E$.  Now we show that $k$ is unique. Assume there is $m \in \ZZ$ such that $m \leq x < m+1$. Then $m \in E$, so $m \leq L$. But $L$ is the supremum, so $L \geq m$. Thus, $L = m$. So, $k = m$.
+\end{proof}
+\dfn{$\QQ$}{If $p \in \ZZ$ with $p \neq 0$, then $\exists p^{-1} \in \RR$. Define $\QQ = \{pq^{-1} : p, q \in \ZZ, p \neq 0\}$.}
+\section{Density of Rationals}
+\thm{Density of the Rationals}{Let $a, b \in \RR$ with $a < b$. Then there is $r \in \QQ$ such that $a < r < b$.}
+\begin{proof}
+We have $a < b \implies 0 = a + (-a) < b - a \implies 0 < \frac{1}{b-a}$. By the integer part theorem, there is $q \in \ZZ$ such that $\frac{1}{b-a} < q$. So now, $\frac{1}{q} < b -a \implies a < a + \frac{1}{q} < b$. Multiply both sides by $q > 0$ to get $aq < a + 1 < bq$. By the integer part theorem, there is $p \in \ZZ$ such that $p \leq qa < p + 1$ (i.e. $p = \lfloor qa \rfloor$). Since $qa < p + 1 \leq qa + 1 < qb$. Getting rid of unnecessary stuff, we have $qa < p + 1 < qb$. Thus, $a < \frac{p+1}{q} < b$. Let $r = \frac{p+1}{q}$. Then $r \in \QQ$ and $a < r < b$.
+\end{proof}
+\dfn{Irrational Numbers}{$\RR \setminus \QQ$ is the set of \emph{irrational numbers}.}
+\exer{TODO in Recitation 1/23}{
+    \begin{itemize}
+        \item Prove that there is no $r \in \QQ$ such that $r^2 = 2$.
+        \item Prove that ``$\sqrt{2}$'' exists in $\RR$. (prove that there is at least one irrational number)
+        \begin{itemize}
+            \item Have to play with the set $E = \{ x \in \RR : x > 0, x^2 < 2\}$.
+        \end{itemize}
+    \end{itemize}}
+\thm{Density of Irrationals}{Let $a, b \in \RR$ with $a < b$. Then there is $x \in \RR \setminus \QQ$ such that $a < x < b$.}
+\begin{proof}
+    $a < b \implies a\sqrt{2} < b\sqrt{2}$. By the density of rationals, there is $r \in \QQ$ such that $a\sqrt{2} < r < b\sqrt{2}$. Then $a < \frac{r}{\sqrt{2}} < b$. Let $x = \frac{r}{\sqrt{2}}$. If $r = 0$, then $a \sqrt{2} < 0 < b \sqrt{2}$. By previous theorem, we can find $q \in \QQ$ such that $a \sqrt{2} < q < 0 < b \sqrt{2}$. Then $a < \frac{q}{\sqrt{2}} < b$. Let $x = \frac{q}{\sqrt{2}}$. Then $x \in \RR \setminus \QQ$ and $a < x < b$.
+\end{proof}
+\nt{Take $x \in \RR$, $E = \{ r \in \QQ :  r < x\}$. $x$ is the upper bound of $E$. This set is nonempty because we can take $x - 1 < r < x$. Now we prove that $x = \sup E$.
+\begin{proof}
+    Assume  $\exists L$ upper bound of $E$ such that $L < x$. Then $L < x \implies$ there exists some $r \in \QQ$ such that $L < r < x$, but $r \in E$, so $L$ is not an upper bound of $E$. Thus, $L$ cannot be an upper bound of $E$ and $x$ is the least upper bound of $E$.
+\end{proof}}
+Since now we know that $\sqrt{2} = \sup\{r \in \QQ : r < \sqrt{2}\}$, we can also define $3^{\sqrt{2}} = \sup\{3^r : r \in \QQ, r < \sqrt{2}\}$.
+\dfn{$x^0$}{Let $0 \neq x  \in \RR$. We define $x^0 = 1$.}
+\dfn{$x^n$}{Let $x \in \RR$, $n \in \NN$. We start with $x^1 := x$. Then assume $x^m$ has been defined. Then we say $x^{m+1} := x^m \cdot x$.}
+\dfn{$x^{p/m}$}{Let $x \in \RR$, $p \in \ZZ$, $m \in \NN$. We say $x^{p/m} = \sqrt[m]{x^p}$.}
+\exer{Properties of Exponenets}{Let $x \in \RR$, $r, q \in \QQ$, and $x,r,q > 0$. Prove the following:
+\begin{itemize}
+    \item $x^r \cdot x^q = x^{r+q}$
+    \item $(x^r)^q = (x^q)^r = x^{rq}$
+\end{itemize}}
+\begin{proof}
+    
+\end{proof}
+\dfn{Negative Exponent}{Take $x > 0$, $r = -\frac{p}{m}$ for $p,m \in \NN$. First, we have that $x^{-r} := (x^{-1})^{p/m}$.}
+\exer{More Properties of Exponents}{Take $x \in \RR, x > 0, r, q \in \QQ$. Prove the following:
+\begin{itemize}
+    \item If $r > 0$, prove that $x^r > 1$.
+    \item If $r < q$, prove that $x^r < x^q$.
+\end{itemize}}
+\subsection{1/23 - Recitation - Proving Irrationality of $\sqrt{2}$}
+Existence of $\sqrt{2}$:
+\begin{enumerate}
+    \item Let $E = \{x \in \RR : x >0, x^2 < 2\}$. Prove that $E$ is non-empty and that $E$ is bounded above.
+    \begin{proof}
+        We know that $0 < 1$ and from that we get $1^2  = 1 < 2$, which can be checked by subtracting $1$ from both sides. As such $E$ is nonempty.
+
+        Now we show that $E$ is bounded above. We know that $2^2 = 4 > 2 > a^2 \in E$, so $2^2 > a^2 \Rightarrow 2 > a$, so $2$ is an upper bound of $E$.
+    \end{proof}
+    \item By the completeness of $(\RR, \leq)$, $E$ has a supremum, $L$. Prove that $L > 0$ and that $L^2 = 2$.
+    \begin{proof}
+        Since $L$ is the least upper bound, it has to be greater than 1 which is in the set $E$. Therefore, $L > 1 > 0 \implies L > 0$. 
+
+        Now we show that $L^2 \geq 2$. For sake of contradiction, assume $L^2 < 2$. Since $L > 0$, this means that $ L \in E$. By the density of rationals, there exists $r \in \QQ$ such that $L < r < \sqrt{2}$. Since $L$ is an upper bound of $E$, $r \notin E$. But $r \in \QQ$, so $r^2 \neq 2$. Thus, $r^2 > 2$. Since $r > 0$, $r^2 > 2 \implies r > \sqrt{2}$. But $r < \sqrt{2}$, so we have a contradiction. Thus, $L^2 \geq 2$.
+    \end{proof}
+    \item Prove that if $y \in \RR \setminus E$ and $y > 0$, then $y$ is an upper bound of $E$.
+    \begin{proof}
+        Assume $y \in \RR \setminus E$ and $y > 0$. We need to show that $y$ is an upper bound of $E$. Assume for sake of contradiction that $y$ is not an upper bound of $E$. Then there exists $x \in E$ such that $x > y$. But $x \in E \implies x^2 < 2$. Since $y > 0$, $x^2 < 2 \implies y^2 < 2$. But $y \notin E$, so $y^2 \geq 2$. But this would mean that $y \in E$. Contradiction. Thus, $y$ is an upper bound of $E$.
+    \end{proof}
+    \item Prove that $L^2 = 2$.
+    \begin{proof}
+        We know that $L^2 \geq 2$ from part 2. Now we show that $L^2 \leq 2$. Assume for sake of contradiction that $L^2 > 2$. 
+
+        How small does $\epsilon > 0$ need to be such that $(L-\epsilon)^2 >2$ as well. 
+
+        Start with $(L-\epsilon)^2 = L^2 - 2L\epsilon + \epsilon^2$, which is greater than $L^2 - 2L\epsilon$ since $\epsilon > 0$. So now, how small does $\epsilon$ need to be such that $L^2 > 2 \implies L^2 - 2L\epsilon > 2$ too. 
+        \begin{align*}
+            2L\epsilon &< 2 - L^2 \\
+            \epsilon &< \frac{2 - L^2}{2L} \\
+        \end{align*}
+        Since $L^2 > 2$, this means that an $\epsilon$ can be found. This means that $L$ is not the least upper bound. Contradiction. Thus, $L^2 \leq 2$.
+    \end{proof}
+\end{enumerate}
+\newpage
+\section{}
+\dfn{$\sqrt{2}$}{$$\sqrt{2} := \sup\{x \in \RR : x > 0, x^2 < 2\}$$}
+\exer{}{For $n \in \NN, n \geq 2$. Fix $x > 0$. 
+$$E = \{y \in \RR: y > 0, y^m < x\}.$$Prove that $l = \sup E$ satisfies $l^m = x$.}
+\dfn{$\sqrt[m]{x}$}{$$\sqrt[m]{x} := \sup\{y \in \RR : y > 0, y^m < x\}$$}
+\dfn{$x^{p/q}$}{$$x^{p/q} := \left( \sqrt[q]{x} \right) ^p$$}
+\dfn{$x^q$}{For $q \in \RR$, $q > 0$, and $x > 1$. $$x^q := \sup\{x^r : r \in \QQ, 0 < r < q\}$$} 
+\ex{}{$$\sqrt{2} = \sup\{r \in \QQ : r > 0, r < \sqrt{2}\}$$}
+\thm{}{Take $a, b \in \RR$, $a, b>  0$ and $x \in \RR > 1$. Then $x^a \cdot x^b = x^{a+b}$.}
+\begin{proof}
+    Let $E_i = \{ x^r : r \in \QQ, r > 0, r < i\}$. Consider $E_a$, $E_b, E_{a+b}$. Then let $l_i = \sup(E_i)$. Consider $l_a, l_b, l_{a+b}$. We want to show that $l_a \cdot l_b = l_{a+b}$ by showing that both $l_a \cdot l_b \leq l_{a+b}$ and $l_a \cdot l_b \geq l_{a+b}$.
+
+    Let $r \in \QQ$ with $0 < r < a$. Let $s \in \QQ$ with $0 < s < b$. Then we have that $x^r \cdot x^s = x^{r+s}$ (from the exercise two days ago and since $r,s \in \QQ$.) we know that $0 < r + s < a + b$ and is rational. Thus, $x^{r+s} \in E_{a+b}$. Thus, $x^r \cdot x^s \leq l_{a+b}$.
+
+    We want to divide both sides by $x^s$ while fixing $r$. So, we have that $ x ^r \leq \dfrac{l_{a+b}}{x^s}$, which is true for all $r \in \QQ$, such that $0 < r < a$. Thus, $\dfrac{l_{a+b}}{x^s}$ is an upper bound for $E_a$. Thus, $l_a \leq \dfrac{l_{a+b}}{x^s}$. Thus, $ x^s \leq \dfrac{l_{a+b}}{l_a}$, meaning that $\frac{l_{a+b}}{l_a}$ is an upper bound for $E_b$. Thus, $l_b \leq \dfrac{l_{a+b}}{l_a}$. Thus, $l_a \cdot l_b \leq l_{a+b}$.
+
+    Now we show that $l_a \cdot l_b \geq l_{a+b}$. Let $t \in \QQ$ with $0 < t < a + b$. We need $0 < r \in \QQ < a$ and $0 < s \in \QQ < b$ with $t = r + s$. We start by looking at $t - a < b$. By the density of $\QQ$, find $s \in \QQ$ such that $t-a < s < b$. Take $s > 0$ beacuse $b > 0$. So $t -s < a$. By the density of $\QQ$, find $0 < p \in \QQ$ such that $t-s < p < a$. So $t < s + p$. So, $x^t < x^{s+p} = x^{s}x^{p} \leq l_a l_b$ since $x^s \in E_b$ and $x^p \in E_a$. We know that $l_a l_b$ is an upper bound of $E_{a+b}$, so $l_{a+b} \leq l_a l_b$.
+
+    Therefore $l_a \cdot l_b = l_{a+b}$.
+\end{proof}
+\dfn{Negative Exponents}{Let $x > 1$, $a < 0$. Then: $$x^a := \left(x^{-a}\right)^{-1}$$}
+\dfn{Exponents between 0 and 1}{Let $x \in \RR$ with $0 < x < 1$ and $a > 0$. Then:
+$$x^a := \left(\dfrac{1}{x}\right)^{-a}$$}
+An important note is that if we have $E \subseteq (0, \infty)$ with a bounded $E$. Then if we define $F = \{ \dfrac{1}{x} : x \in E\}$, then we have the following:
+\begin{align*}
+    \sup E &= \dfrac{1}{\inf F} \\
+    \inf E &= \dfrac{1}{\sup F}
+\end{align*}
+\section{1/25 - Recitation - Sequences of Set}
+\dfn{Sequence of a Set}{
+Given a set $X$, a sequence on $X$ is a function $f : \NN \to X$. We denote $f(n)$ as $x_n$. We can also denote the sequence as $\{x_n\}_{n=1}^\infty$.}
+\dfn{}{Let $(X, \leq)$ be a poset and $\{x_n\}_{n=1}^\infty$ be a sequence on $X$. Then $E = \{x_n : n \in \NN\}$ is a subset of $X$. We say that $\{x_n\}_{n=1}^\infty$ is bounded from above is the set $E$ is bounded from above. We say that $\{x_n\}_{n=1}^\infty$ is bounded from below is the set $E$ is bounded from below. We say that $\{x_n\}_{n=1}^\infty$ is bounded if it is bounded from above and below.}
+\dfn{Limit Superior}{Let $(X, \leq)$ be a poset. Let $\{x_n\}_{n=1}^\infty$ be a sequence on $X$. Suppose $\{x_n\}_n$ is bounded from above. Then, we define the \emph{limit superior} of $x_n$ as $n \to \infty$ as:
+$$\limsup_{n\to\infty} x_n = \inf_{n \in \NN}\sup_{k \geq n} x_k$$}
+\dfn{Limit Inferior}{Let $(X, \leq)$ be a poset. Let $\{x_n\}_{n=1}^\infty$ be a sequence on $X$. Suppose $\{x_n\}_n$ is bounded from below. Then, we define the \emph{limit inferior} of $x_n$ as $n \to \infty$ as:
+$$\liminf_{n\to\infty} x_n = \sup_{n \in \NN}\inf_{k \geq n} x_k$$}
+\newpage
+\exer{}{\begin{enumerate}
+    \item Let $\{x_n\}_{n=1}^\infty$ be a sequence on $\RR$ bounded above. Prove that $L \in \RR$ is the $\limsup$ of $\{x_n\}_{n=1}^\infty$ iff for every $\epsilon>0$, there exists $n_\epsilon \in \NN$ such that:
+    \begin{enumerate}
+        \item $x_n < L + \epsilon$ for all $n \geq n_\epsilon$.
+        \item $L - \epsilon < x_n$ for infinitely many $n$.
+    \end{enumerate}
+\end{enumerate}}
+\begin{proof}
+    Let $L \in \RR$ be the $\limsup$ of $\{x_n\}_{n=1}^\infty$. Let $\epsilon > 0$. $L$ being the lim sup means that $L = \inf_{n \in \NN}\sup_{k \geq n} x_k$. Thus, $L \leq \sup_{k \geq n} x_k$ for all $n \in \NN$. Thus, $L - \epsilon < \sup_{k \geq n} x_k$ for all $n \in \NN$. Then $L - \epsilon$ is not an upper bound of $\{x_n\}_{n=1}^\infty$. Thus, there is $n_\epsilon \in \NN$ such that $L - \epsilon < x_{n_\epsilon}$. Thus, $L - \epsilon < x_n$ for infinitely many $n$. Now we show that $x_n < L + \epsilon$ for all $n \geq n_\epsilon$. Assume for sake of contradiction that there is $n \geq n_\epsilon$ such that $x_n \geq L + \epsilon$. Then $L + \epsilon$ is an upper bound of $\{x_n\}_{n=1}^\infty$. But $L$ is the $\limsup$, so $L \geq L + \epsilon$. Contradiction. Thus, $x_n < L + \epsilon$ for all $n \geq n_\epsilon$.
+
+    Now we show the other direction. Assume that for every $\epsilon > 0$, there exists $n_\epsilon \in \NN$ such that $x_n < L + \epsilon$ for all $n \geq n_\epsilon$ and $L - \epsilon < x_n$ for infinitely many $n$. We want to show that $L$ is the $\limsup$ of $\{x_n\}_{n=1}^\infty$. We know that $L$ is an upper bound of $\{x_n\}_{n=1}^\infty$. We need to show that $L$ is the least upper bound. Assume for sake of contradiction that $L$ is not the least upper bound. Then there is $L' < L$ such that $L'$ is an upper bound of $\{x_n\}_{n=1}^\infty$. Let $\epsilon = L - L'$. Then $L' < L - \epsilon$. But $L - \epsilon < x_n$ for infinitely many $n$. But $L' < L - \epsilon$, so $L'$ is not an upper bound of $\{x_n\}_{n=1}^\infty$. Contradiction.
+\end{proof}
+\section{Vector Spaces}
+\ex{Vector Spaces}{\begin{itemize}
+    \item Euclidean Space $\subseteq \RR^n$. $x \in \RR^n$ is a vector. $x = (x_1, \dots, x_n)$.
+    \item Polynomial Space from $\RR \to \RR$. $x \in \RR[x]$. $x = a_0 + a_1x + \dots + a_nx^n$.
+    \item $f : [a, b] \to \RR$ continuous functions.
+\end{itemize}}
+\dfn{Boundedness of Functions}{Let $E$ be a set and $f : E \to \RR$. \begin{enumerate}
+    \item $f$ is bounded from above if the set $f(E) = \{ y \in \RR : y = f(x), x \in E\}$ is bounded from above.
+    \item $f$ is bounded from below if the set $f(E) = \{ y \in \RR : y = f(x), x \in E\}$ is bounded from below.
+    \item $f$ is bounded if $f(E)$ is bounded. 
+\end{enumerate}}
+\dfn{Inner Product}{A function $(\cdot, \cdot) : V \times V \to \RR$ is an \emph{inner product} if it satisfies the following properties:
+\begin{itemize}
+    \item $(x, x) \geq 0$ for all $x \in X$. 
+    \item $(x, x) = 0$ iff $x = 0$.
+    \item $(x, y) = (y, x)$ for all $x, y \in X$.
+    \item $(sx + ty, z) = s(x, z) + t(y, z)$ for all $x, y, z \in X$ and $s, t \in \RR$.
+\end{itemize}}
+\ex{Examples of Inner Products}{\begin{itemize}
+    \item $\RR^n$ with dot products.
+    \item $f : [a, b] \to \RR$ with $(f, g) = \int_a^b f(x)g(x)dx$. This is is not an inner product because we can define:
+    \begin{align*}
+        f = \begin{cases} 1 & x = 0.5 \\ 0 & \text{otherwise} \end{cases} \\
+    \end{align*}
+    which has an integral of 0. But $f \neq 0$.
+    If we add that $f$ is continuous, then it is an inner product.
+\end{itemize}}
+\dfn{Norm}{Let $V$ be a vector space with an inner product $(\cdot, \cdot)$. Then the \emph{norm} of $x \in X$ is defined as $||\cdot||: X \to [0, \infty)$ such that:
+\begin{enumerate}
+    \item $||x|| = 0 \iff x = 0$
+    \item $||tx|| = |t|||x||$ for all $x \in X$
+    \item $||x + y|| \leq ||x|| + ||y||$ for all $x, y \in X$
+\end{enumerate}}
+\ex{Examples of Norms}{\begin{itemize}
+    \item $||x|| = \sqrt{(x, x)}$ for $x \in \RR^n$
+    \item $X = \{f : E \to \RR, f \text{ bounded}\}$. $||f|| = \sup_{x \in E} |f(x)|$.
+    \begin{itemize}
+        \item First property is obviously true.
+        \item For the second property, we use the fact that $$\sup(tF) = \begin{cases} t\sup(F) & \text{if } t \geq 0 \\ t\inf(F) & \text{if } t< 0 \end{cases}$$
+        \item For the third property, we use the triangle inequality:
+        \begin{align*}
+            \sup|f + g| &\leq \sup|f| + \sup|g| \\
+            |f(x) + g(x)| \leq |f(x)| + |g(x)| \leq \sup|f| + \sup|g|
+        \end{align*}
+    \end{itemize}
+\end{itemize}}
+\nt{Space of bounded functions denoted as $\ell^\infty (E) = \{f : E \to \RR : f \text{ bounded}\}$.}
+\thm{Cauchy Schwarz Inequality}{Let $X$ be a vector space with an inner product $(\cdot, \cdot)$. Then for all $x, y \in X$, we have that $|(x, y)| \leq \sqrt{(x, x)} \cdot \sqrt{(y, y)}$.}
+\begin{proof}
+    Let $y \neq 0$. Consider $(x + ty, x+ty) = (x, x + ty) + t(y, x + ty) = (x, x) + t(x, y) + t(y, x) + t^2(y, y)$. We can combine the middle terms to get $t^2(y, y) + 2(x, y) + (x,x)$, which is quadratic in $t$. Take $t = -\dfrac{(x, y)}{(y, y)}$. \begin{align*}
+        0 &\leq (x, x) - 2\frac{(x, x)^2}{(y, y)} + \frac{(x, y)^2}{(y, y)} \\
+        0 &\leq (x, x)(y, y) - 2(x, y)^2 + (x, y)^2 \\
+        0 &\leq (x, x)(y, y) - (x, y)^2 \\
+        (x, y)^2 &\leq (x, x)(y, y) \\
+        |(x, y)| &\leq \sqrt{(x, x)} \cdot \sqrt{(y, y)}
+    \end{align*}
+\end{proof}
+
+
+\end{document}
