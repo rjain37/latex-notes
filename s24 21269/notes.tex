@@ -331,7 +331,7 @@ $$\liminf_{n\to\infty} x_n = \sup_{n \in \NN}\inf_{k \geq n} x_k$$}
     \end{align*}
 \end{proof}
 \section{Inner Products, Norms, and Metric Spaces}
-\thm{}{Let $X$ be a vector space with an inner product $(\cdot, \cdot)$. Then $||\cdot|| : X \to [0, \infty)$ is a norm.}
+\thm{}{Let $X$ be a vector space with an inner product $(\cdot, \cdot)$. Then $||x|| := \sqrt{(x, x)}$ is a norm.}
 \begin{proof}
     We check the properties of norms:
     \begin{enumerate}
@@ -430,7 +430,7 @@ So, if $||\cdot||$ is a norm, then if i want to define an inner product, I can u
     \item If $U_1, \ldots, U_n \in \mathcal{T}$, then $\bigcap_{i=1}^n U_i \in \mathcal{T}$. (finite intersections)
     \item If $U_\alpha \in \mathcal{T}$ for all $\alpha \in A$, then $\bigcup_{\alpha \in A} U_\alpha \in \mathcal{T}$. (arbitrary unions)
 \end{enumerate}Elements of $\mathcal{T}$ are called open sets.}
-\dfn{Closed}{Let $(X, d)$ be a metric space. We say $C \in X$ is \emph{closed} if $X \setminus C$ is open.}
+\dfn{Closed}{Let $(X, d)$ be a metric space. We say $C \subseteq X$ is \emph{closed} if $X \setminus C$ is open.}
 \noindent Note that $X$ and $\emptyset$ are both open and closed.
 \ex{Open and Closed Sets}{\begin{itemize}
     \item $[0, 1)$ is not open or closed.
@@ -440,7 +440,7 @@ So, if $||\cdot||$ is a norm, then if i want to define an inner product, I can u
 \begin{itemize}
     \item $\emptyset$ and $X$ are closed.
     \item Infinite intersections of closed sets are closed. (De Morgan's Law)
-    \item Finite unions of closed sets are closed. For example, if we have $\bigcup_{m = 1}^\infty (-\infty, -\dfrac{1}{m}) = (-\infty, 0)$ which is open.
+    \item Finite unions of closed sets are closed. For example, if we have $\bigcup_{m = 1}^\infty (-\infty, -\dfrac{1}{m}) = (-\infty, 0)$ which is closed.
 \end{itemize}
 \newpage
 \section{2/1 - Rectitation}
@@ -486,11 +486,16 @@ Prove that $\limsup_{n \to \infty} x_n = 2$.
 \end{proof}
 \newpage
 \section{Closure}
-\dfn{Closure}{Let $(X, d)$ be a metric space }
-\dfn{Boundary Point}{Let $(X, d)$ be a metric space}
+\dfn{Closure}{Let $(X, d)$ be a metric space with $A \subset X$. Then the \emph{closure} of $A$ is defined as $\overline{A}$, the intersection of all sets that contain $E$.}
+\dfn{Boundary Point}{Let $(X, d)$ be a metric space with $E \subseteq X$. Then $x \in X$ is a \emph{boundary point} of $E$ if for every $r > 0$, $B(x, r) \cap E \neq \emptyset$ and $B(x, r) \cap (X \setminus E) \neq \emptyset$. The set of all boundary points is denoted as $\partial E$.}
 \thm{}{Let $(X, d)$ be a metric space and $E \subseteq X$. Then $\overline{E} = E \cup \partial E$.}
+\begin{proof}
+    Let $x \in \overline{E}$. FSOC, assume $x \notin E \cup \partial E$. Since $x \notin \partial E$, there exists $r > 0$ such that $B(x, r)$ that doesn't intersect with either $E$ or complement of $E$. But since $x\notin E$, only the second option can occur. So there exists $r$ such that $B(x, r) \cap E = \emptyset$. Because of that and the fact that $B(x, r)$ is open, it follows that $X \setminus B(x, r)$ is closed and contains $E$. By the definition of $\overline{E}$, we have that $\overline{E} \subseteq X \setminus B(x, r)$. But this is a contradiction because $x \in \overline{E}$. 
+
+    Conversely, let $x \in E \cup \partial E$ and assume $x \notin \overline{E}$. Since $\overline{E}$ is closed, $X \setminus \overline{E}$ is open. Using the fact that $x \in E \cup \partial E$, we have that we can find a $B(x, r) \in X \setminus \overline{E}$. But this is a contradiction because $B(x, r)$ is open and contains $E$. Thus, $E \cup \partial E \subseteq \overline{E}$.
+\end{proof}
 \dfn{Accumulation Point}{Let $(X, d)$ be a metric space with $E \subseteq X$. Then $x \in X$ is an \emph{accumulation point} of $E$ if for every $r > 0$, there exists $y \in E$ such that $y \neq x$ and $d(x, y) < r$.}
-\dfn{Bounded}{}
+
 \dfn{Interval}{$I \subseteq \RR$ is an \emph{interval} if we have that $z \in I$ for all $x < z < y$.}
 \dfn{Rectangle}{$R \subseteq \RR^N$ is a \emph{rectangle} if $R = I_1 \times \cdots \times I_N$ where $I_1, \ldots, I_N$ are intervals in $\RR$.}
 \dfn{Sequence}{Let $X$ be a set. A \emph{sequence} is a function $f : \NN \to X$. We denote $f(n)$ as $x_n$.}
@@ -500,17 +505,25 @@ Prove that $\limsup_{n \to \infty} x_n = 2$.
 \thm{Bolzano-Weierstrauss}{If $E \subset \RR^N$ is bounded and contains infinitely many distinct points, then $E$ has an accumulation point}
 \begin{proof}
     \mlenma{1}{If $[a_n, b_n] \supseteq [a_{n+1}, b_{n+1}]$ for all $n$, then $\bigcap_{n=1}^\infty [a_n, b_n] \neq \emptyset$.}
+    \begin{proof}
+        For all $a_n$ and $b_n$, we have:
+        \begin{align*}
+            a_1 &\leq a_2 \leq \cdots \\
+            b_1 &\geq b_2 \geq \cdots
+        \end{align*}
+        Let \[A := \{a_1, a_2, \ldots \}.\] We have that $a_n \leq b_n \leq b_1$ for all $n$. So $A$ is bounded above, so by the supremum property, there exists $x = \sup A \in \RR$ and $a_n \leq x$ for all $n \in \NN$. We claim that $x \leq b_n$ as well. If not, then there exists $m \in \NN$ such that $b_m < x$. Since $x$ is an upper bound of $A$, we'll have that there's an $n \in \NN$ such that $b_m < a_n \leq x$. Find $k \geq m, n$, then we have $b_m < a_n \leq a_k \leq b_k \leq b_m$, which is a contradiction. This proves the claim. Hence, $x \in [a_n, b_n]$ for all $n$. Thus, $x \in \bigcap_{n=1}^\infty [a_n, b_n]$.
+    \end{proof}
     \mlenma{2}{Let $R_n$ be a closed and bounded rectangle. Assume that $R_1 \supseteq R_2 \supseteq \cdots$. Then $\bigcap_{n=1}^\infty R_n \neq \emptyset$.}
     \begin{proof}
         We know that \begin{align*}
             R_n &= [a_{1, n}, b_{1, n}] \times \cdots \times [a_{N, n}, b_{N, n}] \\
             R_{n+1} &= [a_{1, n+1}, b_{1, n+1}] \times \cdots \times [a_{N, n+1}, b_{N, n+1}]
         \end{align*}
-        We can apply lemma 1 $N$ times (for each of the compoments of $R_n$) to find that $x_1, x_2, \ldots, x_N \in \RR$ such that $a_{i, n} \leq x_i \leq b_{i, n}$ for all $1 \leq i \leq N$. Then, if you take $x = (x_1, \ldots, x_N)$, then $x \in R_m$ for all $n$. Thus, $x \in \bigcap_{n=1}^\infty R_n$. 
+        We can apply lemma 1 $N$ times (for each of the components of $R_n$) to find that $x_1, x_2, \ldots, x_N \in \RR$ such that $a_{i, n} \leq x_i \leq b_{i, n}$ for all $1 \leq i \leq N$. Then, if you take $x = (x_1, \ldots, x_N)$, then $x \in R_m$ for all $n$. Thus, $x \in \bigcap_{n=1}^\infty R_n$. 
     \end{proof}
     \mlenma{3}{Let $(X, d)$ be a metric space with $E \subseteq X$. Then $x \in X$ is an accumulation point of $E$ if and only if there exists a sequence $\{x_n\}_{n=1}^\infty$ in $E$ such that $x_n \to x$ as $n \to \infty$.}
     \begin{proof}
-        Let $x \in X$ be an accumulation point of $E$. Tkae $r = \dfrac{1}{n}$. Find $x_n \in B\left(x, \dfrac{1}{n}\right) \cap E$ with $x_n \neq x$. We claim $x_n \to x$. Given $\epsilon >0$, find $n_\epsilon \geq \dfrac{1}{\epsilon}$. Then $d(x, x_n) < \dfrac{1}{n} \leq \dfrac{1}{n_\epsilon}$ for all $n \geq n_\epsilon$. Thus, $x_n \to x$ as $n \to \infty$.
+        Let $x \in X$ be an accumulation point of $E$. Take $r = \dfrac{1}{n}$. Find $x_n \in B\left(x, \dfrac{1}{n}\right) \cap E$ with $x_n \neq x$. We claim $x_n \to x$. Given $\epsilon >0$, find $n_\epsilon \geq \dfrac{1}{\epsilon}$. Then $d(x, x_n) < \dfrac{1}{n} \leq \dfrac{1}{n_\epsilon}$ for all $n \geq n_\epsilon$. Thus, $x_n \to x$ as $n \to \infty$.
 
         Let $\{x_n\}_{n=1}^\infty$ be a sequence in $E$ such that $x_n \to x$ as $n \to \infty$. We claim that $x \in \text{acc}(E)$. Let $r >0$ and take $\epsilon = r$. Then there exists $n_\epsilon \in \NN$ such that $d(x, x_n) < \epsilon = r$ for all $n \geq n_\epsilon$. Thus, $x_n \in B(x, r) \cap E$ for all $n \geq n_\epsilon$. Thus, $x \in \text{acc}(E)$.
     \end{proof}
@@ -652,5 +665,82 @@ So given $\eta > 0$, take $ 0 < \epsilon < \delta_1$. Find $\eta$ from $d(f(x), 
     d_Y(f(x), l) < \epsilon | \log(\epsilon) | < \eta
 \end{align*}
 for all $x \in E$, $0 < d(x, x_0) < \delta$. Thus, $\lim_{x \to x_0} f(x) = l$.
+\newpage
+\section{Limits Continued}
+\dfn{Restriction}{Assume that $\lim_{x\to x_0}f(x) = l$ exists. Let $F \subseteq E$ such that $x_0 \in  \operatorname{acc}F$. The function $f: F \to Y$ is called the \emph{restriction} of $f$ to $F$. It is denoted as $f|_F$.}
+\nt{If $\lim_{x\to x_0}f(x) = l$, then $\lim_{x\to x_0}f|_F(x) = l$.}
+\noindent So to prove that the limit does not exist, you can conjure up two restrictions of the function and show that the limits are different.
+\ex{Limits that don't exist}{
+    Consider $\lim_{x\to 0} \sin\left(\frac{1}{x}\right)$. We can find two restrictions of the function and show that the limits are different.
+    \begin{itemize}
+        \item $\frac{1}{x} = 2\pi n + \frac{\pi}{2}$
+        \item $x_n = \frac{1}{2\pi n + \frac{\pi}{2}}$
+    \end{itemize}
+    So we have:
+    \begin{itemize}
+        \item $\sin x_n = \sin\left(\frac{\pi}{2} + 2\pi n\right) = 1$
+        \item $\sin x_n = \sin\left(\frac{1}{2\pi n}\right) =0$
+    \end{itemize}
+    Thus, the limit does not exist.
+}
+\exer{TODO in Recitation}{\begin{itemize}
+    \item $\lim_{(x, y) \to (0, 0)} \frac{xy}{x^2 + y^2}$ (no)
+    \item $\lim_{(x, y) \to (0, 0)} \frac{x^2y}{x^2 + y^2}$ (yes, 0)
+    \item $\lim_{(x, y) \to (0, 0)} \frac{x^{10000000000}y}{y - \sin(x)}$ (no)
+\end{itemize}}
+\noindent Now we talk about the composition of limits. 
+\ex{}{Consider \[g(y) = \begin{cases} 1 & y \neq 0 \\ 2 & y = 0 \end{cases}.\] The limit of $g(y)$ as $y \to 0$ is $1$. Now consider $f(x) = 0$. The limit of $f(x)$ as $x \to x_0$ is $0$. Now consider $g(f(x))$. The limit of $g(f(x))$ as $x \to x_0$ is $2$.}
+\thm{Composition of Limits}{Let $(X, d_X)$, $(Y, d_Y)$, and $(Z, d_Z)$ be metric spaces, $E \subseteq X$, $F \subseteq Y$, $f:E \to F$, $g:F \to Z$, and $x_0 \in \operatorname{acc}E$. Assume there exists $\lim_{x \to x_0} f(x) = l \in Y$. Assume $l \in \operatorname{acc}F$ and that there is $\lim_{y \to l} g(y) = L \in Z$. Assume that either $f(x) \neq l$ for all $x \in E$ or $ l\in F$ and $g(l) = L$. Then there is $\lim_{x \to x_0}g(f(x)) = L$.}
+\begin{proof}
+    Since $\lim_{y \to l} g(y) = L$, there for every $\epsilon >0$, there exists $\delta > 0$ such that $d_Z(g(y), L) < \epsilon$ for all $y \in F$ with $0 < d_Y(y, l) < \delta$. We would like to take $y = f(x)$. Use $\delta$ as ``my epsilon'' for the definition of the limit of $f(x)$. Then to find $\eta > 0$ such that $d_X(f(x), l) < \delta$ for all $x \in E$ with $0 < d_X(x, x_0) < \eta$. Now we split into cases:
+    \begin{itemize}
+        \item Assume $f(x) \neq l$ for all $x \in E$. Then $0 < d_Y(f(x), l)$ so we can take $y = f(x)$ to get $d_z(g(f(x)), L) < \epsilon$  for all $x \in E$ with $0 < d_X(x, x_0) < \eta$. This means that there exists $\lim_{x \to x_0} g(f(x)) = L$.
+        \item Assume $l \in F$ and $g(l) = L$. If $f(x) = l$, then $d_Z(g(f(x)), L) = d_Z(g(l), L) = 0$ for all $x \in E$ with $0 < d_X(x, x_0) < \eta$. If $f(x) \neq l$, then take $y = f(x)$ to get $0 < d_Y(f(x), l)$ so we can take $y = f(x)$ to get $d_z(g(f(x)), L) < \epsilon$  for all $x \in E$ with $0 < d_X(x, x_0) < \eta$. This means that there exists $\lim_{x \to x_0} g(f(x)) = L$.
+        This means that there exists $\lim_{x \to x_0} g(f(x)) = L$.
+    \end{itemize}
+\end{proof}
+\cor{Limits of the Sum/Products/Quotients}{Let $(X, d)$ be a metric space and $E \in X$. Then take $f: E \to \RR$ and $g: E \to \RR$. Let $x_0 \in X$ and $x_0 \in \operatorname{acc}E$. Assume $\lim_{x \to x_0} f(x) = l$ and $\lim_{x \to x_0} g(x) = m$. Then we have the following results:
+\begin{itemize}
+    \item $\lim_{x \to x_0} (f+g)(x) = l + m$.
+    \item $\lim_{x \to x_0} (f\cdot g)(x) = l \cdot m$.
+    \item $\lim_{x \to x_0} \frac{f}{g}(x) = \frac{l}{m}$.
+\end{itemize}}
+\begin{proof}
+    We can use the composition of limits to prove this. We'll just proceed with the quotient case. Consider $x \to (f(x), g(x))$. Then consider the function that takes $(s, t) \to \frac{s}{t}$ and call it $h$. THen we have $\frac{f(x)}{g(x)} = h(f(x), g(x))$. We then have $\lim_{x \to x_0} (f(x), g(x)) = (l, m)$ and $\lim_{(s, t) \to (l, m)} h(s, t) = \frac{l}{m} = h(l, m)$. So now we can use the composition of limits to get $\lim_{x \to x_0} \frac{f}{g}(x) = \frac{l}{m}$.
+
+    The other two cases are similar. For products, you need to show that the limit as $(x,y) \to (x_0, y_0)$ of $xy$ is $x_0y_0$ and similarly for sum.
+\end{proof}
+
+\section{Squeeze Theorem}
+\thm{Squeeze Theorem}{Let $(X, d_X)$ be a metric space, $E \subseteq X$, $f:E \to \RR$, $g:E \to \RR$, and $h:E \to \RR$. Let $x_0 \in \operatorname{acc}E$ and have $f \leq g \leq h$. Assume that $\lim_{x \to x_0}f(x) = l = \lim_{x \to x_0} h(x)$. Then $\lim_{x \to x_0} g(x) = l$.}
+\begin{proof}
+    Assume $\lim_{x \to x_0}f(x) = l = \lim_{x \to x_0} h(x)$. Then for every $\epsilon > 0$, there exists $\delta_1 > 0$ such that $0 < d_X(x, x_0) < \delta_1 \Rightarrow |f(x) - l| < \epsilon$ and $0 < d_X(x, x_0) < \delta_2 \Rightarrow |h(x) - l| < \epsilon$. Take $\delta = \min (\delta_1, \delta_2)$ and $x \in E$ with $ 0 < d(x, x_0) < \delta$. Then $l - \epsilon < f(x) < g(x) < h(x) < l + \epsilon$. Then $|g(x) - l| < \epsilon$ for all $x \in E$ with $0 < d_X(x, x_0) < \delta$. Thus, $\lim_{x \to x_0} g(x) = l$.
+\end{proof}
+\ex{}{\[\lim_{x \to 0} |x|^a \sin \frac{1}{x} = 0\] for all $a > 0$.
+
+Let $Q> 0$. Then $O \leq | |x|^Q \sin\frac{1}{x} | \leq |x|^Q$. Since both sides tend to $0$ as $x \to 0$, then the middle does as well.}
+
+\dfn{Increasing}{$f: E \to \RR$ is \emph{increasing} if $f(x) \leq f(y)$ for all $x \leq y$. It is strictly increasing if $f(x) < f(y)$ for all $x < y$.}
+\dfn{Decreasing}{$f: E \to \RR$ is \emph{decreasing} if $f(x) \geq f(y)$ for all $x \leq y$. It is strictly decreasing if $f(x) > f(y)$ for all $x < y$.}
+\dfn{Divergent}{Let $(X, d_x)$ be a metric space with $E \subseteq X$, $x_0 \in \operatorname{acc}E$, and $f: E \to \RR$. We say that $f$ diverges to $+\infty$ as $x \to x_0$ if for every $M > 0\in \RR$, there exists $\delta > 0$ such that $f(x) > M$ for all $x \in E$ with $0 < d_X(x, x_0) < \delta$. We say that $f$ diverges to $-\infty$ as $x \to x_0$ if for every $M < 0 \in \RR$, there exists $\delta > 0$ such that $f(x) < M$ for all $x \in E$ with $0 < d_X(x, x_0) < \delta$.}
+\thm{}{Let $E \subseteq \RR$ and $f : E \to \RR$ be increasing. Let $x_0 \in \RR$. Assume $x_0$ is an accumulation point of $E \cap (-\infty, x_0)$. Then there is \[\lim_{{x\to x_0}^-} f(x) = \sup_{E \cap (-\infty, x_0)} f(x) \]
+Now if $x_0$ is an accumulation point of $E \cap (x_0, \infty)$, then there is \[\lim_{{x\to x_0}^+} f(x) = \inf_{E \cap (x_0, \infty)} f(x) \]}
+\begin{proof} $\\$
+    \begin{itemize}
+        \item Case 1: Assume $f$ is bounded form above on $E \cap (-\infty, x_0)$. Let $l = \sup_{E \cap (-\infty, x_0)} f(x)$. Then for every $\epsilon > 0$, there exists $x_1 \in E \cap (-\infty, x_0)$ such that $l - \epsilon < f(x_1) \leq l$. Then for every $\epsilon > 0$, there exists $\delta > 0$ such that $l - \epsilon < f(x_1) \leq l$. Take $\delta = x_0 - x_1 > 0$. Let $x \in E$ with $x_0 - \delta < x < x_0$. Since $f$ is increasing, we have $l - \epsilon < f(x_1) \leq f(x) \leq l < l + \epsilon$. Thus, $\lim_{{x\to x_0}^-} f(x) = l$.
+        \item Case 2: If $f$ is not bounded from above, then for every $M > 0$, there exists $x_1 \in E \cap (-\infty, x_0)$ such that $f(x_1) > M$. Let $\delta = x_0 - x_1 > 0$. Then for every $x \in E$ with $x_1 = x_0 - \delta < x < x_0$, we have $f(x) \geq f(x_1) > M$. Thus, $\lim_{{x\to x_0}^-} f(x) = +\infty$.
+    \end{itemize}
+    The other case is similar.
+\end{proof}
+
+\dfn{Infinite Sum}{Let $X$ be a set and take $f: X \to [0, \infty]$. The \emph{infinite sum} is defined as: \[ \sum_{x \in X} f(x) = \sup \left\{ \sum_{x \in F} f(x) : F \subseteq X \text{ finite} \right\}.\]}
+\mlenma{}{Let $X$ be nonempty with $f : X \to [0, \infty]$. Assume that $\sum_{x \in X} f(x) < \infty$. Then $\{x \in X : f(x) > 0\}$ is countable.}
+\begin{proof}
+    Take $ n\in \NN$ and define $X_n = \{x \in X : f(x) \geq \frac{1}{n}\}$. Let $E \subseteq X_n$ be finite. Then $\frac{1}{n} |E| < \sum_{x \in E} f(x) \leq M$. Then $|E| < nM$. Thus, $X_n$ is countable. Then $\bigcup_{n \in \NN} X_n  = \{x \in X : f(x) > 0\}$ is countable.
+\end{proof}
+\thm{}{Take $I \subseteq \RR$ to be an interval with $f: I \to \RR$ increasing. Then for all but countably many $x_0 \in I$, there is $\lim_{{x\to x_0}^-} f(x) =\lim_{{x\to x_0}^+} f(x) = f(x_0)$. }
+\begin{proof}
+    Let $x_0 \in I$.
+\end{proof}
 
 \end{document}
