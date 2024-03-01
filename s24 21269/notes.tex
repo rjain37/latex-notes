@@ -738,9 +738,333 @@ Now if $x_0$ is an accumulation point of $E \cap (x_0, \infty)$, then there is \
 \begin{proof}
     Take $ n\in \NN$ and define $X_n = \{x \in X : f(x) \geq \frac{1}{n}\}$. Let $E \subseteq X_n$ be finite. Then $\frac{1}{n} |E| < \sum_{x \in E} f(x) \leq M$. Then $|E| < nM$. Thus, $X_n$ is countable. Then $\bigcup_{n \in \NN} X_n  = \{x \in X : f(x) > 0\}$ is countable.
 \end{proof}
+\section{2/15 -  LIMIT  !!!!!!!!!}
+
+\ex{}{\begin{itemize}
+    \item Let $f(x) = \frac{xy}{x^2y^2}$. Find $\lim_{(x, y) \to (0, 0)} f(x, y)$. If we take the restriction $y = mx$, we see that the limit depends on $m$ which is a contradiction.
+    \item Let $f(x, y) = \frac{x^2y}{x^2 + y^2}$. Find $\lim_{(x, y) \to (0, 0)} f(x, y)$. We can use polar coordinates to show that this is $0$. 
+\end{itemize}}
+
+\section{This Theorem}
 \thm{}{Take $I \subseteq \RR$ to be an interval with $f: I \to \RR$ increasing. Then for all but countably many $x_0 \in I$, there is $\lim_{{x\to x_0}^-} f(x) =\lim_{{x\to x_0}^+} f(x) = f(x_0)$. }
 \begin{proof}
-    Let $x_0 \in I$.
+    Let $I = [a,b]$. For every $x \in (a, b)$, there exists \[\lim_{y \to x^+} =: f_+(x), \quad \lim_{y \to x^-} =: f_-(x).\]
+    Let $S(x) = f_+(x) - f_-(x) \geq 0$, which is the jump of $f$ at $x$. Then we have that $\lim_{y \to x} f(y) = f(x) \iff S(x) = 0$. Let $J \in [a, b]$ be any finite subset, and write \[J = \{x_1, \ldots, x_k\}, \quad \text{where} x_1 < 
+    \cdots < x_k.\]
+    Since $f$ is increasing, we have that 
+    \begin{align*}
+        f(a) \leq f_-(x_1) \leq f_+(x_1) \leq f_-(x_2) \leq f_+(x_2) \leq \cdots \leq f_-(x_k) \leq f_+(x_k) \leq f(b).
+    \end{align*}
+    So, 
+    \begin{align*}
+        \sum_{x \in J} S(x) = \sum_{x \in J} f_+(x) - f_-(x) \leq f(b) - f(a),
+    \end{align*}
+    which implies that $\sum_{x \in (a, b)} S(x) \leq f(b) - f(a)$. It follows that the amount of discontinuities is countable.
+\end{proof}
+\chapter{}
+\dfn{Series}{Given a normed space $X$ and a sequence $\{x_n\}_n$, of vectors in $X$, we call the $n$th-partial sum the vector $s_n = \sum_{k=1}^n x_k$. The sequence $\{s_n\}_n$ of partial sums is called infinite series or \emph{series} and is denoted $\sum_{n=1}^\infty x_n$.
+
+If there exists $\lim_{n \to \infty} s_n = s \in X$, then we say that the series $\sum_{n=1}^\infty x_n$ \emph{converges} to $s$ and $s$ is called the \emph{sum} of the series. If the limit does not converge, we say the series \emph{oscillates}.}
+
+\section{More Series}
+\thm{}{Let $X$ be a normed space. Consdier the series $\sum_{n=1}^\infty x_n$. If the series converges, then $\lim_{n \to \infty} x_n = 0$.}
+\begin{proof}
+    We know by the hypothesis that $s_n = x_1 + \cdots  + x_n$. Also $s_n \to s$ as $n \to \infty$. As such, we can write $x_n = s_n - s_{n-1}$ where both values on the RHS tend to $s$, meaning that $x_n$ tends to 0 as $n\to \infty$. 
+\end{proof}
+\nt{The above theorem is often useful to negate. In the exercises, we can also use teh fact that i $\lim_{n \to \infty}$ does not exists or does not equal 0, then $\sum_{n=1}^\infty x_n$ cannot converge. 
+
+Also important to note that this series is very much one directional. For example, consider the following sums:
+\begin{align*}
+    \sum_{n=1}^\infty \frac{1}{n} &\text{ diverges} \\
+    \sum_{n=1}^\infty \frac{1}{n^2} &\text{ converges}
+\end{align*}
+However, both values here tend to $0$ as $n \to \infty$.}
+
+\ex{Geometric Series}{Consider $\sum_{n=1}^\infty x^n$. We know that $\lim_{n\to \infty} x^n = 0$ iff $|x| < 1$. So if $|x| \geq 1$, then the series does not converge. The theorem above does not help us for the $|x| < 1$ case. So let's compute the partial sum:
+\begin{align*}
+    s_n &= \sum_{k=1}^n x^k \\
+    &= \frac{x^{n+1} - x}{x-1}
+\end{align*}
+So we have that $\lim_{n \to \infty} s_n = \frac{x}{1-x}$ for $|x| < 1$.}
+\ex{}{Consider $X = \ell^\infty(E) = \{f : E \to \RR \text{ bounded}\}$ for $E \subseteq \RR$. The norm here is the supremum norm. Consider the series $\sum_{n=1}^\infty f_n(x)$ of random functions in $X$. We need to check that \[ \sup_{x \in E} |f_n(x)| \to 0 \text{ as } n \to \infty\] for the series to converge. If the limit $\neq 0$, then the series does not converge.}
+\ex{Combining the above}{Let our space be $\ell^\infty((-1, 1))$ and consider the series $\sum_{n=1}^\infty f_n(x)$ where $f_n(x) = x^n$. We know that $\sup_{x \in (-1, 1)} |x^n| = 1$ for all $n$. Thus, the series does not converge.}
+
+\thm{}{Consider a series of nonnegative terms $\sum_{n=1}^\infty x_n$ in $\RR$. Either the series converges or diverges to $+\infty$. }
+\begin{proof}
+    We know that $s_{m+1} \geq s_m$ for all $m$ and that these values are increasing, so $\lim_{m \to \infty} s_n = \sup_{n}s_n \in [0, \infty]$. 
+\end{proof}
+\thm{Comparison Test}{Let $\sum_{n=1}^\infty x_n$ and $\sum_{n=1}^\infty y_n$ be series of nonnegative terms in $\RR$. Assume that $0 \leq x_n \leq y_n$ for all $n \geq N$ for some $N$. If $\sum_{n=1}^\infty y_n$ converges, then $\sum_{n=1}^\infty x_n$ converges. If $\sum_{n=1}^\infty x_n$ diverges, then $\sum_{n=1}^\infty y_n$ diverges.}
+\begin{proof}
+    Consider the first case. So let $s_n = y_1 + \cdots + y_n$. Let $t_n = x_1 + \cdots + x_n$. Then $s_n \geq t_n$ for all $n \geq N$, so we can also say that:
+    \begin{align*}
+        t_n = x_1 + \cdots + x_N + x_{N+1} + \cdots + x_n &\leq x_1 + \cdots + x_N + y_{N+1} + \cdots y_n \\
+        &=x_1 + \cdots + x_N + y_{N+1} + \cdots y_n  + (y_1 + \cdots + y_N) - s_N\\
+    \end{align*}
+\end{proof}
+
+\ex{Examples}{
+    \begin{enumerate}
+        \item $\sum_{n=1}^\infty \left(\frac{1 + \cos n}{3}\right)^n$. We know that $\lim_{n \to \infty} \left(\frac{1 + \cos n}{3}\right)^n = 0$ so the series isn't divergent.
+        
+        We will compare it to $0 \leq \left(\frac{1 + \cos n}{3}\right)^n \leq \left(\frac{2}{3}\right)^n$. We know that $\sum_{n=1}^\infty \left(\frac{2}{3}\right)^n$ converges, so the series $\sum_{n=1}^\infty \left(\frac{1 + \cos n}{3}\right)^n$ converges by the comparison test.
+        \item $\sum_{n=1}^\infty 1 - \cos \frac{1}{3^n}$. We know that $\lim_{n \to \infty} 1 - \cos \frac{1}{3^n} = 0$ so the series isn't divergent.
+        
+        We have that $\lim_{t \to 0} \frac{1-\cos t}{t} = 0$. Take $\epsilon = 1$ and find $\delta > 0$ such that $\left| \frac{1 - \cos t}{t} - 0 \right| < 1$ for all $0 <  |t| < \delta$. We know that $-1 < \frac{1 - \cos t}{t} < 1$. Now take $1 - \cos \frac{1}{3^n}  < \frac{1}{3^n}$ for all $n$ such that $ \frac{1}{3^n} < \delta $. 
+
+        So, $1 - \cos \frac{1}{3^n} < \frac{1}{3^n}$ for all $ n > N$. THe RHS converges so by comparison test, the LHS converges.
+        \item $\sum_{n=1}^\infty \frac{\sin \frac{1}{n^3}}{\log \left( 1 + \frac{1}{n} \right)} \left( e^{1/m} - 1 \right)$. We know that $\sin \frac{1}{n^3} \sim \frac{1}{n^3}$, $\log\left( 1 + \frac{1}{n} \right) \sim \frac{1}{n}$ and $e^{1/n} - 1 \sim \frac{1}{n}$. So we have that $\frac{\sin \frac{1}{n^3}}{\log \left( 1 + \frac{1}{n} \right)} \left( e^{1/m} - 1 \right) \sim \frac{1}{n^3} \cdot \frac{1}{n} \cdot \frac{1}{n} = \frac{1}{n^3}$. 
+        \item Prove by induction that $n! > 2^n$ when $n \geq 4$. This implies that $\frac{1}{n!} \leq \frac{1}{2^n}$ for $n \geq 4$.  Since $\sum_{n=1}^\infty \frac{1}{2^n} < \infty$, comparison test tells us that $\sum_{n=0}^\infty \frac{1}{n!} < \infty$. The sum of the series is called \[e := \sum_{n=0}^\infty \frac{1}{n!}.\]
+    \end{enumerate}
+}
+
+\thm{Root Test}{Let $x_n \geq 0$. 
+\begin{enumerate}
+    \item If $\limsup_{n \to \infty} \sqrt[n]{x_n} < 1$, then $\sum_{n=1}^\infty x_n < \infty$. 
+    \item If $\limsup_{n\to \infty } \sqrt[n]{x_n} > 1$, then $\sum_{n=1}^\infty x_n = \infty$.
+    \item If $\limsup_{n\to \infty } \sqrt[n]{x_n} = 1$, then the test is inconclusive.
+\end{enumerate}}
+\begin{proof}
+    \begin{enumerate}
+        \item Let $\ell = \limsup_{n\to \infty} \sqrt[n]{x^n}$. Assume $\ell < 1$. Find $\epsilon > 0$ such that $\ell + \epsilon < 1$. Then there exists $N$ such that $\sqrt[n]{x_n} < \ell + \epsilon$ for all $n \geq N$. Then $\sqrt[n]{x_n} > \ell - \epsilon$ for infinitely many $n$. Taking the first inequality, we have that $x_n < (\ell + \epsilon)^n$ for all $n \geq N$. By the comparison test, we have that $\sum_{n=1}^\infty (\ell + \epsilon)^n$ converges, so $\sum_{n=1}^\infty x_n$ converges.
+        \item Assume $\ell > 1$. For $\epsilon > 0$ small, $(l - \epsilon) > 1$. So $x_n \geq (l - \epsilon)^n$ for infinitely many $n$. Since the RHS goes to infinity, a subsequence also goes to $\infty$, so $\lim_{n\to \infty} x_n \neq 0$ so the series cannot converge.
+    \end{enumerate}
+\end{proof}
+\ex{Inconclusive Root Test}{
+    Consider the series \[\sum_{n=1}^\infty \frac{1}{n} .\] Then, we have:
+    \begin{align*}
+        \sqrt[n]{\frac{1}{n}} = \left( \frac{1}{n}\right)^\frac{1}{n} = e^{\log\left(\frac{1}{n}\right)^\frac{1}{n}} = e^{\frac{\log\left(\frac{1}{n}\right)}{n}}
+    \end{align*}
+    The exponent goes to $0$, so the limit is 1.
+
+    Now consider the series \[\sum_{n=1}^\infty \frac{1}{n^2} .\] Then, we have:
+    \begin{align*}
+        \sqrt[n]{\frac{1}{n^2}} = \left( \frac{1}{n^2}\right)^\frac{1}{n} = e^{\log\left(\frac{1}{n^2}\right)^\frac{1}{n}} = e^{\frac{\log\left(\frac{1}{n^2}\right)}{n}}
+    \end{align*}
+    The exponent goes to $0$, so the limit is 1.
+
+    We see that the first series diverges and the second series converges, so the root test is inconclusive when the $\limsup$ is 1. 
+}
+\ex{More Root Test}{Consider the series \[\sum_{n=1}^\infty \frac{n^2+1}{2^n}.\] We have that $\lim_{n \to \infty} \frac{n^2+ 1}{2^n} = 0$, so the series isn't divergent. Consider the root test now. We have that \[\sqrt[n]{\frac{n^2+1}{2^n}} =  \frac{\sqrt[n]{n^2+1}}{2} =\frac{1}{2}e^{\frac{1}{n}\log(n^2+1)} \to \frac{1}{2}e^0 = \frac{1}{2} < 1.\] So the series converges.}
+
+\exer{}{Let $x_n \geq 0$. Prove that \[\liminf_{n\to \infty} \frac{x_{n+1}}{x_n} \leq \liminf_{n\to \infty} \sqrt[n]{x_n} \leq \limsup_{n\to \infty} \sqrt[n]{x_n} \leq \limsup_{n\to \infty } \frac{x_{n+1}}{x_n}.\]
+Find an example where the last inequality is strict:
+\[\limsup_{n\to \infty} \sqrt[n]{x_n} < \limsup_{n\to \infty } \frac{x_{n+1}}{x_n}.\]
+An example is \[x_n = \begin{cases} 1 & n \text{ odd} \\ 2 & n \text{ even} \end{cases}.\]}
+\dfn{Ratio Test}{Let $x_n > 0$. 
+\begin{enumerate}
+    \item If $\limsup_{n\to \infty} \frac{x_{n+1}}{x_n} < 1$, then the series converges.
+    \item If $\liminf_{n \to \infty} \frac{x_{n+1}}{x_n} > 1$, then the series diverges.
+\end{enumerate}}
+\begin{proof}
+\begin{enumerate}
+    \item This is a one-line proof. If the limit is less than 1, then the series converges by the root test by the exercise above. That is $, \limsup_{n\to \infty} \frac{x_{n+1}}{x_n} < 1 \implies \limsup_{n\to \infty} \sqrt[n]{x_n} < 1$.
+    \item This is also a one-line proof. If the limit is greater than 1, then the series diverges by the root test by the exercise above. That is, $\liminf_{n \to \infty} \frac{x_{n+1}}{x_n} > 1 \implies \limsup_{n\to \infty} \sqrt[n]{x_n} > 1$.
+\end{enumerate}    
+\end{proof}
+\ex{}{Consider the sequence:
+\[x_n = \begin{cases} \frac{1}{2^n} & n \text{ odd} \\ \frac{1}{3^n} & n \text{ even} \end{cases}.\]
+We have that $\limsup_{n\to \infty} \frac{x_{n+1}}{x_n} = \infty$ and that $\liminf_{n \to \infty} \frac{x_{n+1}}{x_n} = 0$. As such, we cannot apply the ratio test in this case. We try the root test instead.
+
+We have that $\limsup_{n\to \infty} \sqrt[n]{x_n} = \frac{1}{2}$ and that $\liminf_{n\to \infty} \sqrt[n]{x_n} = \frac{1}{3}$. Because of the first one, we know that the series converges.}
+
+\dfn{Integral Test}{Let $f: [1, \infty) \to [0, \infty)$ be a decreasing function in $[N, \infty)$. Then the series $\sum_{n=1}^\infty f(n)$ converges if and only if $\lim_{L \to \infty}\int_1^L f(x) \, dx$ converges.}
+\begin{proof}
+    We start with the forward direction. Consider $\int_{N}^\ell f(x)\, dx$ for integer $\ell$. We have:
+    \begin{align*}
+        \int_{N}^\ell f(x)\, dx &= \sum_{n=N}^{\ell-1} \int_n^{n+1} f(x)\, dx \\
+    \end{align*}
+    If $n \leq x \leq n+1$ and $f$ decreasing, we have that $f(n+1) \leq f(x) \leq f(n)$. For each $n$, we have:
+    \begin{align*}
+        \sum_{n=N}^{\ell-1} \int_n^{n+1} f(x)\, dx \leq \sum_{n=N}^{\ell-1}f(n)
+    \end{align*}
+    If $\lim_{\ell \to \infty} \int_{N}^\ell f(x)\, dx$ diverges, then $\sum_{n=N}^\infty f(n)$ diverges. So, 
+    \begin{align*}
+        \int_N^\ell f(x)\, dx &= \sum_{n=N}^{\ell-1} \int_n^{n+1} f(x)\, dx \\
+        &\geq \sum_{n=N}^{\ell-1} f(n+1)
+    \end{align*}
+    So if $\lim_{\ell \to \infty} \int_{N}^\ell f(x)\, dx$ converges, then $\sum_{n=N}^\infty f(n)$ converges since it is less than or equal to.
+\end{proof}
+
+% \section{2/22 - Uniform Convergence}
+% \dfn{Uniform Convergence}{Let $E$ be a set and take $\ell^\infty(E) = \{f : E \to \RR \text{ bounded}\}$. $\Vert f \Vert_\infty = \sup_{x \in E} |f(x)| < \infty$. Let $\{f_n\}_n \subset \ell^\infty(E)$, $f \in \ell^\infty(E)$. We say that $f_n \to f$ \emph{uniformly} when $\lim_{n \to \infty} \Vert f_n - f \Vert_\infty  = \lim_{n \to \infty} d(f_n, f)= 0$.}
+% \nt{If $x \in E$, then $|f_n(x) - f(x)| \leq \Vert f_n - f \Vert_\infty$. This means that uniform convergence implies pointwise convergence. However, it is important to note that the converse is not true. That is, pointwise convergence does not imply uniform convergence. Here is an example. Let:
+% \[f_n(x) = x^n \quad f(x) = \begin{cases} 0 & x \in [0, 1) \\ 1 & x = 1 \end{cases}.\]
+% }
+% \ex{}{Consider the following sequences:
+% \begin{itemize}
+%     \item $f_n(x) = n^2(x-1)e^{-n(x-1)}$. Find the largest set $E_\circ \subseteq \RR$ where $f_n$ converges pointwise.
+%     \begin{itemize}
+%         \item For $x=1$, $f_n(1) = 0\, \forall \, n \in \NN$, so $\lim_{n\to \infty} f_n(1) = 0$.
+%         \item For $x > 1$, $f_n(x) = \frac{n^2(x-1)}{e^{n(x-1)}} \to 0$ as $n \to \infty$.
+%         \item For $x < 1$, $f_n(x) = \frac{-n^2(x-1)}{e^{n(x-1)}} \to -\infty$ as $n \to \infty$.
+%     \end{itemize}
+%     So, $E_\circ = [1, \infty)$.
+%     \item Sketch the graph of $f_n - f$ in $E_\circ$.
+% \end{itemize}}
+
+\section{More Series}
+\ex{Integral Test}{Consider:
+    \begin{itemize}
+        \item $\sum_{n=1}^\infty \frac{1}{n^a}$ for $a > 0$ First we check that $\lim_{n \to infty} \frac{1}{n^a} = 0$. This is indeed true. Now we define $f(x) = \frac{1}{x^a}$ for $x > 0$. This function is decreasing, so we can use the integral test. We have:
+        \begin{align*}
+            \int_1^\infty \frac{1}{x^a}\, dx &= \lim_{L \to \infty} \int_1^L \frac{1}{x^a}\, dx \\
+            &= \lim_{L \to \infty} \left[ \frac{x^{1-a}}{1-a} \right]_1^L \\
+            &= \lim_{L \to \infty} \left[ \frac{L^{1-a}}{1-a} - \frac{1}{1-a} \right] \\
+            &= \frac{-1}{a-1} \quad \text{if } a > 1
+            &= \infty \quad \text{if } a < 1
+        \end{align*}
+        If $a = 1$, then we have:
+        \begin{align*}
+            \int_1^\infty \frac{1}{x}\, dx &= \lim_{L \to \infty} \int_1^L \frac{1}{x}\, dx \\
+            &= \lim_{L \to \infty} \left[ \log(x) \right]_1^L \\
+            &= \lim_{L \to \infty} \left[ \log(L) - \log(1) \right] \\
+            &= \infty
+        \end{align*}
+        So, the series converges if $a > 1$ and diverges if $a \leq 1$.
+        \item $\sum_{n=2}^\infty \frac{1}{n^a \log n}$. We have that $\lim_{n \to \infty} \frac{1}{n^a \log n} = 0$. We define $f(x) = \frac{1}{x^a \log x}$ for $x > 2$. This function is decreasing, so we can use the integral test. We have:
+        \begin{align*}
+            \int_2^\infty \frac{1}{x^a \log x}\, dx &= \lim_{L \to \infty} \int_2^L \frac{1}{x^a \log x}\, dx \\
+            &= \lim_{L \to \infty} \left[ \frac{\log(\log(x))}{1-a} \right]_2^L \\
+            &= \lim_{L \to \infty} \left[ \frac{\log(\log(L))}{1-a} - \frac{\log(\log(2))}{1-a} \right] \\
+            &= \infty \quad \text{if } a > 1
+        \end{align*}
+    \end{itemize}
+}
+\dfn{Alternating Series}{Let $\{a_n\}_n$ be a sequence of positive numbers. The series $\sum_{n=1}^\infty (-1)^{n+1}a_n$ is called \emph{Alternating}}
+\thm{Leibniz Test}{Consider $\sum_{n=1}^\infty (-1)^n a_n$ where $a_n \geq 0$. \begin{enumerate}
+    \item If $\{a_n\}_n$ is decreasing and $\lim_{n \to \infty} a_n = 0$, then the series converges.
+    \item If $\{a_n\}_n$ is decreasing and $\lim_{n \to \infty} a_n > 0$, then the series diverges.
+\end{enumerate}}
+\begin{proof}
+    We are going to consider the even partial sum and the odd partial sum. So, we have:
+    \begin{align*}
+        S_{2n + 1} &= -a_1 + (a_2 - a_3) + \cdots + (a_{2n - 2} - a_{2n - 1}) + (a_{2n} - a_{2n + 1}) \\
+        & = S_{2n - 1} + (a_{2n} - a_{2n + 1})
+    \end{align*}
+    This shows that $S_{2n + 1} \geq S_{2n - 1}$. So, $\exists \lim_{n \to \infty} S_{2n + 1} = S$. Then we have:
+    \begin{align*}
+        S_{2n + 1} &= -(a_1 - a_2) - (a_3 - a_4) - \cdots - (a_{2n - 1} - a_{2n}) - a_{2n + 1}\\
+        &\leq 0 + 0 + \cdots + 0 - a_{2n + 1} \leq 0 \\
+        &\implies S_{2n + 1} \leq a_{2n + 1}
+    \end{align*}
+    CONTINUE LATER 
+\end{proof}
+\cor{}{Also if an alternating series converges, then the remainder $R_n = |S - S_n|$ satisfies $0 \leq R_n \leq a_{2n+1}$.}
+\begin{proof}
+    We have that $S_{2n + 1} \leq S$ and that $S_{2n}$ is decreasing. So $S = \inf_{n \in \NN} S_{2n}$, so $S \leq S_{2n}$. This yields $|S - S_{2n} | = S_{2n} - S \leq S_{2n} - S_{2n + 1} = a_{2n + 1}$. For the other case, we have $|S - S_{2n+1}| + S - S_{2n+1} \leq S_{2n+2} - S_{2n + 1} \leq a_{2n+2}$.
+\end{proof}
+\ex{}{Consider the sequence \[ \sum_{n=1}^\infty (-1)^n \frac{n \log n}{1 + n^2}. \] We consider $\lim_{n \to \infty} \frac{n \log n}{1 + n^2}$. This is similar to the limit of $\frac{\log n}{n}$, which diverges. So by comparison test, our limit diverges. So we have:
+\begin{align*}
+    f(x) &= \frac{x \log x}{1 + x^2} \\
+    f'(x) &= \frac{\log x + 1}{x^2 + 1} - \frac{2x^2 \log x}{(x^2 + 1)^2}
+\end{align*}
+We can somehow show that $f'(x) < 0$ for all $x \geq N$ for some $N$}
+
+\newpage 
+\thm{}{Let $E, \ell^\infty(E) = \{f : E \to \RR \text{ bounded}\}$. Let $\{f_n\}_n \subset \ell^\infty(E)$ and $f \in \ell^\infty(E)$. 
+\begin{enumerate}
+    \item If $\sum_{n=1}^\infty \sup_{x \in E}|f_n(x)| < \infty$, then $\sum_{n=1}^\infty f_n(x)$ converges uniformly in $E$.
+    \item If $\sum_{n=1}^\infty f_n(x)$ converges uniformly to $f$, then $\lim_{n \to \infty} \sup_{x \in E}|f_n(x)| = 0$.
+\end{enumerate}}
+\ex{}{
+    \begin{enumerate}
+        \item Consider the series $\sum_{n=1}^\infty \frac{e^{nx}}{n}$, for $x \in \RR$.
+        
+        $\frac{e^{nx}}{n} > 0 \, \forall x \in \RR$.
+        \begin{itemize}
+            \item For $x = 0$, we have $\sum_{n=1}^\infty \frac{1}{n} = \infty$.
+            \item For $x > 0$, we have $\lim_{n\to \infty} \frac{e^{nx}}{n} = \infty$.
+            \item For $x  < 0$, $\left(\frac{e^{nx}}{n}^{1/n}\right) = \frac{e^x}{n^{1/n}} \to e^x$ as $ n \to infty$. 
+        \end{itemize}
+        This shows that there is pointwise convergence when $x  < 0$. So if we want to determine a subset were there is uniform convergence, then we have to consider only $x \in (-\infty, 0)$.
+
+        So consider $E = (-\infty ,-\epsilon)$ for some $\epsilon > 0$. Consider the sequence of functions defined as \[f_n(x) = \frac{e^{nx}}{n}\] for $x \in E$. Then we have:
+        \[f_n'(x) = e^{nx} > 0 \implies \sup_{x \in E}|f_n(x)| = \frac{e^{-n\epsilon}}{n}\]
+        So, by our theorem, we have that $\sum_{n=1}^\infty \frac{e^{nx}}{n}$ converges uniformly in $E$.
+        \item Consider $\sum_{n=1}^\infty \frac{x^{2n}}{\sqrt[3]{n}} \log\left( 1 + \frac{x^2}{\sqrt[3]{n}}\right)$, for $x \in \RR$. 
+        
+        \begin{itemize}
+            \item for $x = 0$, it converges to 0.
+            \item for $|x| > 1$, we have that \begin{align*}
+                \lim_{n\to \infty} \frac{x^{2n}}{\sqrt[3]{n}} \log\left( 1 + \frac{x^2}{\sqrt[3]{n}}\right) = \lim_{n \to \infty} \frac{x^{2n+2}}{n^{2/3}} \frac{\log\left( 1 + \frac{x^2}{\sqrt[3]{n}}\right)}{x^2/\sqrt[3]{n}} = \infty
+            \end{align*}
+            \item for $|x| < 1$, $\lim_{n \to \infty} \frac{x^{2n}}{\sqrt[3]{n}} \log\left( 1 + \frac{x^2}{\sqrt[3]{n}}\right) = 0$
+        \end{itemize}
+        \item Consider $\sum_{n=1}^\infty \frac{x^n}{n}$ for $x \geq 0$.
+        \begin{itemize}
+            \item for $x = 0$, there is pointwise convergence .
+            \item for $x \geq 1$, there is no pointwise convergence.
+            \item For $x \in (0, 1)$, we have that $\lim_{n \to \infty} \frac{x^n}{n} = 0$.
+        \end{itemize}
+    \end{enumerate}
+}
+\newpage
+\thm{}{Take some $x_n \in \RR$ and consider the series $\sum_{n=1}^\infty$. If $\sum_{n\to \infty} |x_n|$ converges, then $\sum_{n=1}^\infty x_n$ converges.}
+\nt{The converse isn't true. Consider the alternating version of the harmonic series.}
+\dfn{}{Let $t \in \RR$. We define:
+\begin{align*}
+    t^+ &= \max(t, 0) \\
+    t^- &= \max(-t, 0)
+\end{align*}
+From these, we derive:
+\begin{align*}
+    |t| = t^+ + t^-  \quad \text{and} \quad t = t^+ - t^-
+\end{align*}}
+\begin{proof}
+    We have $0 \leq x_n^+ \leq |x_n|$. By comparison test, we have that $\sum_{n=1}^\infty x_n^+$ converges. We also have $0 \leq x_n^- \leq |x_n|$. By comparison test, we have that $\sum_{n=1}^\infty x_n^-$ converges. Remember that by the limit of the sum,
+    \begin{align*}
+        \sum_{n=1}^\infty x_n^+ &= \lim_{\ell \to \infty}\sum_{n=1}^\ell x_n^+ \\
+        \sum_{n=1}^\infty x_n^- &= \lim_{\ell \to \infty}\sum_{n=1}^\ell x_n^-
+    \end{align*}
+    So, we have that $$\sum_{n=1}^\infty x_n = 
+    \lim_{\ell \to \infty}\sum_{n=1}^\ell x_n^+ -  x_n^- = \lim_{\ell \to \infty} \sum_{n=1}^\ell x_n$$. 
+\end{proof}
+\thm{}{Let $E$ be a set and $\ell^\infty(E) = \{f : E \to \RR \text{ bounded}\}$. Let $\{f_n\}_n \subset \ell^\infty(E)$ and $f \in \ell^\infty(E)$. Then,
+\begin{enumerate}
+    \item If $\sum_{n = 1}^\infty \sup_{x \in E}|f_n(x)| < \infty$, then $\sum_{n=1}^\infty f_n(x)$ converges uniformly in $E$.
+    \item If $\sum_{n=1}^\infty f_n(x)$ converges uniformly to $f$, then $\lim_{n \to \infty} \sup_{x \in E}|f_n(x)| = 0$.
+\end{enumerate}}
+\begin{proof}
+    Let $a_n = \sup_{x \in E}|f_n(x)|$. We know that the sum of the $a_n$ converges in $\RR$. Fix an $x \in E$. We have that $0 \leq |f_n(x)| \leq a_n$. By the comparison test, we have that $\sum_{n=1}^\infty |f_n(x)|$ converges pointwise. So by the previous theorem, $\sum_{n=1}^\infty f_n(x)$ converges pointwise in $\RR$. This isn't good enough; we want uniform convergence. That is, we want:
+    \begin{align*}
+        \Vert f - \sum_{n = 1}^\infty f_n \Vert_\infty \to 0
+    \end{align*}
+    FINSIH THIS LATER
+\end{proof}
+\dfn{Continuity}{Let $(X, d_x)$ and $(Y, d_Y)$ be metric spaces. Let $E \subseteq X$ and $f: E \to Y$. Let $x_0 \in E$ and assume $x_0 \in \operatorname{acc}E$. We say that $f$ is continuous at $x_0$ if there is $\lim_{x \to x_0} f(x) = f(x_0)$. We say that $f$ is continuous on $E$ if $f$ is continuous at all $x_0 \in E$.
+
+We denote $C(E)$ as the continuous functions on $E$.}
+\ex{}{\begin{enumerate}
+    \item Consider sequences. That is, $f \NN \to \RR$. This is continous because $\NN \cap \operatorname{acc}\NN = \emptyset$.
+    \item If we have $f: [0, 1] \cup \{3\} \to \RR$, we only check continuity at $x_0 \in [0, 1]$. $f$ is continuous at 3.
+    \item The sum, product, quotient (denominator nonzero), and composition of two continuous functions is continuous.
+\end{enumerate}}
+\exer{Continuity}{
+    \begin{itemize}
+        \item $x^n$ continuous
+        \item $\sin(x)$ continuous
+        \item $\cos(x)$ continuous
+    \end{itemize}
+}
+\dfn{Relatively Open}{Let $(X, d_X)$ be a metric space and $E \subseteq X$. We say that $F \subseteq E$ is \emph{relatively open} in $E$ if $F = E \cap U$ with $U$ open.}
+\thm{}{Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. Let $E \subseteq X$ and $f: E \to Y$. Then $f$ is continuous on $E$ if and only if for all open sets $V \subseteq Y$, $f^{-1}(V)$ is relatively open in $E$.}
+
+\ex{}{Let $F = \{(x, y) \in \RR^2 : x + \sin y > 4 \}$.Then $f(x,y) = x + \sin y$ is continuous because $F = f^{-1}((4, \infty))$.}
+
+\begin{proof}
+    We start with the forward direction. Assume that $f$ is continuous on $E$. Let $V \subseteq Y$ be open. Consider $f^{-1}(V)$. If $V \neq \emptyset$, let $x_0 \in f^{-1}(V)$. Then $f(x_0) \in V$. Find $B_Y(f(x_0), \epsilon) \subseteq V$. If $x_0 \in \operatorname{acc}E$, then we can find $\delta > 0$ such that if $x \in E$ and $d_X(x, x_0) < \delta$, then $d_Y(f(x), f(x_0)) < \epsilon$. So if $x \in B(x_0, \delta) \cap E$, then $f(x) \in B_Y(f(x_0), \epsilon) \subseteq V$. So $B(x_0, \delta) \cap E \subseteq f^{-1}(V)$.
+
+    If $x_0$ isn't an accumulation point, then there exists $\delta > 0$ such that $B(x_0, \delta) \cap E = \{x_0\}$. So $f^{-1}(V) = \{x_0\}$. 
+    
+    So we just have $f^{-1}(V) = E \cap \bigcup_{x \in E} B(x, \delta_x)$. So $f^{-1}(V)$ is relatively open in $E$.
+
+    For the backward direction, assume that $f^{-1}(V)$ is relatively open for all $V \subseteq Y$ that are open. We want to show that $f$ is continuous. Let $x_0 \in E \cap \operatorname{acc}E$. We want to show that the limit as $x \to x_0$ of $f(x)$ is $f(x_0)$. Take $V = B_Y(f(x_0), \epsilon)$. Since $f^{-1}(V)$ is relatively open, $f^{-1}(B(f(x_0), \epsilon)) = E \cap U$ for some open $U$. So $x_0 \in U$, so there exists $\delta > 0$ such that $B(x_0, \delta) \cap E \subseteq U$. So if $x \in B(x_0, \delta) \cap E$, then $f(x) \in B_Y(f(x_0), \epsilon)$. So $\lim_{x \to x_0} f(x) = f(x_0)$ because $d(f(x), f(x_0)) < \epsilon$.
+\end{proof}
+\newcommand{\acc}{\operatorname{acc}}
+
+\thm{}{Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. Take $ K \subseteq X$ that is sequentially compact and $f: K \to Y$ that is continuous. Then $f(K)$ is sequentially compact.}
+\begin{proof}
+    Let $y_n \in f(K)$. Then there exists $x_n \in K$ such that $f(x_n) = y_n$. Since $K$ is sequentially compact, there exists a subsequence $\{x_{n_k}\}_k$ that converges to $x \in K$. Since $f$ is continuous, we have that $f(x_{n_k}) \to f(x)$ if $x \in \operatorname{acc}E$. If $x \notin \acc E$, then it is a constant sequence and we are done. So $f(x) \in f(K)$. 
 \end{proof}
 
 \end{document}
