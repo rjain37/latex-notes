@@ -795,11 +795,18 @@ So we have that $\lim_{n \to \infty} s_n = \frac{x}{1-x}$ for $|x| < 1$.}
 \end{proof}
 \thm{Comparison Test}{Let $\sum_{n=1}^\infty x_n$ and $\sum_{n=1}^\infty y_n$ be series of nonnegative terms in $\RR$. Assume that $0 \leq x_n \leq y_n$ for all $n \geq N$ for some $N$. If $\sum_{n=1}^\infty y_n$ converges, then $\sum_{n=1}^\infty x_n$ converges. If $\sum_{n=1}^\infty x_n$ diverges, then $\sum_{n=1}^\infty y_n$ diverges.}
 \begin{proof}
-    Consider the first case. So let $s_n = y_1 + \cdots + y_n$. Let $t_n = x_1 + \cdots + x_n$. Then $s_n \geq t_n$ for all $n \geq N$, so we can also say that:
+    Consider the first case. So let $s_n = \sum x_n$ and $t_n = \sum y_n$. Since $y_n$ converges, $\lim t_n = T$ exists, so $t_n$ is bounded by $T$. Then for all $n \geq N$:
     \begin{align*}
-        t_n = x_1 + \cdots + x_N + x_{N+1} + \cdots + x_n &\leq x_1 + \cdots + x_N + y_{N+1} + \cdots y_n \\
-        &=x_1 + \cdots + x_N + y_{N+1} + \cdots y_n  + (y_1 + \cdots + y_N) - s_N\\
+        s_n &:= x_1 + \cdots + x_{N-1} + x_N + \cdots + x_n \\
+        &\leq x_1 + \cdots x_{N-1} + y_N + \cdots + y_n \\
+        &\leq x_1 + \cdots + x_{N-1} + T
     \end{align*}
+    Hence, $\{s_n\}$ is bounded and increasing, so it converges.
+
+    For the second case, we have that $s_n \to \infty$. So since \begin{align*}
+        s_n \leq (x_1  +\cdots + x_{N-1}) + t_n
+    \end{align*}
+    we have that $t_n \to \infty$ as $n \to \infty$. 
 \end{proof}
 
 \ex{Examples}{
@@ -931,23 +938,30 @@ We have that $\limsup_{n\to \infty} \sqrt[n]{x_n} = \frac{1}{2}$ and that $\limi
     \end{itemize}
 }
 \dfn{Alternating Series}{Let $\{a_n\}_n$ be a sequence of positive numbers. The series $\sum_{n=1}^\infty (-1)^{n+1}a_n$ is called \emph{Alternating}}
-\thm{Leibniz Test}{Consider $\sum_{n=1}^\infty (-1)^n a_n$ where $a_n \geq 0$. \begin{enumerate}
-    \item If $\{a_n\}_n$ is decreasing and $\lim_{n \to \infty} a_n = 0$, then the series converges.
-    \item If $\{a_n\}_n$ is decreasing and $\lim_{n \to \infty} a_n > 0$, then the series diverges.
-\end{enumerate}}
+\thm{Leibniz Test}{Consider $\sum_{n=1}^\infty (-1)^n a_n$ where $a_n \geq 0$.
+    If $\{a_n\}_n$ is decreasing and $\lim_{n \to \infty} a_n = 0$, then the series converges and $|S - s_n| \leq a_{n+1}$ for all $n$.}
 \begin{proof}
-    We are going to consider the even partial sum and the odd partial sum. So, we have:
+    Write
     \begin{align*}
-        S_{2n + 1} &= -a_1 + (a_2 - a_3) + \cdots + (a_{2n - 2} - a_{2n - 1}) + (a_{2n} - a_{2n + 1}) \\
-        & = S_{2n - 1} + (a_{2n} - a_{2n + 1})
+        s_{2n + 1} &= -a_1 + (a_2 - a_3) + (a_4 - a_5) + \cdots + (a_{2n} - a_{2n + 1}) \\
+        &= -(a_1 - a_2) - (a_3 - a_4) - \cdots - (a_{2n-1} - a_{2n}) - a_{2n+1} 
     \end{align*}
-    This shows that $S_{2n + 1} \geq S_{2n - 1}$. So, $\exists \lim_{n \to \infty} S_{2n + 1} = S$. Then we have:
+    Since $a_n$ is decreasing, we have that $a_i - a_{i-1} \geq 0$. And from the first equality, we get that $s_{2n+1} \leq s_{2n+3}$, meaning that $s_{2n + 1}$ is an increasing sequence. But from the second equality, we get that $s_{2n+1} \leq -a_{2n+1} \leq 0$. So, there exists:
     \begin{align*}
-        S_{2n + 1} &= -(a_1 - a_2) - (a_3 - a_4) - \cdots - (a_{2n - 1} - a_{2n}) - a_{2n + 1}\\
-        &\leq 0 + 0 + \cdots + 0 - a_{2n + 1} \leq 0 \\
-        &\implies S_{2n + 1} \leq a_{2n + 1}
+        \lim_{n \to \infty} s_{2n+1} = \sup_n s_{2n+1} = S \in (-\infty, 0]
     \end{align*}
-    CONTINUE LATER 
+    Since $s_{2n+1} = s_{2n} + a_{2n+1}$ and $\lim_{n\to\infty} a_n = 0$, we have that $\lim_{n\to\infty} s_{2n} = S$. So, the series converges.
+
+    Moreover, we have that: 
+    \begin{align*}
+        s_{2n} = -(a_1 - a_2) - (a_3 - a_4) - \cdots - (a_{2n-1} - a_{2n}),
+        \end{align*}
+        which implies that $s_{2n} \geq s_{2n+2}$, meaning that $s_{2n}$ is a decreasing sequence. So $\inf_n s_{2n} = S \in (-\infty, 0]$. Therefore, $s_{2n+1} \leq S \leq s_{2n}$. It follows that
+        \begin{align*}
+            |S - s_{2n}| &= s_{2n} - S \leq s_{2n} - s_{2n+1} = a_{2n+1} \\
+            |S - s_{2n+1}| &= s_{2n+1} - S \leq s_{2n+2} - s_{2n+1} = a_{2n+1}
+        \end{align*}
+        as desired.
 \end{proof}
 \cor{}{Also if an alternating series converges, then the remainder $R_n = |S - S_n|$ satisfies $0 \leq R_n \leq a_{2n+1}$.}
 \begin{proof}
@@ -964,7 +978,7 @@ We can somehow show that $f'(x) < 0$ for all $x \geq N$ for some $N$}
 \thm{}{Let $E, \ell^\infty(E) = \{f : E \to \RR \text{ bounded}\}$. Let $\{f_n\}_n \subset \ell^\infty(E)$ and $f \in \ell^\infty(E)$. 
 \begin{enumerate}
     \item If $\sum_{n=1}^\infty \sup_{x \in E}|f_n(x)| < \infty$, then $\sum_{n=1}^\infty f_n(x)$ converges uniformly in $E$.
-    \item If $\sum_{n=1}^\infty f_n(x)$ converges uniformly to $f$, then $\lim_{n \to \infty} \sup_{x \in E}|f_n(x)| = 0$.
+    \item If $\sum_{n=1}^\infty f_n(x)$ converges uniformly to $f$, then $\lim_{n \to \infty} \sup_{x \in E}|f_n(x)| = 0$. 
 \end{enumerate}}
 \ex{}{
     \begin{enumerate}
@@ -1017,7 +1031,8 @@ From these, we derive:
         \sum_{n=1}^\infty x_n^- &= \lim_{\ell \to \infty}\sum_{n=1}^\ell x_n^-
     \end{align*}
     So, we have that $$\sum_{n=1}^\infty x_n = 
-    \lim_{\ell \to \infty}\sum_{n=1}^\ell x_n^+ -  x_n^- = \lim_{\ell \to \infty} \sum_{n=1}^\ell x_n$$. 
+    \lim_{\ell \to \infty}\sum_{n=1}^\ell x_n^+ -  x_n^- = \lim_{\ell \to \infty} \sum_{n=1}^\ell x_n.$$
+    This implies that $x_n$ converges as desired.
 \end{proof}
 \thm{}{Let $E$ be a set and $\ell^\infty(E) = \{f : E \to \RR \text{ bounded}\}$. Let $\{f_n\}_n \subset \ell^\infty(E)$ and $f \in \ell^\infty(E)$. Then,
 \begin{enumerate}
@@ -1065,6 +1080,115 @@ We denote $C(E)$ as the continuous functions on $E$.}
 \thm{}{Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. Take $ K \subseteq X$ that is sequentially compact and $f: K \to Y$ that is continuous. Then $f(K)$ is sequentially compact.}
 \begin{proof}
     Let $y_n \in f(K)$. Then there exists $x_n \in K$ such that $f(x_n) = y_n$. Since $K$ is sequentially compact, there exists a subsequence $\{x_{n_k}\}_k$ that converges to $x \in K$. Since $f$ is continuous, we have that $f(x_{n_k}) \to f(x)$ if $x \in \operatorname{acc}E$. If $x \notin \acc E$, then it is a constant sequence and we are done. So $f(x) \in f(K)$. 
+\end{proof}
+\thm{Weierstrass Theorem}{Let $(X, d_X)$ be a metric space and $K \subseteq X$ that is sequentially compact. Let $f: K \to \RR$ be continuous. Then $f$ is bounded and attains its bounds.}
+\begin{proof}
+    We know that $f(K)$ closed and bounded by the previous theorem. As such, there exists $\sup f(K) = \ell \in \RR$. We want to show that this is the maximum. Consider $\ell - \frac{1}{n}$. This is not an upper bound for $f(K)$, so there exists $x_n \in K$ such that $f(x_n) > \ell - \frac{1}{n}$. Since $K$ is sequentially compact, there exists a subsequence $\{x_{n_k}\}_k$ that converges to $x \in K$. So, 
+    \begin{align*}
+        \ell - \frac{1}{n_k} < f(x_{n_k}) \leq \ell
+    \end{align*}
+    As $k \to \infty$, we have that $f(x_{n_k}) \to \ell$. So $f(x) = \ell$. So $f$ attains its maximum.
+\end{proof}
+
+\thm{Let $I \subseteq \RR$ be an interval and $f:I \to \RR$ continuous and assume there exist $x_1$ and $x_2$ such that $f(x_1) < 0 < f(x_2)$. Then there exists $x_0 \in I$ such that $f(x_0) = 0$.}
+
+\begin{proof}
+    Assume $x_1 < x_2$. So $
+    lim_{x \to x_1} = f(x_1) < 0$. Let $\epsilon = -f(x_1)/2$ to find $\delta_1 > 0$ such that $f(x) < 0$ in $[x_1, x_1 = \delta_1]$. 
+
+    We also have that $\lim_{x \to x_2} f(x) = f(x_2) > 0$. Let $\epsilon = f(x_2)/2 > 0$. So we can find $\delta_2 > 0$ such that $f(x) > 0$ in $[x_2 - \delta_2, x_2]$.
+
+    Consider the set $E = \{ x \in [x_1, x_2] : f(x) < 0\}$, which is bounded above by $x_2 - \delta_2$. So $\sup E = \ell \in [x_1 + \delta_2, x_2 - \delta-2]$ exists.
+    
+    We claim that $f(\ell) = 0$. If $f(\ell) < 0$, then by dfn of continuity, $f(\ell) = \lim_{x \to \ell} f(x)$. Take $\epsilon = -\ell / 2$ and find $\delta_3 > 0$ such that $f(x) < 0$ in $[\ell - \delta_3, \ell + \delta_3]$. So $\ell + \delta_3 \in E$, which is a contradiction because $\ell$ is a maximum. If $f(\ell) > 0$, then take $\epsilon = \ell / 2$ and find $\delta_4 > 0$ such that $f(x) > 0$ in $[\ell - \delta_4, \ell + \delta_4]$. So $\ell - \delta_4 \in E$, which is a contradiction because it is then a better lower bound than $\ell$. So $f(\ell) = 0$ by trichotomy.
+\end{proof}
+\cor{}{A polynomial of odd degree has at least one zero.}
+\begin{proof}
+    Consider $p(x)$ that has odd degree. WLOG assume the first coefficient is positive. So we have:
+    \begin{align*}
+        \lim_{x\to \infty} p(x) = \infty \quad \lim_{x \to -\infty} p(x) = -\infty
+    \end{align*}
+    By the previous theorem, we have that there exists $x_0 \in \RR$ such that $p(x_0) = 0$.
+\end{proof}
+
+\cor{}{Consider the interval $I \subseteq \RR$ with $f: I \to \RR$ continuous. Then $f(I)$ is an interval with endpoints $\inf f(I)$ and $\sup f(I)$.}
+\begin{proof}
+    Let $y_1, y_2 \in f(I)$ with $y_1 < y_2$ and let $y_1 < t < y_2$. Then we wnant to show that $t \in f(I)$. Consider $g(x) = f(x) - t$. There exists $x_1$ and $x_2$ such that $f(x_1) = y_1$ and $f(x_2) = y_2$. So $g(x_1) < 0 < g(x_2)$. So by the previous theorem, there exists $x_0 \in I$ such that $g(x_0) = 0$. So $f(x_0) = t$.
+\end{proof}
+
+\cor{}{Let $I \subseteq \RR$ be an interval and $f : I \to \RR$ that is continuous and injective. Then $f^{-1} : f(I) \to \RR$ is continuous.}
+\ex{bad}{Consider $E = [0, 1] \cup (2, 3]$. Then let:
+\begin{align*}
+    f(x) = \begin{cases} x & x \in [0, 1] \\ x - 1 & x \in (2, 3] \end{cases}
+\end{align*}
+This does not have a continuous inverse.}
+\begin{proof}
+    First we show that $f$ is monotone. Assume FSOC that there are $a<b$ such that $f(a) < f(b)$. Then $f$ is strictly increasing. 
+\end{proof}
+\thm{}{Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. Let $K \subseteq X$ be sequentially compact. Let $f: K \to Y$ be continuous and injective. Then $f^{-1} : f(K) \to X$ is continuous.}
+\begin{proof}
+    Let $y_0 \in f(K)$ and let $y_0 \in \acc f(K)$. We claim that $\lim_{y \to y_0} f^{-1}(y) = f^{-1}(y_0)$. So BWOC, there exists $\epsilon > 0$ such that for every $\delta$, we can find $y \in B_Y(y_0, \delta)$ such that $d_X(f^{-1}(y), f^{-1}(y_0)) \geq \epsilon$. Let $\delta = 1/n$. Then we can find $y_n \in B_Y(y_0, 1/n)$ such that $d_X(f^{-1}(y_n), f^{-1}(y_0)) \geq \epsilon$. $y_n \in f(K)$, so there is $x_n \in K$ such that $f(x_n) = y_n$. Since $K$ is sequentially compact, there exists a subsequence $\{x_{n_k}\}_k$ that converges to $x_0 \in K$. So since $f$ is continuous, we have that $x_{n_k} \to x_0 \implies f(x_{n_k})= y_{n_k}\to f(x_0) = y_0$. $d_X(f^{-1}(y_{n_k}), f^{-1}(y_0)) \geq \epsilon > 0$. But we have that $d_X(x_{n_k}, x_0) \to 0$, contradiction. As such, we have that $\lim_{y \to y_0} f^{-1}(y) = f^{-1}(y_0)$ and so $f^{-1}$ is continuous.
+\end{proof}
+
+\dfn{Directional Derivatives}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Let $f: E \to Y$, $E \subseteq X$, $x_0 \in E$, $v \in X$, $\Vert v \Vert_X = 1$. $L = \{ x \in E : x = x_0 + tv \text{ for some } t \in \RR\}$. Assume $x_0 \in \acc L$. 
+
+The directional derivative of $f$ at $x_0$ in the direction of $v$ is:
+\[\lim_{t \to 0} \frac{f(x_0 + tv) - f(x_0)}{t},\] whenever the limit exists. It is denoted as $\frac{\partial f}{\partial v}(x_0)$. }
+
+\nt{If $X = \RR^N$ and $\ell_i$ is the $i$th vector in the canonical basis, then $\frac{\partial f}{\partial \ell_i}(x_0)$ is the $i$th partial derivative of $f$ at $x_0$.
+
+Also, if we have $f(x, y, z)$, then $\frac{\partial f}{\partial x}(x_0, y_0, z_0)$ is the same as $\lim_{t \to 0} \frac{f(x_0, y_0 + t, z_0) - f(x_0, y_0, z_0)}{t}$.}
+
+\dfn{One-dimensional Derivative}{Let $X = \RR$ and $v = 1$. Then:
+\begin{align*}
+    \frac{\partial f}{\partial v}(x_0) = \lim_{t \to 0} \frac{f(x_0 + t) - f(x_0)}{t} = f'(x_0)
+\end{align*}
+This is the one-dimensional derivative of $f$ at $x_0$.}
+
+If $f'(x_0)$ exists, then $f$ is continuous at $x_0$. This is not true for $N \geq 2$. 
+
+\dfn{Differentiability}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Let $E \subseteq X$ and $f: E \to Y$. We say that $f$ is differentiable at $x_0 \in E \cap \acc E$ if there exists a linear function $L: X \to Y$ and continuous such that $\lim_{x \to x_0} \frac{f(x) - f(x_0) - L(x - x_0)}{\Vert x - x_0 \Vert_X} = 0$. We denote $L$ as $df(x_0)$. $L$ is called the differential of $f$ at $x_0$. }
+
+\thm{(Useful to negate)}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Let $E \subseteq X$ and $f: E \to Y$. Let $x_0 \in E \cap \acc E$. If $f$ is differentiable at $x_0$, then $f$ is continuous at $x_0$.}
+\begin{proof}
+    Let $L = df(x_0)$. Then we have:
+    \begin{align*}
+        f(x) - f(x_0) &= f(x) - f(x_0) - L(x-x_0) + L(x-x_0) \\
+        &= \frac{f(x) - f(x_0) - L(x-x_0)}{\Vert x - x_0 \Vert_X} \Vert x - x_0 \Vert_X + L(x-x_0) \\
+        &= 0 \cdot 0 + L(0) = 0
+    \end{align*}
+    So $f$ is continuous at $x_0$.
+\end{proof}
+\thm{(Also useful to negate)}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Let $E \subseteq X$ and $f: E \to Y$. Let $x_0 \in E \cap \acc E$. Assume $f$ is differentiable at $x_0$. Let $v \in X$ with $\Vert v \Vert_X = 1$. Assume $x_0 \in \acc L$, $L = \{ x \in E : x = x_0 + tv \text{ for some } t \in \RR\}$. Then $\frac{\partial f}{\partial v}(x_0) = T(v)$ where $T$ is the differential of $f$ at $x_0$.}
+\begin{proof}
+    Want to show:
+    \begin{align*}
+        \lim_{t \to 0} \frac{f(x_0 + tv) - f(x_0)}{t} = T(v).
+    \end{align*}
+    By the definition of differentiability, we know that:
+    \begin{align*}
+        \lim_{x \to x_0} \frac{f(x) - f(x_0) - T(x-x_0)}{\Vert x - x_0 \Vert_X} = 0
+    \end{align*}
+    where $T: X \to Y$ is linear and continuous. Take $x = x_0 + tv$ (restriction). Then we have:
+    \begin{align*}
+        \frac{f(x) - f(x_0) - T(x-x_0)}{\Vert x - x_0 \Vert_X} &= \frac{f(x_0 + tv) - f(x_0) - T(tv)}{\Vert tv \Vert_X} \\
+        &= \frac{f(x_0 + tv) - f(x_0) - tT(v)}{|t| \Vert v \Vert_X} \\
+        &= \frac{f(x_0 + tv) - f(x_0) - tT(v)}{|t|}
+    \end{align*}
+    If we take the limit from the right, we get:
+    \begin{align*}
+        \lim_{t \to 0^+} \frac{f(x) - f(x_0) - T(x-x_0)}{\Vert x - x_0 \Vert_X} &= 0 \\
+        &= \lim_{t \to 0^+} \frac{f(x_0 + tv) - f(x_0) - tT(v)}{|t|} \\
+        &= \lim_{t \to 0^+} \frac{f(x_0 + tv) - f(x_0)}{t} - T(v) \\
+        &\implies \lim_{t \to 0^+} \frac{f(x_0 + tv) - f(x_0)}{t} = T(v)
+    \end{align*}
+    If we take the limit from the left, we get:
+    \begin{align*}
+        \lim_{t \to 0^-} \frac{f(x) - f(x_0) - T(x-x_0)}{\Vert x - x_0 \Vert_X} &= 0 \\
+        &= \lim_{t \to 0^-} \frac{f(x_0 + tv) - f(x_0) - tT(v)}{|t|} \\
+        &= \lim_{t \to 0^-} \frac{f(x_0 + tv) - f(x_0)}{t} - T(v) \\
+        &\implies \lim_{t \to 0^-} \frac{f(x_0 + tv) - f(x_0)}{t} = T(v)
+    \end{align*}
 \end{proof}
 
 \end{document}
