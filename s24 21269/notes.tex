@@ -1046,6 +1046,7 @@ From these, we derive:
     \end{align*}
     FINSIH THIS LATER
 \end{proof}
+\section{Continuity}
 \dfn{Continuity}{Let $(X, d_x)$ and $(Y, d_Y)$ be metric spaces. Let $E \subseteq X$ and $f: E \to Y$. Let $x_0 \in E$ and assume $x_0 \in \operatorname{acc}E$. We say that $f$ is continuous at $x_0$ if there is $\lim_{x \to x_0} f(x) = f(x_0)$. We say that $f$ is continuous on $E$ if $f$ is continuous at all $x_0 \in E$.
 
 We denote $C(E)$ as the continuous functions on $E$.}
@@ -1129,7 +1130,8 @@ This does not have a continuous inverse.}
 \begin{proof}
     Let $y_0 \in f(K)$ and let $y_0 \in \acc f(K)$. We claim that $\lim_{y \to y_0} f^{-1}(y) = f^{-1}(y_0)$. So BWOC, there exists $\epsilon > 0$ such that for every $\delta$, we can find $y \in B_Y(y_0, \delta)$ such that $d_X(f^{-1}(y), f^{-1}(y_0)) \geq \epsilon$. Let $\delta = 1/n$. Then we can find $y_n \in B_Y(y_0, 1/n)$ such that $d_X(f^{-1}(y_n), f^{-1}(y_0)) \geq \epsilon$. $y_n \in f(K)$, so there is $x_n \in K$ such that $f(x_n) = y_n$. Since $K$ is sequentially compact, there exists a subsequence $\{x_{n_k}\}_k$ that converges to $x_0 \in K$. So since $f$ is continuous, we have that $x_{n_k} \to x_0 \implies f(x_{n_k})= y_{n_k}\to f(x_0) = y_0$. $d_X(f^{-1}(y_{n_k}), f^{-1}(y_0)) \geq \epsilon > 0$. But we have that $d_X(x_{n_k}, x_0) \to 0$, contradiction. As such, we have that $\lim_{y \to y_0} f^{-1}(y) = f^{-1}(y_0)$ and so $f^{-1}$ is continuous.
 \end{proof}
-
+\newpage
+\section{Differentiability}
 \dfn{Directional Derivatives}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Let $f: E \to Y$, $E \subseteq X$, $x_0 \in E$, $v \in X$, $\Vert v \Vert_X = 1$. $L = \{ x \in E : x = x_0 + tv \text{ for some } t \in \RR\}$. Assume $x_0 \in \acc L$. 
 
 The directional derivative of $f$ at $x_0$ in the direction of $v$ is:
@@ -1191,4 +1193,179 @@ If $f'(x_0)$ exists, then $f$ is continuous at $x_0$. This is not true for $N \g
     \end{align*}
 \end{proof}
 
+\nt{Let $X = \RR^N$ and $x_0 \in E^\circ$. Then let $f: E \to \RR$. Assume $f$ is differentiable at $x_0$. Then for all $v \in \RR^N$ with $\Vert v \Vert = 1$, we have that $\frac{\partial f}{\partial v}(x_0) = T(v)$. But we have that:
+\begin{align*}
+    v = (v_1, v_2, \ldots, v_N)
+\end{align*}
+which means that
+\begin{align*}
+    v = \sum_{i=1}^N v_i e_i.
+\end{align*}
+Since $T$ is linear, we have that:
+\begin{align*}
+    \frac{\partial f}{\partial v}(x_0) = T(v) &= \sum_{i=1}^N v_i T(e_i) \\
+    &= \sum_{i=1}^N v_i \frac{\partial f}{\partial x_i}(x_0)
+\end{align*}}
+\dfn{Gradient}{Let $X = \RR^N$ and $x_0 \in E^\circ$. Let $f: E \to \RR$. Assume $f$ is differentiable at $x_0$. Then the gradient of $f$ at $x_0$ is:
+\begin{align*}
+    \nabla f(x_0) = \left( \frac{\partial f}{\partial x_1}(x_0), \frac{\partial f}{\partial x_2}(x_0), \ldots, \frac{\partial f}{\partial x_N}(x_0) \right)
+\end{align*}}
+\nt{So to check that $f$ is differentiable at $x_0$, we need to check:
+\begin{align*}
+    \lim_{x \to x_0} \frac{f(x) - f(x_0) - \nabla f(x_0) \cdot (x - x_0)}{\Vert x - x_0 \Vert} = 0
+\end{align*}}
+\thm{(useful to prove differentiability at most points)}{Let $E \subseteq \RR^N$ and $x_0 \in E^\circ$. Let $f: E \to \RR$. Assume 
+\begin{enumerate}
+    \item $\frac{\partial f}{\partial x_i}$ exists in $B(x_0, r) \subseteq E$ for all $i = 1, 2, \ldots, N$.
+    \item $\frac{\partial f}{\partial x_i}$ is continuous at $x_0$ for all $i = 1, 2, \ldots, N$.
+\end{enumerate}
+Then $f$ is differentiable at $x_0$.}
+
+\mlenma{Rolle}{Let $f: [a, b] \in \RR$ with $a< b$ be continuous in $[a, b]$ and differentiable on $(a, b)$. Also assume $f(a) = f(b)$. Then there exists $c \in (a, b)$ such that $f'(c) = 0$.}
+\begin{proof}
+    $[a,b]$ is sequentially compact and $f$ is continuous, so there are $\max f(x) = M$ and $\min f(x) = m$. If $M = m$, then $f$ is constant and we are done since the derivative is 0 for all $x$. Assume $M > m$. Since $f(a) = f(b)$, we have that either $M$ or $m$ is in the interior. Say $m = f(c)$ for $c \in (a, b)$. So $f(x) - f(c) \geq 0$ for all $x \in [a, b]$. If $x  -c  > 0$, then we have 
+    \begin{align*}
+        \frac{f(x) - f(c)}{x - c} \geq 0
+    \end{align*}
+    So,
+    \begin{align*}
+        \lim_{x \to c^+} \frac{f(x) - f(c)}{x - c} = f'(c) \geq 0.
+    \end{align*}
+    If $x - c < 0$, then we have
+    \begin{align*}
+        \frac{f(x) - f(c)}{x - c} \leq 0
+    \end{align*}
+    So,
+    \begin{align*}
+        \lim_{x \to c^-} \frac{f(x) - f(c)}{x - c} = f'(c) \leq 0.
+    \end{align*}
+    So $f'(c) = 0$.
+\end{proof}
+\mlenma{MVT}{Let $f: [a, b] \to \RR$ be continuous in $[a, b]$ and differentiable on $(a, b)$. Then there exists $c \in (a, b)$ such that:
+\begin{align*}
+    f(b) - f(a) = f'(c)(b-a).
+\end{align*}}
+\begin{proof}
+    Want $g$ such that $g(b) = g(a)$. Take $g(x) = f(x) - (x - a)\frac{f(b) - f(a)}{b-a}$. Let's make sure this works:
+    \begin{align*}
+        g(b) &= f(b) - (b - a)\frac{f(b) - f(a)}{b-a} = f(b) - f(b) + f(a) = f(a) \\
+        g(a) &= f(a) - (a - a)\frac{f(b) - f(a)}{b-a} = f(a)
+    \end{align*}
+    So $g(a) = g(b)$. So by Rolle's theorem, there exists $c \in (a, b)$ such that $g'(c) = 0$. So $g'(c) = f'(c) - \frac{f(b) - f(a)}{b-a} = 0$. So $f'(c) = \frac{f(b) - f(a)}{b-a}$ as desired.
+\end{proof}
+Now we actually prove Theorem 2.2.12.
+
+\begin{proof}
+    Take $x \in B(x_0, r)$ and consider $f(x) - f(x_0)$. We need to define these vectors in terms of their components:
+    \begin{align*}
+        x = (x_1, x_2, \ldots, x_N) \quad x_0 = (x_{01}, x_{02}, \ldots, x_{0N})
+    \end{align*}
+    So, we alternate the definition of $f(x) - f(x_0)$ component-wise:
+    \begin{align*}
+        f(x) - f(x_0) &= f(x_1, x_2, \ldots, x_N) - f(x_{01}, x_2, \ldots, x_N) + f(x_{01}, x_2, \ldots, x_N) - f(x_{01}, x_{02}, x_3, \ldots, x_N) + \ldots \\
+    \end{align*}
+    Consider $g(x_1) = f(x_1, x_2, \ldots, x_N)$ where the last $N-1$ components are fixed. By MVT,
+    \begin{align*}
+        g(x_1) - g(x_{01}) = g'(c_1)(x_1 - x_{01})
+    \end{align*}
+    where $c_1$ is between $x_1$ and $x_{01}$. That is,
+    \begin{align*}
+        f(x_1, x_2, \ldots, x_N) - f(x_{01}, x_2, \ldots, x_N) = \frac{\partial f}{\partial x_1}(c_1, x_2, \ldots, x_N)(x_1 - x_{01})
+    \end{align*}
+    So 
+    \begin{align*}
+        f(x) - f(x_0) &= \frac{\partial f}{\partial x_1} (c_1, x_2, \ldots, x_N)(x_1 - x_{01}) + \frac{\partial f}{\partial x_2} (x_{01}, c_2, x_3, \ldots, x_N)(x_2 - x_{02}) + \ldots \\
+        &+ \frac{\partial f}{\partial x_{N-1}} (x_{01}, x_2, \ldots, c_{N-1}, x_n)(x_{N-1} - x_{0N-1}) + f(x_{01}, \ldots, x_{0N-1}, x_N) - f(x_{01}, \ldots, x_{0N})
+    \end{align*}
+    First let's define $z_m = (x_{01}, \ldots, c_m, \ldots, x_N)$. We can now consider:
+    \begin{align*}
+        f(x) - f(x_0) - \nabla f(x_0) \cdot (x - x_0) &= f(x) - f(x_0)  - \sum_{i=1}^n \frac{\partial f}{\partial x_i}(x_0)(x_i - x_{0i}) \\
+        &= \left(\frac{\partial f}{\partial x_1} (z_1)- \frac{\partial f}{\partial x_1}(x_0)\right)(x_1 - x_{01}) + \ldots \\
+        &+ f(x_{01}, \ldots, x_{0N-1}, x_N) - f(x_{01}, \ldots, x_{0N}) 
+    \end{align*}
+    Now we divide by $\Vert x - x_0 \Vert$ to get:
+    \begin{align*}
+        &\frac{| f(x) -f(x_0) - \nabla f(x_0) \cdot (x-x_0)|}{\Vert x - x_0 \Vert} \leq \\
+        &\left| \frac{\partial f}{\partial x_1} (z_1)- \frac{\partial f}{\partial x_1}(x_0)\right| \frac{|x_1 - x_{01}|}{\Vert x - x_0 \Vert} + \ldots + \\
+        &\left| \frac{\partial f}{\partial x_{N-1}} (z_{N-1})- \frac{\partial f}{\partial x_{N-1}}(x_0)\right| \frac{|x_{N-1} - x_{0N-1}|}{\Vert x - x_0 \Vert} + \\
+        &\frac{|f(x_{01}, \ldots, x_{0N-1}, x_N) - f(x_0) - \frac{\partial f}{\partial x_N}(x_0)(x_N - x_{0N})|}{\Vert x - x_0 \Vert}
+    \end{align*}
+    All the terms that aren't the last one end up tending to 0 as $x \to x_0$. Consider the last term and call it $A$. So,
+    \begin{align*}
+        A &= \left| \frac{ f(x_0, \ldots, x_{0N-1}, x_N) - f(x_0) }{x_N - x_{0N}} - \frac{\partial f}{\partial x_N}(x_0) \right| \\
+        &= \left| \frac{f(x_0 + t \ell_n) - f(x_0)}{t} - \frac{\partial f}{\partial x_N}(x_0) \right| \to 0
+    \end{align*}
+    if we set $t = x_N - x_{0N}$. So $f$ is differentiable at $x_0$.
+\end{proof}
+\newpage
+\thm{Chain Rule}{Let $(X, \Vert \cdot \Vert_X)$, $(Y, \Vert \cdot \Vert_Y)$, and $(Z, \Vert \cdot \Vert_Z)$ be normed spaces. Let $E \subseteq X$, $F \subseteq Y$, $f: E \to Y$, $g: F \to Z$. Assume $f(E) \subseteq F$ and $f$ is differentiable at $x_0 \in E$ and $g$ is differentiable at $f(x_0)$. Then $g \circ f$ is differentiable at $x_0$ and:
+\begin{align*}
+    d(g \circ f)(x_0) = dg(f(x_0)) \circ df(x_0).
+\end{align*}
+Moreover, if $x_0 \in \acc \{ x_0 + tv \in E : t \in \RR\}$, then 
+\begin{align*}
+    \frac{\partial (g \circ f)}{\partial v}(x_0) =d(g(f(x_0)))\left( \frac{\partial f}{\partial v}(x_0) \right).
+\end{align*}}
+\mlenma{}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Take $T: X \to Y$ linear and continuous. Then there exists a constant $M > 0$ such that $\Vert T(x) \Vert_Y \leq M \Vert x \Vert_X$ for all $x \in X$.}
+\begin{proof}
+    Let $\epsilon = 1$, $T$ continuous at $x=0$. By the definition of continuity, we can find $\delta > 0$ such that $\Vert T(x) \Vert_Y < \epsilon = 1$ if $\Vert x \Vert_X < \delta$. Take any $x \in X$ where $x \neq 0$. Then let $x_1 = \frac{\delta}{2} \frac{x}{\Vert x\Vert_X}$. So, $\Vert x_1 \Vert_X = \frac{\delta}{2}$. So $\Vert T(x_1) \Vert_Y < 1$. So,
+    \begin{align*}
+        \Vert T(x_1) \Vert_Y &= \Vert T\left( \frac{\delta}{2} \frac{x}{\Vert x\Vert_X} \right) \Vert_Y \\
+        &= \frac{\delta}{2} \frac{\Vert T(x) \Vert_Y}{\Vert x \Vert_X} < 1 \\
+        \implies \Vert T(x) \Vert_Y &< \frac{2}{\delta} \Vert x \Vert_X
+    \end{align*}
+    So we can take $M = \frac{2}{\delta}$ to complete the proof.
+\end{proof}
+\mlenma{}{Let $(X, \Vert \cdot \Vert_X)$ and $(Y, \Vert \cdot \Vert_Y)$ be normed spaces. Take $f: E \to Y$ and assume $f$ differentiable at some point $x_0 \in E$. Then there exists a constant $C > 0$ and $\delta >0$ such that $\Vert f(x) - f(x_0) \Vert_Y \leq C \Vert x - x_0 \Vert_X$ for all $x \in B(x_0, \delta)$.}
+\begin{proof}
+    $f$ is differentiable, so we know that $\lim_{x \to x_0} \frac{f(x) - f(x_0) -T(x - x_0)}{\Vert x - x_0 \Vert_X} = 0$ for some $T: X \to Y$ linear and continuous. Take $\epsilon = 1$. Find $\delta > 0$ such that 
+    \begin{align*}
+        \Vert f(x) - f(x_0) - T(x-x_0) \Vert_Y < \epsilon \Vert x-x_0 \Vert_X
+    \end{align*}
+    if $\Vert x - x_0 \Vert_X < \delta$. We have:
+    \begin{align*}
+        \Vert f(x) - f(x_0) \Vert_Y &\leq \Vert f(x) - f(x_0) - T(x-x_0) \Vert_Y + \Vert T(x-x_0) \Vert_Y \\
+        &\leq \epsilon \Vert x-x_0 \Vert_X + M \Vert x-x_0 \Vert_X \\
+        &= (M+1)\Vert x - x_0 \Vert_X
+    \end{align*}
+    as desired.
+\end{proof}
+\newpage
+\noindent Now we actually prove the chain rule.
+\begin{proof}
+    We know there exists $T : X \to Y$ linear and continuous such that $\lim_{x \to x_0} \frac{f(x) - f(x_0) - T(x - x_0)}{\Vert x - x_0 \Vert_X} = 0$. We also know there exists $L: Y \to Z$ linear and continuous such that $\lim_{y \to f(x_0)} \frac{g(y) - g(f(x_0)) - L(y - f(x_0))}{\Vert y - f(x_0) \Vert_Y} = 0$. We want to show that $\lim_{x \to x_0} \frac{g(f(x)) - g(f(x_0)) - (L \circ T)(x - x_0)}{\Vert x - x_0 \Vert_X} = 0$. We start by analyzing the numerator:
+    \begin{align*}
+        &\Vert g(f(x)) - g(f(x_0)) - L(T(x - x_0))\Vert_Z \\ 
+        &\leq \Vert g(f(x)) - g(f(x_0)) - L(f(x) - f(x_0)) \Vert_Z + \Vert L(f(x) - f(x_0)) -L(T(x - x_0)) \Vert_Z \\
+        &= \Vert g(f(x)) - g(f(x_0)) - L(f(x) - f(x_0)) \Vert_Z + \Vert L(f(x) - f(x_0) - T(x - x_0)) \Vert_Z 
+    \end{align*}
+    We will study these quantities separately. 
+    
+    We start with the second quantity. By Lemma 1, there exists $M > 0$ such that $\Vert L(f(x) - f(x_0) - T(x - x_0)) \Vert_Z \leq M \Vert f(x) - f(x_0) - T(x - x_0) \Vert_Y$. Given $\epsilon > 0$, there exists $\delta_1 > 0$ such that $\Vert f(x) - f(x_0) - T(x - x_0) \Vert_Y < \epsilon \Vert x-x_0 \Vert_X$ if $0 < \Vert x - x_0 \Vert_X < \delta_1$. So,
+    \begin{align*}
+        \Vert L(f(x) - f(x_0) - T(x - x_0)) \Vert_Z &\leq M \Vert f(x) - f(x_0) - T(x - x_0) \Vert_Y \\
+        \leq M \epsilon \Vert x - x_0 \Vert_X
+    \end{align*}
+    for all $x \in E$ with $0 < \Vert x - x_0 \Vert_X < \delta_1$.
+
+    Now we study the first quantity. Given the same $\epsilon > 0$, there exists $\delta_2 > 0$ such that $\Vert g(y) - g(f(x_0)) - L(y - f(x_0)) \Vert_Z < \epsilon \Vert y - f(x_0) \Vert_Y$ if $0 < \Vert y - f(x_0) \Vert_Y < \delta_2$. We want to take $y = f(x)$ so we need to check that $0 < \Vert f(x) - f(x_0) \Vert_Y < \delta_2$. By Lemma 2, there exists $C > 0$ and $\delta_3 > 0$ such that $\Vert f(x) - f(x_0) \Vert_Y \leq C \Vert x - x_0 \Vert_X$ for all $x \in E$ such that $0 < \Vert x - x_0 \Vert_X < \delta_3$. So we can take $\delta = \min\{\delta_1, \delta_3, \delta_2/C\}$. So we have that we can take $y = f(x)$ because $\Vert f(x) - f(x_0) \Vert_Y < \delta_2$. So we have that:
+    \begin{align*}
+        \Vert g(f(x)) - g(f(x_0)) - L(f(x) - f(x_0)) \Vert_Z &< \epsilon \Vert f(x) - f(x_0) \Vert_Y \\
+        &\leq \epsilon C \Vert x - x_0 \Vert_X
+    \end{align*}
+    for all $x \in E$ such that $0 < \Vert x - x_0 \Vert_X < \delta$. So we have that:
+    \begin{align*}
+        \Vert g(f(x)) - g(f(x_0)) - L(f(x) - f(x_0)) \Vert_Z + \Vert L(f(x) - f(x_0) - T(x - x_0)) \Vert_Z < \epsilon (M + C) \Vert x - x_0 \Vert_X
+    \end{align*}
+    Dividing by $\Vert x - x_0 \Vert_X$, we get that:
+    \begin{align*}
+        \frac{\Vert g(f(x)) - g(f(x_0)) - L(f(x) - f(x_0)) \Vert_Z + \Vert L(f(x) - f(x_0) - T(x - x_0)) \Vert_Z}{\Vert x - x_0 \Vert_X} < \epsilon (M + C)
+    \end{align*}
+    Now we prove the second part of the theorem. $f$ differentiable at $x_0$ implies that $\dfrac{\partial f}{\partial v}(x_0) = T(v)$. $g \circ f$ being differentiable at $x_0$ implies that $\dfrac{\partial (g \circ f)}{\partial v}(x_0) = L(T(v))$. So we have that:
+    \begin{align*}
+        L(T(v)) &= L\left( \frac{\partial f}{\partial v}(x_0) \right)
+    \end{align*}
+    as desired.
+\end{proof}
+\newpage
 \end{document}
