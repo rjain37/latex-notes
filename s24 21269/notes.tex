@@ -1298,6 +1298,7 @@ Now we actually prove Theorem 2.2.12.
     if we set $t = x_N - x_{0N}$. So $f$ is differentiable at $x_0$.
 \end{proof}
 \newpage
+\section{Differentiation Rules}
 \thm{Chain Rule}{Let $(X, \Vert \cdot \Vert_X)$, $(Y, \Vert \cdot \Vert_Y)$, and $(Z, \Vert \cdot \Vert_Z)$ be normed spaces. Let $E \subseteq X$, $F \subseteq Y$, $f: E \to Y$, $g: F \to Z$. Assume $f(E) \subseteq F$ and $f$ is differentiable at $x_0 \in E$ and $g$ is differentiable at $f(x_0)$. Then $g \circ f$ is differentiable at $x_0$ and:
 \begin{align*}
     d(g \circ f)(x_0) = dg(f(x_0)) \circ df(x_0).
@@ -1368,4 +1369,380 @@ Moreover, if $x_0 \in \acc \{ x_0 + tv \in E : t \in \RR\}$, then
     as desired.
 \end{proof}
 \newpage
+\thm{Quotient Rule}{Let $(X, \Vert \cdot \Vert)$ be a normed space and $f : E \to \RR^2$ with $f$ differentiable at $x_0 \in E$, with $f_2(x) \neq 0$ for all $x \in E$. Then $\frac{f_1}{f_2}$ is differentiable at $x_0$ and:
+\begin{align*}
+    \left( \frac{f_1}{f_2} \right)'(x_0) = \frac{f_2(x_0)f_1'(x_0) - f_1(x_0)f_2'(x_0)}{(f_2(x_0))^2}
+\end{align*}}
+\begin{proof}
+    We can use the fact that if $g: \RR^2 \to \RR \ \{0\} \to \RR$ with $g(y_1, y_2) = \frac{y_1}{y_2}$, then:
+    \begin{align*}
+        \frac{\partial g}{\partial y_1}(y_1, y_2) &= \frac{1}{y_2} \\
+        \frac{\partial g}{\partial y_2}(y_1, y_2) &= -\frac{y_1}{y_2^2}
+    \end{align*}
+    We apply chain rule. 
+    \begin{align*}
+        \frac{\partial}{\partial v}\left( \frac{f_1}{f_2}\right)(x_0) &= \frac{\partial}{\partial v}\left(g \circ f\right)(x_0) \\
+        &= dg(f(x_0))\left( \frac{\partial f}{\partial v}(x_0) \right) \\
+        &= \nabla g(f(x_0)) \cdot \frac{\partial f}{\partial v}(x_0) \\
+        &= \frac{\partial g}{\partial y_1}(f_1(x_0), f_2(x_0))\frac{\partial f_1}{\partial v}(x_0) + \frac{\partial g}{\partial y_2}(f_1(x_0), f_2(x_0))\frac{\partial f_2}{\partial v}(x_0) \\
+        &= \frac{1}{f_2(x_0)}f_1'(x_0) - \frac{f_1(x_0)}{(f_2(x_0))^2}f_2'(x_0) \\
+        &= \frac{f_2(x_0)f_1'(x_0) - f_1(x_0)f_2'(x_0)}{(f_2(x_0))^2}
+    \end{align*}
+    as desired.
+\end{proof}
+\dfn{Jacobian Matrix}{Let $E \subseteq \RR^N$ and $f: E \to \RR^M$ and $H \subseteq \RR^M$ with $g: H\ to \RR^L$. Assume $f$ is differentiable at $x_0$ and $g$ is differentiable at $f(x_0)$. The Jacobian matrix of $f$ at $x_0 \in E$ is the $M \times N$ matrix:
+\begin{align*}
+    \begin{bmatrix} \nabla f_1(x_0) \\ \nabla f_2(x_0) \\ \vdots \\ \nabla f_M(x_0) 
+    \end{bmatrix}
+\end{align*}
+and is denoted as $Jf(x_0)$.}
+\newpage
+\section{Higher Order Derivatives}
+
+\dfn{Higher Order Derivative}{Take $E \subseteq \RR^N$ and $f: E \to \RR$. Assume there is $\dfrac{\partial f}{\partial x_i}: E \to \RR$. Take $j \in [1, N]$. Then,
+\begin{align*}
+    \frac{\partial^2 f}{\partial x_i \partial x_j}:= \frac{\partial}{\partial x_j}\left( \frac{\partial f}{\partial x_i} \right).
+\end{align*}}
+\noindent In general, we have that:
+\begin{align*}
+    \frac{\partial^2 f}{\partial x_i \partial x_j} \neq \frac{\partial^2 f}{\partial x_j \partial x_i}.
+\end{align*}
+\thm{Symmetry of Higher Order Derivatives}{Let $E \subseteq \RR^N$ and $f: E \to \RR$. Assume there exists $\dfrac{\partial f}{\partial x_i}, \dfrac{\partial f}{\partial x_j}, \dfrac{\partial^2 f}{\partial x_i \partial x_j}$ in $B(x_0, r) \subseteq E$. And assume that $\dfrac{\partial^2 f}{\partial x_j \partial x_i}$ is continuous at $x_0$. Then $\dfrac{\partial^2 f}{\partial x_i \partial x_j} = \dfrac{\partial ^2 f}{\partial x_j \partial x_i}$.}
+\mlenma{}{Let $A: ((-r, r) \setminus \{0\})^2 \to \RR$. Assume that there exists:
+\begin{enumerate}
+    \item $\lim_{(s, t) \to (0, 0)} A(s, t) = \ell \in \RR$. 
+    \item For every $s \in (-r, r) \setminus \{0\}$,
+    \begin{align*}
+        \exists \lim_{t \to 0} A(s, t) \in \RR.
+    \end{align*}
+\end{enumerate}
+Then, there is 
+\begin{align*}
+    \lim_{s \to 0} \left( \lim_{t \to 0} A(s, t) \right) = \lim_{(s, t) \to (0, 0)} A(s, t) = \ell.
+\end{align*}}
+\begin{proof}
+    For every $\epsilon > 0$, there exists $0< \delta < r$ such that \begin{align*}
+        |A(s, t) - \ell| < \epsilon
+    \end{align*}
+    for all $s, t$ with $0 < \sqrt{s^2 + t^2} < \delta$. So, we have:
+    \begin{align*}
+        \ell - \epsilon \leq A(s, t) \leq \ell + \epsilon.
+    \end{align*}
+    Fix $s \in (-\delta, \delta) \setminus \{0\}$. By the second condition, we have that:
+    \begin{align*}
+        \lim_{t \to 0} A(s, t) = \ell_s
+    \end{align*}
+    for some $\ell_s$. So take $t \to 0$ in the inequality above to get:
+    \begin{align*}
+        \ell - \epsilon \leq \ell_s \leq \ell + \epsilon
+    \end{align*}
+    for the same choice of $\delta$. So, 
+    \begin{align*}
+        \left| \ell_s - \ell \right| < \epsilon
+    \end{align*}
+    for all $0 < |s| < \delta$. So $\lim_{s \to 0} \ell_s = \ell$, as desired.
+\end{proof}
+\newpage 
+\noindent Now we turn to the proof of the symmetry of higher order derivatives.
+\begin{proof}
+    Step 1: Let $N = 2$. Let $\vec{x}_0 = (x_0, y_0)$. Consider the rectangle $R$ determined by the corners $(x_0, y_0), (x_0 + s, y_0), (x_0, y_0 + t), (x_0 + s, y_0 + t)$ and assume $R \subseteq B(\vec{x}_0, r)$. Let 
+    \begin{align*}
+        A(s, t) = \frac{f(x_0 + s, y_0 + t) - f(x_0 + s, y_0) - f(x_0, y_0 + t) + f(x_0, y_0)}{st}.
+    \end{align*}
+    Fix $t$, move $s$. Consider the following functions
+    \begin{align*}
+        g(x) = f(x, y_0 + t) - f(x, y_0)
+    \end{align*}
+    We attempt to write $A(s, t)$ in terms of $g$:
+    \begin{align*}
+        A(s, t) &= \frac{f(x_0 + s, y_0 + t) - f(x_0 + s, y_0) - f(x_0, y_0 + t) + f(x_0, y_0)}{st} \\
+        &= \frac{g(x_0 + s) - g(x_0)}{st} \\
+        &= \frac{g(x_0 + s) - g(x_0)}{s} \cdot \frac{1}{t}
+    \end{align*}
+    By MVT, there exists $c_s$ between $x_0$ and $x_0 + s$ such that:
+    \begin{align*}
+        g(x_0 + s) - g(x_0) = sg'(c_s)
+    \end{align*}
+    So we have that:
+    \begin{align*}
+        A(s, t) = \frac{g'(c_s)}{t}
+    \end{align*}
+    Consider $g'(x) = \frac{\partial f}{\partial x}(x, y_0 + t) - \frac{\partial f}{\partial x}(x, y_0)$. So we have that:
+    \begin{align*}
+        A(s, t) = \frac{ \frac{\partial f}{\partial x}(c_s, y_0 + t) -  \frac{\partial f}{\partial x}c_s, y_0) }{t}
+    \end{align*}
+    Consider the function:
+    \begin{align*}
+        h(y) = \frac{\partial f}{\partial x}(c_s, y)
+    \end{align*}
+    So, 
+    \begin{align*}
+        A(s, t) = \frac{h(y_0 + t) - h(y_0)}{t} = h'(c_t) = \frac{\partial^2 f}{\partial y \partial x}(c_s, c_t)
+    \end{align*}
+    where $c_t$ is between $y_0$ and $y_0 + t$. As $(s,t) \to (0, 0)$, we have that $c_s \to x_0$ and $c_t \to y_0$. So we have that:
+    \begin{align*}
+        \lim_{(s,t) \to (0, 0)} A(s, t) = \lim_{(s,t) \to (0, 0)} \frac{\partial^2 f}{\partial y \partial x}(c_s, c_t) = \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)
+    \end{align*}
+    Now we consider
+    \begin{align*}
+        \lim_{t \to 0} A(s, t) &= \frac{1}{s} \lim_{t \to 0} \frac{f(x_0 + s, y_0 + t) - f(x_0 + s, y_0)}{t}  - \frac{f(x_0, y_0 + t) - f(x_0, y_0)}{t} \\
+        &= \frac{1}{s} \left(\frac{\partial f}{\partial y}(x_0 + s, y_0) - \frac{\partial f}{\partial y}(x_0, y_0)\right)
+    \end{align*}
+    So now the preconditions for the lemma are satisfied. So we have that:
+    \begin{align*}
+        \lim_{(s, t) \to (0, 0)} A(s, t) = \lim_{s \to 0} \left( \lim_{t \to 0} A(s, t) \right) &= \lim_{s\to 0} \frac{\frac{\partial f}{\partial y}(x_0 + s, y_0) - \frac{\partial f}{\partial y}(x_0, y_0)}{s} \\
+        &= \frac{\partial^2 f}{\partial x \partial y}(x_0, y_0)
+    \end{align*}
+    But we also have that:
+    \begin{align*}
+        \lim_{(s, t) \to (0, 0)}A(s, t) = \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)
+    \end{align*}
+    So we have that $\frac{\partial^2 f}{\partial x \partial y}(x_0, y_0) = \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)$ as desired.
+
+    Now consider the case where $N \geq 2$. Say $1 < i < j < N$. Then realize our function looks like:
+    \begin{align*}
+        F(x_i, x_j) := f(x_1, x_2, \cdots, x_i, \cdots, x_j, \cdots, x_N)
+    \end{align*}
+    which is a function of two variables. So we can apply the previous case to get that:
+    \begin{align*}
+        \frac{\partial^2 F}{\partial x_i \partial x_j} = \frac{\partial^2 F}{\partial x_j \partial x_i}
+    \end{align*}
+    as desired.
+\end{proof}
+\newpage
+\section{Taylor Series}
+\thm{Taylor's Formula}{Let $f: (a, b) \to \RR$ be $k$ times differentiable for $k \in \NN$ with $x_0 \in (a, b)$. Then:
+\begin{align*}
+    f(x) = f(x_0) + f'(x_0)(x-x_0) + \cdots + \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k + R_k(x)
+\end{align*}
+where $R_k(x) = \frac{f^{(k-1)}(c)}{(k+1)!}(x - x_0)^{k+1}$ is the error term for some $c$ between $x$ and $x_0$.
+
+Moreover, if there exists $M>0$ such that $|f^{(k+1)}(x)| \leq M$ for every $x \in(a, b)$, then 
+\begin{align*}
+    |R_k(x)| \leq \frac{M}{(k+1)!}|x-x_0|^{k+1},
+\end{align*}
+which tends to zero faster than $(x-x_0)^{k+1}$ as $x \to x_0$. That is, 
+\begin{align*}
+    \lim_{x \to x_0} \frac{R_k(x)}{(x-x_0)^{k+1}} = 0.
+\end{align*}
+Or,
+\begin{align*}
+    R_k(x) = o((x-x_0)^{k+1}).
+\end{align*}} 
+\ex{$\log(x+1)$}{
+    We have that $f(x) = \log(x+1)$, $f'(x) = \dfrac{1}{x+1}$, $f''(x) = -\dfrac{1}{(x+1)^2}$. Consider $x_0 = 0$ and $(a,b) = (-1/2, 1/2)$. Then, we have that the $k=1$ exapansion is:
+    \begin{align*}
+        f(x) &= f(0)  + f'(0)(x-0) + o(x-0)\\
+        &= 0 + 1x + o(x) \\
+    \end{align*}
+    Dividing both sides by $x$, we get that:
+    \begin{align*}
+        \frac{\log(1+x)}{x} &= \frac{x + o(x)}{x} \\
+        &= 1 + \cancelto{0}{o(1)}
+    \end{align*}
+}
+\noindent Now we prove Taylor's Formula.
+\begin{proof}
+    Fix $x \in (a, b)$. Consider:
+    \begin{align*}
+        g(t) = f(x) - \left[f(t) + f'(t)(x-t) + \cdots + \frac{f^{(k)}(t)}{k!}(x-t)^k\right] - R_k(x) \frac{(x-t)^{k+1}}{(x-x_0)^{k+1}}
+    \end{align*}
+    Let $t \in (x_0, x)$. Then,
+    \begin{align*}
+        g(x) &= f(x) - f(x) + 0 + \cdots + 0 = 0 \\
+        g(x_0) &= R_k(x) - R_k(x) = 0
+    \end{align*}
+    So, we can apply Rolle's Theorem to get that there exists $c$ between $x$ and $x_0$ such that $g'(c) = 0$. So we have that:
+    \begin{align*}
+        0 &= \cancelto{0}{f'(c)} - f'(c) - f''(c)(x-c) - \cdots - \frac{f^{(k)}(c)}{k!}k(x-c)^{k-1} - R_k(x) \frac{(k+1)(x-c)^k}{(x-x_0)^{k+1}} \\
+        &= -f'(c) - \frac{f^{(k+1)}(c)}{k!}(x-c)^k + f'(c) + R_k(x) \frac{(k+1)(x-c)^k}{(x-x_0)^{k+1}} \\
+        &= -\dfrac{f^{(k+1)}(c)}{k!} (x-c)^k + R_k(x) \frac{(k+1)(x-c)^k}{(x-x_0)^{k+1}}
+    \end{align*}
+    So, 
+    \begin{align*}
+        \frac{f^{(k+1)}(c)}{k!} &= R_k(x) \frac{k+1}{(x-x_0)^{k+1}} 
+        \implies R_k(x) = \frac{f^{(k+1)}(c)}{(k+1)!}(x-x_0)^{k+1}
+    \end{align*}
+    as desired.
+\end{proof}
+\cor{}{Let $f:(a, b) \to \RR$ be $k$ times differentiable with $f', \cdots, f^{(k)}$ continuous. Then, for every $x, x_0 \in (a, b)$,
+\begin{align*}
+    f(x) = f(x_0) + \sum_{n=1}^k \frac{1}{n!}f^{(n)}(x_0)(x-x_0)^n + o((x-x_0)^k).
+\end{align*}}
+\begin{proof}
+    Apply Taylor's Formula with $k$ to get:
+    \begin{align*}
+        f(x) &= f(x_0) + \sum_{n=1}^{k-1} \frac{1}{n!}f^{(n)}(x_0)(x-x_0)^n + \frac{f^{(k)}(c)}{k!}(x-x_0)^k \\
+        &= f(x_0) + \sum_{n=1}^{k} \frac{1}{n!}f^{(n)}(x_0)(x-x_0)^n + [f^{(k)}(c) - f^{(k)}(x_0)]\frac{(x-x_0)^k}{k!}
+    \end{align*}
+\end{proof}
+\dfn{Multi-Index}{
+A multi-index is a vector $\alpha \in \NN_0$, $\alpha  = (\alpha_1, \cdots, \alpha_N)$. The length of $\alpha$ is $|\alpha| = \alpha_1 + \cdots + \alpha_N$. We define $\alpha! = \alpha_1! \cdots \alpha_N!$ and $x^\alpha = x_1^{\alpha_1} \cdots x_N^{\alpha_N}$. We define the derivative of $f$ with respect to $\alpha$ as:
+\begin{align*}
+    \frac{\partial^\alpha}{\partial x^\alpha} = \frac{\partial^{\alpha_1}}{\partial x_1^{\alpha_1}} \cdots \frac{\partial^{\alpha_N}}{\partial x_N^{\alpha_N}}.
+\end{align*}
+}
+\ex{}{Let $N=3$ and $\alpha = (2, 0, 3)$. Then, $(x, y, z)^\alpha = x^2z^3$. So, $\frac{\partial^\alpha}{\partial x^\alpha} = \frac{\partial^2}{\partial x^2} \frac{\partial^3}{\partial z^3}$.}
+\dfn{Class}{Let $U \subseteq \RR^N$ open, $k \in \NN$, and $f: U \to \RR$. We say $f$ is of class $C^k$ if all partial derivatives of order less than or equal to $k$ exist and are continuous.}
+If $f \in C^k(V)$, $k \geq 2$, you can apply theorem about symmetry of derivatives. 
+\ex{}{Let $f \in C^5(k)$ and consider the the domain as $\RR^3$. Then, we have that:
+\begin{align*}
+    \frac{\partial^2}{\partial y^2} \left(\frac{\partial}{\partial x}\left(\frac{\partial}{\partial z} f \right) \right) = \frac{\partial}{\partial x } \left(\frac{\partial^2}{\partial y^2}\left(\frac{\partial }{\partial z} f \right) \right)
+\end{align*}}
+\thm{Taylor's Formula}{Let $V \in \RR^N$ open, $k \in \NN$. $f: V \to \R$ of class $C^k$. Let $x_0 \in V$. Then:
+\begin{align*}
+    f(x) = f(x_0) + \sum_{|\alpha| = 1}^k \frac{\partial^\alpha f}{\partial x^\alpha}(x_0) \frac{(x - x_0)^\alpha}{\alpha!} + o(\Vert x-x_0 \Vert^k)
+\end{align*}
+for $x$ near $x_0$. 
+}
+\nt{If $k = 1$, 
+\begin{align*}
+    f(x) &= f(x_0) + \sum_{|\alpha| = 1} \frac{1}{\alpha !}\frac{\partial^\alpha f(x_0)}{\partial x^\alpha}(x-x_0)^\alpha + o(\Vert x-x_0 \Vert) \\
+    &= f(x_0) + \sum_{i = 1}^N \frac{\partial f}{\partial x_i}(x_0)(x_i - x_{0i}) + o(\Vert x-x_0 \Vert) \\
+    &= f(x_0) + \nabla f(x_0) \cdot (x-x_0) + o(\Vert x-x_0 \Vert).
+\end{align*}
+So, 
+\begin{align*}
+    \frac{f(x) - f(x_0) - \nabla f(x_0)\cdot(x-x_0)}{\Vert x-x_0 \Vert} = \frac{o(\Vert x - x_0 \Vert )}{\Vert x - x_0 \Vert} \to 0.
+\end{align*}
+This is differentiability at $x_0$.}
+
+\ex{Multinomial Theorem}{Let $x \in \RR^N$, $n \in \NN$. Prove that:
+\begin{align*}
+    (x_1 + x_2 + \cdots + x_N)^n = \sum_{|\alpha| = n} \frac{x^\alpha n!}{\alpha!}
+\end{align*}}
+\ex{}{$V \in \RR^N$ open, $f:  V \to \RR$ of class $C^k$. $v \in \RR^N$. Define:
+\begin{align*}
+    v \cdot \nabla &= v_1 \frac{\partial}{\partial x_1} + \cdots + v_N \frac{\partial}{\partial x_N} \\
+    (v \cdot \nabla)^n &= (v \cdot \nabla)(v \cdot \nabla)^{n} \\
+    &=\sum_{|\alpha| = n} v^\alpha \frac{n!}{\alpha!} \frac{\partial^\alpha}{\partial x^\alpha}
+\end{align*}}
+
+\noindent Now we prove the theorem.
+\begin{proof}
+    Let $\Vert v \Vert = 1$, and consider $x_0 + tv$ for $t \in \RR$. Define $g(t) = f(x_0 + tv)$. We have that $$g'(t) = \nabla f(x_0 + tv) \cdot v = (v \cdot \nabla)f(x_0 + tv)$$ $$g''(t) = (v \cdot \nabla)^2 f(x_0 + tv)$$
+    and so on. So we have:
+    \begin{align*}
+        g^{(n)}(t) &= (v \cdot \nabla)^n f(x_0 + tv) \\
+        &= (v_1 \frac{\partial}{\partial x_1} + \cdots + v_N \frac{\partial}{\partial x_N})^n f(x_0 + tv) \\
+        &= \sum_{|\alpha| = n} v^\alpha \frac{n!}{\alpha!} \frac{\partial^\alpha f}{\partial x^\alpha}(x_0 + tv)
+    \end{align*}
+    Apply Taylor's formula to $g$. We have that:
+    \begin{align*}
+        g(t) &= g(0) + g'(0)t + \cdots + \frac{g^{(n)}(0)}{n!}t^n + \cdots + \frac{g^{(k)}(0)}{k!}t^k + R_k(t)
+    \end{align*}
+    where $R_k(t) = \left( \dfrac{g^{(k)}(c)}{k!} - \dfrac{g^{(k)}(0)}{k!} \right)t^k$. So then,
+    \begin{align*}
+        f(x_0 + tv) &= f(x_0) + (v \cdot \nabla)f(x_0 + tv)t + \cdots + \sum_{|\alpha| = k} \frac{k!}{\alpha!}v^\alpha \frac{\partial^\alpha f}{\partial x^\alpha}(x_0) \frac{1}{k!} t^k + \sum_{|\alpha| = k}\frac{k!}{\alpha!}v^\alpha \left( \frac{\partial^\alpha f}{\partial x^\alpha}(x_0 + cv) - \frac{\partial^\alpha f}{\partial x^\alpha}(x_0) \right) \frac{1}{k!} t^k
+    \end{align*}
+    The $k!$ cancels out, and we are now ready to choose $t$ and $v$. We choose $v = \dfrac{x - x_0}{\Vert x - x_0 \Vert}$ and $t = \Vert x - x_0 \Vert$. So we have that:
+    \begin{align*}
+        x_0 + tv = x
+    \end{align*}
+    So, 
+    \begin{align*}
+        f(x) = f(x_0) + \cdots + \sum_{|\alpha| = k} \frac{1}{\alpha!} \frac{\partial^\alpha f}{\partial x^\alpha}(x_0) \frac{(x-x_0)^\alpha}{\Vert x - x_0 \Vert^k} \Vert x - x_0 \Vert^k + \sum_{|\alpha| = k} \frac{1}{\alpha!} \left(\frac{\partial^\alpha f}{\partial x^\alpha}(x_0 + cv)  - \frac{\partial^\alpha f(x_0)}{\partial x^\alpha}\right)(x - x_0)^\alpha 
+    \end{align*}
+    Cancelling out the terms, we get the desired result.
+\end{proof}
+\newpage
+\section{Local Min and Local Max}
+\dfn{Local Min and Local Max}{Let $(X, d)$ be a metric space, $E \subseteq X$, and $f: X \to \RR$. 
+\begin{enumerate}
+    \item $f$ has a \emph{local maximum} at $x_0 \in E$ if $f(x) \leq f(x_0)$ for all $x \in E \cap B(x_0, r)$ for some $r > 0$.
+    \item $f$ has a \emph{local minimum} at $x_0 \in E$ if $f(x) \geq f(x_0)$ for all $x \in E \cap B(x_0, r)$ for some $r > 0$.
+\end{enumerate}}
+
+\thm{}{Let $(X , \Vert \cdot \Vert)$ be a normed space, $f : E \to \RR$. Assume $f$ has a local maximum at $x_0 \in E^\circ$ and $f$ is differentiable at $x_0$. Then $d f(x_0) = 0$.}
+
+\begin{proof}
+    Let $\Vert v \Vert = 1$. Take $g(t) = f(x_0 + tv)$. We know that $g(t) \leq g(0)$ for all $|t| < r$. (Proof of Rolle's Theorem) $\implies g'(0) = 0$. So, $g'(t) = df(x_0 + tv)(v)$, and $g'(0) = df(x_0)(v) = \dfrac{\partial f}{\partial v}(x_0) \implies df(x_0) = 0$. 
+\end{proof}
+\dfn{Hessian}{Let $E \subseteq \RR^N$ and $f: E \to \RR$. Define $Hf(x_0)$ as the Hessian matrix of $f$ and $x_0$ as:
+\begin{align*}
+    Hf(x_0) = \begin{pmatrix} \frac{\partial^2 f}{\partial x_1^2}(x_0) & \cdots & \frac{\partial^2}{\partial x_N \partial x_1}(x_0) \\ 
+    \frac{\partial^2 f}{\partial x_1 \partial x_2}(x_0) & \cdots & \frac{\partial^2}{\partial x_N \partial x_2} \\ 
+    \vdots & \ddots & \vdots \\
+    \frac{\partial^2 f}{\partial x_1 \partial x_N}(x_0) & \cdots & \frac{\partial^2 f}{\partial x_N^2}(x_0) \end{pmatrix}
+\end{align*}
+This is an $N \times N$ matrix.}
+\noindent If $f \in C^2$, then $Hf(x_0)$ is symmetric. A $N \times N$ symmetric matrix implies that the eigenvalues are real. 
+
+\exer{}{Take $p(t) = t^N + a_{N-1}t^{N-1} + \cdots + a_1t + a_0$. 
+\begin{enumerate}
+    \item All the roots are positive $\iff$ the coefficients switch signs.
+    \item All the roots are negative $\iff$ all the coefficients are positive.
+\end{enumerate}}
+\newpage
+\thm{}{Let $U \subseteq \RR^N$ open and $f: U \to \RR$ of class $C^2$. Assume $x_0 \in U$ and that $\nabla f(x_0) = 0$. Let $\lambda_1, \lambda_2, \ldots, \lambda_N$ be the eigenvalues of $Hf(x_0)$. Then:
+\begin{enumerate}
+    \item If $\lambda_1, \lambda_2, \ldots, \lambda_N > 0$, then $f$ has a local minimum at $x_0$.
+    \item If $f$ has a local minimum at $x_0$, then $\lambda_1, \lambda_2, \ldots, \lambda_N \geq 0$.
+    \item If $\lambda_1, \lambda_2, \ldots, \lambda_N < 0$, then $f$ has a local maximum at $x_0$.
+    \item If $f$ has a local maximum at $x_0$, then $\lambda_1, \lambda_2, \ldots, \lambda_N \leq 0$.
+\end{enumerate}}
+\mlenma{}{If $H = (h_{i, j})_{i, j = 1}^N$ is an $N \times N$ symmetric matrix and all the eigenvalues are positive, then $\sum_{i, j = 1}^N h_{i, j}x_ix_j \geq c \Vert x \Vert^2$ for all $x \in \RR^N$ and some $c > 0$. }
+\begin{proof}
+    Let $x \in \RR^N$. Treat $x$ as a $1 \times N$ matrix. We can show:
+    \begin{align*}
+        xHx^T = \sum_{i, j = 1}^N h_{i, j}x_ix_j.
+    \end{align*}
+    Let $\lambda_1, \lambda_2, \ldots, \lambda_N \in \RR$ be the eigenvalues of $H$. Let $e_1, e_2, \ldots, e_N$ be the corresponding eigenvectors. We can assume that they form an orthonormal basis for $\RR^N$. So $x \in \RR^N$ can be written as a linear combination of the eigenvectors:
+    \begin{align*}
+        x = \sum_{i = 1}^N c_i e_i.
+    \end{align*}
+    So,
+    \begin{align*}
+        H x^T &= \sum_{i=1}^N c_i H e_i^T \\ 
+        &= \sum_{i=1}^N c_i \lambda_i e_i^T 
+    \end{align*}
+    So, we have that:
+    \begin{align*}
+        xHx^T &= \sum_{j=1}^n c_j e_j \sum_{i=1}^N c_i \lambda_i e_i^T \\
+        &= \sum_{i, j = 1}^N c_i c_j \lambda_i e_j^T e_i \\
+        &= \sum_{i=1}^N c_i^2 \lambda_i \\
+        &\geq c \sum_{i=1}^N c_i^2 \tag{$c = \min \{\lambda_1, \lambda_2, \ldots, \lambda_N\}$} \\
+        &= c \Vert x \Vert^2 \tag{by orthonormality}
+    \end{align*}
+\end{proof}
+\noindent We move to the proof of the actual theorem.
+\begin{proof}
+    We start by proving 1.
+
+    \noindent Assume $\lambda_1, \lambda_2, \ldots, \lambda_N > 0$. We know that $Hf(x_0)$ is symmetric. So, we can apply the lemma to get that:
+    \begin{align*}
+        \sum_{i, j=1}^N \frac{\partial^2 f}{\partial x_i \partial x_j}(x_0)y_iy_j \geq c \Vert y \Vert^2
+    \end{align*}
+    for all $y \in \RR^N$ and some $c > 0$. Apply Taylor's formula to $f$:
+    \begin{align*}
+        f(x) = f(x_0) + \sum_{|\alpha| = 1}^2 \frac{1}{\alpha !}\frac{\partial^\alpha f}{\partial x^\alpha}(x_0)(x-x_0)^\alpha + o(\Vert x - x_0 \Vert^2)
+    \end{align*}
+    Since the gradient is zero, we know that:
+    \begin{align*}
+        \frac{\partial f}{\partial x_i}(x_0) = 0
+    \end{align*}
+    for all $i$. So, we have that:
+    \begin{align*}
+        f(x) &= f(x_0) + \sum_{|\alpha| = 2}^2 \frac{1}{\alpha !}\frac{\partial^\alpha f}{\partial x^\alpha}(x_0)(x-x_0)^\alpha + o(\Vert x - x_0 \Vert^2) \\
+        &= f(x_0) + \frac{1}{2}\sum_{i , j = 1}^N \frac{\partial^2f}{\partial x_i x_j}(x_0)(x_i - x_{0i})(x_j - x_{0j}) + o(\Vert x - x_0 \Vert^2) \\
+        &\geq f(x_0) + \frac{c}{2}\Vert x - x_0 \Vert^2 + o(\Vert x - x_0 \Vert^2) \tag{by result from lemma}\\
+        &= f(x_0) + \Vert x - x_0 \Vert^2 \left( \frac{c}{2} + \frac{o(\Vert x - x_0 \Vert^2)}{\Vert x -x_0 \Vert^2} \right) \\
+        &\geq f(x_0) + \Vert x - x_0 \Vert^2 \left( \frac{c}{2} - \frac{c}{4}\right) \tag{take $\epsilon = \frac{c}{4}$} \\
+        &\implies f(x) > f(x_0)
+    \end{align*}
+    for $\Vert x - x_0 \Vert < \delta$. So, $f$ has a local minimum at $x_0$.
+
+    \noindent Now we prove 2. Assume $f$ has a local minimum at $x_0$. That is $f(x) \geq f(x_0)$ for all $x \in B(x_0, r) \subseteq U$ for some $r  > 0$. We want to show that $\lambda_1, \lambda_2, \ldots, \lambda_N \geq 0$. So BWOC, assume $\lambda_j < 0$. Take $x = x_0 + te_j$ for $t > 0$ where $e_j$ is $\lambda_j$'s eigenvector. Apply Taylor's formula:
+    \begin{align*}
+        f(x_0 + te_j) &= f(x_0) + \frac{1}{2}(x_0 + te_j - x_0)Hf(x_0)(x_0 + te_j - x_0)^T + o(t^2) \\
+        &= f(x_0) + \frac{1}{2}\lambda_j t^2 \cancelto{1}{\Vert e_j \Vert^2} + o(t^2) \\
+        &= f(x_0) t^2 \left( \frac{\lambda_j}{2} + \frac{o(t^2)}{t^2} \right) \\
+        &\leq f(x_0) + t^2 \left( \frac{\lambda_j}{2} + \frac{\lambda_j}{4} \right) \tag{$\epsilon = -\frac{\lambda_j}{4}$}\\
+        &\implies f(x_0 + te_j) < f(x_0)
+    \end{align*}
+    for $t$ small enough. So, $f$ does not have a local minimum at $x_0$. So, $\lambda_1, \lambda_2, \ldots, \lambda_N \geq 0$ by contradiction.
+\end{proof}
+\newpage
+
+
 \end{document}
