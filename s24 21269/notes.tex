@@ -4,6 +4,10 @@
 \input{../macros}
 \input{../letterfonts}
 
+\DeclareMathOperator{\length}{length}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\dist}{dist}
+
 \title{\Huge{21-269}\\Vector Analysis}
 \author{\huge{Rohan Jain}}
 \date{}
@@ -1711,7 +1715,7 @@ This is an $N \times N$ matrix.}
 
     \noindent Assume $\lambda_1, \lambda_2, \ldots, \lambda_N > 0$. We know that $Hf(x_0)$ is symmetric. So, we can apply the lemma to get that:
     \begin{align*}
-        \sum_{i, j=1}^N \frac{\partial^2 f}{\partial x_i \partial x_j}(x_0)y_iy_j \geq c \Vert y \Vert^2
+        y Hf(x_0) y^T =\sum_{i, j=1}^N \frac{\partial^2 f}{\partial x_i \partial x_j}(x_0)y_iy_j \geq c \Vert y \Vert^2
     \end{align*}
     for all $y \in \RR^N$ and some $c > 0$. Apply Taylor's formula to $f$:
     \begin{align*}
@@ -1743,6 +1747,344 @@ This is an $N \times N$ matrix.}
     for $t$ small enough. So, $f$ does not have a local minimum at $x_0$. So, $\lambda_1, \lambda_2, \ldots, \lambda_N \geq 0$ by contradiction.
 \end{proof}
 \newpage
+\section{Implicit Functions}
+Let $x \in \RR^N$ and $y \in \RR^M$ and $E \subseteq \RR^N \times \RR^M$. $f: E \to \RR^M$, $f = (f_1, f_2, \ldots, f_M)$.
+\begin{align*}
+    \frac{\partial f}{\partial x}(x, y) = \begin{pmatrix} \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \cdots & \frac{\partial f_1}{\partial x_M} \\ \vdots & \vdots &\cdots &\vdots \\ \frac{\partial f_M}{\partial x_1} & \cdots & \cdots & \frac{\partial f_M}{\partial x_N}\end{pmatrix},
+\end{align*}
+which is an $M \times N$ matrix. Similarly for $y$, 
+\begin{align*}
+    \frac{\partial f}{\partial y}(x, y) = \begin{pmatrix} \frac{\partial f_1}{\partial y_1} & \frac{\partial f_1}{\partial y_2} & \cdots & \frac{\partial f_1}{\partial y_M} \\ \vdots & \vdots & \cdots &\vdots \\ \frac{\partial f_M}{\partial y_1} & \cdots & \cdots & \frac{\partial f_M}{\partial y_M}\end{pmatrix},
+\end{align*}
+which is an $M \times M$ matrix (can find the determinant). Now we state the theorem.
+\thm{Implicit Function Theorem}{ Let $U \subseteq \RR^N \times \RR^M$ be an open set and $f: U \to \RR^M$ of class $C^k$. Let $(a, b) \in U$ such that $f(a, b) = 0$. Assume that $\det \frac{\partial f}{\partial y}(a, b) \neq 0$. Then, $r_1 > 0, r_2 > 0$ and a unique function $g: B(a, r_1) \to B(b, r_2)$ of class $C^k$ such that $g(a) = b$, $f(x, g(x)) = 0$ for all $x \in B(a, r_1)$ and $B(a, r_1) \times B(b, r_2) \subseteq U$.}
+\begin{proof}
+    We start with $M=1$. This means that $y \in \RR$. So, $f : U \to \RR$. Assume $\frac{\partial f}{\partial y}(a, b) > 0$, $f \in C^k$. So we know that $\frac{\partial f}{\partial y}$ is continuous at the point $(a, b)$. As such, we can find a ball centered at $(a, b)$ such that $\frac{\partial f}{\partial y} > 0$ for all points in the ball. Consider $B(a, r) \times [b - r, b + r] \subseteq$ our ball. Consider $h(y) = f(a, y)$. $h'(y) = \frac{\partial f}{\partial y}(a, y) > 0$, meaning that $h$ is strictly increasing and $h(b) = 0$. So, $h(b + r) = f(a, b-r)  > 0$, and $h(b - r) = f(a, b-r) < 0$. $f$ is also continuous at $(a, b+r)$ and $(a, b-r)$. 
+    
+    As such, we can find $r_3 > 0$ such that $f > 0$ in a ball $B((a, b+r), r_3)$. Additionally, we can find $r_4 > 0$ such that $f < 0$ in a ball $B((a, b-r), r_4)$. Let $r_5 = \min(r_3, r_4)$. Let $x \in B(a, r_5)$. Let $k(y) = f(x, y)$. Then $k'(y) = \frac{\partial f}{\partial y}(x, y) > 0$. $k(b + r) > 0$ and $k(b-r) < 0$. So, $\exists y$ such that $k(y) = 0$ that is unique since $k$ is strictly increasing. 
+
+    So far, we have proved that for every $x \in B(a, r_5)$, there exists a unique $y \in [r-b, r+b]$ such that $f(x, y) = 0$. Define $g(x) = y \implies f(x, g(x)) = 0$. 
+
+    Step 2: We claim that $g$ is continuous. Let $x_0 \in B(a, r_5)$. Fix small $\epsilon > 0$. Call $p(y) = f(x_0 , y)$ which is strictly increasing. $p(g(x_0)) = f(x_0, g(x_0)) = 0$. So, $p(g(x_0) + \epsilon) > 0$ and $p(g(x_0) - \epsilon) < 0$. $f$ continuous at $(x_0, g(x_0) + \epsilon)$, so $f > 0$ at a ball centered at $x(, g(x_0) + \epsilon)$. Similarly, $f < 0$ at a ball centered at $(x_0, g(x_0) - \epsilon)$. So, $f(x, g(x)) = 0$ for all $x$ in a ball centered at $x_0$. Define $r_6$ for the former and $r_7$ for the latter. Let $r_8 = \min(r_6, r_7)$. Let $x \in B(x_0, r_8)$.
+
+    We know that $f(x, g(x_0) + \epsilon) > 0$ and $f(x, g(x_0) - \epsilon) < 0$. Also, $f(x, g(x)) = 0 \implies g(x_0) - \epsilon < g(x) < g(x_0) + \epsilon$ as desired.
+
+    Step 3: Prove that $g$ is differentiable. So, let $x, x_0 \in B(a, r)$, $y_0, y \in (b-r, b+r)$. Consider the fubnction $q(s) = f(s,(x, y) + (1-s)(x_0, y_0)$) for $s\in[0, 1]$. By the mean value theorem, $q(1) - q(0) = g'(c)(1)$ for some $c \in (0, 1)$. Meaning, \begin{align*}
+        f(x, y) - f(x_0, y_0) &= \sum_{i=1}^N \frac{\partial f}{\partial x_i}(c(x, y) + (1-c)(x_0, y_0))(x_i - x_{0i}) + \frac{\partial f}{\partial y}(c(x, y) + (1-c)(x_0, y_0))(y - y_0).
+    \end{align*}
+    Take $(x_0, y_0) = (x_0, g(x_0))$ and $(x, y) = (x_0 + te_k, g(x_0 + te_k))$. So, we have that: 
+    \begin{align*}
+        f(x_0 + te_k, g(x_0 + te_k)) - f(x_0, g(x_0)) &= 0 \\
+        &= 0 + 0 + \cdots + \frac{\partial f}{\partial x_k}(\overline x, \overline y)(x_{0k} + t  - x_{0k}) + \frac{\partial f}{\partial y}(\overline x , \overline y)(g(x_0 + te_k) - g(x_0)) \\
+        &= \frac{\partial f}{\partial x_k}(\overline x, \overline y)t + \frac{\partial f}{\partial y}(\overline x, \overline y)(g(x_0 + te_k) - g(x_0)) \\
+        \implies \frac{g(x_0 + te_k) - g(x_0)}{t} &= -\frac{\frac{\partial f}{\partial x_k}(\overline x, \overline y)}{\frac{\partial f}{\partial y}(\overline x, \overline y)}
+    \end{align*}
+    Now take $t \to 0$ to get:
+    \begin{align*}
+        \frac{\partial g}{\partial x_k}(x_0) &= -\frac{\frac{\partial f}{\partial x_k}(x_0, g(x_0))}{\frac{\partial f}{\partial y}(x_0, g(x_0))}
+    \end{align*}
+    for every $x_0 \in B(a, r)$. So, since the partials of $f$ are continuous and $g$ is continuous, the partials of $g$ are continuous and therefore $g$ is differentiable. 
+\end{proof}
+We now use this result to prove the inverse function theorem.
+\thm{Inverse Function Theorem}{Let $U \subseteq \RR^N$ be open and $f: U \to \RR^N$ of class $C^k$. Assume $a \in U$ and that $\det{} Jf(a) \neq 0$. Then there is $r > 0$ such that $f: B(a, r) \to \RR^N$ is one-to-one, $f^{-1}: f(B(a, r)) \to \RR^N$ is of class $C^k$ and $f^{-1}$. 
+
+Also, $f(B(a, r))$ is open.}
+\begin{proof}
+    Define $h(x, y) = f(x) - y$. Let $b = f(a)$. So, $h(a, b) = 0$. Then, 
+    \begin{align*}
+        \frac{\partial h}{\partial x}(x, y) &= \frac{\partial f}{\partial x}(x) \\
+        \det \frac{\partial h}{\partial x}(x, y) &= \det \frac{\partial f}{\partial x}(x) \neq 0 \tag{by hypothesis}
+    \end{align*}
+    So, we can apply the implicit function theorem to find a function $g: B(b, r_1) \to B(a, r_2)$, $g(b) = a$, of class $C^k$ such that $h(g(y), y) = 0$. So, $f(g(y)) = y$. 
+
+    Let $V = B(a, r_2) \cap f^{-1}(B(b, r_1))$ (pre-image). So $f(V) = B(b, r_1)$. So $f: V \to B(b, r_1)$ is onto. We want to show that it is injective as well. Assume $\exists x_1, x_2 \in V$ such that $f(x_1) = f(x_2) = y \in B(b, r_1)$. But the implicit function theorem tells us that there is a unique $x \in B(a, r_2)$ such that $h(x, y) = 0$. So, $x_1 = x_2$. So, $g = f^{-1}$ is of class $C^k$. 
+\end{proof}
+\newpage 
+\section{Lagrange Multipliers}
+\dfn{Constrained Extrema}{Let $f: E \to \RR$, where $E \subseteq \RR^N$. Let $F \subseteq E$ and $x_0 \in F$. We say that:
+\begin{itemize}
+    \item $f$ attains a \emph{constrained local minimum} at $x_0$ if there exists $r > 0$ such that $f(x) \geq f(x_0)$ for all $x \in B(x_0, r) \cap F$.
+    \item $f$ attains a \emph{constrained local maximum} at $x_0$ if there exists $r > 0$ such that $f(x) \leq f(x_0)$ for all $x \in B(x_0, r) \cap F$.
+\end{itemize}
+The set $F$ is called our \emph{constraint}.}
+\thm{Lagrange Multipliers}{Let $U \subseteq \RR^N$ be an open set, $f : U \to \RR$ a function of class $C^1$ and let $g : U \to \RR^M$ a function of class $C^1$ where $M \leq N$. Then let 
+\begin{align*}
+    F := \{x \in U : g(x) = 0\}.
+\end{align*}
+Let $x_0 \in F$ and assume that $f$ attains a constrained local minimum (or maximum) at $x_0$. If the vectors $\nabla g_i(x_0)$ for $i = 1, 2, \ldots, M$ are linearly independent, then there exist $\lambda_1, \lambda_2, \ldots, \lambda_M \in \RR$ such that:
+\begin{align*}
+    \nabla f(x_0) = \sum_{i=1}^M \lambda_i \nabla g_i(x_0).
+\end{align*}
+
+}
+
+\begin{proof}
+    write later
+\end{proof}
+
+
+\section{Lebesgue Measure}
+\dfn{Length, Rectangle, Volume}{
+    $I \subseteq \RR$ interval. The \emph{length} of $I$ is defined as the $\length(I) = \sup I - \inf I$. A \emph{rectangle} in $\RR^N$ is a set of the form $I_1 \times I_2 \times \cdots \times I_N$ where $I_i$ are intervals in $\RR$. The \emph{volume} of a rectangle is defined as $\vol(I_1 \times I_2 \times \cdots \times I_N) = \length(I_1)\length(I_2)\cdots\length(I_N)$.
+}
+
+\dfn{Lebesgue Outer Measure}{Let $E \subseteq \RR^N$. The \emph{Lebesgue outer measure} of $E$ is defined as:
+\begin{align*}
+    \mathcal{L}^N_o (E) := \inf \left\{ \sum_{n=1}^\infty \vol (R_m) : E \subseteq \bigcup_{n=1}^\infty R_m, R_m \text{ rectangles}\right\}
+\end{align*}}
+\exer{}{$R$ rectangle, $R$ closed. Let $R_n$ be open rectangles such that $R \subseteq \bigcup_{m=1}^\infty R_m$. Prove that there is $\ell \in \NN$ such that $R \subseteq \bigcup_{m=1}^\ell R_m$.}
+
+
+\ex{}{$R$ rectangle, $\mathcal L_o^N(\partial R) = 0$.}
+
+\thm{}{$R$ rectangle. Then $\mathcal L_o^N(R) = \vol(R)$.}
+\begin{proof}
+    Let $R_1 = R$ and $R_2 = R_3 = \cdots = \emptyset$. Then we have that $\mathcal L_o^N(R) \leq \sum_{n=1}^\infty \vol(R_n) = \vol(R)$.
+
+    Now assume $R$ is closed. Let $R_n$ be rectangles $\bigcup_{n=1}^\infty R_n \supseteq R$. Fix $\epsilon > 0$, find $S_n \supseteq R_n$ open with $\vol(S_n) \leq \vol(R_n) + \epsilon 2^{-n}$. 
+
+    Now we can apply the exercise to find some $\ell \in \NN$ such that $R \subseteq \bigcup_{n=1}^\infty S_n$. So by other example,
+    \begin{align*}
+        \vol(R) \leq \sum_{n=1}^\infty \vol(S_n)\leq \sum_{n=1}^\ell \vol(S_n) \leq \sum_{n=1}^\ell \vol(R_n) + \epsilon
+    \end{align*}
+    That is,
+    \begin{align*}
+        \vol(R) \leq \sum_{n=1}^\infty \vol(R_n)
+    \end{align*}
+    as $\epsilon \to 0$. So, 
+    \begin{align*}
+        \vol(R) \leq \mathcal L_o^N(R) \leq \vol(R)
+    \end{align*}
+    and we are done.
+
+    If $R$ is not closed, $\vol(\bar R) = \vol (R) = \mathcal L_o^N(\bar R) \leq \mathcal L_o^N(R) + \mathcal L_o^N(\partial R) = \mathcal L_o^N(R)$.
+\end{proof}
+\noindent Properties of Lebesgue outer measure:
+\begin{enumerate}
+    \item $E \subseteq F$, then $\mathcal L_o^N(E) \leq \mathcal L_o^N(F)$.
+    \item $E \subseteq \bigcup_{k=1}^\infty E_k$, then $\mathcal L_o^N(E) \leq \sum_{k=1}^\infty \mathcal L_o^N(E_k)$.
+    \begin{proof}
+        If $\sum_{k=1}^\infty \mathcal L_o^N(E_k) = \infty$, then the inequality is trivial. So assume that the sum is finite. Fix $\epsilon > 0$. $\mathcal L_o^N(E_k)$ find rectangles $R_{n, k}$ such that $E_k \subseteq \bigcup_{n=1}^\infty R_{n, k}$ and $\sum_{n=1}^\infty \vol(R_{n, k}) \leq \mathcal L_o^N(E_k) + \epsilon 2^{-k}$. So,
+        \begin{align*}
+            E \subseteq \bigcup_{k=1}^\infty E_k \subseteq \bigcup_{k=1}^\infty \bigcup_{n=1}^\infty R_{n, k} = \bigcup_{j = 1}S_j
+        \end{align*}
+        So, $\mathcal L_o^N(E) \leq \sum_{j=1}^\infty \vol(S_j) = \sum_{k=1}^\infty \sum_{n=1}^\infty \vol(R_{n, k}) \leq \sum_{k=1}^\infty \mathcal L_o^N(E_k) + \epsilon$.
+        Letting $\epsilon \to 0^+$ gives the desired result.
+    \end{proof}
+    \item $E, F \subseteq \RR^N$ with $\dist(E, F) > 0$, where $\dist$ is the infimum of the collection $\Vert x- y \Vert$ for $x \in E$, $y \in F$. Then $\mathcal L_o^N(E \cup F) = \mathcal L_o^N(E) + \mathcal L_o^N(F)$.
+    \begin{proof}
+        Let $R_n$ be rectangles, $E \cup F \subseteq \bigcup_{n=1}^\infty R_n$. Can we assume $\diam R_n < \dist(E, F)$ (partition $R_n$ into smaller rectangles and use previous exercise). So,
+        \begin{align*}
+            \bigcup_{n=1}^\infty R_n = \bigcup_{R_n \cap E \neq \emptyset} R_n \cup \bigcup_{R_n \cap F \neq \emptyset} R_n
+        \end{align*}
+        So, $\mathcal L_o^N(E) + \mathcal L_o^N(F) \leq \sum_{R_n \cap E \neq \emptyset} \vol(R_n) + \sum_{R_n \cap F \neq \emptyset} \vol(R_n) = \sum_{n=1}^\infty \vol(R_n) = \mathcal L_o^N(E \cup F)$.
+    \end{proof}
+\end{enumerate}
+\newpage
+\nt{You can construct $E, F \subseteq \RR^N$, $E \cap F = \emptyset$ such that \begin{align*}
+    \mathcal L_o^N(E \cup F) < \mathcal L_o^N(E) + \mathcal L_o^N(F).
+\end{align*}
+(Relies on axiom of choice)}
+
+\dfn{Lebesgue Measure}{A set $E \subseteq \RR^N$ is \emph{Lebesgue measurable} if for every $\epsilon > 0$, there exists an open set $U \supseteq E$ such that $\mathcal L_o^N(U \setminus E) < \epsilon$.
+
+We define the \emph{Lebesgue measure} of $E$ to be $\mathcal L^N(E) = \mathcal L_o^N(E)$.}
+\noindent Properties of Lebesgue measure:
+\begin{enumerate}
+    \item Open sets are Lebesgue measurable. (If $E$ is open, take $U = E$, so $U \setminus E = \emptyset$.)
+    \item If $\mathcal L_o^N (E) = 0$, then $E$ is Lebesgue measurable. 
+    \begin{proof}
+        Let $\epsilon > 0$. Find $R_n$ rectangles such that $\bigcup R_n \supseteq E$ and $\sum \vol(R_n) < \epsilon$. Find $S_n$ open rectangle with $S_n \supseteq R_n$ and $\vol(S_n) < \vol(R_n) + \epsilon 2^{-n}$. So, let $U = \bigcup S_n \supseteq E$, so $U$ is open. Then,
+        \begin{align*}
+            \mathcal L_o^N(U \setminus E) \leq \mathcal L_o^N(U) \leq \sum \vol(S_n) \leq \sum \vol(R_n) + \epsilon < \epsilon + \epsilon = 2\epsilon
+        \end{align*}
+        and we are done.
+    \end{proof}
+    \item If $E_n$ is Lebesgue measurable, $n \in \NN$, then $\bigcup E_n$ is Lebesgue measureable. 
+    \begin{proof}
+        Fix $\epsilon > 0$, find $U_n \supseteq E_n$ open, $\mathcal L_o^N(U_n \setminus E_n) < \epsilon 2^{-n}$. So, $U = \bigcup U_n \supseteq \bigcup E_n$. So,
+        \begin{align*}
+            \mathcal L_o^N(U \setminus \bigcup E_n) \leq \sum \mathcal L_o^N(U_n \setminus E_n) < \epsilon
+        \end{align*}
+        and we are done.
+    \end{proof}
+\end{enumerate}
+\newpage
+\thm{}{Sequentially compact sets are Lebesgue measurable.}
+\mlenma{}{$C \subset \RR^N$ closed, $K \subset \RR^N$ sequentially compact such that $C \cap K = \emptyset$. Then $\dist(C, K) > 0$.}
+\begin{proof}
+    Assume $\dist(C, K) = 0$. Take $\epsilon = \frac 1n$, find $x_n \in G$, $y_n \in K$ such that $\Vert x_n - y_n \Vert < \frac 1n$. Since $K$  is sequentially compact, $\exists y_{n_k} \to y \in K$. So,
+    \begin{align*}
+        \Vert x_{n_k} y\Vert \leq \Vert x_{n_k} - y_{n_k} \Vert + \Vert y_{n_k} - y \Vert
+    \end{align*}
+    Both values on the RHS tend to 0, so $x_{n_k} \to y$, $x_{n_k} \in C$ as well. This implies $y \in C$, but $C \cap K$ is empty, so contradiction.
+\end{proof}
+
+\mlenma{}{$U \subseteq \RR^N$ open. Then, $U = \bigcap Q_n$ where $Q_n$ are closed cubes with disjoint interiors. }
+\begin{proof}
+    Subdivide $\RR^N$ into cubes of sidelength one. If $Q_n \subseteq U$, keep it. If $Q_n \subseteq \RR^n \setminus U$, throw it away. If $Q_n \cap U \neq \emptyset$, $\overline Q_n \cap   (\RR^n \setminus U) \neq \emptyset$, subdivide $Q_n$ into cubes of sidelength $\frac 12$. Keep going. Find a sequence of cubes $Q_n$ (the ones you kept). We have that $\overline Q_n \subseteq U$ and we want $\bigcup \overline Q_n =  U$. 
+
+    Let $x \in U$, then $\dist(x, \partial U) > 0$. $x$ was in one of the cubes of side one $T_0$. Either $\overline T_0 \subseteq U$ or $T_0$ was subdivided. In the first case, we are done. Otherwise $x \in T_1$, one of the subcubes $\frac{\sqrt N}{2^n} < \frac r2$. 
+\end{proof}
+We turn to the proof of the theorem.
+\begin{proof}
+    Take $K$ sequentially compact. Fix $\epsilon > 0$. Find open rectangles $R_n$ such that $\bigcup R_n \supseteq K$ and $\sum \vol R_n  \leq \mathcal L_o^N(K) + \epsilon$. 
+
+    Let $U = \bigcup R_n$.  \begin{align*}
+        \mathcal L_o^N(U) \leq \sum \vol R_n \leq \mathcal L_o^N(K) + \epsilon
+    \end{align*}
+    So, $U \setminus K$ is open, and by a previous lemma, we have:
+    \begin{align*}
+        U \setminus K = \bigcup Q_n
+    \end{align*}
+    where $Q_n$ are closed cubes with disjoint interiors. Let $C_\ell = \bigcup_{n=1}^\ell Q_n$. We know that $C_\ell$ is closed  and $C\ell \cap K = \emptyset$. By the other lemma, $\dist(C_\ell, K) > 0$, so 
+    \begin{align*}
+        \mathcal L_o^N ( C_\ell \cup K) &= \mathcal L_o^N (C_\ell) + \mathcal L_o^N(K) \\
+        &= \sum_{n=1}^\ell \vol Q_n + \mathcal L_o^N (K) \\
+        \implies \sum_{n=1}^\ell \vol Q_n &\leq \mathcal L_o^N (C_\ell \cup K) - \mathcal L_o^N(K) \\
+        &\leq \mathcal L_o^N(U) - \mathcal L_o^N(K) \leq \epsilon
+    \end{align*}
+    Taking $\ell \to \infty$ completes the proof; 
+    \begin{align*}
+        \mathcal L_o^N (U \setminus K) \leq \sum_{n =1}^{\ell \to \infty} \vol Q_n \leq \epsilon
+    \end{align*}
+    as desired.
+\end{proof}
+\newpage
+\thm{}{Closed sets are Lebesgue measureable. }
+\begin{proof}
+    Let $C \in \RR^N$ be closed. If $C$ is bounded, then we're done. Otherwise, $C = \bigcup_{n=1}^\infty C \cap \overline{B(0, n)}$. Each $C \cap B(0, n)$ is bounded, so Lebesgue measurable. So, $C$ is Lebesgue measurable, as the union of Lebesgue measurable sets is Lebesgue measurable.
+\end{proof}
+\thm{}{If $E \subseteq \RR^N$ is Lebesgue measureable, then $\RR^N \setminus E$ is Lebesgue measureable.}
+\begin{proof}
+    Let $E$ be Lebesgue measureable. Let $\epsilon = \frac 1n$. Let $U_n$ be open, $U_n \supseteq E$, and $\mathcal L_o^N(U_n \setminus E) \leq \frac 1n$. Then we have $\RR^N \setminus U_n \subseteq \RR^N \setminus E$. Let $C_n := \RR^N \setminus U_n$. Then $C_n$ is closed, so Lebesgue measureable. 
+
+    We have that $F := \bigcup C_n \subseteq \RR^N \setminus E$, where the LHS is LM. We want to show that $\RR^n \setminus E = F \cup S$, where $S$ is a set with measure zero. That is, we claim $\mathcal L_o^N((\RR^n \setminus E) \setminus F) = 0$.
+
+    So,
+    \begin{align*}
+        x \in (\RR^n \setminus E) \setminus F \subseteq U_n \setminus E.
+    \end{align*}
+    if $x \notin F$, then $x \notin C_n \implies x \in U_n$. So,
+    \begin{align*}
+        0 \leq \mathcal L_o^N((\RR^N \setminus E) \setminus F) \leq \mathcal L_o^N(U_n \setminus E) \leq \frac 1n.
+    \end{align*}
+    So as we send $n \to \infty$, we have that $\mathcal L_o^N((\RR^N \setminus E) \setminus F) = 0$, meaning that $\RR^N \setminus E$ is Lebesgue measureable.
+\end{proof}
+\thm{}{$E_n$ Lebesgue measureable, $n \in \NN$. Then $\bigcap E_n$ is Lebesgue measureable.}
+\begin{proof}
+    We know that the union of Lebesgue measureable sets is Lebesgue measureable. So, $\RR^N \setminus \bigcup \RR^N \setminus E_n$ is Lebesgue measureable. By the previous theorem, $\bigcap E_n$ is Lebesgue measureable.
+\end{proof}
+\newpage
+\thm{Important}{Let $E_n$ be Lebesgue measureable such that $E_i \cap E_j = \emptyset$ for $i \neq j$. Then $\mathcal L^N\left(\bigcup E_n\right) = \sum \mathcal L^N(E_n)$.}
+\begin{proof}
+    \textbf{Step 1:} Assume that the $E_n$ are bounded. Consider $\RR^N \setminus E_n$, which we know is LM. By the definition of LM, given an $\epsilon > 0$, we can find some $U_n$ open that contains $\RR^N \setminus E_n$ and $\mathcal L_o^N(U_n \setminus (\RR^N \setminus E_n)) \leq \frac{\epsilon}{2^n}$. 
+
+    Let $K_n := \RR^n \setminus U_n \subseteq E_n$. Then $K_n$ is compact, so LM. Then for $i \neq j$, $K_j \cap K_i = \emptyset$, meaning $\dist (K_i, K_j) > 0$. So, 
+    \begin{align*}
+        \mathcal L_o^N\left(\bigcup_{n=1}^\ell K_n\right) = \sum_{n=1}^\ell \mathcal L_o^N(K_n).
+    \end{align*}
+    Then,
+    \begin{align*}
+        \mathcal L_o^N\left(\bigcup_{n=1}^\infty E_n\right) \geq \mathcal L_o^N\left(\bigcup_{n=1}^\ell E_n\right) \geq \mathcal L_o^N\left(\bigcup_{n=1}^\ell K_n\right) = \sum_{n=1}^\ell \mathcal L_o^N(K_n) \geq \sum_{n=1}^\ell \mathcal L_o^N(E_n) - \mathcal L_o^N(E_n \setminus K_n) \geq \sum_{n=1}^\ell \mathcal L_o^N(E_n) - \epsilon.
+    \end{align*}
+    Now let $\ell \to \infty$ to get:
+    \begin{align*}
+        \mathcal L_o^N\left(\bigcup_{n=1}^\infty E_n\right) \geq \sum_{n = 1}^\infty \mathcal L_o^N ( E_n) - \epsilon.
+    \end{align*}
+    Send $\epsilon \to 0$ to get the desired result.
+
+    \textbf{Step 2:} Now we consider the case where the $E_n$ are not necessarily bounded. Let 
+    \begin{align*}
+        F_1 &= B(0, 1) \\
+        F_2 &= B(0, 2) \setminus B(0, 1) \\
+        &\vdots \\
+        F_i &= B(0, i) \setminus B(0, i-1) \\
+        &\vdots
+    \end{align*}
+    Then we have $E_n = E_n \cap \bigcup F_i = \bigcup_i (E_n \cap F_i)$. So,
+    \begin{align*}
+        \mathcal L_o^N \left(\bigcup_{n=1}^\infty E_n \right) &= \mathcal L_o^N \left( \bigcup_{n=1}^\infty \bigcup_{i=1}^\infty (E_n \cap F_i)\right) \\
+        &= \sum_{n=1}^\infty \sum_{i=1}^\infty \mathcal L_o^N (E_n \cap F_i) \\
+        &= \sum_{n=1}^\infty \mathcal L_o^N\left( \bigcup_{i=1}^\infty E_n \cap F_i\right) \\
+        &= \sum_{n=1}^\infty \mathcal L_o^N(E_n).
+    \end{align*}
+\end{proof}
+\newpage
+\cor{}{If we have $E_1 \subseteq E_2 \subseteq \cdots \subseteq E_n$, basically do the same as above with $F_1 = E_1, F_2 = E_2 \setminus E_1, \ldots$ to get:
+\begin{align*}
+    \mathcal L_o^N \left( \bigcup_{n=1}^\infty E_n\right) = \sup_{n} \mathcal L^N_o(E_n) = \lim_{n \to \infty} \mathcal L_o^N(E_n).
+\end{align*}
+And, \begin{align*}
+    \mathcal L_o^N\left( \bigcup_{n=1}^\infty F_n \right) = \sum_{n=1}^\infty \mathcal L_o^N(F_n) = \lim_{\ell \to \infty} \sum_{n=1}^\ell \mathcal L_o^N(F_n) = \lim_{\ell \to \infty} \mathcal L_o^N\left( \bigcup_{n=1}^\ell F_n\right) = E_\ell.
+\end{align*}
+Note that $\mathcal L_o^N\left( \bigcup_{n=1}^\infty F_n \right) = \mathcal L_o^N\left( \bigcup_{n=1}^\infty E_n \right)$.
+}
+
+\section{Lebesgue Integration}
+\dfn{Characteristic Function}{Let $E$ be a set. The characteristic function of the set $E$ is defined as:
+\begin{align*}
+    \chi_E(x) = \begin{cases}
+        1 & x \in E \\
+        0 & x \notin E
+    \end{cases}.
+\end{align*}
+}
+\dfn{Simple Function}{Let $E \subseteq \RR^N$ be a Lebesgue measureable set. A function $s: E \to \RR$ is called a \emph{simple function} if it is of the form:
+\begin{align*}
+    s(x) = \sum_{i=1}^n a_i \chi_{E_i}(x)
+\end{align*}
+where $a_i \in \RR$ and $E_i$ are Lebesgue measureable sets.}
+\dfn{Lebesgue Integral (simple)}{Let $s: E \to [0, \infty)$ be a simple function. That is:
+\begin{align*}
+    s = \sum_{i=1}^n c_i \chi_{E_i},
+\end{align*}
+with disjoint $E_j$. Then the Lebesgue integral of $s$ over $E$ is defined as:
+\begin{align*}
+    \int_E s\, dx := \sum_{i=1}^n c_i \mathcal L^N(E_i).
+\end{align*}
+If $c_i = 0$, $c_i \mathcal L^N(E_i) = 0$.}
+\newpage
+
+\noindent Properties of the Lebesgue integral:
+\begin{enumerate}
+    \item $\int_E cs\, dx = c \int_E s\, dx$.
+    \item If $s, t$ simple, then $\int_E (s + t)\, dx = \int_E s\, dx + \int_E t\, dx$.
+\end{enumerate}
+\dfn{Lebesgue Measureable Function}{Let $E \subseteq \RR^N$ be Lebesgue measureable. A function $f: E \to [0, \infty)$ is called Lebesgue measureable if there exists a sequence of simple functions $s_n$ with $0 \leq s_n \leq f$ such that $s_n \to f$ pointwise in $E$.}
+\noindent Properties. Let $E \subseteq \RR^N$ LM, $f, g: E \to [0, \infty)$ LM:
+\begin{enumerate}
+    \item $f + g$ is LM.
+    \item $fg$ is LM.
+    \item $\max(f, g)$ is LM.
+    \item $\min(f, g)$ is LM.
+\end{enumerate}
+\dfn{Lebesgue Integral}{Let $f: E \to [0, \infty)$ be a Lebesgue measureable function. Then the Lebesgue integral of $f$ over $E$ is defined as:
+\begin{align*}
+    \int_E f\, dx = \sup \left\{ \int_E s\, dx : 0 \leq s \leq f, s \text{ simple}\right\}.
+\end{align*}}
+\nt{$f : E \to [0, \infty)$ LM. WLOG, can assume $0 \leq s_n \leq s_{n+1} \leq f$ for all $n$. By def, $\exists s_n$ simple $0 \leq s_n \leq f$ such that $s_n \to f$ pointwise. So redefine $s_n$ to be increasing.
+
+This still converges to $f$ pointwise. If we have $x \in E$, then:
+\begin{align*}
+    f(x) > \epsilon < s_n(x) \leq f(x),
+\end{align*}
+but \begin{align*}
+    f(x) -\epsilon < s_n(x) \leq \overline s_n(x) \leq f(x).
+\end{align*}
+So, $\overline s_n \to f$ pointwise.}
+\newpage
+\thm{}{Let $f: E \to [0, \infty)$ be a Lebesgue measureable function. Then the set:
+\begin{align*}
+    E_a = \{ x \in E: f(x) > a \geq 0\}
+\end{align*}
+is Lebesgue measureable. }
+
+
+
+
+
+
 
 
 \end{document}
