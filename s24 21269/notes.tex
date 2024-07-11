@@ -1819,7 +1819,26 @@ Let $x_0 \in F$ and assume that $f$ attains a constrained local minimum (or maxi
 }
 
 \begin{proof}
-    write later
+    Assume $f$ gets a local min at $x_0$. Then, there is $B(x_0, r) \subseteq U$ such that:
+    \begin{align*}
+        f(x) \geq f(x_0) \tag{$\forall x \in B(x_0, r) \text{ with } g(x) = 0$}.
+    \end{align*}
+    $\nabla g_i(x_0)$ are linearly independent iff $J_g(x_0)$ has an $M \times M$ submatrix with nonzero determinant. That is, by relabelling, we can say:
+    \begin{align*}
+        \det \begin{pmatrix} \frac{\partial g_1}{\partial x_{N-M+1}}(x_0) & \cdots & \frac{\partial g_1}{\partial x_N}(x_0) \\ \vdots & \ddots & \vdots \\ \frac{\partial g_M}{\partial x_{N-M+1}}(x_0) & \cdots & \frac{\partial g_M}{\partial x_N}(x_0) \end{pmatrix} \neq 0.
+    \end{align*}
+    Write $x =(z,y) \in \RR^{N-M} \times \RR^M$ and $x_0 = (a, b)$ and we see that:
+    \begin{align*}
+        g(a, b) = 0 \quad \text{and} \quad \det \begin{pmatrix} \frac{\partial g_1}{\partial y_1}(a, b) & \cdots & \frac{\partial g_1}{\partial y_M}(a, b) \\ \vdots & \ddots & \vdots \\ \frac{\partial g_M}{\partial y_1}(a, b) & \cdots & \frac{\partial g_M}{\partial y_M}(a, b) \end{pmatrix} \neq 0.
+    \end{align*}
+    So we are in a spot to apply the IFT to get $h(z)$ such that $g(z, h(z)) = 0$ for $z \in B(a, r_0)$ for some $r_0 > 0$. Also $h$ is $C^1$ and $h(a) = b$. Then let $H: z \mapsto (z, h(z))$. So, $H$ is $C^1$ and $H(a) = x_0$. Then,
+    \begin{align*}
+        f(H(z)) \geq f(x_0) = f(H(a)) \quad \forall z \in B(a, r_0).
+    \end{align*}
+    As such $f \circ H$ attains a local minimum at $a$, meaning
+    \begin{align*}
+        0 = \nabla (f \circ H)(a) = \nabla f(x_0) \cdot \nabla J_H(a).
+    \end{align*}
 \end{proof}
 
 
@@ -1835,7 +1854,7 @@ Let $x_0 \in F$ and assume that $f$ attains a constrained local minimum (or maxi
 \exer{}{$R$ rectangle, $R$ closed. Let $R_n$ be open rectangles such that $R \subseteq \bigcup_{m=1}^\infty R_m$. Prove that there is $\ell \in \NN$ such that $R \subseteq \bigcup_{m=1}^\ell R_m$.}
 
 
-\ex{}{$R$ rectangle, $\mathcal L_o^N(\partial R) = 0$.}
+\exer{}{$R$ rectangle, $\mathcal L_o^N(\partial R) = 0$.}
 
 \thm{}{$R$ rectangle. Then $\mathcal L_o^N(R) = \vol(R)$.}
 \begin{proof}
@@ -1843,7 +1862,7 @@ Let $x_0 \in F$ and assume that $f$ attains a constrained local minimum (or maxi
 
     Now assume $R$ is closed. Let $R_n$ be rectangles $\bigcup_{n=1}^\infty R_n \supseteq R$. Fix $\epsilon > 0$, find $S_n \supseteq R_n$ open with $\vol(S_n) \leq \vol(R_n) + \epsilon 2^{-n}$. 
 
-    Now we can apply the exercise to find some $\ell \in \NN$ such that $R \subseteq \bigcup_{n=1}^\infty S_n$. So by other example,
+    Now we can apply the exercise to find some $\ell \in \NN$ such that $R \subseteq \bigcup_{n=1}^\ell S_n$. 
     \begin{align*}
         \vol(R) \leq \sum_{n=1}^\infty \vol(S_n)\leq \sum_{n=1}^\ell \vol(S_n) \leq \sum_{n=1}^\ell \vol(R_n) + \epsilon
     \end{align*}
@@ -1853,7 +1872,7 @@ Let $x_0 \in F$ and assume that $f$ attains a constrained local minimum (or maxi
     \end{align*}
     as $\epsilon \to 0$. So, 
     \begin{align*}
-        \vol(R) \leq \mathcal L_o^N(R) \leq \vol(R)
+        \vol(R) \leq \mathcal L_o^N(R)
     \end{align*}
     and we are done.
 
@@ -1862,11 +1881,18 @@ Let $x_0 \in F$ and assume that $f$ attains a constrained local minimum (or maxi
 \noindent Properties of Lebesgue outer measure:
 \begin{enumerate}
     \item $E \subseteq F$, then $\mathcal L_o^N(E) \leq \mathcal L_o^N(F)$.
+    \begin{proof}
+        Let $R_i$ be rectangles such that $F \subseteq \bigcup_{i=1}^\infty R_i$, meaning $E \subseteq \bigcup_{i=1}^\infty R_i$. So,
+        \begin{align*}
+            \mathcal L_o^N(E) \leq \sum_{i=1}^\infty \vol(R_i)
+        \end{align*}
+        Taking the infimum over all such rectangles gives the desired result.
+    \end{proof}
     \item $E \subseteq \bigcup_{k=1}^\infty E_k$, then $\mathcal L_o^N(E) \leq \sum_{k=1}^\infty \mathcal L_o^N(E_k)$.
     \begin{proof}
         If $\sum_{k=1}^\infty \mathcal L_o^N(E_k) = \infty$, then the inequality is trivial. So assume that the sum is finite. Fix $\epsilon > 0$. $\mathcal L_o^N(E_k)$ find rectangles $R_{n, k}$ such that $E_k \subseteq \bigcup_{n=1}^\infty R_{n, k}$ and $\sum_{n=1}^\infty \vol(R_{n, k}) \leq \mathcal L_o^N(E_k) + \epsilon 2^{-k}$. So,
         \begin{align*}
-            E \subseteq \bigcup_{k=1}^\infty E_k \subseteq \bigcup_{k=1}^\infty \bigcup_{n=1}^\infty R_{n, k} = \bigcup_{j = 1}S_j
+            E \subseteq \bigcup_{k=1}^\infty E_k \subseteq \bigcup_{k=1}^\infty \bigcup_{n=1}^\infty R_{n, k} = \bigcup_{j = 1}^\infty S_j
         \end{align*}
         So, $\mathcal L_o^N(E) \leq \sum_{j=1}^\infty \vol(S_j) = \sum_{k=1}^\infty \sum_{n=1}^\infty \vol(R_{n, k}) \leq \sum_{k=1}^\infty \mathcal L_o^N(E_k) + \epsilon$.
         Letting $\epsilon \to 0^+$ gives the desired result.
@@ -1900,7 +1926,7 @@ We define the \emph{Lebesgue measure} of $E$ to be $\mathcal L^N(E) = \mathcal L
         \end{align*}
         and we are done.
     \end{proof}
-    \item If $E_n$ is Lebesgue measurable, $n \in \NN$, then $\bigcup E_n$ is Lebesgue measureable. 
+    \item If $E_n$ is Lebesgue measurable, then $\bigcup E_n$ is Lebesgue measureable. 
     \begin{proof}
         Fix $\epsilon > 0$, find $U_n \supseteq E_n$ open, $\mathcal L_o^N(U_n \setminus E_n) < \epsilon 2^{-n}$. So, $U = \bigcup U_n \supseteq \bigcup E_n$. So,
         \begin{align*}
@@ -1913,20 +1939,20 @@ We define the \emph{Lebesgue measure} of $E$ to be $\mathcal L^N(E) = \mathcal L
 \thm{}{Sequentially compact sets are Lebesgue measurable.}
 \mlenma{}{$C \subset \RR^N$ closed, $K \subset \RR^N$ sequentially compact such that $C \cap K = \emptyset$. Then $\dist(C, K) > 0$.}
 \begin{proof}
-    Assume $\dist(C, K) = 0$. Take $\epsilon = \frac 1n$, find $x_n \in G$, $y_n \in K$ such that $\Vert x_n - y_n \Vert < \frac 1n$. Since $K$  is sequentially compact, $\exists y_{n_k} \to y \in K$. So,
+    Assume $\dist(C, K) = 0$. Take $\epsilon = \frac 1n$, find $x_n \in C$, $y_n \in K$ such that $\Vert x_n - y_n \Vert < \frac 1n$. Since $K$  is sequentially compact, $\exists y_{n_k} \to y \in K$. So,
     \begin{align*}
-        \Vert x_{n_k} y\Vert \leq \Vert x_{n_k} - y_{n_k} \Vert + \Vert y_{n_k} - y \Vert
+        \Vert x_{n_k} - y\Vert \leq \Vert x_{n_k} - y_{n_k} \Vert + \Vert y_{n_k} - y \Vert
     \end{align*}
     Both values on the RHS tend to 0, so $x_{n_k} \to y$, $x_{n_k} \in C$ as well. This implies $y \in C$, but $C \cap K$ is empty, so contradiction.
 \end{proof}
 
-\mlenma{}{$U \subseteq \RR^N$ open. Then, $U = \bigcap Q_n$ where $Q_n$ are closed cubes with disjoint interiors. }
+\mlenma{}{$U \subseteq \RR^N$ open. Then, $U = \bigcup Q_n$ where $Q_n$ are closed cubes with disjoint interiors. }
 \begin{proof}
     Subdivide $\RR^N$ into cubes of sidelength one. If $Q_n \subseteq U$, keep it. If $Q_n \subseteq \RR^n \setminus U$, throw it away. If $Q_n \cap U \neq \emptyset$, $\overline Q_n \cap   (\RR^n \setminus U) \neq \emptyset$, subdivide $Q_n$ into cubes of sidelength $\frac 12$. Keep going. Find a sequence of cubes $Q_n$ (the ones you kept). We have that $\overline Q_n \subseteq U$ and we want $\bigcup \overline Q_n =  U$. 
 
     Let $x \in U$, then $\dist(x, \partial U) > 0$. $x$ was in one of the cubes of side one $T_0$. Either $\overline T_0 \subseteq U$ or $T_0$ was subdivided. In the first case, we are done. Otherwise $x \in T_1$, one of the subcubes $\frac{\sqrt N}{2^n} < \frac r2$. 
 \end{proof}
-We turn to the proof of the theorem.
+\noindent We turn to the proof of the theorem.
 \begin{proof}
     Take $K$ sequentially compact. Fix $\epsilon > 0$. Find open rectangles $R_n$ such that $\bigcup R_n \supseteq K$ and $\sum \vol R_n  \leq \mathcal L_o^N(K) + \epsilon$. 
 
@@ -1953,7 +1979,7 @@ We turn to the proof of the theorem.
 \newpage
 \thm{}{Closed sets are Lebesgue measureable. }
 \begin{proof}
-    Let $C \in \RR^N$ be closed. If $C$ is bounded, then we're done. Otherwise, $C = \bigcup_{n=1}^\infty C \cap \overline{B(0, n)}$. Each $C \cap B(0, n)$ is bounded, so Lebesgue measurable. So, $C$ is Lebesgue measurable, as the union of Lebesgue measurable sets is Lebesgue measurable.
+    Let $C \in \RR^N$ be closed. If $C$ is bounded, then we're done. Otherwise, $C = \bigcup_{n=1}^\infty C \cap \overline{B(0, n)}$. Each $C \cap \overline{B(0, n)}$ is bounded, so Lebesgue measurable. So, $C$ is Lebesgue measurable, as the union of Lebesgue measurable sets is Lebesgue measurable.
 \end{proof}
 \thm{}{If $E \subseteq \RR^N$ is Lebesgue measureable, then $\RR^N \setminus E$ is Lebesgue measureable.}
 \begin{proof}
@@ -2079,9 +2105,272 @@ So, $\overline s_n \to f$ pointwise.}
     E_a = \{ x \in E: f(x) > a \geq 0\}
 \end{align*}
 is Lebesgue measureable. }
+\begin{proof}
+    There are simple functions $0 \leq s_n \leq s_{n+1} \leq f$ such that $s_n \to f$ pointwise. Then,
+    \begin{align*}
+        \{ x \in E : f(x) > a \} \stackrel{?}{=} \bigcup_{n=1}^\infty \{ x \in E : s_n(x) > a\}.
+    \end{align*}
+    If $f(x) > a$, then $\lim_{n \to \infty} s_n(x) > a$. Take $\epsilon = \frac{f(x) - a}{2}$. So, we have:
+    \begin{align*}
+        s_n(x) > a
+    \end{align*}
+    for all $ n \geq \overline n$. Then, if $s_n(x) > a$ for some $n$, this means 
+    \begin{align*}
+        f(x) \geq s_n(x) > a.
+    \end{align*}
+    So, the two sets are equal.
+\end{proof}
+\nt{Some more Lebesgue measureable sets:
+\begin{enumerate}
+    \item $\{x \in E : f(x) \leq a\}$ is LM because $E \setminus \{x \in E : f(x) \leq a\} = \{x \in E : f(x) > a\}$ and the LHS is LM.
+    \item Now $\{x \in E : f(x) \geq a\} = \bigcap_{n=1}^\infty \{x \in E : f(x) > a - \frac 1n\}$ is LM. (exercise)
+\end{enumerate}}
 
+\thm{}{Let $E \subseteq \RR^N$ be LM. $f: E \to [0, \infty]$. If \begin{align*}
+    E_a = \{ x \in E . f(x) > a\}
+\end{align*}
+is LM for all $a \geq 0$, then $f$ is LM. }
 
+\cor{}{$E\subseteq \RR^N$ LM, $f: E \to [0, \infty)$ continuous. Then $f$ is LM.}
+\begin{proof}
+    $E_a = f^{-1}((a, \infty)) = E \cap U$ open. Intersection of two LM sets is LM.
+\end{proof}
+\begin{proof}
+    For $n \in \NN$, let:
+    \begin{align*}
+        E_n &= \{ x \in E: f(x) \geq 2^n\} \\
+        E_{n | k} &= \left\{ x\in E :  \frac{k}{2^n} \leq f(x) < \frac{k+1}{2^n}\right\}. \tag{$0 \leq k \leq 2^{2^n - 1}$}
+    \end{align*}
+    Then define the simple function:
+    \begin{align*}
+        s_n(x) &= \begin{cases} 2^n & x \in E_n \\ \frac{k}{2^n} & x \in E_{n | k}\end{cases}.
+    \end{align*}
+    Claim that $s_n \to f$ as $n \to \infty$. If $f(x) = 0$, then $x \in E_{n|0}$. So, $s_n(x) = 0 \to 0 = f(x)$.
 
+    If $f(x) > 0$, note that $k = \lfloor 2^nf(x) \rfloor$. So, $x \in E_{n|k}$. So, 
+    \begin{align*}
+        s_n(x) = \frac{\lfloor 2^nf(x) \rfloor}{2^n} \leq f(x) < \frac{\lfloor 2^nf(x) \rfloor + 1}{2^n} = s_n(x) + \frac{1}{2^n}.
+    \end{align*}
+    This yields:
+    \begin{align*}
+        0 \leq f(x) - s_n(x) < \frac{1}{2^n}.
+    \end{align*}
+    As $n\to \infty$, we have that $s_n \to f$ pointwise. So, $f$ is LM.
+\end{proof}
+
+\noindent Properties of $f_n: E \to [0, \infty)$ measureable. 
+\begin{enumerate}
+    \item Assume $\sup_n f_n(x): E \to [0, \infty)$, then $\sup_n f_n$ is LM.
+    \begin{proof}
+        \begin{align*}
+            \{ x \in E : \sup_n f_n(x) > a\} = \bigcup_{n=1}^\infty \left\{ x \in E : f_n(x) > a\right\}.
+        \end{align*}
+        As the right side is Lebesgue measureable, so is the left side.
+    \end{proof}
+    \item Assume $\inf_n f_n(x): E \to [0, \infty)$, then $\inf_n f_n$ is LM.
+    \begin{proof}
+        \begin{align*}
+            \{ x \in E : \inf_n f_n(x) \geq a \} = \bigcap_{n=1}^\infty \left\{ x \in E : f_n(x) \geq a\right\}.
+        \end{align*}
+        This is LM because of stuff we did on Friday (complements idk).
+    \end{proof}
+    \item $\limsup$ and $\liminf$ are LM because of the first two properties.
+\end{enumerate}
+\newpage
+\thm{Lebesgue Monotone Convegence Theorem}{Let $E \subseteq \RR^N$ be LM, $f_n : E \to [0, \infty)$ LM, $0 \leq f_n \leq f_{n+1}$ for all $n$. Assume $f(x) = \lim_{n \to \infty}f_n(x) \in [0, \infty)$ for all $x \in E$. Then,
+\begin{align*}
+    \int_E f(x) \, \text dx = \lim_{n \to \infty} \int_E f_n(x) \, \text dx.
+\end{align*}}
+\noindent Recall that $\int_E f(x) \, \text dx = \sup \left\{ \int_E s(x) \, \text dx : 0 \leq s \leq f, s \text{ simple}\right\}$. It has the following properties for $E \subseteq \RR^N$ LM, $f, g: E \to [0, \infty)$ LM:
+\begin{enumerate}
+    \item If $f \leq g$, then $\int_E f \, \text dx \leq \int_E g \, \text dx$.
+\end{enumerate}
+\begin{proof}
+    We have $f_n \leq f_{n+1} \leq f$, and by the previous property, we have:
+    \begin{align*}
+        \int_E f_n \, \text dx \leq \int_E f_{n+1} \, \text dx \leq \int_E f \, \text dx.
+    \end{align*}
+    Meaning, there exists
+    \begin{align*}
+        \sup_n \int_E f_n \, \text dx = \lim_{n \to \infty} \int_E f_n \, \text dx \leq \int_E f \, \text dx.
+    \end{align*}
+    Now let $0 \leq s \leq f$ be simple and fix $0 <\epsilon < 1$. Define \begin{align*}
+        E_n = \{ x \in E : f_n(x) \geq (1-\epsilon)s(x)\}.
+    \end{align*}
+    Then $E_n$ is LM and $E_n \subseteq E_{n+1}$. So we have:
+    \begin{align*}
+        (1-\epsilon)s(x) \leq f_n(x) \leq f_{n+1}(x).
+    \end{align*}
+    We want to show
+    \begin{align*}
+        \bigcup_{n=1}^\infty E_n = E.
+    \end{align*}
+    Obviously the left is contained in the right. So now let $x \in E$. If $f(x) = 0$, then $f_n(x) = 0$ for all $n$ and $s(x) = 0$, meaning $x \in E_n$ for all $n$. 
+    
+    If $f(x) > 0$, since 
+    \begin{align*}
+        \lim_{n\to \infty} f_n(x) = f(x) > (1- \epsilon)s(x)
+    \end{align*}
+    for all $n$ large, 
+    \begin{align*}
+        f_n(x) > (1-\epsilon)s(x)
+    \end{align*}
+    meaning $x \in \E_n$ for all large $n$. 
+
+    Now note 
+    \begin{align*}
+        f_n &\geq \chi_{E_n}f_n \geq (1-\epsilon)s \chi_{E_n} \\ 
+        \int_E f_n \, \text dx &\geq \int_E \chi_{E_n} f_n \, \text dx \geq \int_E (1-\epsilon)s \chi_{E_n} \, \text dx.
+    \end{align*}
+    Now $s = \sum_{i = 1}^\ell c_i \chi_{F_i}$ for disjoint $F_i$. So we can rewrite the last integral as:
+    \begin{align*}
+        \int_E (1-\epsilon)\sum_{i = 1}^\ell \chi_{E_n}\chi_{F_i} &= (1-\epsilon)\sum_{i=1}^\ell c_i \mathcal L^N(E_n \cap F_i) \\
+        &\to (1-\epsilon)\sum_{i=1}^\ell c_i \mathcal L^N\left(\bigcup_{n=1}^\infty E_n \cap F_i\right) \\
+        &= (1-\epsilon)\sum_{i=1}^\ell c_i \mathcal L^N(F_i) \\
+        &= (1-\epsilon)\int_E s \, \text dx.
+    \end{align*}
+    So,
+    \begin{align*}
+        \lim_{n\to \infty} \int_E f_n \, \text dx \geq (1-\epsilon)\int_E s \, \text dx.
+    \end{align*}
+    Take $\epsilon \to 0^+$. This means the LHS is an upper bound for the integral of $f$. 
+\end{proof}
+
+\cor{}{Let $E \subseteq \RR^N$ be LM and $f, g: E \to [0, \infty]$ LM. Then $\int (f + g) = \int f + \int g$. }
+\begin{proof}
+    Since $f$ is LM, there is a sequence of $s_n$ simple functions that converge pointwise to $f$. Similarly, there is a sequence of $t_n$ simple functions that converge pointwise to $g$. We can assume that the $s_n$ and $t_n$ are increasing. Then we have that $s_n + t_n \leq s_{n+1} + t_{n+1}$. Now we apply the Lebesgue Monotone Convergence Theorem to get:
+    \begin{align*}
+        \int (f + g) = \lim_{n \to \infty} \int (s_n + t_n) = \lim_{n \to \infty} \int s_n + \lim_{n \to \infty} \int t_n = \int f + \int g.
+    \end{align*}
+\end{proof}
+\section{Real Calculus (idk)}
+\mlenma{Fatou's Lemma}{Let $E \subseteq \RR^N$ be LM, $f_n: E \to [0, \infty)$ LM. Assume $\liminf_{n \to \infty}f(x) =: f(x) < \infty$ for all $x \in E$. Then, $\int_E f \, \text dx \leq \liminf_{n \to \infty} \int_E f_n \, \text dx$.}
+\begin{proof}
+    $\liminf_{n \to \infty} f_n(x) =  \sup_n \inf_{k \geq n} f_k(x)$. Let $g_n(x) := \inf_{k \geq n} f_k(x)$. Then $g_n \leq g_{n+1}$, so we can apply the Lebesgue Monotone Convergence Theorem to get:
+    \begin{align*}
+        \int_E \lim_{n \to \infty} g_n \, \text dx = \lim_{n \to \infty} \int_E g_n \, \text dx \leq \liminf_{n \to \infty} \int_E f_n \, \text dx.
+    \end{align*}
+    But $\int_E \lim_{n \to \infty} g_n \, \text dx = \int_E \sup_n g_n \, \text dx = \int_E \liminf_{n \to \infty} f_n \, \text dx$.
+\end{proof}
+
+\thm{}{Let $E \subseteq \RR^N \times \RR^M$ be LM. Let $f: E \to [0, \infty)$ be LM. Then,
+\begin{align*}
+    \mathcal L^{N+M} (E)= \int_G \mathcal L^M(E_x) \, \text dx = \int_H \mathcal L^N(E^y) \, \text dy.
+\end{align*}}
+\cor{}{Let $E \subseteq \RR^N$ be LM, $a, b: E \to [0, \infty)$ LM with $a \leq b$. Then,
+\begin{align*}
+    F = \{ (x, y) \in E \times \RR : a(x) \leq y \leq b(x)\}
+\end{align*}
+is LM.}
+\newpage
+\thm{Fubini's Theorem}{Let $E \subseteq \RR^N \times \RR^M$ be LM. Let $f: E \to [0, \infty)$ be LM. Then,
+\begin{align*}
+    \int_E f(x, y) \, \text dx \, \text dy = \int_{\RR^N} \left( \int_{\RR^M} f(x, y) \, \text dy\right) \, \text dx = \int_{\RR^M} \left( \int_{\RR^N} f(x, y) \, \text dx\right) \, \text dy.
+\end{align*}}
+\cor{}{Let $E \subseteq \RR^N$, $a, b: E \to [0, \infty)$ LM with $a\leq b$. $F = \{ (x, y) \in E \times \RR : a(x) \leq y \leq b(x)\}$, $f : F \to [0, \infty)$ LM. Then,
+\begin{align*}
+    \int_F f \, \text dx \text dy = \int_E \left( \int_{a(x)}^{b(x)} f(x, y) \, \text dy\right) \, \text dx.
+\end{align*}}
+\nt{$F$ is LM because $g(x, y) = y - a(x)$ is LM. So, 
+\begin{align*}
+    F_1 = \{ (x, y) \in E \times \RR : g(x, y) \geq 0\}
+\end{align*}
+is measureable. Then $h(x, y) = b(x) - y$ is LM, so $F_2 = \{ (x, y) \in E \times \RR : h(x, y) \geq 0\}$ is LM. Then $F = F_1 \cap F_2$ is LM.}
+
+\dfn{LM Functions (can be negative)}{$E \subseteq \RR^N$ Lebesgue measureble, $f: E \to \RR$ LM. Then $f$ is Lebesgue Measureable if $f^+$ and $f^-$ are LM.}
+
+\dfn{Lebesgue Integral}{The Lebesgue Integral of $f$ over $E$ is 
+\begin{align*}
+    \int_E f \, \text dx := \int_E f^+ \, \text dx - \int_E f^- \, \text dx,
+\end{align*}
+provided one of them is finite. 
+}
+
+\ex{}{$f(x) = \frac{\sin x}{x}$ on $x > 1$. Check:
+\begin{align*}
+    \int_1^\infty \left(\frac{\sin x}{x}\right)^+ \, \text dx &= \infty \\
+    \int_1^\infty \left(\frac{\sin x}{x}\right)^- \, \text dx &= \infty.
+\end{align*}
+So, the integral does not exist. }
+
+\dfn{Lebesgue Integrable}{$f$ is Lebesgue Integral over $E$ if $\int_E f \, \text dx < \infty$.}
+
+\thm{Lebesgue Dominated Convergence Theorem}{Let $E \subseteq \RR^N$ be LM, $f_n: E \to \RR$ LM, $f: E \to \RR$ LM. Assume $f_n \to f$ pointwise, $|f_n| \leq g$ for all $n$ and some Lebesgue Integrable $g: E \to [0, \infty)$. Then,
+\begin{align*}
+    \lim_{n \to \infty} \int_E f_n \, \text dx = \int_E f \, \text dx.
+\end{align*}}
+\begin{proof}
+    Step 1: Claim: $\int_E |f| \, \text dx < \infty$. We have that $|f_n| \leq g$ for all $n$, so 
+    \begin{align*}
+        \int_E |f_n| \, \text dx \leq \int_E g \, \text dx < \infty.
+    \end{align*}
+    We apply Fatou's Lemma to get:
+    \begin{align*}
+        \int_E |f| \, \text dx \leq \liminf_{n \to \infty} \int_E |f_n| \, \text dx < \infty.
+    \end{align*}
+    Step 2: $g + f_n \geq 0$ and $g - f_n \geq 0$. By Fatou's, we have
+    \begin{align*}
+        \liminf_{n \to \infty} \int_E ( g + f_n) \text dx \geq \int_E \liminf_{n \to \infty} ( g + f_n) \, \text dx = \int_E (g + f) \, \text dx = \int_E g \, \text dx + \int_E f \, \text dx \\
+        \int_E g \, \text dx + \liminf_{n \to \infty} \int_E f_n \, \text dx \geq \int_E g \, \text dx + \int_E f \, \text dx.
+    \end{align*}
+    So, 
+    \begin{align*}
+        \liminf_{n \to \infty} \int_E f_n \, \text dx \geq \int_E f \, \text dx.
+    \end{align*}
+    We apply Fatou's to get:
+    \begin{align*}
+        \liminf_{n \to \infty} \int_E (g - f_n) \, \text dx \geq \int_E \liminf_{n \to \infty} ( g - f_n) \, \text dx = \int_E (g - f) \, \text dx = \int_E g \, \text dx - \int_E f \, \text dx.
+    \end{align*}
+    Then,
+    \begin{align*}
+        \int_E g \, \text dx - \limsup_{n \to \infty} \int_E f_n \, \text dx \geq \int_E g \, \text dx - \int_E f \, \text dx \\
+        \limsup_{n \to \infty} \int_E f_n \, \text dx \leq \int_E f \, \text dx.
+    \end{align*}
+    So we have proved that:
+    \begin{align*}
+        \int_E f \, \text dx \leq \liminf_{n \to \infty} \int_E f_n \, \text dx \leq \limsup_{n \to \infty} \int_E f_n \, \text dx \leq \int_E f \, \text dx.
+    \end{align*}
+    SO,
+    \begin{align*}
+        \lim_{n \to \infty} \int_E f_n \, \text dx = \int_E f \, \text dx.
+    \end{align*}
+\end{proof}
+\newpage
+\thm{Fubini's Theorem (again)}{Let $E \subseteq \RR^N \times \RR^M$ be LM, $f: E \to \RR$ Lebesgue Integrable. Then,
+\begin{align*}
+    \int_E f(x, y) \, \text dx \, \text dy = \int_{G} \left( \int_{E_x} f(x, y) \, \text dy\right) \, \text dx = \int_{H} \left( \int_{E_y} f(x, y) \, \text dx\right) \, \text dy
+\end{align*}
+where
+\begin{align*}
+    G &= \{ x \in \RR^N : E_x \neq \emptyset\} \\
+    H &= \{ y \in \RR^M : E_y \neq \emptyset\}.
+\end{align*}}
+
+\ex{}{Compute:
+\begin{align*}
+    \int_E \frac{y^3 e^{-xy^4}}{x^4} \, d(x, y),
+\end{align*}
+where \begin{align*}
+    E = \{ (x, y) \in \RR^2 : x\geq 1, |y| < \frac{1}{x^{3/4}}\}.
+\end{align*}
+We know $E$ is LM because is the the intersection of the two LM sets:
+\begin{align*}
+    E_1 &= \{ x \geq 1\} \tag{closed} \\
+    E_2 &= \left\{ x > 0, |y| < \frac{1}{x^{3/4}}\right\} \tag{open}.
+\end{align*}
+Now \begin{align*}
+    f(x, y) = \frac{y^3 e^{-xy^4}}{x^4}. 
+\end{align*}
+This is Lebesgue measureable because $f^+$ is just when $y$ is positive, which is obviously LM, and the same for $f^-$. So now we need to show that $\int_E |f| \, d(x, y) < \infty$. We have:
+\begin{align*}
+    \int_E \frac{|y|^3e^{-xy^4}}{x^4}\, d(x, y) &= \int_1^\infty \frac{1}{x^4}\int_{-\frac{1}{x^{3/4}}}^{\frac{1}{x^{3/4}}} |y^3|e^{-xy^4} \, dy \, dx \\
+    &= \int_1^\infty \frac{2}{x^{3/4}} \int_0^{\frac{1}{x^{3/4}}} y^3 e^{-xy^4} \, dy \, dx 
+\end{align*}
+SPENDING THE LAST 10 MINUTES OF 21-269 VECTOR ANALYSIS DOING A DOUBLE INTEGARL AHAHAHAJHAHA
+
+}
+
+FUN CLASS DEFINITELY RECOMMEND! $\square$
 
 
 

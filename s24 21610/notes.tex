@@ -69,7 +69,7 @@ This gives a bijection between $O_x$ and set of left cosets of $G_x$. So, we hav
 \ex{Automorphism Groups}{$$\Aut(G) = \{f : G \to G : f \text{ is an isomorphism}\}$$
 $\phi \in \Sigma_G$, $\phi(ab) = \phi(a)\phi(b)$. Recall conjugate of $h$ by $g$ is $h^g = ghg^{-1}$.
 
-Fact 1: For any $g \in G$, $h \mapsto h^g$ is an automorphism of $G$.
+Fact 1: For any $g \in G$, $h \mapsto h^g$ is an automohism of $G$.
 
 Fact 2: If $\phi : G \to \Aut(G)$, $\phi : g \mapsto (h \mapsto h^g)$, then $\phi$ is an HM for $G$ to $\Aut(G)$.
 
@@ -97,7 +97,7 @@ Recall the definition of a fixed-point. So, for $G$ acting on $G$ by conjugation
 \begin{align*}
     h \text{ fixed point} \iff h^g = h \iff hg = gh \tag{for all $g$}
 \end{align*}
-\dfn{Center}{The \emph{center} of $G$ is $Z(G) = \{g \in G : gh = hg \text{ for all } h \in G\}$. In fact, $Z(G)$ is normal in $G$. That is, $Z(G) \trianglelefteq G$.}
+\dfn{Center}{The \emph{center} of $G$ is $Z(G) = \{g \in G : gh = hg \text{ for all } h \in G\}$. In fact, $Z(G)$ is normal in $G$. That is, $Z(G) \lhd G$.}
 \thm{}{Let $p$ be prime. Let $G$ be a group of order $p^n$. Then $Z(G) \neq 1$.}
 \begin{proof}
     Let $G$ act on $G$ by conjugation. $G$ is partitioned into orbits (i.e. conjugacy classes). 
@@ -114,9 +114,9 @@ Recall the definition of a fixed-point. So, for $G$ acting on $G$ by conjugation
 
 Facts to remember from undergraduate group theory:
 \begin{itemize}
-    \item Let $N \trianglelefteq G$. Then subgroups of $G/N$ are in bijection with $\{H : N \leq H \leq G\}$. In fact $H \mapsto H/N$ is a bijection.
-    \item Normal subgroups of $G/N$ are uniquely of the form $H/N$ where $H \trianglelefteq G$ and $N \leq H$.
-    \item $H/N \trianglelefteq G/N$ , $\frac{G/N}{H/N} \cong G/H$.
+    \item Let $N \lhd G$. Then subgroups of $G/N$ are in bijection with $\{H : N \leq H \leq G\}$. In fact $H \mapsto H/N$ is a bijection.
+    \item Normal subgroups of $G/N$ are uniquely of the form $H/N$ where $H \lhd G$ and $N \leq H$.
+    \item $H/N \lhd G/N$ , $\frac{G/N}{H/N} \cong G/H$.
 \end{itemize}
 \newpage
 \section{1/22 - Using Group Actions to Prove Theorems}
@@ -145,7 +145,7 @@ Now we prove Cauchy's Theorem:
 \begin{itemize}
     \item Let $G$ be a group. $\alpha \in \Aut(G), H\leq G$. Then $\alpha [H] = \{\alpha(h) : h \in H\}$ is a subgroup of $G$  and $\alpha[H] \cong H$. $\alpha$ is a bijection from $H$ to $\alpha[H]$. 
     \item In particular, for $g \in G$, if $\alpha$ is ``conjugation by $g$'', then $\alpha[H] = gHg^{-1}$ or $H$ goes to $H^g$. We can check: $G$ acts on $\{H : H \leq G\}$. $g\cdot H = H^g = gHg^{-1}$.
-    \item $H$ is a fixed point of this action if and only if $H^g = H$ for all $g \in G$. That is, $H \trianglelefteq G$.
+    \item $H$ is a fixed point of this action if and only if $H^g = H$ for all $g \in G$. That is, $H \lhd G$.
     \item For any $H$, stabilizer of $H$ for this action is $N_G(H) = \{g \in G : gHg^{-1} = H\}$.
 \end{itemize}
 \dfn{Normalizer}{Let $H \leq G$. The \emph{normalizer} of $H$ in $G$ is $N_G(H) = \{g \in G : gHg^{-1} = H\}$.}
@@ -154,10 +154,374 @@ Now we prove Cauchy's Theorem:
     \item Let $G$ act on $X$. Let $H \leq G$, now easily $H$ acts on $X$. Each $G$-orbit breaks up as a union of $H$-orbits.
 \end{itemize}
 \newpage
-\section{1/29 - Using Group Actions to Prove Theorems}
+\section{1/26 - Using Group Actions to Prove Theorems}
 Now we finally prove Sylow's.
 \begin{proof}
     
 \end{proof}
 
+\section{1/29 - Series in Groups}
+\dfn{Subnormal Series}{A \emph{subnormal series} for a group $G$ is a sequence $(G_i)$ of subgroups \[1  = G_0 \lhd G_1 \lhd \cdots \lhd G_n = G\]}
+\dfn{Normal Series}{A subnormal series is a \emph{normal series} if $G_i \lhd G$ for all $i$.}
+\dfn{Characteristic Series}{A \emph{characteristic series} is a normal series $(G_i)$ such that $G_i \text{char} G$ for all $i$.}
+\dfn{Commutator}{Let $G$ be a group. The \emph{commutator} of $g,h \in G$ is $[g,h] = ghg^{-1}h^{-1}$.}
+\nt{$[g,h] = 1$ if and only if $gh = hg$.}
+\dfn{Commutator Subgroups}{The \emph{commutator subgroup} of $G$ is $[G,G] = \langle [g,h] : g,h \in G\rangle$.}
+\nt{If $\alpha \in \Aut(G)$, then $\alpha([g,h]) = [\alpha(g), \alpha(h)]$. So $\alpha([G,G]) = [G,G]$. So $[G,G] \lhd G$.}
+\noindent What does it mean for $G/N$ to be abelian? We get:
+\begin{align*}
+    &[aN, bN] = 1 \forall a ,b \\
+    &\iff [a,b]N = 1 \\
+    &\iff [a,b] \in N \\
+    &\iff [G,G] \leq N
+\end{align*}
+So $[G, G]$ is the least normal subgroup of $G$ such that $G/N$ is abelian.
+\dfn{Solvable}{A group $G$ is \emph{solvable} iff there is a subnormal series $(G_i)$ in $G$ such that $G_{i+1}/G_i$ is abelian for all $i < n$.}
+Trivially, abelian groups are solvable. But there are non-abelian solvable groups. For example, $S_3$ is solvable. This is because $1 \lhd A_3 \lhd S_3$. $S_3/A_3 \cong C_2$ is abelian.
+\newpage
+\thm{}{If $G$ is solvable and $H \leq G$, then $H$ is solvable.}
+\begin{proof}
+    Let $(G_i)$ be a subnormal series for $G$ such that $[G_{i+1}, G_{i+1}] \leq G_i$ for all $i < n$. Then $(H \cap G_i)$ is a subnormal series for $H$ such that $[H \cap G_{i+1}, H \cap G_{i+1}] \leq H \cap G_i$ for all $i < n$.
+\end{proof}
+
+\thm{}{If $G$ is solvable and $N \lhd G$, then $G/N$ is solvable.}
+\begin{proof}
+    Note: If we have $N \lhd G$ and $H \leq G$ and $\phi_N : G \to G/N$ is the natural homomorphism, then $\phi_N(H) \leq  = HN/N \leq G/N$.
+
+    Let $(G_i)$ be a subnormal series for $G$ such that $[G_{i+1}, G_{i+1}] \leq G_i$ for all $i < n$. Then $(G_iN/N)$ is a subnormal series for $G/N$ such that $[G_{i+1}N/N, G_{i+1}N/N] \leq G_iN/N$ for all $i < n$.
+\end{proof}
+
+\section{1/31 - }
+\thm{}{If $N \lhd G$ with $N$ and $G/N$ both solvable, then $G$ is solvable.}
+\begin{proof}
+    Let $(N_i)$ be a subnormal series for $N$ such that $[N_{i+1}, N_{i+1}] \leq N_i$ for all $i < n$. Let $(V_i)$ be a subnormal series for $G/N$ such that $[V_{i+1}, V_{i+1}] \leq V_i$ for all $i < n$.
+
+    For each $j$, let $G_j$ be the unique subgroup of $G$ such that $N \leq G_j$ and $G_j/N = V_j$. 
+
+    What we want is that $N_0, N_1, \ldots, N_m = N = G_0, G_1, \ldots, G_m = G$ is a subnormal series for $G$ such that $[G_{i+1}, G_{i+1}] \leq G_i$ for all $i < n$.
+
+    Since $V_j \lhd V_{j+1}$, run time to check that $G_j \lhd G_{j+1}$. We know that $N_{j+1} / N_j$ and $V_{j+1} / V_j$ are abelian. So we have that $V_{j+1} / V_j = G_{j+1} / N / G_j / N \cong G_{j+1} / G_j$ is abelian. So $G_{j+1} / G_j$ is abelian. So $G$ is solvable.
+\end{proof}
+
+\dfn{Derived Series}{Let $G$ be a group. Then the \emph{derived series} of $G$ is a sequence of subgroups of $G$ defined as \[G^{(0)} = G, G^{(1)} = [G,G], G^{(2)} = [G^{(1)}, G^{(1)}], \ldots, G^{(n+1)} = [G^{(n)}, G^{(n)}]\]}
+
+\nt{$G^{(n)} / G^{(n+1)}$ is abelian. In fact, $G^{(n+1)}$ is the best normal subgroup of $G^{(n)}$ such that $G^{(n)} / G^{(n+1)}$ is abelian.}
+\nt{$G^{(n)} \text{char} G$ for all $n$.}
+\mprop{}{If there is $n$ with $G^{(n)} = 1$, then $G$ is solvable.}
+\begin{proof}
+    $G^{(n)} = 1 \implies G^{(n-1)}$ is abelian. So $G^{(n-1)} / G^{(n)} = G^{(n-1)}$ is abelian. So $G$ is solvable.
+\end{proof}
+\newpage
+\mprop{}{If $G$ is solvable, then there is $n$ with $G^{(n)} = 1$.}
+\begin{proof}
+    Let $(G_i)$ be a subnormal series for $G$ such that $[G_{i+1}, G_{i+1}] \leq G_i$ for all $i < n$. We show by induction on $s$ that $G^{(s)} \leq G_{n-s}$ for $0 \leq s \leq n$. 
+
+    If this works, then $G^{(n)} \leq G_0 = 1$. So $G^{(n)} = 1$.
+
+    \textbf{Base Case:} $s = 0$. $G^{(0)} = G \leq G_n = G$.
+
+    Now suppose $s < n$ and $G^{(s)} \leq G_{n-s}$. Then $G^{(s+1)} = [G^{(s)}, G^{(s)}] \leq [G_{n-s}, G_{n-s}] \leq G_{n-s-1}$.
+
+    So $G^{(n)} = 1$.
+\end{proof}
+
+\dfn{Simple}{$G$ is \emph{simple} if $G\neq 1$ and $N \lhd G$ implies $N = 1$ or $N = G$.}
+
+\cor{}{If $G$ is abelian and simple, then $G$ is cyclic of prime order.}
+
+\thm{}{For $n \geq 5$, $A_n$ is simple.}
+\thm{}{If $G$ has a nonabelian simple subgroup, then $G$ is not solvable.}
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item If $K$ is simple and nonabelian, $K$ is definitely not solvable.
+        \item Subgroups of solvable groups are solvable.
+    \end{enumerate}
+\end{proof}
+
+\section{2/2 - (absent)}
+\dfn{Nilpotence}{A group $G$ is \emph{nilpotent} if there is a subnormal series $(G_i)$ for $G$ such that $G_{i+1} \lhd G_i / G_{i+1}$ for all $i$.}
+
+\section{2/5 - Nilpotency}
+\dfn{Central Series}{A \emph{central series} for a group $G$ is a sequence $(G_i)$ of subgroups \[1  = G_0 \lhd G_1 \lhd \cdots \lhd G_n = G\] such that $G_i / G_{i-1} \leq Z(G/G_{i-1})$ for all $i$.}
+Note that $G \text{ nilpotent} \iff G$ has a central series.
+\dfn{Descending Central Series}{A \emph{descending central series} for a group $G$ is a sequence $(G_i)$ of subgroups \[G = G_0 \triangleright G_1 \triangleright \cdots \triangleright G_n \triangleright \cdots\] where for each $n$, $G_{n+1} = [G_n, G]$. In other words, $L_1(G) = G$, $L_{n+1}(G) = [G, L_n(G)]$.}
+Note that $G \text{ nilpotent} \iff G$ has a descending central series which has $n$ such that $L_n(G) = 1$.
+\dfn{Ascending Central Series}{An \emph{ascending central series} for a group $G$ is a sequence $(G_i)$ of subgroups \[1 = Z_0 \lhd Z_1 \lhd \cdots \lhd Z_n \lhd \cdots\] where each successive group is defined by $Z_{n+1} = \{g \in G : \forall y \in G, [x, y] \leq Z_i\}$. In other words, $U_0(G) = 1$, $U_{n+1}(G) / U_n(G) = Z(G/U_n(G))$.}
+Note that $G \text{ nilpotent} \iff G$ has an ascending central series which has $n$ such that $U_n(G) = G$.
+
+For $G$ nilpotent:
+
+The number of steps it takes the acs to reach $G$ is the same number of steps the dcs takes to reach $1$, which are both the least length of a central series.
+
+\dfn{Nilpotency Degree}{If $G$ nilpotent, $G$ has \emph{nilpotency degree} $t$ if either series takes $t$ steps.}
+\ex{Nilpotency Degrees}{
+    \begin{itemize}
+        \item Degree 0: $G = 1$.
+        \item Degree 1: $G$ abelian, $G \neq 1$. 
+    \end{itemize}
+}
+Fact (``normalizer property''):
+\begin{itemize}
+    \item $G$ nilpotent and $H < G \implies N_G(H) > H$.
+\end{itemize}
+\begin{proof}
+    We induct on nilpotence degree:
+
+    \textbf{Base Case:} $t = 0$ or $t=1$. $G$ abelian. $H < G$. $N_G(H) = G > H$.
+
+    Now suppose the nilpotenecy degree of $G = t +1$ and we have the normalizer property for all groups of nilpotency degree $\leq t$. Let $H < G$. We proceed with case analysis involving the center. We know that $Z(G) \leq N_G(H)$, so:
+    \begin{itemize}
+        \item Case 1: If $Z(G) \not\leq H$, then $H \neq N_G(H)$, done. 
+        \item Case 2: If $Z(G) \leq H$, consider the acs. We have that $U_0 = 1, U_1 = Z(G)$. We take for granted that the nilpotency degree of $G/Z(G) = t$. So consider the acs of $G/Z(G)$, where $U_0 = Z(G)/Z(G) = 1$, $U_1 = G/Z(G)$. So, $Z(G) \leq H < G \implies H/Z(G) < G/Z(G)$ and $G/Z(G)$ has nilpotency degree $t$. So $N_{G/Z(G)}(H/Z(G)) > H/Z(G)$. So $N_G(H) > H$.
+    \end{itemize}
+    
+\end{proof}
+
+\thm{}{If $G_1, G_2$ are niltpotent, then $G_1 \times G_2$ is nilpotent.}
+Recall that if $M,N \lhd G$ and $M \cap N = 1$, then $mn = nm$ for all $m \in M$ and $n \in N$, then $MN \cong M \times N$ and $MN \lhd G$. This generalizes for more than 2 subgroups.
+
+Also recall if $G$ finite and $H \in \Syl_p(G)$, then $N_G(H)  = N_G(N_G(H))$.
+\begin{proof}
+    $H \lhd N_G(H)$, so $H$ is the unique Sylow $p$-subgroup of $N_G(H)$. So now if $g \in N_G(N_G(H))$, then $N_G(H)^g = N_G(H)$, so $H^g$ is the unique Sylow subgroup of $N_G(H)^g = H$, so $g \in N_G(H)$.
+\end{proof}
+
+Now let $G$ be finite and nilpotent. Let $|G| = p_1^{t_1}p_2^{t_2}\ldots p_k^{t_k}$. We claim that for each $i$, $G$ has a unique normal Sylow $p_i$-subgroup, $P_i$.
+\begin{proof}
+    Let $P_i \in \Syl_{p_i}(G)$. Then $N_G(P_i) = N_G(N_G(P_i))$. By the normalizer property, $N_G(P_i) = G$. So $P_i \lhd G$ and $P_i$ is the unique Sylow $p_i$-subgroup of $G$.
+\end{proof}
+Then by Lagrange, $P_i \cap P_j = 1$ for $i \neq j$. So $P_1P_2\ldots P_k \lhd G$ and $P_1 \times P_2 \times \ldots \times P_k \cong P_1P_2\ldots P_k$. So $P_1P_2 \ldots P_k = G \cong P_1 \times P_2 \times \ldots \times P_k$.
+
+\section{2/7 - Jordan Holder}
+\thm{Jordan-Holder}{Let $G$ be a group. Let $(H_i)_{0 \leq i \leq n}$ and $(G_j)_{0 \leq j \leq m}$ be two composition series of $G$. Then $n = m$ and there is a permutation $\sigma$ of $\{0, 1, \ldots, n\}$ such that $H_i / H_{i-1} \cong G_{\sigma(i)} / G_{\sigma(i-1)}$ for all $i$.}
+\begin{proof}
+    If $G = 1$ or if $G$ is simple, then the result is trivial. So assume $G$ is not simple or trivial so that $m, n > 1$.
+
+    Let $H = H_{n-1}$, so $1 < H \lhd G$. $G/H$ is simple and $(H_i)_{0 \leq i \leq n-1}$ is a composition series for $H$.
+
+    Let $k$ be least $k$ such taht $G_k \not\leq H$. Note that $0 < k < m$. ($G_0 = 1 \leq H, G_m = G \not\leq H$.) Form the subnormal series $(G_iH/H)_{0 \leq j \leq m} \in G/H$. As $G/H$ is simple, this series is a series of $H/H$'s followed by series of $G/H$'s. 
+
+    For $j<k$, $G_j \leq H, G_jH = H \Rightarrow G_jH/H = H/H = 1$.
+
+    So for $j \geq k$, $G_j H/H = G/H$, so $G = G_jH$. 
+
+    For $j \geq k$, $G/H = G_jH/H \cong G_j/(G_j \cap H)$.
+
+    So $(G/H$ simple), $G_j / (G_j \cap H)$ simple for $j \geq k$. 
+
+    Recall $(H_i)_{0 \leq i \leq n-1}$ is for $h$ with $n-1$ steps, so our IH applies to $H$. 
+
+    Define subnormal series in $H$ that is $(G_j \cap H)_{0 \leq j \leq m}$.
+
+    We want to argue two things:
+    \begin{enumerate}[label=(\alph*)]
+        \item Deleting one repetition in $(G_j \cap H)_{0 \leq j \leq m}$, we obtain a composition series for $H$.
+        \item By IH applied to $H$, $m-1 = n-1$ so $m=n$. Argue that we can find IM's between quotients of $G_j$ and $H_j$.
+    \end{enumerate}
+    Note that for $j < k, G_j \leq H$, so $G_j = G_j \cap H$. 
+
+    Let $j > k$. $G_{j-1} \lhd G_j, G_j \cap H \lhd G_j$. Then we have that $G_{j_1}(G_j \cap H) = G_{j}$. This yields:
+    \begin{align*}
+        \frac{G_{j-1}(G_j \cap H)}{(G_j \cap H)} &\lhd \frac{G_j}{G_j \cap H} \tag{this RHS is simple} \\
+    \end{align*}
+    So either $G_{j-1}(G_j \cap H) = G_j$ or $G_{j-1}(G_j \cap H) = G_j \cap H$. However, since $j >k$, we have that $G_{j-1} \not\leq H$, so $G_{j-1} (G_j \cap H) = G_j$. So:
+    \begin{align*}
+        \frac{G_j}{G_{j-1}} = \frac{G_{j-1}(G_j \cap H)}{G_{j-1}} \\
+        \cong \frac{G_j \cap H}{(G_{j} \cap H)\cap G_{j-1}} = \frac{G_j \cap H}{G_{j-1} \cap H}
+    \end{align*}
+    To finish, we have that $G_{k-1} = G_{k-1} \cap H = G_k \cap H$. We also want to show that $G/H \cong G_k / G_{k-1}$. From $G_{k-1} = G_k \cap H$, $G_k / G_{k-1} \cong G_k / (G_k \cap H) \cong G/H$, by fact already proved. 
+
+    If $G$ has a composition series with $n$ steps, then a $U$ composition series have $n$ steps and ``same quotients''.
+
+    $G \neq 1$, G not simple. So $n \geq 2$. Fix a compostion series $(H_i)_{0 \leq i \leq n}$ so that $H = H_{n-1} \leq G$. 
+
+    Get another composition series $(G_j)_{0 \leq j \leq m}$. Choose $k$ such that $G_k \not\leq H$. Recall that $G_j \cap H = G_j$ for $j < k$ and that for $j>k$, $\frac{G_j \cap H}{G_{j-1} \cap H} \cong \frac{G_j}{G_{j-1}}$.
+
+    We are left to prove that $G_{k-1} = G_k \cap H$ and $\frac{G_k}{G_{k-1}} \cong \frac{G}{H}$. 
+
+    Assessing this, $G_{k-1} \cap H = G_k \cap H$ and seq$(G_j \cap H : j \neq k, 0 \leq j \leq m)$ is a composition series for $H$ with $m-1$ steps with quotients $\frac{G_j}{G_{j-1}}$ for $0 < j  \leq m, j \neq k$. 
+
+    We have 2 composition series for $h$ with 
+    \begin{align*}
+        (H_i)_{0 \leq i \leq n-1} &\text{ and } (G_j \cap H)_{0 \leq j \leq m-1} \\
+    \end{align*}
+    By the inductive hypothesis, $m-1 = n-1$, so $m = n$ and up to isomorphism, we can match the quotients of the two series. 
+\end{proof}
+
+\section{2/9 - Free Groups}
+Recall that $G$ is cyclic if $G = \langle g \rangle$ for some $g \in G$. In this case, there is a unique HM $\phi : (\ZZ, +) \to G$ such that $\phi(1) = g$. Clearly $\phi$ is surjective, so $G \cong \ZZ / \ker \phi$. So $G$ is abelian.
+
+If $\ker(\phi) = 0 = 0 \ZZ$, then $|G| = \infty$, $\phi$ is an isomorphism from $\ZZ$ to $G$. So there is a unique $n > 0$ such that $\ker(\phi) = n \ZZ$ and $|g| = n$. $\phi$ induces an IM from $\ZZ / n \ZZ$ to $G$.
+
+Let's talk about groups that are generated by two elements $G = \langle a, b \rangle$. 
+\begin{enumerate}
+    \item Any symmetric group $S_n$ for $n \geq 2$ is generated by two elements.
+    \begin{align*}
+        S_n = \langle (12), (1 \ldots n)\rangle
+    \end{align*}
+    \item Any dihedral group $D_k$ for finite $k$. 
+\end{enumerate}
+Our goal is to find a group $F = \langle a, b \rangle$ such that for all $G$ and all $g,h \in G$, there is a unique HM $\phi : F \to G$ such that $\phi(a) = g$ and $\phi(b) = h$. 
+
+We start by trying to construct $F$ using words. Let $\Sigma = \{ a, b\}$. A \emph{word} in $\Sigma$ is a finite sequence of elements of $\Sigma \times \ZZ$. 
+\ex{Words}{\begin{itemize}
+    \item Write $(a, 3)(b, 5)(a, 2)(b, 1)$ as $a^3b^5a^2b$.
+\end{itemize}}
+\noindent A word is reduced if
+\begin{itemize}
+    \item No pairs of form $(s, 0)$ for $s \in \Sigma$
+    \item No successive pairs of form $(s, i)(s, j)$ for $s \in \Sigma$.
+\end{itemize}
+\dfn{Reduction}{Remove terms of the form $s^0$ and replace successive terms of the form $s^is^j$ with $s^{i+j}$.}
+
+\section{2/12 - More Alphabet Stuff}
+Let $\sigma$ be a set of any symbols. Words are finite sequences of elements of $\sigma \times \ZZ$. A word is reduced if it has no terms of the form $(s, 0)$ and no successive terms of the form $(s, i)(s, j)$.
+
+Let $W$ be the set of all reduced words in $\sigma^*$. We want to associated to each $s \in \Sigma$, a permutation $\pi_s$ of $W$. The idea is that $\pi_s(w)$ is a unique reduction of $sw$. 
+
+$\pi_s(w)=sw$ makes $w$ start with a term $s^i$ for some $i \in \ZZ$.
+
+If $w = s^i \ldots$ and $i \neq -1$, then $\pi_s(w) = s^{i+1} \ldots$.
+
+If $w = s^{-1}\ldots$, then $\pi_s(w) = \ldots$.
+
+Define $\rho_s$, whose intuition is to reduce $s^{-1}w$. 
+
+$\rho_s(w) = s^{-1}w$ unless $w$ starts with a power of $s$. 
+
+If $w = s^i \ldots$ and $i \neq 1$, then $\rho_s(w) = s^{i-1} \ldots$.
+
+If $w = s \ldots$, then $\rho_s(w) = \ldots$.
+
+One can check that $\pi_s \circ \rho_s = \rho_s \circ \pi_s = \id_W$. As such, $\pi_s$ is a permutation and $\rho_s = \pi_s^{-1}$.
+
+Let $G$ be the subgroup of $\Sigma_w$ (the group of permutations of $w$) generated by $\{\pi_s : s \in \Sigma\}$. If $w$ is a word (not necessarily reduced), say $w = s_1^{i_1}s_2^{i_2}\ldots s_n^{i_n}$, then $\pi_{w} = \pi_{s_1}^{i_1}\pi_{s_2}^{i_2}\ldots \pi_{s_n}^{i_n} \in G$. 
+
+Key fact 1: If $w'$ is obtained from $w$ by a single reduction step, then $\pi_{w'} = \pi_{w}$.
+
+Key fact 2: $G = \{\pi_w : w \in W\}$.
+\begin{proof}
+    from key fact 1. 
+\end{proof}
+Key fact 3: If $w \in W$, then $\pi_w(\epsilon) = w$. 
+
+So every $g \in G$ is of form $\pi_w$ for unique reduced word $w$, where $w = g(\epsilon)$. 
+
+Key fact 4: For any words $v, w$, $\pi_v \circ \pi_w = \pi_{vw}$.
+
+Key fact 5: if $w$ is a word and reduced $v$ is obtained from $w$ by some reduction sequence, then $\pi_v(\epsilon) = \pi_w(\epsilon) = v \Rightarrow$ $v$ is determined by $w$. 
+
+Key fact 6: If $v,w \in W$ and $u$ is the unique redcuced word obatined by reducing $vw$, then $\pi_u = \pi_v \circ \pi_w$.
+
+Conclusion: $G$ is isomorphic to the group of whose underlying set is $W$ and whose group operation is ``concatenate and reduce''.
+
+Key point: $G_\Sigma$ has the following ``universal property'': For any group $H$ and any function $\phi : \Sigma \to H$, there is a unique HM $\Phi : G \to H$ such that $\Phi \circ \pi_s = \phi(s)$ for all $s \in \Sigma$.
+
+\dfn{Free Group}{The \emph{free group} on $\Sigma$ is the group $G_\Sigma$ with the universal property.}
+
+\section{2/14 - Free Groups}
+Key property of $Free(\Sigma)$ is called the ``universal property.'' Basically, for all groups $H$ and functions $f : \sigma \to H$, there is unique HM $\alpha : Free(\Sigma) \to H$ such that $\alpha(s') = f(s)'$ for all $s \in \Sigma$.
+
+Let's proceed with a proof of the universal property.
+\begin{proof}
+    \begin{enumerate}
+        \item If such an $\alpha$ exists, then it must be given by the formula 
+        $$\alpha(s_1^{i_1}s_2^{i_2}\ldots s_n^{i_n}) = f(s_1)^{i_1}f(s_2)^{i_2}\ldots f(s_n)^{i_n}$$
+        for all reduced words $s_1^{i_1}s_2^{i_2}\ldots s_n^{i_n}$.
+        \item Need to verify that function $\alpha$ specified by $(x)$ is a group HM.
+        
+        Let $v= s_1^{i_1}s_2^{i_2}\ldots s_n^{i_n}$ and $w = t_1^{j_1}t_2^{j_2}\ldots t_m^{j_m}$ be reduced words. Then $vw$ is a reduced word and $\alpha(vw) = \alpha(v)\alpha(w)$.
+    \end{enumerate}
+\end{proof}
+
+\section{2/19 - Rings}
+What do we mean when we say $R$ is a ring? For now, they will be commutative rings with unity. 
+
+\dfn{Ring Homomorphism}{Let $R$ and $S$ be rings. Then $\phi: R \to S$ is a \emph{ring homomorphism} iff:
+\begin{align*}
+    \phi(a+b) &= \phi(a) + \phi(b) \\
+    \phi(ab) &= \phi(a)\phi(b) \\
+    \phi(1_R) &= 1_S
+\end{align*}
+for all $a,b \in R$.}
+\dfn{Subring}{Let $R \subseteq S$ be a subring. This means that the inclusion map $\iota : R \to S$ is a ring homomorphism.}
+\dfn{Ideal}{$I \subseteq R$ is an \emph{ideal} iff $I \leq (R, +)$ and $tr \in I$ for all $t \in R$ and $r \in I$. }
+\nt{If $\phi: R \to S$ is a ring homomorphism, then $\ker(\phi) = \{r \in R : \phi(r) = 0\}$ is an ideal of $R$.
+
+Also, if $I$ is an ideal, then $I = R$ iff $1 \in I$. 
+
+$\{0\}$ and $R$ are always ideals. `zero ideal'}
+
+\dfn{Quotient Ring}{Let $I \lhd R$. Then $R/I = \{r + I : r \in R\}$ is the \emph{quotient ring} of $R$ by $I$.}
+\nt{$(s + I)(t + I) = st + I$. $\phi_I : R \to R/I$ is a quotient homormophism. $\phi_I(r) = r + I$. $\ker(\phi_I) = I$.}
+
+\dfn{$R$-module}{Let $R$ be a ring. $M$ is an \emph{$R$-module} if $M$ is equipped with operations $+: M \times M \to M$ and scalar multiplication$: R \times M \to M$ with the following properties:
+\begin{itemize}
+    \item $(M, +)$ is an abelian group.
+    \item $r(m+n) = rm + rn$ for all $r \in R$ and $m,n \in M$.
+    \item $(r+s)m = rm + sm$ for all $r,s \in R$ and $m \in M$.
+    \item $(rs)m = r(sm)$ for all $r,s \in R$ and $m \in M$.
+    \item $1m = m$ for all $m \in M$.
+    \item $0m = 0$ for all $m \in M$.
+\end{itemize}}
+
+\ex{}{\begin{enumerate}
+    \item If $R$ is a field, $R$-modules are just vector spaces over $R$. 
+    \item Let $R = \ZZ$. We claim that $\ZZ$-modules are just abelian groups. Let $G$ be a $\ZZ$-module. Just forget scalar multiplication to get an abelian group.
+    
+    Converse: Let $(G, +)$ be an abelian group. We have that $ 0g = 0$, $1g = g, (n+1)g = ng + g$, and $(-n)g = 0 - (ng)$. 
+    \item Let $K$ be a field, $R = K[x]$. Let $M$ be a $K[x]$-module. 
+    \begin{enumerate}
+        \item $K$ is a subring of $K[x]$. So $M$ is a $K$-module that is a vector space over $K$.
+        \item Let $T: M \to M$ be given by $T(m) = xm$. Then $T$ is a $K$-linear map. Note that we can recover $K[x]$-module structure from $K$-vector space structure and $T$. Namely, $(a_0 + a_1x + \ldots + a_nx^n)m = a_0m + a_1T(m) + \ldots + a_nT^n(m)$.
+    \end{enumerate}
+    \item For any ring $R$, $R$ is an $R$-module.
+    \item Let $M, N$ be $R$-modules. $M \dotplus N = \{(m,n) : m \in M, n \in N\}$ is an $R$-module with coordinatewise operations.
+    \item Let $M, N$ be $R$-modules. $Hom_R(M,N) = \{f : M \to N : f \text{ is an $R$-module HM}\}$ is an $R$-module that is $R$ linear. 
+\end{enumerate}}
+\dfn{Submodule}{If $N$ is an $R$-module then $M \subseteq N$ is a \emph{submodule} iff $M$ is a subgroup of $(N, +)$ and $rm \in M$ for all $r \in R$ and $m \in M$.}
+\ex{}{
+    \begin{enumerate}
+        \item Submodules of vector spaces over $R$ are just subspaces.
+        \item In abelian groups, submodules are just subgroups.
+        \item If $R$ is a ringe viewed as an $R$-module, then submodules are just ideals.
+        \item If $V$ is a vector space over $K$ with $T: V \to V$ linear, view $V$ as a $K[x]$-module. Then submodules of $V$ are just $T$-invariant subspaces.
+    \end{enumerate}
+}
+\dfn{Quotient Module}{If $M \leq N$, $N/M$ is defined in the obvious way. $N/M = \{n + M : n \in N\}$.}
+$\phi_M : N \to N/M$ is a quotient homomorphism. 
+
+Also, if $T: M \to N$ is a linear homomorphism, then $\ker(T) = \{m \in M : T(m) = 0\}$. also, $im(T) \cong M / \ker(T)$.
+\dfn{Cokernel}{The \emph{cokernel} of $T$ is $N / im(T)$.}
+\newpage
+\section{Some Random Category Stuff}
+% define \span as \operataorname{span}
+\def\span{\operatorname{span}}
+\dfn{Finitely Generated}{An $R$-module $M$ is \emph{finitely generated} if there is $X \subseteq M$ finite such that $M = \span(X)$.}
+\dfn{Noetherian}{An $R$-module $M$ is \emph{Noetherian} if every submodule of $M$ is finitely generated.}
+\dfn{Noetherian Ring}{A ring $R$ is \emph{Noetherian} iff $R$ is Noetherian as an $R$-module.}
+\ex{}{PID's are Noetherian rings.}
+\nt{For any ring $R$, $R$ is the $R$-span of $\{1\}$. So $R$ is finitely generated.}
+\ex{Non-Noetherian Ring}{Let $R = \mathbb{Z}[x_1, x_2, \ldots]$ be the ring of polynomials in infinitely many variables. Then $R$ is not Noetherian.
+
+We have that $I = (x_0, x_1, \cdots)$, which is $p \in R$ such that the constant term of $p$ is 0. Supposed by contradiction that $I$ is finitely generated. Say that $I = R$-span of $(p_0, \cdots, p_{n-1})$. That is, $I = (\sum_{i=0}^{n-1} a_i p_i : a_i \in R)$. Then $x_n \in I$, so $x_n = \sum_{i=0}^{n-1} a_i p_i$ for some $a_i \in R$. Let $R$ be so large that $x_k$ does not appear in any $p_j$. $x_k \in I$, so $x_k = \sum_{i=0}^{n-1} a_i p_i$. 
+
+Consider assigning values to $x$ like:
+\begin{itemize}
+    \item $x_k \to 1$
+    \item $x_i \to 0$ for $i \neq k$
+\end{itemize}
+This gives $1 = \sum_{i=1}^{n-1} a_i  0 = 0$, which is a contradiction.
+}
+\thm{}{Let $M$ be an $R$-module. Then the following are equivalent:
+\begin{enumerate}
+    \item $M$ is Noetherian.
+    \item Whenever $(N_i)$ such that $N_i \leq N_{i+1}$ and $N_i \leq M$, $N_i$ is eventually constant.
+    \item Any nonempty famiy of submodules of $M$ has a maximal element.
+\end{enumerate}}
+\begin{proof}
+    \begin{itemize}
+        \item $1 \implies 2$. Let $(N_i)$ be a chain of submodules of $M$. Then $N = \bigcup_{i=1}^\infty N_i$ is a submodule of $M$. $N$ is finitely generated, so fix $X \subseteq N$ where $X$ is finite. $N = \span(X)$, find $i$ such that $X \subseteq N_i$. Now $N_i \subseteq N$, so $N = \span(X) \subseteq N_i$. So $N_i = N_j = N$ for $j \geq i$.
+        \item $\neg 1 \implies \neg 2$. 
+    \end{itemize}
+\end{proof}
 \end{document}
