@@ -1,0 +1,96 @@
+\documentclass{report}
+
+\input{../preamble}
+\input{../macros}
+\input{../letterfonts}
+
+\title{\Huge{21-235 Math Studies Analysis I}}
+\author{\huge{Rohan Jain}}
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+
+\pagebreak
+
+\chapter{}
+\section{Ordered Fields (Review)}
+
+\dfn{Order}{Let $E$ be a set. An \emph{order} on $E$ is a relation $<$ on $E$ such that for all $x, y, z \in E$:
+\begin{enumerate}
+    \item (Trichotomy) Exactly one of the following holds: $x < y$, $x = y$, or $x > y$.
+    \item (Transitivity) If $x < y$ and $y < z$, then $x < z$.
+\end{enumerate}}
+
+\ex{Examples of Ordered Sets}{\begin{enumerate}
+    \item This definition develops orders on basic number systems: e.g. $\ZZ$, $\QQ$, and $\RR$.
+    \item Define $\lesssim$ on $\ZZ$ as follows: We say that $m \lesssim n$ for $m, n \in \ZZ$ if:
+\begin{enumerate}
+    \item $m$ is even and $n$ is odd
+    \item $m,n$ are even and $m < n$
+    \item $m,n$ are odd and $m < n$. 
+\end{enumerate}
+\end{enumerate}}
+\noindent Key Concepts: 
+\begin{itemize}
+    \renewcommand\labelitemi{--}
+    \item upper/lower bounds of sets
+    \item bounded sets
+    \item max/min
+    \item supremum/infimum
+    \item supremum/infimum property: An ordered set $E$ satisfies such a property if every nonempty set $A \subseteq E$ that's bounded above/below has a supremum/infimum in $E$.
+    \item Fact: sup prop $\implies$ inf prop
+\end{itemize}
+
+\dfn{Ordered Field}{Let $\FF$ be a field with order $<$. We say that $\FF$ is an \emph{ordered field} provided that:
+\begin{enumerate}
+    \item For all $x, y, z \in \FF$, if $x < y$, then $x + z < y + z$.
+    \item For all $x, y \in \FF$, if $0 < x$ and $0 < y$, then $0 < x \cdot y$.
+\end{enumerate}}
+
+\ex{}{$\QQ$ is a field.}
+\noindent Facts of any ordered field:
+\begin{enumerate}
+    \item $0 < 1$
+    \item $\nexists x \in \FF$ such that $x^2 = -1$.
+\end{enumerate}
+
+\dfn{Ordered Subfield, Homomorphism, Isomorphism}{Let $\FF$ be an ordered field. 
+\begin{enumerate}
+    \item A set $\mathbb K \subseteq \FF$ is called an \emph{ordered subfield} if $mathbb K$ is an algeraic subfield and $\mathbb K$ is an ordered field equipped with $<$ from $\FF$.
+    \item Let $\mathbb G$ be an ordered field and let $f : \mathbb F \to \mathbb G$. We say that $f$ is an \emph{ordered field homomorphism} if it's a field homomorphism and $f(x) < f(y)$ whenever $x < y$.
+    \item $f$ is an ordered field isomorphism if $f$ is an ordered field homomorphism and $f$ is bijective.
+\end{enumerate}}
+\nt{
+\begin{enumerate}
+    \item If $f : \mathbb F \to \mathbb G$ is an ordered field homomorphism, $f(\mathbb F)$ is an ordered subfield of $\mathbb G$.
+    \item OF property $\implies$ $f$ is injective.
+    \item $\therefore$ every ordered field homomorphism $f : \mathbb F \to \mathbb G$ is such that $f$ induces a bijection $f: \mathbb F \to f(\mathbb F) \subseteq \mathbb G$.
+\end{enumerate}
+}
+
+\thm{$\mathbb Q$ is the smallest ordered field. More precisely, if $\FF$ is an ordered field, then there exists a canonical ordered field homomorphism $f : \QQ \to \FF$.}
+
+\noindent Upshot/notation abuse: We identify $f(\QQ) = \QQ$ to view $\QQ \subseteq \FF$. 
+In turn, $\NN \subset \ZZ \subset \QQ \subseteq \FF$. 
+
+
+\section{Types of Ordered Fields}
+\dfn{Archimedean, Dedekind complete}{Let $\FF$ be an ordered field.
+\begin{enumerate}
+    \item We say that $\FF$ is Archimedean if $\forall 0 < x \in \FF$, $\exists n \in \NN$ such that $n > x$.
+    \item We say that $\FF$ is Dedekind complete if it satisfies the supremum property.
+\end{enumerate}}
+
+\noindent Facts:
+\begin{enumerate}
+    \item $\QQ$ is Archimedean.
+    \item If $\FF$ is Dedekind complete, then $\forall 0 < x \in \FF$ and $\forall 0< n \in \NN$, $\exists !$  $0 < y \in \FF$ such that $y^n = x$.
+    \item $\QQ$ is not Dedekind complete. ($\sqrt 2$ is a counterexample.)
+\end{enumerate}
+\end{document}
