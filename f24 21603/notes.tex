@@ -4,10 +4,10 @@
 \input{../macros}
 \input{../letterfonts}
 
-\title{\Huge{21-603 Model Theory I}}
+\title{\Huge{21603 Model Theory I}}
 \author{\huge{Rohan Jain}}
 \date{}
-
+% \usepackage{lmodern}
 \begin{document}
 
 \maketitle
@@ -47,7 +47,53 @@ MOAB1.pdf
     \item fields
     \item graphs - $(V, E)$
     \item ordered structures
-    \item 
 \end{enumerate}
+
+Around 1870, mathematicians started to layout the foundations for mathematics. One of the ideas was axiomatization. One example was Euclidean axioms for plane geometry. 
+
+\section{Logic}
+
+\dfn{Language}{$L$ is a language if $L = F \cup R \cup C$ are parameter disjoint. }
+
+\dfn{$L$-structure}{Let $L$ be a language (similarity type/signature). Then $\mathcal M$ is an $L$-structure provided:
+\begin{align*}
+    \mathcal M = (U, \{ f^{\mathcal M} \mid f \in F \}, \{ r^{\mathcal M} \mid r \in R \}, \{ c^{\mathcal M} \mid c \in C \})
+\end{align*}
+where $U$ is a nonempty set. $U$ is also called the universe of $\mathcal M$. 
+
+For any $f \in F$ there is $U(f)$ natural number such that $f^{\mathcal M} : U^{n(F)} \to U$, $R^{\mathcal M} \subseteq U^{n(R)}$, $C^{\mathcal M} \subseteq U$, $\forall c \in C$. }
+
+Notation: $| \mathcal M | = U$. The cardinal of $\mathcal M$ is $|U|$. $\Vert \mathcal M \Vert$ denotes the cardinality of $\mathcal M$. 
+
+\dfn{Theory}{Let $L$ be a language. A theory $T$ is a set of sentences in $L$. A sentence is a finite set of symbols from $L$.}
+
+\ex{Sentences}{
+$L_{\text{gr}} = \{ e, \cdot\}$. $e \in C$, $\cdot \in F$. $T_{\text{gr}} = \{ \forall x \forall y \forall z (x \cdot (y \cdot z) = (x \cdot y) \cdot z), \forall x (x \cdot e = x, e \cdot x = x), \forall x \exists y (x \cdot y = e, y \cdot x = e) \}$. These are the group axioms (associativity, identity, existence of inverse). }
+
+\dfn{Term}{Let $L$ be a language. A term is:
+\begin{enumerate}
+    \item $c$ is a term for any $c \in C$.
+    \item $x$ when $x$ is a variable.
+    \item $\tau_1,\ldots, \tau_k$ terms, $f \in F$, $n(f) = k$, then $f(\tau_1, \ldots, \tau_k)$ is a term.
+\end{enumerate}}
+
+\dfn{Term}{$\text{Term}(L)$ is a minimal set of finite strings of symbols from $L \cup \{ (, ) \} \cup X$ that contains $C \cup x$ and closed under the following rule:
+\begin{align*}
+    \tau_1, \ldots, \tau_k \in \text{Term}(L), f k-\text{place function symbol, then} f(\tau_1, \ldots, \tau_k) \in \text{Term}(L)
+\end{align*}
+}
+\ex{$L_r$}{
+    $L_r = \{0, 1, +, -\}$. $\text{Term}(L_r) \supseteq \{\sum a_j x_1^{n_j} \mid a_j \in \mathbb Z, n_j \in \mathbb N\}$.
+}
+\ex{$L_{\text{gr}}$}{
+    $\text{Term}(L_{\text{gr}}) \supseteq \{x_1 \cdot x_n \cdots x_n \mid x_i \in X, n \in \omega\}$. 
+}
+
+\newcommand{\term}{\text{Term}}
+\newcommand{\Fml}{\text{Fml}}
+
+\dfn{$\Fml$}{$\Fml (L)$ is the set of first order formulas in $L$.}
+
+
 
 \end{document}
