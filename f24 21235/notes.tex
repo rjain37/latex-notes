@@ -93,4 +93,93 @@ In turn, $\NN \subset \ZZ \subset \QQ \subseteq \FF$.
     \item If $\FF$ is Dedekind complete, then $\forall 0 < x \in \FF$ and $\forall 0< n \in \NN$, $\exists !$  $0 < y \in \FF$ such that $y^n = x$.
     \item $\QQ$ is not Dedekind complete. ($\sqrt 2$ is a counterexample.)
 \end{enumerate}
+
+\thm{}{Suppose $\FF$ is a Dedekind complete ordered field. Then $\FF$ is Archimedean.}
+\begin{proof}
+    If not, then $\NN \subset \FF$ is bounded above, and so the supremum property provides $x \in \FF$ such that $x = \sup \NN$. But then $x - 1$ is an upper bound for $\NN$, so there exists $n \in \NN$ such that $x-1 < n$. Hence $x < n + 1$, which contradicts the definition of $x$ as an upper bound. Therefore, $\FF$ is Archimedean.
+\end{proof}
+
+\section{Dedekind Completion}
+Throughout this section, let $\FF$ be an Archimedean ordered field.
+
+\dfn{Dedekind cut}{We say a set $\mathcal C \subseteq \FF$ is \emph{Dedekind cut} if:
+\begin{enumerate}
+    \item $\mathcal C \neq \emptyset$ and $\mathcal C \neq \FF$.
+    \item If $p \in \mathcal C$ and $q \in \FF$ such that $q < p$, then $q \in \mathcal C$.
+    \item If $p \in \mathcal C$, then $\exists r \in \mathcal C$ such that $p < r$.
+\end{enumerate}
+We will write $\FF^*$ for the set of all Dedekind cuts in $\FF$. It is called the \emph{Dedekind completion} of $\FF$.}
+
+\nt{Let $\mathcal C \subseteq \FF$ be a cut. Then:
+\begin{enumerate}
+    \item If $p \in \mathcal C$, then $q \notin \mathcal C$, then $p < q$.
+    \item If $r \notin \mathcal C$, and $r < s \in \FF$, then $s \notin \mathcal C$.
+\end{enumerate}}
+
+\ex{Cut examples}{\begin{enumerate}
+    \item Let $q \in \FF$ and define $\mathcal C_q = \{ p \in \FF \mid p < q\}$. Then $\mathcal C_q$ is a cut.
+    \begin{proof}
+        \begin{enumerate}
+            \item $q - 1 < q \implies q - 1 \in \mathcal C_q$. $q \not < q \implies q \notin \mathcal C_q \implies \mathcal C_q \neq \FF$.
+            \item Let $p \in \mathcal C_q$. Suppose $s \in \FF$ such that $s < p$. Then $s < q \implies s \in \mathcal C_q$.
+            \item Let $p \in \mathcal C_q$. Then $p < \frac{p + q}{2} < q \implies \frac{p + q}{2} \in \mathcal C_q$.
+        \end{enumerate}
+    \end{proof}
+    \item Suppose $\FF$ is such that $\nexists x \in \FF$ such that $x^2 = 2$. Let $\mathcal C = \{ p \in \FF \mid p \leq 0 \text{ or } 0 < p^2 < 2\}$. Then $\mathcal C$ is a cut.
+    \begin{proof}
+        \begin{enumerate}
+            \item $1 \in \mathcal C$ and $1^2 = 1 < 2$. $2 \notin \mathcal C$ and $2^2 = 4 > 2$. 
+            \item Let $p \in \mathcal C$ and $q \in \FF$ such that $q < p$. If $q \leq 0$, then $q \in \mathcal C$ trivially. Suppose $0 < q < p$. Then $0 < q^2 < p^2 < 2$, so $q \in \mathcal C$.
+            \item Let $p \in \mathcal C$. If $p \leq 0$, then $1 \in \mathcal C$ and $p < 1$, so we're done. Suppose $0 < p^2 < 2$. Note, $0 < 2 - p^2$, so $\frac{2p + 1}{2 - p^2} > 0$. Then we can define $r = 1 + \frac{2p + 1}{2 - p^2} \geq \max(1, \frac{2p + 1}{2 - p^2})$. Then $(p + 1/r)^2 = p^2 + \frac{2p}{r} + \frac{1}{r^2}$. We have:
+            \begin{align*}
+                p^2 + \frac{2p}{r} + \frac{1}{r^2} &< p^2 + \frac{2p}{r} + \frac 1r \\
+                &= p^2 + \frac{2p+1}{r} \\
+                &\leq p^2 + 2-p^2 \\
+                &= 2.
+            \end{align*}
+            So, $p < p + 1/r < 2$ and $p + 1/r \in \mathcal C$.
+        \end{enumerate}
+    \end{proof}
+\end{enumerate}}
+
+\subsection{Ordering $\FF^*$}
+
+\mlenma{}{The following hold:
+\begin{enumerate}
+    \item If $\mathcal A, \mathcal B \in \FF^*$, then exactly one holds:
+    \begin{itemize}
+        \item $\mathcal A \subset \mathcal B$
+        \item $\mathcal A = \mathcal B$
+        \item $\mathcal B \subset \mathcal A$
+    \end{itemize}
+    \item If $\mathcal A, \mathcal B, \mathcal C \in \FF^*$ and $\mathcal A \subset \mathcal B$ and $\mathcal B \subset \mathcal C$, then $\mathcal A \subset \mathcal C$.
+\end{enumerate}}
+\begin{proof}
+    Proof of $2$ is trivial, as well as the equality part for $1$. 
+    \begin{itemize}
+        \item If $\mathcal A = \mathcal B$, we're done.
+        \item Suppose $\exists b \in \mathcal B \setminus\mathcal A$. If $a \in \mathcal A$, then $a < b$, but $\mathcal B$ is a cut so $a \in \mathcal B$, so $\mathcal A \subset \mathcal B$.
+        \item Suppose $\exists a \in \mathcal A \setminus \mathcal B$. Then $a < b$ for all $b \in \mathcal B$, so $a \in \mathcal B$, so $\mathcal B \subset \mathcal A$.
+    \end{itemize}
+\end{proof}
+
+
+\dfn{Order on cuts}{Given $\mathcal A, \mathcal B \in \FF^*$, we say that $\mathcal A < \mathcal B$ if $\mathcal A \subset \mathcal B$. The lemma above shows that this is infact an order.}
+
+
+\mlenma{}{Let $E \subseteq \FF^*$ be nonempty and bounded above. Then $\mathcal B = \bigcup_{\mathcal A \in E} \mathcal A$ is a cut.}
+\begin{proof}
+    \begin{enumerate}
+        \item Since $E \neq \emptyset$, there exists $\mathcal A \in E$. So $\mathcal A \neq \emptyset$, hence $\mathcal B \neq \emptyset$. 
+        
+        Since $E$ is bounded above, there exists $\mathcal C \in \FF^*$ such that $\mathcal A \subset \mathcal C$ for all $\mathcal A \in E$. Since $\mathcal C$ is a cut, there is $q \in \FF$ such that $q \notin \mathcal C$. Then $q \notin \mathcal A$ for all $\mathcal A \in E$, so $q \notin \mathcal B$.
+        \item Let $p \in \mathcal B$ and $q \in \FF$ such that $q < p$. Since $\mathcal B$ is a union of cuts, it follows that $p \in \mathcal A$ for some $\mathcal A \in E$. Since $\mathcal A$ is a cut, $q \in \mathcal A \subseteq \mathcal B$.
+        \item Let $p \in \mathcal B$. Then $p \in \mathcal A$ for some $\mathcal A \in E$. Since $\mathcal A$ is a cut, there exists $r \in \mathcal A$ such that $p < r$. Since $\mathcal A \subset \mathcal B$, we have $r \in \mathcal B$.
+    \end{enumerate}
+\end{proof}
+
+\thm{}{$\FF^*$ equipped with the order $<$ satisfies the supremum property.}
+
+
+
 \end{document}
