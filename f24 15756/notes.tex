@@ -9,7 +9,7 @@
 \date{}
 
 \begin{document}
-
+\newcommand{\poly}{\text{poly}}
 \maketitle
 \newpage% or \cleardoublepage
 % \pdfbookmark[<level>]{<title>}{<dest>}
@@ -18,8 +18,7 @@
 
 \pagebreak
 
-\chapter{}
-\section{100 Prisoners Problem}
+\chapter{100 Prisoners Problem}
 
 This is a problem based on a riddle:
 \qs{}{There is a jail and a warden. However, the warden is very lazy and says if they win a game, they're all set free, otherwise they all die. There is 100 boxes in a room and each box has a hidden number from 1 to 100. They are assorted in a random permutation. Each prisoner is also given a number from 1 to 100. Each prisoner is allowed to enter the room and will be allowed to open 50 boxes and if they find their number, they win. They will only live if everyone finders their number. The prisoners can't communicate with each other. What strategy should they use to maximize their chances of winning?}
@@ -93,7 +92,80 @@ Thus, the probability of winning is $\geq 1 - 0.693 \approx 0.307$ as desired.
     Together, these lemmas show that the cycle algorithm is optimal in version 1. 
 \end{proof}
 
+\chapter{Graph algorithms}
+*Note: all graphs are going to be undirected and unweighted.
 
+\section{Graph coloring}
+Suppose we are given a graph $G = (V, E)$. Suppose $G$ is 3-colorable. Recall that a 3-coloring is a function $c: V \to \{1, 2, 3\}$ such that $c(u) \neq c(v)$ for all $(u, v) \in E$. Simply put, you can color the vertices such that no two adjacent vertices have the same color.
+\qs{}{Can we efficiently find a 3-coloring of $G$?}
+\noindent \textbf{Answer:} No, this is NP-hard.
 
+\noindent \textbf{Observation:} It's possible to partition the vertices in the graph into two parts that are each $\triangle$-free. This is easy because we can create the partition of one set being the odd vertices (1 and 3) and the other set being the even vertices (2).
+
+\thm{McDiarmid (1993)}{Given a 3-colorable graph, you can construct a triangle-free partition of the vertices in $\poly(n)$ expected time.}
+\begin{proof}
+    Consider the following algorithm: in each round, find a triangle in some side, pick a random vertex from the triangle, and move it to the other side. Repeat this process until there are no more triangles.
+
+Now we analyze the algorithm. Fix a 3-coloring of $G$. Let $X$ be the number of vertices of color 1 on the left side. Let $Y$ be the number of vertices of color 2 on the right side. Now we analyze what happens to $X+Y$ during a round: 
+\begin{itemize}
+    \item If we move a vertex from the left to the right, $X$ can decrease by 1 with probability $\frac 13$, $Y$ can increase by 1 with probability $\frac 13$, or both can stay the same with probability $\frac 13$. 
+    \item If we move a vertex from the right to the left, $Y$ can decraese by 1, $X$ can increase by 1, or both can stay the same all with probability $\frac 13$.
+\end{itemize}
+So overall, $X+Y$ increases by 1 with probability $\frac 13$, decreases by 1 with probability $\frac 13$, and stays the same with probability $\frac 13$. This is just a random walk.
+
+The random walk starts at an unknown value, but if it ever leaves $[0, n]$, the algorithm terminates. It can look something like $+1, -1, 0, 0, -1, +1, +1, +1$, and at some point $t_1$ the algorithm finishes. For sake of discussion, assume this hypothetical random walk keeps going. At some point, the walk may leave $[0, n]$ at time $t_2$. Note that $t_2$ can exist only if $t_1$ exists, and $t_1 < t_2$. So $\E[t_2] \geq \E[t_1]$.
+
+Goal: prove that $\E[t_2] \in O(n^2)$. This will imply that $\E[t_1] \in O(n^2)$, which will imply that the algorithm runs in $\poly(n)$ time.
+
+We step away from the graph problem to analyze random walks further. Consider a random walk on $\Z$ that starts at 0. Let $T$ be the first time the walk arrives at $n$ or $-n$. We want to show that $\E[T] \in O(n^2)$.
+
+Fact: after $t$ steps, the middle ~90\% of possible positions would be $O(\sqrt t)$ from the origin. Additionally, within this ~90\%, the walk is about uniformly distributed.
+
+Using the fact above, we want $t=n^2$ to be the time it takes to reach $n$ or $-n$. 
+
+Now we return to the original problem. 
+
+\mlenma{}{For any power of 2, the expected time to get from the origin to $n$ or $-n$ is $n^2$.}
+\begin{proof}
+    If $n=1$, the expected time is 1. Define $T_n$ as the expected time to get from the origin to $n$ or $-n$. Pretend we split the number line into $-n, -n/2, 0, n/2, n$. Then we can write $T_n$ as:
+    \begin{align*}
+        T(n) = T(n/2) + T(n/2) + \frac 12 T(n).
+    \end{align*}
+    Solving, we get $T(n) = 4T(n/2) \implies T(n) = n^2$.
+\end{proof}
+
+This means that our algorithm is $O(n^2)$ rounds, meaning the algorithm runs in $\poly(n)$ time.
+\end{proof}
+
+\section{Shortest paths}
+Given $G = (V,E)$, for each $x, y \in V$, we want $d(x, y) \pm O(1)$ in time $O(n^{2.5} \log n)$.
+
+Naive algorithm: $O(|V| \cdot |E|) = O(n^3)$. 
+
+Now consider a shortest path from $x$ to $y$.
+\begin{itemize}
+    \item Option 1: Every vertex on the path has degree $< \sqrt n$. 
+    
+    Then for each vertex, we can BFS, but only on low degree vertices. This takes $O(n^{2.5})$ time. The result is that we get exact distances for all vertices on the path.
+    \item Option 2: There is a vertex on the path with degree $\geq \sqrt n$.
+    
+    Now we sample $100\sqrt n \log n$ iid uniformly random vertices and call this set $S$. We claim that with high probability, every high degree vertex $w$ will be incident to a vertex $s \in S$. 
+
+    If we take this claim for granted, observe that for $x,y$ in option 2, $d(x, y) = d(x, s) + d(s, y) \pm 2$ for some $s \in S$. So for each $s \in S$, do a BFS which takes $O(n^{2.5} \log n)$ time. For each pair $(x, y)$, compute the minimum $d(x, s) + d(s, y)$ over all $s \in S$. This takes $O(n^{2.5} \log n)$ time.
+\end{itemize}
+
+Now we prove the claim made in option 2. 
+\begin{proof}
+    Let $w$ be a high degree vertex. We want to find $P($none of $w$'s neighbors are sampled). 
+    \begin{align*}
+        P(\text{none of $w$'s neighbors are sampled}) &\leq P(\text{given sample misses})^{|S|} \\ 
+        &= \left(1 - \frac{1}{\sqrt n}\right)^{100 \sqrt n \log n}.
+    \end{align*}
+    Now we use the fact that $\left(1 - \frac 1n\right)^n \leq \frac 1e$. So now,
+    \begin{align*}
+        \left(1 - \frac{1}{\sqrt n}\right)^{100 \sqrt n \log n} &\leq \frac{1}{e^{100 \log n}} = \frac{1}{n^{100}}.
+    \end{align*}
+    This is the probability of $w$ screwing up. The probability of any high degree vertex screwing up is $\leq \frac{n}{n^{100}} = \frac{1}{n^{99}}$ by union bound.
+\end{proof}
 
 \end{document}
