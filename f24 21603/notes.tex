@@ -10,6 +10,14 @@
 % \usepackage{lmodern}
 \begin{document}
 
+\newcommand{\term}{\text{Term}}
+\newcommand{\fml}{\text{Fml}}
+\newcommand{\afml}{\text{AFml}}
+\newcommand{\fv}{\text{FV}}
+\newcommand{\sent}{\text{Sent}}
+\newcommand{\val}{\text{Val}}
+\newcommand{\Mod}{\text{Mod}}
+
 \maketitle
 \newpage% or \cleardoublepage
 % \pdfbookmark[<level>]{<title>}{<dest>}
@@ -20,10 +28,7 @@
 
 \chapter{}
 \section{random info}
-rami@cmu.edu \\
-username: MOAB \\
-password: APLATON \\
-MOAB1.pdf
+rami@cmu.edu
 \begin{enumerate}
     \item Set Theory
     \item Model Theory
@@ -51,7 +56,7 @@ MOAB1.pdf
 
 Around 1870, mathematicians started to layout the foundations for mathematics. One of the ideas was axiomatization. One example was Euclidean axioms for plane geometry. 
 
-\section{Logic}
+\section{Structures and Languages}
 
 \dfn{Language}{$L$ is a language if $L = F \cup R \cup C$ are parameter disjoint. }
 
@@ -89,11 +94,97 @@ $L_{\text{gr}} = \{ e, \cdot\}$. $e \in C$, $\cdot \in F$. $T_{\text{gr}} = \{ \
     $\text{Term}(L_{\text{gr}}) \supseteq \{x_1 \cdot x_n \cdots x_n \mid x_i \in X, n \in \omega\}$. 
 }
 
-\newcommand{\term}{\text{Term}}
-\newcommand{\Fml}{\text{Fml}}
-
-\dfn{$\Fml$}{$\Fml (L)$ is the set of (first order) formulas in $L$.}
 
 
+\dfn{$\afml$}{Let $L$ be a language. The set of atomic fomrulas denotes by $\afml(L)$ is the smallest set of formulas in $L$ that contains $L \cup \{(, ), =\} \cup X$ such that:
+\begin{enumerate}
+    \item If $\tau_1, \tau_2 \in \term (L)$, then $\tau_1 = \tau_2 \in \afml(L)$.
+    \item Given $R(x_1, \ldots, x_n)$ relation symbol and $\tau_1, \ldots, \tau_n \in \term(L)$, then $R(\tau_1, \ldots, \tau_n) \in \afml(L)$.
+\end{enumerate}
+}
+
+\dfn{$\fml$}{$\fml (L)$ is the set of (first order) formulas in $L$. Which is the mininmal set of finite strings of symbols from $L \cup \{ (, ), =, \neg, \vee, \wedge, \implies, \impliedby, \iff, \forall, \exists \} \cup X$ such that:
+\begin{enumerate}
+    \item $\fml(L) \supseteq \afml(L)$.
+    \item If $\varphi$ is a formula, then $\neg \varphi$ is a formula.
+    \item If $x \in \{\wedge, \vee, \implies, \iff\}$ and $\varphi, \psi \in \fml(L)$, then $(\varphi x \psi) \in \fml(L)$.
+    \item If $\varphi \in \fml(L)$, $Q \in \{\forall, \exists\}$, and $x \in X$, then $Q x \varphi \in \fml(L)$.
+    \item If $\varphi \in \fml(L)$, $\fv (\varphi)$ is the set of free variables in $\varphi$ defined by induction on the structure of $\varphi$. 
+    
+    Case 1: $\varphi \in \afml (L)$. 
+    \begin{enumerate}
+        \item $\varphi$ is $\tau_1 = \tau_2$. $\fv(\varphi) = \fv(\tau_1) \cup \fv(\tau_2)$.
+        \item $\varphi$ is $R(\tau_1, \ldots, \tau_n)$. $\fv(\varphi) = \fv(\tau_1) \cup \ldots \cup \fv(\tau_n)$.
+    \end{enumerate}
+    Case 2: 
+    \begin{enumerate}
+        \item if $\varphi$ is $\neg \psi$, then $\fv(\varphi) = \fv(\psi)$.
+        \item if $\varphi = \psi_1 * \psi_2$ for $* \in \{\wedge, \vee, \implies, \iff\}$, then $\fv(\varphi) = \fv(\psi_1) \cup \fv(\psi_2)$.
+    \end{enumerate}
+    Case 3: $\varphi$ is $Q x \psi$, $Q \in \{\forall, \exists\}$. Then $\fv(\varphi) = \fv(\psi) \setminus \{x\}$.
+    \item $\sent(L)$ are the sentences in $L$. $\sent(L) = \{ \varphi \in \fml(L) \mid \fv(\varphi) = \emptyset \}$.
+\end{enumerate}
+}
+
+\ex{}{If $L_f = \{+, \cdot, 0, 1\}$, then $T_f = \{$
+    \begin{itemize}
+        \item $\forall x \forall y \forall z (x \cdot (y \cdot z) = (x \cdot y) \cdot z)$,
+        \item $\forall x \forall y \forall z (x + (y + z) = (x + y) + z),$
+        \item $\forall x \forall y (x + y = y + x),$
+        \item $\forall x \forall y (x \cdot y = y \cdot x)$,
+        \item $\forall x (x \cdot 1 = x, 1 \cdot x = x)$, 
+        \item $\forall x (x + 0 = x, 0 + x = x)$,
+        \item $\forall x \exists y (x \cdot y = 1, y \cdot x = 1)$,
+        \item $ \forall x \exists y (x + y = 0, y + x = 0)$,
+        \item $\forall x \forall y \forall z (x \cdot (y + z) = (x \cdot y) + (x \cdot z))$
+    \end{itemize}$\}$.}
+
+\dfn{$L$-theory}{$T$ is an $L$-theory if $T \subseteq \sent(L)$.}
+\noindent The example above is ``field theory".
+\newpage
+\dfn{}{Let $M$ be an $L$-structure. $\tau(\bar x)$ is a term, $\bar a \in |M|^{\ell(n)}$. T
+
+Case 1: $\tau(\bar x) = c$ for some constant symbol. Then $\tau^M(\bar a) = c^M$.
+
+Case 2: $\tau(\bar x) = x_i$. Then $\tau^M(\bar a) = a_i$.
+
+Case 3: $\tau(\bar x) = f(\tau_1, \ldots, \tau_k)$. Then $\tau^M(\bar a) = f^M(\tau_1^M(\bar a), \ldots, \tau_k^M(\bar a))$.
+}
+
+\dfn{$\models$}{Let $L$ be a language, $\varphi \in \fml(L)$, $ M$ and $L$-structure, $n = \ell(\bar x)$, $\bar a \in |  M |^n$. Define $ M \models \varphi(\bar a)$ at $\bar a$ by induction on the structure of $\varphi$:
+
+\begin{itemize}
+    \item If $\varphi$ is atomic, 
+    \begin{itemize}
+        \item when $\varphi(x)$ is $\tau_1 = \tau_2$, then $M \models \varphi(\bar a)$ iff $\tau_1(\bar a) = \tau_2(\bar a)$.
+        \item when $\varphi(x)$ is $R(\tau_1, \ldots, \tau_k)$, then $M \models \varphi(\bar a)$ iff $(\tau_1(\bar a), \ldots, \tau_k(\bar a)) \in R^M$.
+    \end{itemize}
+    \item If $\varphi$ is not atomic, then:
+    \begin{itemize}
+        \item if $\varphi$ is $\neg \psi$, then $M \models \varphi(\bar a)$ iff $M \models \psi(\bar a)$ is false.
+        \item if $\varphi$ is $\psi_1 * \psi_2$ for $* \in \{\wedge, \vee, \implies, \iff\}$, then $M \models \varphi(\bar a)$ iff $M \models \psi_1(\bar a)$ and $M \models \psi_2(\bar a)$.
+        \item if $\varphi$ is $\exists y \psi(y, \bar x)$, then $M \models \varphi(\bar a)$ iff there is $b \in |M|$ such that $M \models \psi(b, \bar a)$.
+        \item if $\varphi$ is $\forall y \psi(y, \bar x)$, then $M \models \varphi(\bar a)$ iff for all $b \in |M|$, $M \models \psi(b, \bar a)$.
+    \end{itemize}
+\end{itemize}
+}
+\dfn{}{Let $M$ be an $L$-structure and $T$ an $L$-theory. $M \models T$ iff for every $\varphi \in T$, $M \models \varphi$. We say $T$ ``satisfies'' $M$.}
+\ex{Models}{$M \models T_f \iff (|M|, +^M, \cdot^M, 0^M, 1^M)$ is a field.}
+
+\dfn{$\Mod$}{$\Mod(T) = \{ M\, L \text{-structure} \mid M \models T \}$.}
+\ex{}{$\Mod(T_f)$ is the class of all fields and $\Mod(T_{\text{gr}})$ is the class of all groups.}
+
+\dfn{Structure Isomorphism}{Let $M, N$ both be $L$-structures. $f$ is an isomorphism from $M$ onto $N$ if $f: |M| \to |N|$ is a bijection such that:
+\begin{itemize}
+    \item $f(c^M) = c^N$ for all $c \in C$.
+    \item $G(x_1, \ldots, x_k)$ function symbol. $a_1, \ldots, a_k \in |M|$, then $f(G^M(a_1, \ldots, a_k)) = G^N(f(a_1), \ldots, f(a_k))$.
+    \item $R(x_1, \ldots, x_k)$ predicate symbol. $a_1, \ldots, a_k \in |M|$, then $(a_1, \ldots, a_k) \in R^M$ iff $(f(a_1), \ldots, f(a_k)) \in R^N$.
+\end{itemize}
+We write $f: M \cong N$. Also $M \cong N \iff \exists f: M \cong N$.}
+
+\dfn{}{Let $\lambda \geq \aleph_0$, $T$ an $L$-theory. $T$ is $\lambda$-categorical if for all $M, N \models T$ of cardinality $\lambda$, $M \cong N$.}
+
+\thm{Los Conjecture (1954)}{Let $L$ be a language, $T$ a first order $L$-theory, in an at most countable language. If $\exists \lambda > \aleph_0$ such that $T$ is $\lambda$-categorical, then for all $\mu > \aleph_0$, $T$ is $\mu$-categorical.}
+\noindent Somewhere around 1961-1965, Morley proved this conjecture.
 
 \end{document}
