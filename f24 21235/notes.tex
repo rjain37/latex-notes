@@ -179,7 +179,149 @@ We will write $\FF^*$ for the set of all Dedekind cuts in $\FF$. It is called th
 \end{proof}
 
 \thm{}{$\FF^*$ equipped with the order $<$ satisfies the supremum property.}
+\begin{proof}
+    Let $E \subseteq \FF$ be a nonempty set that is bounded above.  From last time, we know that $\mathcal B = \cup_{\mathcal A \in E} \mathcal A$ is a cut. We claim that $\mathcal B = \sup E$. 
+
+    If $\mathcal A \in E$, then $\mathcal A \subseteq \mathcal B$. And so $\mathcal A \leq \mathcal B$, so $\mathcal B$ is an upper bound for $E$.
+
+    Next, suppose that $\mathcal C \in \FF^*$ is an upper bound of $E$. This means that $\mathcal A \leq \mathcal C$ for every $\mathcal A \in E$, meaning $\mathcal A \subseteq \mathcal C \forall \mathcal A \in E$. So $\mathcal B \subseteq \mathcal C$. As such, $\mathcal B \leq \mathcal C$, so $\mathcal B = \sup E$.
+\end{proof}\
+
+\noindent Remark: In none of the results leading up to this theorem did we use that $\FF$ is anything other than an ordered set. This shows that the cut construction of Dedekind works in general for ordered sets and yields $\FF^*$ that satisfies the supremum property. Also, $\{ \mathcal C_p \mid p \in \FF\} \subseteq \FF^*$. 
+
+\subsection{Addition}
+Idea: $\FF \cong \{ \mathcal C_p \mid p \in \FF\}$. 
+
+\mlenma{}{Let $\mathcal A, \mathcal B \in \FF^*$. Then $\mathcal C = \{a  + b \mid a \in \mathcal A, b \in \mathcal B\}$ is a cut.}
+\begin{proof}
+    Claim: $\mathcal A, \mathcal B \neq \emptyset \implies \mathcal C \neq \emptyset$.
+
+    $\mathcal A, \mathcal B$ are cuts, so $\exists M_1, M_2 \in \FF$ such that $a < M_1$ for all $a \in \mathcal A$ and $b < M_2$ for all $b \in \mathcal B$. Then $a + b < M_1 + M_2$ for all $a \in \mathcal A, b \in \mathcal B$, so $a + b < M_1 + M_2$, meaning $M_1 + M_2 \notin \mathcal C$.
+
+    Also, let $c = a + b \in \mathcal C$ for $a \in \mathcal A, b \in \mathcal B$. Let $q < c \implies q-a < b \implies q - a \in \mathcal B$. Hence, $q = a + (q-a) \in \mathcal C$. 
+
+    Thirdly, let $c = a + b \in\mathcal C$ for $a \in \mathcal A, b \in \mathcal B$. Since $\mathcal A, \mathcal B \in \FF^*$, $\exists r_a, r_b$ such that $a < r_a \in \mathcal A$, $b < r_b \in \mathcal B$. Then $c = a + b < r_a + r_b$, so $r_a + r_b \in \mathcal C$.
+
+    As such, $\mathcal C$ is a cut.
+\end{proof}
+\noindent Before we define addition, we need to define the negative of a cut.
 
 
+Heuristic: What we want is that $-\mathcal C_1 = \mathcal C_{-1}$. The way we do this is by defining $\mathcal C_{-p} = \{ q \in \FF \mid \exists p > q : p \in -\mathcal C_p^C\}$. This is the same as $\{ q\in \FF \mid \exists p > q : -p \notin \mathcal C_p\}$. 
 
+Now we study $\{ q \in \FF \mid \exists p > q : -p \notin \mathcal C\}$.
+
+\mlenma{}{Let $\mathcal C \in \FF^*$. Then $\{ q \in \FF \mid \exists p > q : -p \notin \mathcal C\}$ is a cut.}
+
+\dfn{Addition}{For $\mathcal A, \mathcal B \in \FF^*$, we define $\mathcal A + \mathcal B = \{ a + b \mid a \in \mathcal A, b \in \mathcal B\}$ and $-\mathcal A = \{ q \in \FF \mid \exists p > q : -p \notin \mathcal A\}$.}
+
+\thm{}{Define $0 = \mathcal C_0 \in \FF^*$. The following hold:
+\begin{enumerate}
+    \item $\mathcal A, \mathcal B \in \FF^* \implies \mathcal A + \mathcal B \in \FF^*$.
+    \item $\mathcal A, \mathcal B \in \FF^* \implies \mathcal A + \mathcal B = \mathcal B + \mathcal A$.
+    \item $\mathcal A, \mathcal B, \mathcal C \in \FF^* \implies (\mathcal A + \mathcal B) + \mathcal C = \mathcal A + (\mathcal B + \mathcal C)$.
+    \item $\mathcal A \in \FF^* \implies \mathcal A + 0 = \mathcal A$.
+    \item $\mathcal A \in \FF^* \implies \mathcal A + (-\mathcal A) = 0$.
+\end{enumerate}
+}
+\begin{proof}
+    Easy proof, too lazy to write out.
+\end{proof}
+Also: $\mathcal A, \mathcal B, \mathcal C \in \FF^*$ and $\mathcal A < \mathcal B \implies \mathcal A + \mathcal C < \mathcal B + \mathcal C$.
+
+Important Remark: The Archimedean property is actually needed for the above theorem in orer to prove the 5th condition. 
+
+\newpage
+\subsection{Multiplication}
+\mlenma{}{Let $\mathcal A, \mathcal B \in \FF^*$ such that $\mathcal A, \mathcal B > 0$. Then $\mathcal C = \{ p \in \FF \mid p \leq 0\} \cup \{ ab \mid a \in \mathcal A, b \in \mathcal B, a, b > 0\}$ is a cut.}
+
+\mlenma{}{Let $\mathcal A \in \FF^*$ be such that $\mathcal A > 0$. Then $\mathcal C = \{ p \in \FF^* \mid p \leq 0\}\cup \{ 0 < q \in \FF \mid \exists p > q : p^{-1} \notin \mathcal A\}$ is a cut.}
+
+\dfn{Multiplication}{Let $\mathcal A, \mathcal B \in \FF^*$. We define multiplication as:
+\begin{enumerate}
+    \item If $\mathcal A , \mathcal B > 0$, then $\mathcal A \cdot \mathcal B = \{ ab \mid 0 < a \in \mathcal A, 0 < b \in \mathcal B\}$.
+    \item If $\mathcal A = 0$  or $\mathcal B = 0$, then $\mathcal A \cdot \mathcal B = 0$.
+    \item If $\mathcal A > 0$ and $\mathcal B < 0$, then $\mathcal A \cdot \mathcal B = -(\mathcal A \cdot (-\mathcal B))$.
+    \item If $\mathcal A < 0$ and $\mathcal B > 0$, then $\mathcal A \cdot \mathcal B = -((-\mathcal A) \cdot \mathcal B)$.
+    \item If $\mathcal A, \mathcal B < 0$, then $\mathcal A \cdot \mathcal B = (-\mathcal A) \cdot (-\mathcal B)$.
+\end{enumerate}
+We define multiplication inversion via:
+\begin{enumerate}
+    \item If $\mathcal A > 0$, then $\mathcal A^{-1} = \{ q \in \FF \mid \exists p > q : p^{-1} \notin \mathcal A\}$.
+    \item If $\mathcal A < 0$, then $\mathcal A^{-1} = -(-\mathcal A)^{-1}$.
+\end{enumerate}}
+\thm{}{Set $1 = \mathcal C_1$. The following hold:
+\begin{enumerate}
+    \item If $\mathcal A, \mathcal B \in \FF^*$, then $\mathcal A \cdot \mathcal B \in \FF^*$.
+    \item If $\mathcal A, \mathcal B \in \FF^*$, then $\mathcal A \cdot \mathcal B = \mathcal B \cdot \mathcal A$.
+    \item If $\mathcal A, \mathcal B, \mathcal C \in \FF^*$, then $(\mathcal A \cdot \mathcal B) \cdot \mathcal C = \mathcal A \cdot (\mathcal B \cdot \mathcal C)$.
+    \item If $\mathcal A \in \FF^*$, then $\mathcal A \cdot 1 = \mathcal A$.
+    \item If $\mathcal A \in \FF^*$, then $\mathcal A \cdot \mathcal A^{-1} = 1$.
+\end{enumerate}}
+
+Also if $\mathcal A, \mathcal B \in \FF^*$ and $\mathcal A, \mathcal B > 0$, then $\mathcal A \cdot \mathcal B > 0$. 
+
+\thm{}{If $\mathcal A, \mathcal B, \mathcal C \in \FF^*$, then $\mathcal A \cdot(\mathcal B + \mathcal C) = \mathcal A \cdot \mathcal B + \mathcal A \cdot \mathcal C$.}
+
+We now know that $\FF^*$ is an ordered field.
+
+
+\subsection{Robert Reci}
+
+\thm{}{$\QQ$ is the smallest ordered field.}
+\begin{proof}
+    Let $\FF$ be any ordered field. Let $1 \in \FF$. Let $\iota : \NN \to \FF$, $n \mapsto 1 + \cdots + 1$ $n$ times. Then $\iota(-n) = -\iota(n)$ for $n \in \NN_0$ and $-n \in \ZZ^-$. 
+
+    Then we say $\iota(p/q) = \iota(p)\iota(q)^{-1}$ for $p/q \in \QQ$.
+\end{proof}
+
+\cor{Every ordered field is infinite}{$\iota[\QQ] \subseteq \FF$ is infinite.}
+
+\subsubsection{Roots}
+Let $\FF$ be a Dedekind complete ordered field, $0 < x \in \FF$, $n \in \NN$. Then $\exists ! y \in \FF$ such that $y > 0$ and $y^n = x$.
+
+\begin{proof}
+    $n = 1$ is silly. Assume $n \geq 2$. Let $E = \{ z \in \FF \mid z > 0 \text{ and } z^n < x\}$. Then $E$ is nonempty and bounded above by $x$. Let $y = \sup E$. We claim that $y^n = x$.
+
+    We want to show that $y^n \ngtr > x$ and $y^n \nless < x$. 
+
+    \mlenma{}{In any commutative ring R, $b^n - a^n = (b - a)(b^{n-1} + b^{n-2}a + \cdots + ba^{n-2} + a^{n-1})$.}
+
+    And hence for $0 < a < b$ in $\FF$, we have $0 < b^n - a^n = (b-a)nb^{n-1}$. 
+
+    Suppose $y^n < x$, so $x-y^n > 0$. We define $h = \frac 12 \min\left(1, \frac{x-y^n}{n(y+1)^{n-1}}\right)$. $0 < h < 1$, also $0 < h < \frac{x-y^n}{n(y+1)^{n-1}}$. 
+
+    Then, by the inequality below the lemma, we have \begin{align*}
+        0 &< (y+h)^n - y^n \\
+        &< hn(y + h)^{n-1} \\
+        &< hn(y + 1)^{n-1} \\
+        &< {x-y^n},
+    \end{align*}
+    so $(y+h)^n < x$, which contradicts the definition of $y$ as the supremum.
+\end{proof}
+
+\dfn{Ring*}{A ring is a field where actually we don't care about inverses anymore. }
+
+\dfn{Domain}{$R$ is a domain when $xy = 0 \implies x = 0 \wedge y = 0$.}
+
+Let $R$ be a ring. For $(r, s) \in R \times R \setminus \{0\}$, we say $(r, s) \sim (r', s')$ if $rs' = r's$.
+
+The field of fractions, Frac$(R)$ is the set of equivalence classes of $R \times R \setminus \{0\}$ under $\sim$ equipped with the operations $[(r, s)] + [(r', s')] = [(rs' + r's, ss')]$ and $[(r, s)] \cdot [(r', s')] = (rr', ss')$.
+
+We check that $[(r , s)] \cdot [(s, r)] = [(rs, sr)] = [(1, 1)]$.
+
+Let $\FF$ a field, $\FF[x]$ its polynomial ring. Let $\FF(x)$ be the field of fractions of $\FF[x]$. Then $\FF(x) := \text{Frac}(\FF[x])$ is the field of rational functions in $x$ with coefficients in $\FF$.
+
+Given $p, q \in \FF[x]$, say $p/q > 0$ if $p$ and $q$ have the same sign. Say $f, g \in \FF(x)$, that $f > g$ when $f- g > 0$. 
+
+\thm{}{$\FF(x)$ is never Archimedean.}
+\begin{proof}
+    $x$ is an upper bound for all $n \in \NN$. 
+\end{proof}
+
+\nt{If $\FF$ is Archimedean, $|\FF| \leq 2^{\aleph_0}$.}
+
+\thm{}{Let $\lambda$ be an infinite cardinal. Then there is an ordered field of cardinality $\lambda$.}
+
+\cor{}{The Archimedean property is not a first-order property.}
 \end{document}
