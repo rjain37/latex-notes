@@ -17,6 +17,7 @@
 \newcommand{\sent}{\text{Sent}}
 \newcommand{\val}{\text{Val}}
 \newcommand{\Mod}{\text{Mod}}
+\newcommand{\Th}{\text{Th}}
 
 \maketitle
 \newpage% or \cleardoublepage
@@ -186,5 +187,59 @@ We write $f: M \cong N$. Also $M \cong N \iff \exists f: M \cong N$.}
 
 \thm{Los Conjecture (1954)}{Let $L$ be a language, $T$ a first order $L$-theory, in an at most countable language. If $\exists \lambda > \aleph_0$ such that $T$ is $\lambda$-categorical, then for all $\mu > \aleph_0$, $T$ is $\mu$-categorical.}
 \noindent Somewhere around 1961-1965, Morley proved this conjecture.
+
+
+\chapter{Basic Concepts}
+
+\mlenma{}{\begin{enumerate}
+    \item $M \cong N \implies N \cong M$. 
+    \item $M \cong M$, $f = \text{id}_{|M|}$.
+    \item Let $M_1, M_2, M_3$ be all $L$-structures. Then $f_1 : M_1 \cong M_2$ and $f_2: M_2 \cong M_3 \implies f_2 \circ f_1 : M_1 \cong M_3$. 
+\end{enumerate}
+In other words, $\cong$ is an equivalence relation on Struct$(L)$.}
+
+$M / \cong \, = \{N$ is an $L(M)$-structure $\mid N \cong M\}$.
+
+\dfn{Spectrum function of $T$}{
+Let $T$ be a first order theory $(T \subseteq \sent(L))$ of cardinality $\lambda$. Then $I(\lambda, T)$ is the number of pairwise nonisomorphic models of $T$ of cardinality $\lambda$. We have 
+\begin{align*}
+    I(\lambda, T) = \left| M / {\cong}\right|
+\end{align*}
+where $M \models T$ and $\Vert M\Vert = \lambda$.
+ }
+
+Consider $\lambda \mapsto I(\lambda, T)$, $\lambda \in \text{Card}$ (the class of cardinal numbers). But what is the shape of $\lambda \mapsto I(\lambda, T)$. Is it weakly monotone? That is, $\mu > \lambda \implies I(\mu, T) \geq I(\lambda, T)$?
+
+\thm{Morley's Conjecture ($\sim$1965)}{
+    Suppose $T$ is first order and $|L(T)| \leq \aleph_0$. Then $\mu > \lambda > \aleph_0 \implies I(\mu, T) \geq I(\lambda, T)$. 
+}
+
+The basic problem is that given $M$ and $N$ both of cardinality $\lambda$, $M \not\cong N$, find $M', N'$ both of cardinality $\mu$ such that $M' \cong N'$. In 1990, Shelah solved Morley's Conjecture. However, this is an open question for uncountable $T$. 
+
+\thm{Morley's Category Theorem}{Let $T$ be a first order theory for $|L(T)| \leq \aleph_0$. Then $\exists \lambda > \aleph_0, I(\lambda, T) = 1$ then $\forall \mu > \aleph_0$, $I(\mu, T)=1$. }
+
+Shelah listed all possible functions $\lambda \mapsto I(\lambda, T)$ and, by hand, verified that they were weakly monotone. 
+
+\ex{}{\begin{enumerate}
+    \item $I(\lambda, T) = 1$ for all $\lambda > \aleph_0$.
+    \item $I(\lambda, T) = 2^\lambda$ for all $\lambda > \aleph_0$.
+\end{enumerate}}
+
+Hart, Hrushovski, and Laskowski found all the 13 functions. 
+
+\dfn{Submodel}{Let $M, N$ be $L$-structures. $M$ is a submodel of $N$ if:
+\begin{enumerate}
+    \item $|M| \leq |N|$
+    \item $\forall a_1, \ldots, a_n \in |M|$ and $F(x_1, \ldots, x_n)$, $F^M(a_1, \ldots, a_n) = F^N(a_1, \ldots, a_n)$. 
+    \item $c^M =c^N$ for all constant symbols $c$.
+    \item $R^M = R^N \cap (|M| \times \cdots \times |M|)$. 
+\end{enumerate}}
+
+\dfn{Elementarily Equivalent}{Let $M, N$ be $L$-structure. $M$ is elementarily equivalent to $N$ denoted by $M \equiv N$ provided $M \models \varphi \iff N \models \varphi$ for any $\varphi \in \sent(L)$. }
+
+
+\dfn{}{Let $M$ be an $L$-structure. The theory of $M$ is denoted $(M) = \{ \Th(M) \varphi \in \sent(L) \mid M \models \varphi\}$.}
+
+Let $N := (\omega, +, \cdot, 0, 1)$. Then TA $= \Th(N)$ ``True Arithmetic''. For example the twin primes conjecture is $\{p \mid p$ and $p+2$ are both primes$\}$ is infinite. If it is true, then it is a member of TA. 
 
 \end{document}
