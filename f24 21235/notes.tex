@@ -266,7 +266,7 @@ Also if $\mathcal A, \mathcal B \in \FF^*$ and $\mathcal A, \mathcal B > 0$, the
 We now know that $\FF^*$ is an ordered field.
 
 
-\subsection{Robert Reci}
+\section{Robert Reci}
 
 \thm{}{$\QQ$ is the smallest ordered field.}
 \begin{proof}
@@ -324,4 +324,57 @@ Given $p, q \in \FF[x]$, say $p/q > 0$ if $p$ and $q$ have the same sign. Say $f
 \thm{}{Let $\lambda$ be an infinite cardinal. Then there is an ordered field of cardinality $\lambda$.}
 
 \cor{}{The Archimedean property is not a first-order property.}
+
+\section{Completeness}
+\mlenma{}{Suppose $\FF$ is an ordered field that is not Dedekind complete. Then $\exists$ and infinite $E \subseteq \FF$ such that:
+\begin{enumerate}
+    \item $E$ bounded above, $\emptyset \neq U(E)$ is open, $\emptyset \neq U(E)^C$ is open.
+    \item $a \in U(E)^C$, $b \in U(E) \implies a < b$.
+    \item $f: \FF \to \FF$ with $f(x) = \begin{cases} 1 & x \in U(E) \\ 0 & x \in U(E)^C \end{cases}$ is differentiable with $f' = 0$. 
+\end{enumerate}}
+
+\thm{Characteristics of Dedekind Completeness}{
+    Let $\FF$ be an ordered field. The following are equivalent:
+    \begin{enumerate}
+        \item $\FF$ is Dedekind complete.
+        \item $\FF$ has the intermediate value property: If $f: [a, b] \to \FF$ is continuous and $\min(f(a), f(b)) < c < \max(f(a), f(b))$, then $\exists x \in [a, b]$ such that $f(x) = c$.
+        \item $\FF$ satisfies the mean value property: If $f: [a, b] \to \FF$ is continuous and differentiable on $(a, b)$, then $\exists x \in (a, b)$ such that $f'(x) = \frac{f(b) - f(a)}{b-a}$.
+        \item $\FF$ satisfies Cauchy mean value property: If $f,g: [a, b] \to \FF$ are both continuous and differentiable on $(a, b)$, then $\exists x \in (a, b)$ such that $\frac{f'(x)}{g'(x)} = \frac{f(b) - f(a)}{g(b) - g(a)}$.
+        \item $\FF$ satisfies the extreme value property: If $f: [a, b] \to \FF$ is continuous, then $f$ attains a maximum and minimum on $[a, b]$.
+    \end{enumerate}
+}
+\begin{proof}
+    $1 \implies 2$: Let $f: [a, b] \to \FF$ and continuous. WLOG, assume $f(a) < c < f(b)$. Define $E = \{x \in [a,b] \mid f(x) < c\}$. $E$ is nonempty and bounded above by $b$. Let $x = \sup E$. We claim that $f(x) = c$. Since $f$ is continuous, $\exists \kappa > 0$ such that $f(t) < c \, \forall t \in [a, a + \kappa]$ and $f(t) > c \, \forall t \in [b - \kappa, b]$. So, $a + \frac \kappa 2 < x < b - \frac \kappa 2$. 
+
+    Suppose BWOC $f(x) < c$. Again by continuity, $\exists \delta > 0$ such that $f(t) < c$ for all $t \in B(x, \delta) \subseteq [a, b]$. Then $x + \frac \delta 2 \in E$, contradiction. 
+
+    Then suppose BWOC $f(x) > c$. Again, $\exists \delta > 0$ such that $f(t) > c$ for all $t \in B(x, \delta) \subseteq [a, b]$. Then $\exists z \in E$ such that $x - \frac \delta 2 < z  \leq x$ and $f(z) < c$. But then $c < f(z) < c$, contradiction. 
+
+    So $f(x) = c$ by trichotomy.
+
+    $2 \implies 1$: We'll show $\neg 1 \implies \neg 2$. Suppose $\FF$ is not Dedekind complete. Then we can let $f : \FF \to \FF$ be the strange function from the lemma, and we can pick $a < b$ with $a \in U(E)^C$ and $b \in U(E)$. Then $f$ is continuous on $[a, b]$, $f(a) - < 1 = f(b)$, but there is not $x \in [a,b]$ with $f(x) = \frac 12$, by construction.
+
+    $1 \implies 5$: First we claim that if $\FF$ is Dedekind and $f: [a, b]\to \FF$ is continuous, then $f([a, b]) \subseteq \FF$ is a bounded set. We prove the claim.
+
+    Consider $E = \{x \in [a, b] \mid f([a, x]) \text{ is bounded}\}$. $a \in E$ and $E$ is bounded, so we can let $s = \sup E$. Next note that by continuity, if $[c,d] \subseteq [a, b]$ such that $f([c, d])$ is bounded, then $\exists \delta  > 0$ such that $f([a,b] \cap [c - \delta, d + \delta])$ is bounded. Using this, deduce in turn that $a < s$, $s = \max E$, and $s = b$. 
+
+    So now suppose $\FF$ is Dedekind complete and let $f: [a,b] \to \FF$ be continuous. The claim establishes that $f([a, b]) \subseteq \FF$ is a bounded set, so we can let$
+    \begin{cases} \mu = \inf f([a, b]) \\ \lambda = \sup f([a, b]) \end{cases}$. Suppose BWOC that $f(x) < \lambda$ for all $x \in [a, b]$. Then teh function $g: [a,b] \to \FF$ defined by $g(x) = \frac{1}{\lambda - f(x)}$ is continuous and positive. So by the claim, there is $k > 0$ such that $g(x) \leq k$ for all $x \in [a, b]$. But then 
+    \begin{align*}
+        \frac{1}{\lambda - f(x)} \leq k \implies \frac 1k \leq \lambda - f(x) \implies f(x) \leq \lambda - \frac 1k,
+    \end{align*}
+    for all $x \in [a,b]$. But this contradicts the definition of $\lambda$, as we just found a better upper bound.
+
+    Therefore, there does exists $M \in [a,b]$ such that $f(M) = \lambda$, which is $\max f([a,b])$. 
+
+    The min follows from a similar argument. 
+
+    $5 \implies 4$: Let $f, g: [a,b] \to \FF$ be continuous and differentiable on $(a, b)$. Let $h:[a,b]\to \FF$ via $h(x) = f(x)(g(b) - g(a)) - g(x)(f(b) - f(a))$. It suffices to show $\exists x \in (a, b)$ such that $h'(x) = 0$.
+
+    By construction, $h(a) = h(b)$. If $h(x) = h(a)$ for all $x \in [a,b]$, then $h' = 0$ and we're done. Suppose then that $h$ is not constant. Then EVT shows that $f$ attains its maximal/minimum values, and at least one must occur at the point $x \in (a, b)$, therefore $h'(x) = 0$.
+
+    $4 \implies 3$: Let $g(x) = x$. Done.
+
+    $3 \implies 1$. We'll show $\neg 1 \implies \neg 3$. Suppose $\FF$ is not Dedekind complete. Then we can let $f: \FF \to \FF$ be the function from the lemma, and we can pick $a < b$ with $a \in U(E)^C$ and $b \in U(E)$. Then consider the restriction $f:[a,b] \to \FF$. Then $1 = 1 - 0 = f(b) - f(a)$. Then, $f'(x) (b-a) = 0 \cdot(b-a) = 0$ for all $x \in \FF$. $0 \neq 1$ so $\neg 3$ as desired.
+\end{proof}
 \end{document}
