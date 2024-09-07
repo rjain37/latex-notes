@@ -377,4 +377,75 @@ Given $p, q \in \FF[x]$, say $p/q > 0$ if $p$ and $q$ have the same sign. Say $f
 
     $3 \implies 1$. We'll show $\neg 1 \implies \neg 3$. Suppose $\FF$ is not Dedekind complete. Then we can let $f: \FF \to \FF$ be the function from the lemma, and we can pick $a < b$ with $a \in U(E)^C$ and $b \in U(E)$. Then consider the restriction $f:[a,b] \to \FF$. Then $1 = 1 - 0 = f(b) - f(a)$. Then, $f'(x) (b-a) = 0 \cdot(b-a) = 0$ for all $x \in \FF$. $0 \neq 1$ so $\neg 3$ as desired.
 \end{proof}
+
+\chapter{$\RR, \CC, \bar \RR$}
+\thm{}{$\RR$ is uncountable.}
+\begin{proof}
+    $\QQ \subseteq \RR$, so $\RR$ is definitely infinite. Suppose BWOC that there was a bijection $f: \NN \to \RR$. Set $I_0 = [f(0) + 1, f(0) + 2]$ and not that $f(0) \notin I_0$. Suppose we are given closed, nested, non-singleton intervals $I_n \subseteq I_{n-1} \subseteq \cdots \subseteq I_0$ such that $f(k) \notin I_k$ for $0 \leq k \leq n$. If $f(n+1) \notin I_n$, then set $I_{n+1} = I_n$. Otherwise, set $I_{n+1}$ to some non-singleton closed interval contained in $I_n$ such that $f(n+1) \notin I_{n+1}$.
+
+    Since $\RR$ is Dedekind complete, we have that $\bigcap_{n=0}^\infty I_n \neq \emptyset$. So, there is an $x$ such that $x \in I_n$ for all $n \in \NN$. But then $x \neq f(n)$ for all $n \in \NN$, contradiction since $f$ is a bijection.
+\end{proof}
+\nt{Upshot: Most of $\RR$ is transcendental over $\QQ$.}
+
+\section{Extended Reals: $\bar \RR$}
+\dfn{Extended Reals}{$\bar \RR = \RR \cup \{-\infty, \infty\}$. We endow $\bar \RR$ with the following order: We write $x< y$ for $x, y\in \bar \RR$ if:
+\begin{enumerate}
+    \item $x, y \in \RR$ and $x < y$.
+    \item $x = -\infty$ and $y \in \bar \RR \setminus \{-\infty\}$.
+    \item $x \in \bar\RR \setminus \{\infty\}$ and $y = \infty$.
+\end{enumerate}}
+
+\noindent Facts:
+\begin{itemize}
+    \item $(\bar \RR, <)$ is an ordered set that satisfies the supremum property.
+    \item All sets in $\bar \RR$ are bounded above.
+    \item All sets in $\bar \RR$ admit a sup/inf, i.e.
+    \begin{itemize}
+        \item $\sup: \mathcal P(\bar \RR) \to \bar \RR$.
+        \item $\inf: \mathcal P(\bar \RR) \to \bar \RR$.
+    \end{itemize}
+    Note: $\sup \emptyset = -\infty$ and $\inf \emptyset = \infty$. Also, $A \subseteq B \subseteq \bar \RR$ implies $\sup A \leq \sup B$ and $\inf A \geq \inf B$. And if $E \neq \emptyset$, then $\inf E \leq \sup E$. 
+\end{itemize}
+\nt{$\bar \RR$ isn't an OF because if it were, then it would be Dedekind complete and then there would exists an ordered field isomorphism $f: \RR \to \RR$ such that $f(x) = \infty$ for some $x \in \RR$. but then $f(x+1) = f(x) + f(1) = \infty + 1 = \infty$, which is not a true statement. }
+
+\dfn{}{We endow $\bar \RR$ with the following ``algebra.''
+\begin{enumerate}
+    \item If $x \in \RR$, we set $x + \infty = \infty + x = \infty$.
+    \item If $x \in \RR$, we set $x + (-\infty) = (-\infty) + x = -\infty$.
+    \item $\infty + \infty = \infty$.
+    \item $-\infty + (-\infty) = -\infty$.
+    \item If $0 < x \in \bar \RR$, we set $x \cdot \infty = \infty \cdot x = \infty$.
+    \item If $0 < x \in \bar \RR$, we set $x \cdot (-\infty) = (-\infty) \cdot x = -\infty$.
+    \item If $0 > x \in \bar \RR$, we set $x \cdot \infty = \infty \cdot x = -\infty$.
+    \item If $0 > x \in \bar \RR$, we set $x \cdot (-\infty) = (-\infty) \cdot x = \infty$.
+    \item If $x \in \RR$, we set $\frac{x}{\infty} = \frac{x}{-\infty} = 0$.
+    \item $\infty^{-1} = 0 = (-\infty)^{-1}$.
+    \item If $0 < x \in \bar \RR$, we set $\frac x0 = \infty$.
+    \item If $0 > x \in \bar \RR$, we set $\frac x0 = -\infty$.
+\end{enumerate}}
+\noindent Forbidden/undefined: $\infty + (-\infty)$, $\infty \cdot 0$, $\frac 00$, $\frac{\pm \infty}{\pm \infty}$, $\frac{\pm \infty}{\mp \infty}$.
+
+\subsection{Sequences in $\bar \RR$}
+\dfn{Sequence}{A sequence in $\bar \RR$ is $\{x_n \}^\infty_{n = \ell} \subseteq \bar \RR$ for $\ell \in \ZZ$.}
+
+\noindent In turn, we define new sequences $\{a_N\}^\infty_{N = \ell}, \{b_N\}^\infty_{N = \ell}  \subseteq \bar \RR$:
+\begin{itemize}
+    \item $a_N = \inf \{x_n \mid n \geq N\}$.
+    \item $b_N = \sup \{x_n \mid n \geq N\}$.
+\end{itemize}
+We then set $\liminf_{n \to \infty} x_n = \sup_{N \geq \ell} \inf_{n \geq N} x_n = \sup_{N \geq \ell} a_N$ and $\limsup_{n \to \infty} x_n = \inf_{N \geq \ell} \sup_{n \geq N} x_n = \inf_{N \geq \ell} b_N$.
+
+
+\ex{}{Let $x_n = \begin{cases} (-1)^n & n \equiv 0 \mod 2 \\ n & n \equiv 1 \mod 2\end{cases}$. Then, $\limsup_{n \to \infty} x_n = \infty$ and $\liminf_{n \to \infty} x_n = 1$.}
+
+\mprop{}{Let $\{x_n\}_{n = \ell}^\infty \subseteq \bar \RR$. Then $\liminf_{n \to \infty} x_n \leq \limsup_{n \to \infty} x_n$.}
+\begin{proof}
+    Let $M,N \geq \ell$ and $K = \max(M,N)$. Then, $\inf_{n > N} x_n \leq \inf_{n > K} x_n \leq \sup_{n \geq K} x_n \leq \sup_{n \geq M} x_n$.
+
+    Thus, $\liminf_{n \to \infty} x_n  = \sup_{N \geq \ell} \inf_{n \geq N} x_n \leq \sup_{n \geq M} x_n$ for all $M \geq \ell$. So, $\liminf_{n \to \infty} x_n \leq \limsup_{n \to \infty} x_n$.
+\end{proof}
+
+
+
+
 \end{document}
