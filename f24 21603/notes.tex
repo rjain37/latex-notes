@@ -242,4 +242,70 @@ Hart, Hrushovski, and Laskowski found all the 13 functions.
 
 Let $N := (\omega, +, \cdot, 0, 1)$. Then TA $= \Th(N)$ ``True Arithmetic''. For example the twin primes conjecture is $\{p \mid p$ and $p+2$ are both primes$\}$ is infinite. If it is true, then it is a member of TA. 
 
+
+\thm{}{Let $M,N$ be $L$-stuructres. If $M \cong N$, then $M \equiv N$.}
+
+
+\thm{}{Let $M, N$ be $L$-structures. Suppose $f: M \cong N$. Then for any $\bar a \in |M|$ and any $\varphi(\bar x) \in \fml(L)$ with $\ell(\bar x) = \ell (\bar a)$, $M \models \varphi[\bar a] \iff N \models \varphi[f(\bar a)]$.}
+
+\begin{proof}
+    Suppose $\varphi(\bar x)$ is atomic. 
+
+    \mlenma{}{Suppose $f: M\cong N$ and $\tau(\bar x)$ sequence of terms. $\bar a \in |M|$, $\ell(\bar x) = \ell(\bar a)$. Then $f(\tau(\bar a)) = \tau(f(\bar a))$.}
+    \begin{proof}
+        By induction on the length of $\tau$. 
+
+        Case 1: $\tau(\bar x)$ is $x$. Then $f(\tau(\bar a)) = f(a) = \tau(f(\bar a))$.
+
+        Case 2: $\tau(\bar x) = c$. then $f(c^M) = c^N$ by definition of isomorphism. 
+
+        Case 3: $\tau(\bar x) = G(y_1, \ldots, y_n)$ function symbol. Then $\tau_1(\bar x), \ldots, \tau_n(\bar x)$ are terms. By induction, $f(\tau(\bar a)) = f(G^M(\tau_1(\bar a), \ldots, \tau_n(\bar a))) = G^N(f(\tau_1(\bar a)), \ldots, f(\tau_n(\bar a))) = \tau^N(f(\bar a))$.
+    \end{proof}
+    Now returning to the proof:
+
+    Case 1: $\varphi(\bar x)$ is $\tau_1(\bar x) = \tau_2(\bar x)$. Then, we have $M \models \varphi(\bar a) \iff \tau_1(\bar a) = \tau_2(\bar a) \iff f(\tau_1(\bar a)) = f(\tau_2(\bar a)) \iff \tau_1^N(f(\bar a)) = \tau_2^N(f(\bar a)) \iff N \models \varphi(f(\bar a))$.
+
+    Case 2: $\varphi(\bar x)$ is $R(\tau_1(\bar x), \ldots, \tau_n(\bar x))$. When $R(y_1, \ldots, y_n)$ is a relation symbol and $\tau_i (\bar x)$ are terms. Then $M \models \varphi(\bar a) \iff (\tau_1(\bar a), \ldots, \tau_n(\bar a)) \in R^M \iff (f(\tau_1(\bar a)), \ldots, f(\tau_n(\bar a))) \in R^N \iff (\tau_1(f(\bar a)), \ldots, \tau_n(f(\bar a))) \iff N \models \varphi(f(\bar a))$.
+
+    Suppose $\varphi$ is $\lnot \psi$. Then $M \models \varphi(\bar a) \iff M \not\models \psi(\bar a) \iff N \not\models \psi(f(\bar a)) \iff N \models \varphi(f(\bar a))$.
+
+    Suppose $\varphi$ is $\psi_1 \land \psi_2$. Then $M \models \varphi(\bar a) \iff M \models \psi_1(\bar a)$ and $M \models \psi_2(\bar a) \iff N \models \psi_1(f(\bar a))$ and $N \models \psi_2(f(\bar a)) \iff N \models \varphi(f(\bar a))$.
+
+    Suppose $\varphi(\bar x)$ is $\exists y \psi(y, \bar x)$. Then $M \models \varphi(\bar a) \iff $ there is $b \in |M|$ such that $M \models \psi(b, \bar a) \iff$ there is $c \in |N|$ such that $N \models \psi(c, f(\bar a)) \iff N \models \exists \psi(y, f(\bar a)) \iff N \models \varphi(f(\bar a))$. 
+\end{proof}
+\noindent General Remark:
+\begin{align*}
+    M \models  \exists y \varphi(y, \bar a) \iff M \models \neg \forall y \neg \varphi(y, \bar a) \\
+    M \models \neg \exists y \varphi(y, \bar x) \iff \forall y \neg \varphi(y, \bar a).
+\end{align*}
+
+\ex{}{$L_{gr} = \{\cdot, 1\}$. $(\QQ, +, 0), (\RR, +, 0)$ are not isomorphic because diff cardinality. $(\QQ, + , 0), (\ZZ, +, 0)$ are not isomorphic because:
+\begin{align*}
+    (\QQ, + , 0) \models \forall x \exists y (x = y + y).
+\end{align*}
+This sentence is not true for $\ZZ$ under addition. }
+
+$N = (\omega, +, \cdot, 0, 1)$ is called the standard model of arithmetic. $\text{TA} = \Th(N)$, true arithmetic. 
+
+\qs{}{Given $M_1, M_2 \models \text{TA}$ both countable. Are they isomorphic?}
+\qs{}{What is $I(\aleph_0, \text{TA})$? Voted on $2^{\aleph_0}$.... and it is.}
+
+Let $T$ be a theory and $\varphi \in \sent(L)$. We say $T$ proves $\varphi$ (denoted $T \vdash \varphi$) if there exists a finite set of sequences from $L$, $\varphi_1, \varphi_2, \ldots, \varphi_n$ such that $\varphi_n = \varphi$ and for all $i$, $\varphi_i \in T$ or $\varphi_i$ is a tautology or there are $j, k < i$ where $\varphi_j = (\varphi_k \implies \varphi_i)$.
+
+\begin{enumerate}
+    \item $Q \to P$: the rule of inference. ``modus ponens''.
+    \item 
+\end{enumerate}
+Other rules (possible members of $\varphi$):
+\begin{itemize}
+    \item $x = y$, $y  = z$ then $x = z$.
+    \item If $\varphi_i = \forall x \varphi(x)$, then also $\forall y \varphi(y)$ in the sequence. 
+    \item If $\forall x \varphi (x)$ also $\varphi(\tau(\bar c))$. 
+\end{itemize}
+
+\dfn{}{A set of sentences is a consistent theory if there is no $\varphi$ such that $\varphi$ and $\neg \varphi$ are both in the theory. $T$ is inconsistent if it is not consistent.}
+
+
+
+
 \end{document}
