@@ -446,6 +446,97 @@ We then set $\liminf_{n \to \infty} x_n = \sup_{N \geq \ell} \inf_{n \geq N} x_n
 \end{proof}
 
 
+\mprop{}{Let $a_n, b_n \in \bar \RR$ and suppose $\exists K \geq \ell$ such that $a_n \leq b_n$ for all $n \geq K$. Then, $\liminf_{n \to \infty} a_n \leq \liminf_{n\to \infty} b_n$ and $\limsup_{n \to \infty} a_n \leq \limsup_{n \to \infty} b_n$.}
+\begin{proof}
+    We can claim that if $k \geq K$, then 
+    \begin{align*}
+        \inf \{ a_n \mid n \geq k\} \leq \inf \{ b_n \mid n \geq k\} \\ 
+        \sup \{ b_n \mid n \geq k\} \leq \sup \{ a_n \mid n \geq k\}.
+    \end{align*}
+    Indeed, if $\exists k \geq K$ such that $\inf \{ a_n \mid n \geq k\} > \inf \{ b_n \mid n \geq k\}$, then $\exists m \geq k$ such that $b_m < \inf\{a_n \mid n \geq k\} \leq a_m \leq b_m$, contradiction. Ditto for $\sup$. 
+
+    Now define for $N \geq \ell$, $C_N = \inf_{n \geq N} a_n$, $D_N = \inf_{n \geq N} b_N$, $E_N = \sup_{n \geq N} a_n$, and $F_N = \sup_{n \geq N} b_n$. 
+
+    The above claims show that $N \geq K$ then $C_N \leq D_N$ and $E_N \leq F_N$. Then we iterate to learn:
+    \begin{align*}
+        \liminf_{n \to \infty} a_n = \sup_{N \geq \ell} C_N \leq \sup_{N \geq \ell} D_N = \liminf_{n \to \infty} b_n \\
+        \limsup_{n \to \infty} a_n = \inf_{N \geq \ell} E_N \leq \inf_{N \geq \ell} F_N = \limsup_{n \to \infty} b_n.
+    \end{align*}
+\end{proof}
+
+\thm{}{Suppose $a_n, b_n \in \bar \RR$. The following hold:
+\begin{enumerate}
+    \item If $\limsup_{n \to \infty} a_n < x \in \bar \RR$, then $\exists N \geq \ell$ such that $a_n < x$ for all $n \geq N$.
+    \item If $\liminf_{n \to \infty} a_n > x \in \bar \RR$, then $\exists N \geq \ell$ such that $a_n > x$ for all $n \geq N$.
+    \item $\liminf_{n \to \infty} a_n = - \limsup_{n \to \infty} -a_n$.
+    \item $\limsup_{n \to \infty} a_n = - \liminf_{n \to \infty} -a_n$.
+    \item $\limsup_{n \to \infty} a_n + b_n \leq \limsup_{n \to \infty} a_n + \limsup_{n \to \infty} b_n$, provided that all arithmetic operations are well-defined. 
+    \item $\liminf_{n \to \infty} a_n + \liminf_{n \to \infty} b_n \leq \liminf_{n \to \infty} a_n + b_n$, provided that all arithmetic operations are well-defined.
+\end{enumerate}}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Suppose $\limsup_{n\to\infty}a_n = \inf_{N \geq \ell} \sup_{n\geq N} a_n < x$. This implies that $\exists N \geq \ell$ such that $\sup_{n \geq N} a_n < x$, meaning $a_n < x$ for all $n \geq N$.
+        \item Similar as above.
+        \item For any $\emptyset \neq X \subseteq \FF$, we have that $-\sup(-X) = \inf X$ and $-\inf(-X) = \sup X$. So the result follows.
+        \item Same as above. 
+        \item We break into cases:
+        \begin{enumerate}
+            \item $\limsup a_n = \infty$ or $\limsup b_n = \infty$. Then $\limsup a_n + b_n = \infty  \geq \limsup a_n + \limsup b_n$.
+            \item Suppose either $\limsup a_n = -\infty$ or $\limsup b_n = -\infty$. WLOG consider the first option. Since $\limsup b_n < \infty$, then there eixsts $N_1 \geq \ell$ and $K \geq \RR$ such that $b_n < K$ for $n \geq N_1$. Now let $m \in \NN$ and note that $-\infty < -m - K$. We can use the first result of the theorem to pick $N_2 \geq \ell$ such that $n \geq N_2 \implies a_n < -m -K$. Then, if $n \geq \max(N_1, N_2)$, we have $a_n + b_n < -m$, so $\limsup a_n + b_n = -\infty \leq \limsup a_n + \limsup b_n$.
+            \item $\limsup a_n, \limsup b_n \in \RR$. Let $\epsilon > 0$, then $\exists N_1, N_2 \geq \ell$ such that $n \geq N_1 \implies a_n < \limsup a_n + \frac{\epsilon}{2}$ and $n \geq N_2 \implies b_n < \limsup b_n + \frac{\epsilon}{2}$. Then, $n \geq \max(N_1, N_2) \implies a_n + b_n < \limsup a_n + \limsup b_n + \epsilon$, so $\limsup a_n + b_n \leq \limsup a_n + \limsup b_n + \epsilon$ for all $\epsilon$.
+        \end{enumerate}
+        \item Same as above.
+    \end{enumerate}
+\end{proof}
 
 
+\mlenma{}{Let $x_n \subseteq\RR$. The following are equivalent for $x \in \RR$:
+\begin{enumerate}
+    \item $x_n \to x$ as $n \to \infty$.
+    \item $\liminf_{n \to \infty} x_n = \limsup_{n \to \infty} x_n = x$.
+\end{enumerate}}
+\begin{proof}
+    Let $\epsilon > 0$. Then $\exists N \geq \ell$ such that $n \geq N \implies x - \epsilon < x_n < x + \epsilon$. Thus, $x - \epsilon \leq \liminf_{n \to \infty} x_n \leq \limsup_{n \to \infty} x_n \leq x + \epsilon$ for all $\epsilon > 0$. This implies that $\liminf_{n \to \infty} x_n = \limsup_{n \to \infty} x_n = x$.
+
+    Now let $\epsilon > 0$. Then by the previous theorem, there exists $N_1 , N_2 \geq \ell$ such that $\begin{cases}
+        x - \epsilon < x_n & n \geq N_1 \\
+        x_n < x + \epsilon & n \geq N_2
+    \end{cases}$. Thus, $n \geq \max(N_1, N_2) \implies x - \epsilon < x_n < x + \epsilon$, so $x_n \to x$ as $n \to \infty$.
+\end{proof}
+
+\dfn{}{Let $x_n \in \bar \RR$ and $x \in \bar \RR$. We say that $x_n \to x$ as $n \to \infty$ if $\liminf_{n \to \infty} x_n = \limsup_{n \to \infty} x$.}
+\noindent Remarks:
+\begin{enumerate}
+    \item The lemma shows this extends the notion of convergence in $\RR$.
+    \item Limits are unique, when they exist.
+\end{enumerate}
+
+\ex{}{
+    \begin{enumerate}
+        \item $\lim_{n \to \infty} n = \infty$ ($n \to \infty$ as $n \to \infty$).
+        \item Version of squeeze lemma
+        \item TFAE:
+        \begin{itemize}
+            \item $x_n \to \infty$ as $n \to \infty$. 
+            \item $\liminf_{n \to \infty} x_n = \infty$.
+            \item $\forall M \in \NN$, there exists $N \geq \ell$ such that $n \geq N \implies M \leq x_N$.
+        \end{itemize}
+    \end{enumerate}
+}
+
+\chapter{Metric Spaces}
+\dfn{Metric}{Let $X$ be a nonempty set. A metric on $X$ is a function $d: X \times X \to \RR$ such that:
+\begin{enumerate}
+    \item $d(x,y) \geq 0$ for all $x,y \in X$, and $d(x,y) = 0 \iff x = y$.
+    \item $d(x,y) = d(y,x)$ for all $x,y \in X$.
+    \item $d(x,y) \leq d(x,z) + d(z,y)$ for all $x,y,z \in X$.
+\end{enumerate}}
+\dfn{}{A metric space is $(X, d)$ for $X \neq \emptyset$ and $d$ a metric on $X$.}
+
+\ex{}{\begin{enumerate}
+    \item $\RR$ with $d(x, y) = |x - y|$.
+    \item $\CC$ with $d(x, y) = |x - y|$.
+    \item Let $X \neq \emptyset$ be any set. Then $d: X \times X \to \{0, 1\}$ defined by $d(x, y) = \begin{cases} 0 & x = y \\ 1 & x \neq y \end{cases}$ is a metric on $X$.
+\end{enumerate}}
 \end{document}

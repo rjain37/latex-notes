@@ -306,6 +306,17 @@ Other rules (possible members of $\varphi$):
 \dfn{}{A set of sentences is a consistent theory if there is no $\varphi$ such that $\varphi$ and $\neg \varphi$ are both in the theory. $T$ is inconsistent if it is not consistent.}
 
 
+\thm{Godel's Completeness Theorem}{Let $T$ be some set of sentences in $L$. Then $T$ is consistent iff $T$ has a model.}
+Godel only proved it for when $|L| \leq \aleph_0$.
+
+\thm{Compactness Theorem}{Let $T \subseteq \sent(L)$. If for any finite $T_0 \subseteq T$, $T_0$ has a model, then $T$ has a model.}
+\begin{proof}
+    Enough to show by completeness that is consistent. If $T$ inconsistent, $T \vdash \varphi$ and $T \vdash \neg \varphi$, there are $T_1, T_2 \subset T$ finite such that $T_1 \vdash \varphi$ and $T_2 \vdash \neg \varphi$. Then $T_1 \cup T_2 \vdash \varphi \land \neg \varphi$. By assumption on $T$, $\exists M_0 \models T_1 \cup T_2$. Then $M_0 \models \varphi \land \neg \varphi$ which is a contradiction.
+\end{proof}
+ZF cannot prove the compactness theorem.
+
+
+
 
 
 \end{document}
