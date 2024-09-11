@@ -274,69 +274,6 @@ And this pattern continues.
 \end{itemize}
 
 
-% \begin{tikzpicture}[level distance=1.5cm,
-%     level 1/.style={sibling distance=3cm},
-%     level 2/.style={sibling distance=2.5cm},
-%     level 3/.style={sibling distance=1.5cm}]
-    
-%     \node {Start ($n$ nodes)}
-%       child {node {Karger's ($n/2$)}
-%         child {node {ßKarger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%       }
-%       child {node {Karger's ($n/2$)}
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%       }
-%       child {node {Karger's ($n/2$)}
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%       }
-%       child {node {Karger's ($n/2$)}
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%         child {node {Karger's ($n/4$)}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%           child {node {Base case: 2 nodes}}
-%         }
-%       };
-% \end{tikzpicture}
 \begin{center}
 \begin{tikzpicture}[
     level distance=1.5cm,
@@ -421,5 +358,100 @@ Now we consider the probability that our algorithm succeeds. Again, we have a $4
 The goal is an algorithm that succeeds with probability greater than $1 - \frac{1}{n^2}$. 
 
 \textbf{Exercise:} $O(\log^2 n)$ repetitions suffice.
+
+\section{Galton Walton Tree}
+Building on the previous problem, we introduce the concept of a Galton Walton tree. This is a $4$-ary tree with $t$ levels where each edge flips a biased coin. The probability of heads is $1/4$. A root-to-leaf path in this tree is ``successful'' if all edges are heads.
+
+\textbf{Claim:} $P(\text{successful path}) \geq \frac{1}{t}$.
+\begin{proof}
+    Pretend the paths are independent. Then we have that
+    \begin{align*}
+        P(\text{No successful path}) = \left(1 - \frac{1}{4^t}\right)^{4^t} \leq \frac{1}{e}.
+    \end{align*}
+
+    This is not a very interesting result. It is worth noting that the paths are extremely dependent on each other. Consider a path of length $t-2$ and creating two separate paths by diverging at the last edge. This should illustrate the dependence of the paths.
+
+    Now let $f_t$ the probability of tailing in a tree with $t$ levels. We can define this as a recurrence on $f_{t-1}$. We have:
+    \begin{align*}
+        f_t = \left(\frac{1}{4} f_{t-1} + \frac{3}{4}\right)^4.
+    \end{align*}
+
+    To proceed with induction on $t$, we first prove the following identity:
+    \begin{align*}
+        1 - 1/k < \frac{1}{e^{1/k}} < 1 - 1/(k+1).
+    \end{align*}
+    This is a useful identity to have in our back pocket. We have:
+    \begin{align*}
+        (1 - 1/k)^k &< 1/e < (1 - 1/k)^{k-1} \\
+        \implies 1 - 1/k &< 1/e^{1/k} \\ 1/e^{1/(k-1)} &< 1 - 1/k \implies 1/e^{1/k} < 1 - 1/(k+1).
+    \end{align*}
+    Putting it all together, we get the desired result. We can now proceed with induction.
+
+    Our hypothesis: $f_{t-1} \leq 1 - \frac{1}{t-1}$. What we want to show is that $f_t \leq 1 - \frac 1t$. 
+
+    We have:
+    \begin{align*}
+        f_t &\leq \left( \frac 34 + \frac 14 \left( 1 - \frac{1}{t-1} \right)\right)^4 \\
+        &= \left(1 - \frac{1}{4(t-1)}\right)^4 \\
+        &\leq \left(\frac{1}{e^{\frac{1}{4(t-1)}}}\right)^4 \\
+        &= \frac{1}{e^{1/(t-1)}} \tag{by the above identity}\\
+        &< 1 - \frac{1}{t}. \tag{by the above identity}
+    \end{align*}
+    This completes the induction, as well as the entire proof.
+\end{proof}
+
+
+\chapter{Lovasz Local Lemma}{}
+\mlenma{Lovasz Local Lemma}{Let $A_1, A_2, \ldots, A_n$ be ``bad events.'' Suppose:
+\begin{itemize}
+    \item $P(A_i) < p$ for some $p$.
+    \item Each $A_i$  has a ``dependency set'' $D_i \subseteq \{A_1, A_2, \ldots, A_n\}$ such that $A_i$ is independent of $\{A_1, A_2, \ldots, A_n\} \setminus D_i$ and $|D_i| \leq d$. 
+\end{itemize}
+If $p < \frac{1}{ed}$, then there exists an outcome where none of the $A_i$ occur. That is, $P(\text{no bad events}) \geq \frac{1}{d^n}$.}
+\noindent \textbf{Application:} KSAT. In KSAT, we have a bunch of boolean variables $x_1, x_2, \ldots$. A K-SAT formula is a conjunction of $n$ clauses, where each clause selects $k$ unique variables that cannot take a specific form. For example, if we have $k=3$, we might have a clause that says $(x_1, x_2, x_3) \neq (0, 1, 0)$. The question is whether we can find a satisfying assignment of these variables. 
+
+\thm{}{Suppose each clause overlaps in variables $\leq d-1$ other clauses. Also suppose $\frac{1}{2^k} < \frac{1}{ed}$. Then, there exists a satisfying assignment.}
+\begin{proof}
+    $x_1, x_2, \ldots$ are random $0, 1$ variables. Let $A_i$ be the event that clause $i$ is not satisfied. Then $P(A_i) \leq \frac{1}{2^k}$. By the LLL, there exists a satisfying assignment.
+\end{proof}
+
+\section{Algorithmic Lovasz Local Lemma}
+\subsection{Algorithmic Setting}
+We have random variables $X_1, X_2, \ldots, X_n$ and events $A_i$ that are determined by some subset of the $X_i$s. We can think about this as a dependency graph where all the $X_i$ and $A_i$ are nodes, and edges are drawn between $X_i$ and $A_j$ if $X_i$ determines $A_j$.
+
+\mlenma{Algorithmic Lovasz Local Lemma}{Suppose each $A_i$ overlaps with at most $d-1$ other $A_j$s on which $X_i$s they use. Suppose $P(A_i) < \frac{1}{4d}$. Then there exists a polynomial time algorithm$^*$ that finds an outcome of $X_i$s such that none of the $A_i$s occur.}
+
+\newpage
+\subsection{Moser's Fix-it Algorithm}
+% "i was going to present the proof from the paper, but a few days ago i came up with a much better proof". allegedly was a great proof solving a 30 year old open problem and slams it in 30 minutes. two weeks later, moser leaves academia and works in finance
+
+\textbf{Algorithm:}
+\begin{itemize}
+    \item Sample $X_1, X_2, \ldots, X_n$.
+    \item While $\exists$ bad event $A_i$:
+    \begin{itemize}
+        \item Pick $A_i$ arbitrarily.
+        \item Resample the $X_i$'s that determine $A_i$.
+    \end{itemize}
+\end{itemize}
+
+\thm{Moser's Theorem}{The expected number of fix-its is at most $O\left(\frac nd\right)$. }
+\noindent \textbf{Proof Idea:}
+Use random bits, for example $0010010100101\ldots$. Construct a ``transcript'' $T$ such that if you tell me $T$, I can recover all the random bits you used. The interesting property of $T$ is that:
+\begin{align*}
+    |T| \leq (\text{number of fix-its}) \cdot (2 \lg d) + O(n).
+\end{align*}
+The number of random bits we use is less than the number of fix-its times $k$. We know that $k > (2 + \lg d) \cdot 100$. 
+
+If Moser's algorithm runs for a long time, say $> 100n$ fix-its, then
+\begin{align*}
+    |T| \leq 100n \cdot (2 \lg d) + O(n).
+\end{align*}
+Then,
+\begin{align*}
+    \text{number of random bits} &= 100n \cdot k \\
+    &> 100n \cdot (2 + \lg d) \cdot 100.
+\end{align*}
+This means $|T| << \text{number of random bits}$. So if we can show that such a $T$ exists, then we can show that the expected number of fix-its to be pretty small.
 
 \end{document}
