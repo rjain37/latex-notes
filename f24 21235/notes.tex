@@ -537,6 +537,70 @@ We then set $\liminf_{n \to \infty} x_n = \sup_{N \geq \ell} \inf_{n \geq N} x_n
 \ex{}{\begin{enumerate}
     \item $\RR$ with $d(x, y) = |x - y|$.
     \item $\CC$ with $d(x, y) = |x - y|$.
-    \item Let $X \neq \emptyset$ be any set. Then $d: X \times X \to \{0, 1\}$ defined by $d(x, y) = \begin{cases} 0 & x = y \\ 1 & x \neq y \end{cases}$ is a metric on $X$.
+    \item (Discrete Metric) Let $X \neq \emptyset$ be any set. Then $d: X \times X \to \{0, 1\}$ defined by $d(x, y) = \begin{cases} 0 & x = y \\ 1 & x \neq y \end{cases}$ is a metric on $X$.
+    \item Let $V$ be a normed metric space with norm $\Vert \cdot \Vert$. Then $d(x, y) = \Vert x - y \Vert$ is a metric on $V$.
+    \item Suppose $(Y, d)$ is a metric space and suppose $f: X \to Y$ is an injection where $X \neq \emptyset$ is a set. Then $\sigma: X \times X \to \RR$ defined by $\sigma(x, y) = d(f(x), f(y))$ is a metric on $X$.
+    \begin{proof}
+        We need to show that $\sigma$ satisfies the three properties of a metric. 
+        \begin{enumerate}
+            \item $\sigma(x, y) \geq 0$ because $d \geq 0$ and $\sigma(x, y) = 0 \iff d(f(x), f(y)) = 0 \iff f(x) = f(y) \iff x = y$.
+            \item The other two are very trivial.
+        \end{enumerate}
+    \end{proof}
+    \item Let $Y$ be a metric space and $\emptyset \neq X \subseteq Y$. Then $d: X \times X \to \RR$ defined by $d(x, y) = d_Y(x, y)$ is a metric on $X$.
+    \item Consider $f:(0, \infty) \to \RR$ and $g: (0, \infty) \to \RR$ with $f(x) = \log x$ and $g(x) = \frac 1x$. Then $d_f(x, y) = \left| \log \frac xy \right|$ and $d_g(x, y) = \left| \frac 1x - \frac 1y \right| = \frac{|x - y|}{|x||y|}$ are metrics on $(0, \infty)$.
+    \item Let $V,W$ be finite dimensional vector spaces over $\FF \in \{ \RR, \CC\}$. Let $L(V, W) = \{T: V \to W: T \text{ linear}\}$. Then define $\text{rk}(T) = \dim \ran T$ for $T \in L(V, W)$. Note that $\ran (T + S) = \{Tx + Sx \mid  x \in \FF\} \subseteq \{Tx + Sy \mid x, y \in \FF\} = \ran T + \ran S$. Then, $\text{rk}(T + S) \leq \text{rk}(T) + \text{rk}(S)$.
+    
+    Define $d(T, S)  = \text{rk}(T-S) \in \NN \subseteq [0, \infty]$. 
+    \begin{itemize}
+        \item $d(T, S) = 0 \iff \text{rk}(T-S) = 0 \iff T -S = 0$.
+        \item Has symmetry.
+        \item Triangle inequality: $d(T-S) = \text{rk}(T - R + R - S) \leq \text{rk}(T - R) + \text{rk}(R - S) = d(T, R) + d(R, S)$.
+    \end{itemize}
+    \item Let $f: \bar RR \to [-1, 1]$ via $f(x) = \begin{cases} 1 & x = \infty \\ -1 & x = -\infty \\ \frac{x}{\sqrt{1 + x^2}} & x \in \RR \end{cases}$. Then $d(x, y) = |f(x) - f(y)|$ is a metric on $\bar \RR$.
 \end{enumerate}}
+
+\dfn{}{Let $X$ be a metric space.
+\begin{enumerate}
+    \item For $x \in X$ and $r \geq 0$, we define $B(x, r) = \{y \in X \mid d(x, y) < r \}$. And $B[x, r] = \{y \in X \mid d(x, y) \leq r \}$.
+    \item A set $E \subseteq XX$ is bounded if $\exists (R \geq 0)$ such that $E \subseteq B(x, R)$ for some $x \in X$.
+    \item Let $Y$ be any set and $f:  Y \to X$. We say $f$ is a bounded function if $f(Y) \subseteq X$ is bounded. We write $\mathcal B(Y; X) = \{g : Y \to X \mid g \text{ is bounded}\}$.
+\end{enumerate}
+
+}
+
+\ex{}{
+    \begin{enumerate}
+        \item $f : \RR \to \CC$ via $f(t) = e^{it} \implies f(t) = 1 \implies f(\RR) \subseteq B[0, 1]$ is bounded. So, $f \in \mathcal B(\RR; \CC)$.
+        \item $f:(0, \infty) \to \RR$ via $f(t) = \frac{\log t}{\sqrt{1 + (\log t)^2}}$. So, $f \in \mathcal B((0, \infty); \RR)$.
+        \item Let $X$ be a metric space and $Y$ a nonempty set. Consider $\mathcal B(X ; Y)$. If $f \in \mathcal B(X; Y)$, then $\exists y \in Y$ and $R \geq 0$ such that $d(f(x), y) \leq R$ for all $x$. Thus, $\sup_{x \in X} d(f(x), y) := \sup \{d(f(x), y) \mid x \in X\} \in [0, R]$.
+        
+        Similarly, if $f, g \in \mathcal B(X; Y)$, then exists $R \geq 0$ and $y_1, y_2 \in Y$ such that $d(f(x), y_1) \leq R$ and $d(g(x), y_2) \leq R$ for all $x \in X$. Then, $d(f(x), g(x)) \leq d(f(x), y_1) + d(y_1, y_2) + d(y_2, g(x)) \leq 2R + d(y_1, y_2) < \infty$ for all $x \in X$. So, $\sup_{x \in X} d(f(x), g(x)) < \infty$. We now define
+        \begin{align*}
+            d: \mathcal B(X; Y) \times \mathcal B(X; Y) &\to [0, \infty) \\
+            (f, g) &\mapsto \sup_{x \in X} d(f(x), g(x)).
+        \end{align*}
+        \begin{proof}
+            Consider the properties of a metric:
+            \begin{itemize}
+                \item $d(f, g) = 0 \iff \sup_{x \in X} d(f(x), g(x)) = 0 \iff d(f(x), g(x)) = 0 \iff f(x) = g(x)$ for all $x \in X \iff f = g$.
+                \item Symmetry is trivial.
+                \item Let $f, g, h\in \mathcal B(X; Y)$. Then, $d(f, h) = \sup_{x \in X} d(f(x), h(x)) \leq \sup_{x \in X} d(f(x), g(x)) + d(g(x), h(x)) \leq d(f, g) + d(g, h)$.
+            \end{itemize}
+        \end{proof}
+    \end{enumerate}
+}
+
+
+\dfn{}{Let $X$ and $Y$ be metric spaces:
+\begin{enumerate}
+    \item A map $f : X \to Y$ is an isometric embedding if $d_Y(f(x), f(y)) = d_X(x, y)$ for all $x, y \in X$. Note, such an $f$ is injective.
+    \item $f$ is an isometry if it's an isometric embedding and surjective.
+    \item $X$ and $Y$ are isometric if there exists an isometry $f: X \to Y$.
+\end{enumerate}}
+
+
+
+
+
 \end{document}
