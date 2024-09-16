@@ -171,7 +171,7 @@ Now we prove the claim made in option 2.
 \section{Global Min-Cut}
 We start by stating the question we are trying to solve.
 \qs{Global Min-Cut Problem}{
-    We are given a unweighted and undirected graph $G = (V, E)$. A ``cut'' of the graph is a partition of the vertices into two sets such that each set is non-empty. The ``cost'' of the cut (also called the cut ``size'') is the number of edges that have one endpoint in each set. The goal is to find the cut with the smallest cost.
+    We are given an unweighted and undirected graph $G = (V, E)$. A ``cut'' of the graph is a partition of the vertices into two sets such that each set is non-empty. The ``cost'' of the cut (also called the cut ``size'') is the number of edges that have one endpoint in each set. The goal is to find the cut with the smallest cost.
 }
 
 \noindent Let $n:= |V|$. We consider two randomized algorithms:
@@ -208,22 +208,22 @@ The key idea in both algorithms is edge contraction. Given an edge $(u, v)$, we 
 
 \noindent \textbf{Answer:} No. Delete them.
 
-\noindent The observation we make is that we win iff edges at the end are min-cut.
+\noindent The observation we make is that we win iff edges at the end are a min-cut.
 
 \subsection{Karger's Algorithm}
 \noindent The algorithm is as follows:
 \begin{itemize}
     \item Randomly pick an edge $(u, v)$.
     \item Contract $(u, v)$.
-    \item Repeat until 2 vertices left.
+    \item Repeat until 2 vertices are left.
 \end{itemize}
-\mlenma{}{For any min-cut C, the probability that Karger's algorithm finds C is $\geq \frac{1}{\poly(n)}$.}
+\mlenma{}{For any min-cut C, the probability that Karger's algorithm finds C is $\geq \frac{1}{\text{poly}(n)}$.}
 \begin{proof}
     Let $e_1, e_2, \ldots$ be the edges we contract. Let's start by considering $P(e_1 \in C)$.
 
     We first have $P(e_1 \in C) = \frac{|C|}{|E|}$, but there's something better to notice. Let $d$ be the minimum degree of any vertex in $G$. Then $|C| \leq d$ and $|E| \geq \frac{dn}{2}$. So $P(e_1 \in C) \leq \frac{2}{n}$ and $P(e_1 \notin C) \geq 1 - \frac{2}{n}$.
 
-    Now consider $P(e_2 \notin C \mid e_1 \notin C)$. By the same analysise, we have $P(e_2 \notin C \mid e_1 \notin C) \geq 1- \frac{2}{n-1}$. This is because after we contract $e_1$, we have $n-1$ vertices left. So, $C$ is still a min-cut with respect to the remaining vertices. Set $d$ as the new minimum degree, and we have $|C| \leq d$ and $|\text{remaining edges}| \geq \frac{d(n-1)}{2}$. Then:
+    Now consider $P(e_2 \notin C \mid e_1 \notin C)$. By the same analysis, we have $P(e_2 \notin C \mid e_1 \notin C) \geq 1- \frac{2}{n-1}$. This is because after we contract $e_1$, we have $n-1$ vertices left. So, $C$ is still a min-cut with respect to the remaining vertices. Set $d$ as the new minimum degree, and we have $|C| \leq d$ and $|\text{remaining edges}| \geq \frac{d(n-1)}{2}$. Then:
     \begin{align*}
         P(e_2 \in C \mid e_1 \notin C) = \frac{|C|}{|\text{remaining edges}|} \leq \frac{d}{\frac{d(n-1)}{2}} = \frac{2}{n-1}.
     \end{align*}
@@ -243,7 +243,7 @@ The key idea in both algorithms is edge contraction. Given an edge $(u, v)$, we 
 
 \noindent \textbf{New Goal:} Find min-cut with $\geq 1 - \frac{1}{n^2}$ probability. 
 
-\noindent \textbf{Idea:} Repeat $t$ times and return best cut we find. (We will determine the value for $t$ below.)
+\noindent \textbf{Idea:} Repeat $t$ times and return the best cut we find. (We will determine the value for $t$ below.)
 
 The probability that all $t$ trials fail is $\leq \left(1 - \frac{2}{n(n-1)}\right)^t$. We want this to be $\leq \frac{1}{n^2}$. We utilize the inequality below:
 \begin{align*}
@@ -343,7 +343,7 @@ And this pattern continues.
 
 \noindent \textbf{Time Analysis}: The first level takes $\tilde{O}(n^2)$ time. The second level takes $\tilde{O}\left(\frac{n^2}{2}\right)$ time. The third level takes $\tilde{O}\left(\frac{n^2}{4}\right)$ time. So the total time is $\tilde{O}(n^2)$. 
 
-So, at level $i$:
+\noindent So, at level $i$:
 \begin{itemize}
     \item There are $4^i$ edges.
     \item The work per edge $\leq (|\text{remaining vertices}|)^2 = \tilde{O}\left(\frac{n}{2^i}\right)^2 = \tilde{O}\left(\frac{n^2}{4^i}\right)$. 
@@ -357,12 +357,12 @@ Now we consider the probability that our algorithm succeeds. Again, we have a $4
 
 The goal is an algorithm that succeeds with probability greater than $1 - \frac{1}{n^2}$. 
 
-\textbf{Exercise:} $O(\log^2 n)$ repetitions suffice.
+\noindent \textbf{Exercise:} $O(\log^2 n)$ repetitions suffice.
 
 \section{Galton Walton Tree}
 Building on the previous problem, we introduce the concept of a Galton Walton tree. This is a $4$-ary tree with $t$ levels where each edge flips a biased coin. The probability of heads is $1/4$. A root-to-leaf path in this tree is ``successful'' if all edges are heads.
 
-\textbf{Claim:} $P(\text{successful path}) \geq \frac{1}{t}$.
+\noindent \textbf{Claim:} $P(\text{successful path}) \geq \frac{1}{t}$.
 \begin{proof}
     Pretend the paths are independent. Then we have that
     \begin{align*}
@@ -427,7 +427,7 @@ We have random variables $X_1, X_2, \ldots, X_n$ and events $A_i$ that are deter
 
 \textbf{Algorithm:}
 \begin{itemize}
-    \item Sample $X_1, X_2, \ldots, X_n$.
+    \item Sample $X_1, X_2, \ldots, X_m$.
     \item While $\exists$ bad event $A_i$:
     \begin{itemize}
         \item Pick $A_i$ arbitrarily.
@@ -435,9 +435,15 @@ We have random variables $X_1, X_2, \ldots, X_n$ and events $A_i$ that are deter
     \end{itemize}
 \end{itemize}
 
-\thm{Moser's Theorem}{The expected number of fix-its is at most $O\left(\frac nd\right)$. }
+\thm{Moser's Theorem (KSAT)}{Consider KSAT:
+\begin{itemize}
+    \item $m$ vars, $X_1, \ldots, X_m$.
+    \item $n$ clauses $C_1, \ldots, C_n$.
+    \item Each $C_i$ depends on $\leq d$ other $C_i$'s. 
+\end{itemize}
+If $8d < 2^k$, then Moser's algorithm performs $t = O(n)$ (really $O \left( \frac nd \right)$) fix-its in expectation. }
 \noindent \textbf{Proof Idea:}
-Use random bits, for example $0010010100101\ldots$. Construct a ``transcript'' $T$ such that if you tell me $T$, I can recover all the random bits you used. The interesting property of $T$ is that:
+Use random bits, for example $R=0010010100101\ldots$. Construct a ``transcript'' $T$ such that if you tell me $T$, I can recover all the random bits you used. The interesting property of $T$ is that:
 \begin{align*}
     |T| \leq (\text{number of fix-its}) \cdot (2 \lg d) + O(n).
 \end{align*}
@@ -454,4 +460,190 @@ Then,
 \end{align*}
 This means $|T| << \text{number of random bits}$. So if we can show that such a $T$ exists, then we can show that the expected number of fix-its to be pretty small.
 
+\subsection{Proof of Moser's Theorem}
+\begin{proof}
+    We start by defining variables we are going to use:
+    \begin{itemize}
+        \item $R =$ random bits used by the algorithm. 
+        \item $M_1 =$ final values of $X_i$'s. 
+        \item $M_2 =$ sequence of which clauses we fix.
+    \end{itemize}
+    \mlenma{}{$M_1$ and $M_2$ fully determine $R$.}
+    \begin{proof}
+        Work backwards! Consider the last $C_i$ that was fixed. We know its variables after the fix and the variables before the fix. So we can ``undo'' the fix. We can keep doing this until we get to the beginning.
+    \end{proof}
+    \mlenma{}{$M_2$ can be compressed to $n + t(2 + \lg d)$ bits.}
+    We'll proceed by assuming the lemma first. So now we have $|M_1| = m$ and $|R| = m + tk$. Also since $8d < 2^k$< we have $3 + \lg d \leq k$. So, $|R| \geq m + t(3 + \lg d)$. 
+
+    Now,
+    \begin{align*}
+        |M_1| + |M_2| &= n + m + t(2 + \lg d) \\
+        &\leq |R| + n - t.
+    \end{align*}
+    If $E[t] > n$, then $E[|M_1 \circ M_2|] < E[|R|]$. This is a contradiction by the incompressibility of random bits. So, $E[t] \leq n$ as desired.
+\end{proof}
+
+    \noindent Now we return to proving the second lemma. 
+    \begin{proof}
+    We start by defining processes.
+
+    \noindent Define process($C_i$):
+    \begin{itemize}
+        \item Resample $C_i$'s variables.
+        \item While $\exists$ another $C_j$ that is broken and depends on $C_i$:
+        \begin{itemize}
+            \item Select such a $C_j$.
+            \item process($C_j$).
+        \end{itemize}
+    \end{itemize}
+
+
+    \noindent Define Algorithm:
+    \begin{itemize}
+        \item For $i = 1, \ldots, n$:
+        \begin{itemize}
+            \item If $C_i$ is broken, process($C_i$).
+        \end{itemize}
+    \end{itemize}
+    \textbf{Claim:} When the algorithm finishes, all clauses holds.
+
+    \noindent \textbf{Claim:} Algorithm terminates with probability 1.
+
+    \noindent We now look towards constructing $M_2$:
+    \begin{itemize}
+        \item $A =$ Part 1: $n$ bits, which $C_i$'s get fixed in for loop.
+    \end{itemize}
+    Now recall the process algorithm. Notice here that for each $C_j$, there are only $d+1$ options. This means that we can communicate $C_j$ with $\lg(d+1)$ bits, which we'll call $q$. We now rewrite process considering a string $B$.
+
+    \noindent Define process($C_i$):
+    \begin{itemize}
+        \item Resample $C_i$'s variables.
+        \item While $\exists$ another $C_j$ that is broken and depends on $C_i$:
+        \begin{itemize}
+            \item Select such a $C_j$.
+            \item $B = B + ``1" + q$.
+            \item process($C_j$).
+        \end{itemize}
+        \item $B = B + ``0"$.
+    \end{itemize}
+So given $M_2$, $A$ lets us recover which clauses the for loop fixes. $B$ lets us figure out which clauses are fixed within each process subroutine. This means we can recover the entire sequence of clause fixes that the algorithm performs.
+
+So, $|A| = n$ and $|B| = t(2 + \lg d)$. This means $|A \circ B| = n + t(2 + \lg d)$, which completes the proof.
+\end{proof} 
+
+
+\chapter{Chernoff Bounds}
+We start with an example. Suppose I flip 100 fair coins. What is the probability that the number of heads is greater than or equal to 75? Turns out,
+\begin{align*}
+    P(\text{heads} \geq 75) &\approx \frac{1}{3.5 \times 10^6}.
+\end{align*}
+\thm{}{
+    Consider $n$ fair coin flips, $X_1, X_2, \ldots, X_n$ iid with $X_i = \begin{cases} 0 & \text{w.p. $1/2$} \\ 1 & \text{w.p. $1/2$} \end{cases}$. Let $X = \sum X_i$. Then,
+    \begin{align*}
+        P\left(X > \frac n2  + K \sqrt n\right) \leq e^{-K^2/2}.
+    \end{align*}
+}
+\cor{}{
+    \[P\left( X \geq \frac 34 n \right) \leq e^{-n/32}\]
+}
+\noindent You don't actually need $X_1, \ldots, X_n$ to be independent. It suffices to have that, for any $i$ and any outcomes of $X_1, \ldots, X_{i-1}$,
+\begin{align*}
+    P(X_i = 1 \mid X_1, \ldots, X_{i-1}) \leq 1/2.
+\end{align*}
+\nt{``Azuma's Inequality'' is a citable Chernoff bound. Alternatives include ``multiplicative version of Azuma's inequality'' and ``Freedman's inequality.''}
+\noindent We turn to the proof of the theorem.
+\begin{proof}
+    Idea: suppose we have a function $f$ such that:
+    \begin{itemize}
+        \item $f$ is non-negative.
+        \item $f$ is increasing on $[n/2, n]$.
+    \end{itemize}
+    Then, 
+    \begin{align*}
+        P\left(x \geq \frac  n2 + K \sqrt n\right) \leq P\left(f(x) \geq f\left(\frac n2 + K \sqrt n\right)\right) \leq \frac{E[f(x)]}{f\left(\frac n2 + K \sqrt n\right)}. 
+    \end{align*}
+    \ex{Trying $f$'s}{
+        $f(x) = \left(x - \frac n2\right)^2$. This clearly satisfies the requirements. This tells us that:
+        \begin{align*}
+            P\left(x > \frac n2 + K \sqrt n\right) &\leq \frac{E[f(x)]}{K^2n} \\
+            &= \frac{\Var(X)}{K^2n}.
+        \end{align*}
+        We use the linearity of variance. We have $\text{Var}(X_i) = \frac 14$. So, $\text{Var}(X) = \frac n4$. Thus,
+        \begin{align*}
+            P\left(x > \frac n2 + K \sqrt n\right) \leq \frac{1}{4k^2}.
+        \end{align*}
+        This is exactly Chebyshev's inequality.
+    }
+    \noindent We now find an $f$ that proves our result. Try $f(x) = e^{\lambda x}$ for some $\lambda \in (0, 1)$. This is approximately ${(1+\lambda)}^x$. We first find the expectation:
+    \begin{align*}
+        E[f(x)] = E[e^{\lambda \sum_i X_i}] &= E\left[\prod_i e^{\lambda X_i}\right] \\
+        &= \prod_i E[e^{\lambda X_i}] \tag{by independence} \\
+        &= \left( \frac{1 + e^\lambda}{2} \right)^n.
+    \end{align*}
+    \noindent \textbf{Fact:} \begin{align}
+        e^\lambda &= 1 + \lambda + \frac{\lambda^2}{2!} + \frac{\lambda^3}{3!} + \cdots \\
+        &\leq 1 + \lambda + \lambda^2 \cdot\left(\frac {1}{2!} + \frac {1}{3!} + \cdots \right) \\
+        &\leq 1 + \lambda + \lambda^2.
+    \end{align}
+    It follows that
+    \begin{align*}
+        E[e^{\lambda X_i}] &\leq 1+ \frac 12 \lambda + \frac 12 \lambda^2.
+    \end{align*}
+    Now we make use of the other fact that $1 + x \leq e^x$. So
+    \begin{align*}
+        E[e^{\lambda X_i}] &\leq 1+ \frac 12 \lambda + \frac 12 \lambda^2 \\
+        &\leq e^{\lambda/2 + \lambda^2/2}.
+    \end{align*}
+    Thus,
+    \begin{align*}
+        E[f(x)] &\leq e^{n(\lambda/2 + \lambda^2/2)}.
+    \end{align*}
+    So now,
+\begin{align*}
+    P\left(X > \frac n2 + K \sqrt n\right) &\leq \frac{E[f(x)]}{f\left(\frac n2 + K \sqrt n\right)} \\
+    &\leq \frac{e^{n(\lambda/2 + \lambda^2/2)}}{e^{n\lambda/2 + \lambda K \sqrt n}} \\
+    &= e^{n\lambda^2 / 2 - \lambda K \sqrt n}.
+\end{align*}
+Now we try to find an appropriate value for $\lambda$. We try:
+\begin{align*}
+    \lambda K \sqrt n &= n\lambda^2\\
+    \frac{K}{\sqrt n} &= \lambda.
+\end{align*}
+This yields:
+\begin{align*}
+    e^{n\lambda^2 / 2 - \lambda K \sqrt n} &= e^{-\lambda K \sqrt  n /2} = e^{-k^2/2},
+\end{align*}
+as desired.
+\end{proof}
+\section{Quicksort Algorithm (1961)}
+We review the algorithm for quicksort:
+\begin{itemize}
+    \item Pick random pivot $P$.
+    \item Partition elements into 2 pieces: elements smaller/larger than $P$.
+    \item Recurse on the pieces.
+\end{itemize}
+\thm{}{The running time of quicksort satisfies $T = O(n \lg n)$ with probably at least $1 - \frac{1}{n^2}$.}
+\begin{proof}
+    Note that the time is $\leq \#\text{levels} \cdot O(n)$. So what we have to prove is that with high probability, the depth of the algorithm doesn't exceed $\lg n$. So,
+    \begin{align*}
+        P(\text{max depth} \geq 1000\lg n) &\leq P(\exists \text{element with max depth} \geq 1000 \lg n) \\
+        &\leq n \cdot P(\text{a given $v$ has depth} \geq 1000 \lg n).
+    \end{align*}
+    We want to show that the probability on the last line is $\leq \frac{1}{n^3}$. We have that
+    \begin{align*}
+        P(\text{next subproblem} \leq 3/4 \text{current size}) \geq \frac 12.
+    \end{align*}
+    Let $P_1, P_2, \ldots$ be subproblems in $v$'s path. Let 
+    \begin{align*}
+        X_i = \begin{cases}
+            1 & P_{i+1} \text{exists and } |P_{i+1}| > \frac 34 |P_i| \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{align*}
+    We observe that $P(X_i = 1 \mid X_1, \ldots, X_{i-1}) \leq 1/2$. So by Chernoff bound, if we look at $X = X_1 + X_2  + \cdots + X_{1000 \lg n =: m}$, we get:
+    \begin{align*}
+        P\left( X \geq \frac 34 m\right) \leq e^{-m/32} <<< \frac{1}{n^3}.
+    \end{align*}
+    If $X \leq \frac 34 m$, either $P_m$ doesn't exist or $|P_m| \leq n \cdot \left( \frac 34 \right)^{m/4} = n \cdot \left( \frac 34 \right)^{250 \log n} << 1$, which is a contradiction. This means $P_m$ in fact does not exist. As such, we are able to conclude that we have a running time of $O(n \lg n)$ with the desired probability.
+\end{proof}
 \end{document}
