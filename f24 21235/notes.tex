@@ -599,8 +599,40 @@ We then set $\liminf_{n \to \infty} x_n = \sup_{N \geq \ell} \inf_{n \geq N} x_n
     \item $X$ and $Y$ are isometric if there exists an isometry $f: X \to Y$.
 \end{enumerate}}
 
+\ex{}{
+    \begin{enumerate}
+        \item Consider $\RR^n$ with $|\cdot| = \Vert \cdot \Vert_2$, that is, 2-norm. 
+        \item Recall $O(n) = \{\mathcal M \in \RR^{n \times n} \mid \mathcal M^T \mathcal M = I \}$ and $R \in O(n) \implies |Rx| = |x|$. 
+        
+        Let $a \in \RR^n$, $R \in O(n)$, and set $f: \RR^n \to \RR^n$ via $f(x) = a + Rx$. Then, 
+        \begin{align*}
+            |f(x) - f(y)| = |a + Rx - (a + Ry)| = |Rx - Ry| = |R(x - y)|.
+        \end{align*}
+        Also, $y = f(x) = a + Rx \iff y - a = Rx$.  So, $f$ is an isometry.
+        \item Consider $x \mapsto ix \in \CC$ for $x \in \RR$. This is an isometric embedding but obviously not an isometry for it is not surjective.
+    \end{enumerate}
+}
+The next example is so important that we call it a theorem. Recall $\mathcal B(X) = \mathcal B(X; \RR)$ for $X \neq \emptyset$ is a set. Note that if $V$ is a normed vector space, then $\mathcal B(X; V)$ is too: $\Vert f \Vert_{\mathcal B} = \sup_{x \in X}\Vert f(x) \Vert_V$ is a norm (exercise) and $d_{\mathcal B}(f, g) = \Vert f -g \Vert_{\mathcal B}$. 
 
+\thm{}{
+    Let $X$ be a metric space and fix an arbitrary element $a \in X$. For $x \in X$, we'll define $\varphi_x : X \to \RR$ via $\varphi_x(y) = d(x, y) - d(y, a)$. The following hold:
+    \begin{enumerate}
+        \item $\varphi_x \in \mathcal B(X)$ for all $x \in X$.
+        \item Define $\Phi : X \to \mathcal B(X)$ via $\Phi(x) = \varphi_x$. Then, $\Phi$ is an isometric embedding.
+    \end{enumerate}
+}
+\begin{proof}
+    First note, $|\varphi_x(y)| = |d(x, y) - d(y, a)| \leq d(x, a)$ by the triangle inequality. So, $\Vert \varphi_X \Vert_{\mathcal B} = \sup_{y \in X} |\varphi_x(y)| \leq d(x, a) < \infty$. This shows the first result.
 
+    Next, fix $x, z \in X$ and consider $\varphi_x(y) - \varphi_z(y) = d(x, y) - d(y, a) - d(z, y) + d(y, a)$. So,
+    \begin{align*}
+        |\varphi_x(y) - \varphi_z(y)| = |d(x, y) - d(y, z)| \leq d(x, z).
+    \end{align*}
+    Thus, $d_{\mathcal B}(\varphi_x, \varphi_y) = \Vert \varphi_x - \varphi_y \Vert_{\mathcal B} = \sup_{y \in X} |\varphi_x(y) - \varphi_z(y)| \leq d(x, z)$.
 
+    On the other hand, $|\varphi_x(z) - \varphi_z(z)| = |d(x, z) - \cancelto{0}{d(z, z)}| = d(x, z)$. So, $d_{\mathcal B}(\varphi_x, \varphi_z) = d(x, z)$. 
+\end{proof}
+
+\chapter{Basic Metric Space Topology}
 
 \end{document}
