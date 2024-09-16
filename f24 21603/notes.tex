@@ -376,4 +376,139 @@ ZF cannot prove the compactness theorem.
     \item $\exists M \models (\text{ZF} + \neg\text{BPI})$. So, ZF $\not\vdash$ CT.
 \end{itemize}
 
+\noindent \textbf{Remark:} $M \subseteq N \not\Rightarrow M \equiv N$.
+\ex{}{$N = \langle \omega, +, 0 \rangle$. Then $M = \langle \ZZ, +, 0 \rangle$. $N \subseteq M$, but $M$ is a group and $N$ isn't.}
+
+\ex{}{Suppose $\{M_k \mid k < \omega\}$. We have that $M_k \subseteq M_{k+1}$ for all $k$. Then $N := \bigcup_{k < \omega} M_k$. Then,
+\begin{itemize}
+    \item $F^N := \bigcup_{k < \omega} F^M_k$.
+    \item $R^N := \bigcup_{k < \omega} R^M_k$.
+\end{itemize}}
+More generally, let $(I, <)$ be a linearly ordered set. Suppose $\{ M_i \mid i \in I\}$ is such that $i \leq j \implies M_i \subseteq M_j$. Then $N := \bigcup_{i \in I} M_i$.
+
+\noindent \textbf{Question:} Does $N \equiv M_k$ for any $k$?
+
+\noindent \textbf{Answer:} No.
+
+Suppose we know in addition that for all $k$, $M_k \equiv M_{k+1}$. The answer remains no.
+
+Now let $L = \{ < \}$. For $k \in \omega$, $M_k = [-k - 1, k + 1]$. Clearly $M_k \cong M_{k+1} \models \exists x \forall y [ y > x \vee y = x]$. But $N \equiv \RR \models \forall x \neg \exists y [ y > x \vee y = x]$.
+
+\dfn{}{Let $M$ and $N$ be $L$-structures. $M$ is an elementary submodel of $N$ (denoted by $M \prec N$) if:
+\begin{enumerate}
+    \item $M \subseteq N$.
+    \item for every $\varphi(x) \in \fml(L)$ and every $\bar a \in |M|$ with $\ell(x) = \ell(\bar a)$< we know $M \models \varphi[\bar a] \iff N \models \varphi[\bar a]$.
+\end{enumerate}}
+
+
+\thm{Tarski Vaught Chain Theorem (1956)}{
+    If $(I, <)$ linearly ordered set and $\{M_i \mid i \in I\}$ elementary chain and $M := \bigcup_{i \in I} M_i$. Then $M_i \prec N$ for all $i \in I$. 
+}
+\begin{proof}
+    Clearly $M_i \subseteq N$ for all $i \in I$. So now we proceed by induction on $\varphi(x) \in \fml(L)$. 
+
+    For $\varphi \in \fml(L)$, $\bar a \in |M|$, then $M_i \models \varphi[\bar a] \iff N \models \varphi[\bar a]$ for every $i \in I$ and $\bar a \in |M_i|$.
+    \mlenma{}{$M \subseteq N \implies M \models (\varphi[\bar a] \iff N \models \varphi[\bar a] \forall \bar a \in |M|$ and every atomic formula $\varphi \in \fml(L))$.}
+    We check that when $\varphi(\bar x) \in \afml(L)$:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\varphi(\bar x)$ is $\tau_1(\bar x) = \tau_2(\bar x)$.
+        
+        $M \models \tau_1(\bar a) = \tau_2(\bar a)$, so $\tau_1^M[\bar a] = \tau_2^M[\bar a] \iff \tau_1^N[\bar a] = \tau_2^N[\bar a]$. As such, $M \models\varphi(\bar a)$. 
+        \item $\varphi(\bar x)$ is $R(\tau_1, \ldots, \tau_k)$. 
+        
+        Then $M \models \varphi[\bar a] \implies \langle \tau_1^M[\bar a], \ldots, \tau_k^M[\bar a] \rangle \in R^M \implies \langle \tau_1^N[\bar a], \ldots, \tau_k^N[\bar a] \rangle \in R^N \implies N \models \varphi[\bar a]$. 
+    \end{enumerate} 
+
+    So if $\varphi$ is atomic, we have $(*)$
+
+    If $\varphi(\bar x) = \neg \psi(\bar x)$, then $M_i \models \varphi[\bar a] \iff$ not true $M_i \models \psi(\bar a) \iff$ not true $N \models \psi[\bar a] \iff N \models \neg\psi[\bar a]$. 
+
+    Then if $\varphi(\bar x)$ is $\psi_1(\bar x) \land \psi_2(\bar x)$,
+    \begin{align*}
+        M_i \models \varphi[\bar a] \iff M_i \models \psi_1[\bar a] \land M_i \models \psi_2[\bar a] \iff N \models \psi_1[\bar a] \land N \models \psi_2[\bar a] \iff N \models \varphi[\bar a].
+    \end{align*}
+    If $\varphi(\bar x)$ is $\exists y \psi(y, \bar x)$,
+    \begin{align*}
+        M_i \models \varphi[\bar a] \iff \text{there is} b \in |M_i| \text{such that} M_i \models \psi[b, \bar a].
+    \end{align*}
+    So by the inductive hypothesis,
+    \begin{align*}
+        N \models \psi[b, \bar a] \implies b \in |N|.
+    \end{align*}
+    As such, $N \models \exists y \psi(y, \bar x) \implies N \models \varphi[\bar x]$.
+
+    Suppose $N \models \varphi[\bar x] \implies \exists b \in |N| \psi[b, \bar a]$. As $N = \bigcup M_i$, $\exists j \in I$ such that $b \in M_j$. So let $k = \max(i, j)$. Since $i_1 < i_2 \implies M_{i_1} \subseteq M_{i_2}$, we have $M_i \subseteq M_k$ and $M_j \subseteq M_k$. So $\bar a\in |M_i|, b \in |M_j| \implies \bar a, b\in |M_k|$. 
+
+    Apply $(*)$ to $i \leftarrow k$, so $M_k \models \exists y \psi(y, \bar a)$. Since $M_i \subseteq M_k$ and $\bar a \in M_i$, we have $M_i \models \exists y \psi(y, \bar a) \implies M_k \models \exists y \psi(y, \bar a)$.
+    
+\end{proof}
+
+\thm{Tarski Vaught Test}{
+    Suppose $M \subseteq N$. TFAE:
+    \begin{enumerate}
+        \item $M \prec N$
+        \item For every $\varphi(y, \bar x) \in \fml(L)$, $\forall \bar a \in |M|$, if $N \models \exists y \varphi(y, \bar a)$, then there is $b \in |M|$ such that $N \models \varphi[b, \bar a]$.
+    \end{enumerate}
+}
+
+\begin{proof}
+    Obviously $1 \implies 2$. For the other direction, we know that for atomic $\varphi(\bar x)$, $M \subseteq N \implies ( M \models \varphi[\bar a] \iff N \models \varphi(\bar a))$ for every $\bar a \in |M|$. 
+
+    We proceed by induction on $\varphi$. 
+
+    Suppose $\varphi$ is $\neg \psi$. $M \models \varphi[\bar a] \iff M \not\models \psi[\bar a] \iff N \not \models \psi[\bar a] \iff N \models \varphi [\bar a]$.
+
+    Suppose $\varphi$ is $\psi_1 \land \psi_2$. \[M \models \varphi[\bar a] \iff M \models \psi_1[\bar a] \land M \models \psi_2[\bar a] \iff N \models \psi_1[\bar a] \land N \models \psi_2[\bar a] \iff N \models \varphi [\bar a]\].
+
+    Suppose $\varphi$ is $\psi_1 \lor \psi_2$. \[M \models \varphi[\bar a] \iff M \models \psi_1[\bar a] \lor M \models \psi_2[\bar a] \iff N \models \psi_1[\bar a] \lor N \models \psi_2[\bar a] \iff N \models \varphi [\bar a].\]
+
+    Suppose $\varphi$ is $\exists y \psi(y, \bar x)$. Then,
+    \[
+        M \models \varphi(\bar a) \iff \exists b \in |M|, M \models \psi(b, \bar a) \implies \exists b \in |M|, N \models \psi(b, \bar a) \implies b \in |N|, N \models \psi[b, \bar a] \implies N \models \varphi[\bar a].
+    \]
+    Suppose $N \models \varphi[\bar a]$, \[
+        N \models \exists y \psi(y, \bar a).
+    \]
+    By the assumption, there is $b \in |M|$ such that $N \models \psi[b, \bar a]$. As $b, \bar a \in |M|$, there is $b \in |M|$ such that $M \models \psi[b, \bar a] \implies M \models \exists y \psi(y, \bar a) \implies M \models \varphi[\bar a]$.
+\end{proof}
+\newpage
+\thm{Downward Lowenheim Skolem-Tarski}{
+    Let $M$ be $L$-structure, $A \subseteq |M|$. Then there is $N \prec M$, $|N| \supseteq A$, and $\Vert M \Vert = |A| + \lambda$.
+}
+\begin{proof}
+    For every $\psi(y, \bar x) \in \fml(L)$, let $G_\psi$ be a new function symbol, $L_1 = L \cup \{ G_\psi \mid \psi \in \fml(L)\}$. $M_1$ is an expansion of $M$ to $L_1$. 
+
+    $G_\psi : |M|^{\ell(\bar x)} \to |M|$. Fix $<$ a well-ordering of $|M|$. For $\bar a \in |M|^{\ell(\bar x)}$, 
+    \begin{align*}
+        G_{\psi}^{M_1}(\bar a) := \begin{cases} 
+            b_0 & M \not\models \exists y \psi(y, \bar a) \\
+            \min\{ b \in |M| \mid M \models \varphi[b, \bar a]\}
+        \end{cases}.
+    \end{align*}
+    Apply the submodel theorem to find $N_1 \subseteq M_1$ containing $A$ of cardinality $\lambda + |A|$. Take $N:= N_1 \cap L_1$. 
+
+    Verify $N \prec M$. Follows for $N_1 \prec M_1$. Clearly $N_1 \subseteq M_1$. Verify the Tarski-Vaught test (condition 2). Given $\varphi(y, \bar x), \bar a\in |N|$, 
+    \begin{align*}
+        M_1 &\models \exists y \psi(y, \bar a) \text{ by definition of $G_\varphi$} \\
+        M_1 &\models \varphi(G_{\varphi}(\bar a), \bar a) \text{ since $N_1 \subseteq M_1$} \\
+        G_{\varphi}^{N_1} (\bar a) &= G_{\varphi}^{M_1}(\bar a).
+    \end{align*}
+\end{proof}
+
+\cor{Upward Lowenheim Skolem Tarski}{
+    Given $L$, $M$ an infinite $L$-structure. For every $\lambda \geq |L| + \Vert M \Vert$, there exists $N \succ M$ of cardinality $\lambda$.
+}
+
+
+\cor{Downward Lowenheim Skolem Tarski (stronger)}{
+    For all $M$ $L$-structure, $\lambda \leq \Vert M \Vert$, $\lambda \geq |L| + \aleph_0$, there exists $N \prec M$ of cardinality $\lambda$. 
+}
+
+\noindent \textbf{Question} Suppose $T$ is first order with $|L(T)| \leq \aleph_0$. If $I(\lambda, T) \neq 0$ for some $\lambda \geq \aleph_0$, then $I(\mu, T) \neq 0$ for all $\mu \geq \aleph_0$. 
+
+\noindent \textbf{Answer} By the two above corralaries, yes.
+\begin{proof}
+    Given $M$ and $\lambda$, pick $A \subseteq |M|$, $|A| = \lambda$. Apply the last theorem to find $N \prec M$, $|N| \supseteq A$ of cardinality $\lambda$.
+\end{proof}
+
 \end{document}
