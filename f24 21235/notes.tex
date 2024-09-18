@@ -635,4 +635,94 @@ The next example is so important that we call it a theorem. Recall $\mathcal B(X
 
 \chapter{Basic Metric Space Topology}
 
+
+FILL IN LATER 
+
+
+\mprop{}{
+    Let $Y_1, \ldots, Y_n$ be metric spaces and consider $Y = \prod_{i=1}^n Y_i$, endowed with a $p$-metric from Homework 3. That is,
+    \begin{align*}
+        d_p(x, y) = \begin{cases}
+        \left( \sum_{i=1}^n d^p_{Y_i}(x_i, y_i)\right)^{1/p} & 1 \leq p < \infty \\
+        \max_{1 \leq i \leq n} d^p_{Y_i}(x_i, y_i) & p = \infty
+        \end{cases}.
+    \end{align*}
+    Suppose $\{y_k\}_{k = \ell}^\infty \subseteq Y$ is given by $y_k = (y_{k, 1}, \ldots, y_{k, n})$. The following hold:
+    \begin{enumerate}
+        \item Let $y = (y_1, \ldots, y_n) \in Y$. Then $y_k \to y$ in $Y$ as $n \to \infty \iff y_{k, i} \to y_i$ in $Y_i$ as $k \to \infty$ for all $1 \leq i \leq n$. 
+        \item $\{y_k\}_{k = \ell}^\infty$ is Cauchy in $Y$ if and only if $\{y_{k, i}\}_{k = \ell}^\infty$ is Cauchy in $Y_i$ for all $1 \leq i \leq n$.
+    \end{enumerate}
+}
+\begin{proof}
+    We'll only prove 1. as 2. is very similar. Suppose $y_k \to y$ as $k \to \infty$. Note that for $ 1 \leq i \leq n$, $d_i(y_{k, i}, y_i) \leq d_Y(y_k, y)$. Thus, for $\epsilon > 0$, we pick $K \geq \ell$ such that if $k \geq K$, then $d_Y(y_k, y) \leq \epsilon$. But then $k \geq K \implies d_i(y_{k ,i}) \leq d_Y(y_k, y) \leq \epsilon$ for all $1 \leq i \leq n$, meaning $y_{k ,i} \to y_i$ as $k \to \infty$ for $1 \leq i \leq n$. 
+
+    Now suppose $y_{k ,i} \to y_i$ as $k \to \infty$ for all $1 \leq i \leq n$. Let $\epsilon > 0$ and pick $K_i \geq \ell$ such that $k \geq K_i \implies d_i(y_{k ,i}, y_i) < \frac{\epsilon}{n^{1/p}}$. Let $K = \max K_i \geq \ell$, and note $k \geq K \implies d_i(y_{k ,i}, y_i) < \frac{\epsilon}{n^{1/p}}$ for all $1 \leq i \leq n$. This means 
+    \begin{align*}
+        \begin{cases}
+            \left(\sum_{i=1}^n d_i^p(y_{k, i}, y_i)\right)^{1/p}  \leq \left(\sum_{i=1}^n \frac{\epsilon^p}{n}\right)^{1/p} = \epsilon & 1 \leq p < \infty \\
+            \max_i d_i(y_{k, i}, y_i)  < \epsilon & p = \infty
+        \end{cases}
+    \end{align*}
+    So, $y_k \to y$ as $k \to \infty$.
+\end{proof}
+
+\dfn{}{Let $X \neq \emptyset$ be a set and $d_1, d_2$ be metrics on $X$. We say $d_1$ and $d_2$ are equivalent if $\exists c_1, c_2 >0$ such that $c_1d_1(x, y) \leq d_2(x, y) \leq c_2d_1(x, y)$ for all $x, y \in X$.}
+The point is that equivalent metrics give the same notions of convergence, Cauchyness, and boundedness. 
+\newpage
+\ex{Equivalent Norms}{
+    \begin{enumerate}
+        \item All norms on $\FF^n$ are equivalent. 
+        \item From recitation, $\Vert \cdot \Vert_p$ are all equivalent on $\FF^n$ for $1 \leq p \leq \infty$. 
+        \item Let $Y_1, \ldots, Y_n$ be metric spaces and form $Y = \prod_{i=1}^n Y_i$. Then
+        \begin{align*}
+            d_p(x, y) = \Vert (d_1(x, y), \ldots, d_n(x, y)) \Vert_p \asymp \Vert (d_1(x, y), \ldots, d_n(x, y)) \Vert_q = d_q(x, y)
+        \end{align*}
+        Therefore, $d_p \asymp d_q$ in $Y$. 
+        
+        Note: This does not mean all metrics on $Y$ are equivalent. 
+    \end{enumerate}
+}
+\ex{}{
+    Let $V_1, \ldots, V_n, W$ be normed vector sapces over $\FF$. We define $\mathcal L(V_1, \ldots, V_n; W)$ is the set of $\{ T \in L(V_1, \ldots, V_n ; W) \mid \Vert T \Vert_{\mathcal L}\ < \infty\}$ where $\Vert T \Vert_{\mathcal L} := \sup \{\Vert T(v_1, \ldots, v_n) \Vert_W \mid v_i \in V_i : \Vert v_i \Vert_{V_i} < 1\} \in [0, \infty]$. Facts:
+    \begin{enumerate}
+        \item This is indeed a norm.
+        \item $T \in \mathcal L \iff \Vert T(v_1, \ldots, v_n) \Vert_W \leq c\prod_{i=1}^n \Vert v_i \Vert_{V_i}$ for all $v_i \in V_i$ for some $0 \leq c < \infty$. $c = \Vert T \Vert_{\mathcal L}$ is the best constant. 
+    \end{enumerate}
+}
+
+\thm{Algebra of Sequences}{
+    Let $V_1, \ldots, V_n, W$ be normed vector spaces over a common field $\FF$. The following hold:
+    \begin{enumerate}
+        \item Let $\{v_{k ,i}\}^\infty_{k = \ell} \subseteq V_i$ for $1 \leq i \leq n$ be such that $v_{k, i} \to v_i$ in $V_i$ as $k \to \infty$. Let $\{T_k\}_{k = \ell}^\infty \subseteq \mathcal L(V_1, \ldots, V_n; W)$ be such that $T_k \to T$ as $k \to \infty$. Then $T_k(v_{k, 1}, \ldots, v_{k, n}) \to T(v_1, \ldots, v_n)$ in $W$ as $k \to \infty$.
+        \item If $\{u_k\}, \{v_k\} \subseteq V_1$ are such that $u_k \to u$, $v_k \to v$ then $u_k + v_k \to u + v$ as $k \to \infty$. 
+    \end{enumerate}
+}
+\begin{proof}
+    We'll only do $1$ because $2$ is easy. We start with $n=2$ for simplicity. Suppose $\{x_k\} \subseteq V_1$, $\{y_k\} \subseteq V_w$ such taht $x_k \to x$ and $y_k \to y$ as $k \to \infty$. Then let $\sup_{k \geq \ell} \max \{\Vert x_k \Vert_{V_1}, \Vert y_k \Vert_{V_2}$, $\Vert T_k \Vert_{\mathcal L} \} = M < \infty$. Then,
+    \begin{align*}
+        T_k(x_k, y_k) - T(x, y)&= T_k(x_k, y_k - y) + T_k(x_k, y) - T(x, y) \\ 
+        T_k(x_k, y_k + y) + T(x_k - x, y) + T_k(x, y) - T(x, y).
+    \end{align*}
+    This shows that 
+    \begin{align*}
+        \Vert T_k(x_k, y_k) - T(x, y) \Vert_W &\leq \Vert T_k \Vert_{\mathcal L} \Vert x_k \Vert_{V_1} \Vert y - y_k \Vert_{V_2}  + \Vert T_k \Vert_{\mathcal L} \Vert x - x_k \Vert_{V_1} \Vert y_k \Vert_{V_2}  + \Vert T - T_k \Vert_{\mathcal L} \Vert x_k \Vert_{V_1} \Vert y_k \Vert_{V_2}  \\
+        \leq M^2 \Vert y - y_k \Vert_{V_2} + M^2 \Vert x - x_k \Vert_{V_1}  + M^2 \Vert T - T_k \Vert_{\mathcal L} \to 0
+    \end{align*}
+    as $k \to \infty$. 
+\end{proof}
+\dfn{}{\begin{enumerate}
+    \item We say a metric space $X$ is complete if every Cauchy sequence in $X$ is convergent in $X$.
+    \item We say a normed vector space is Banach if it's complete.
+    \item We say an inner product space is a Hilbert space if it's Banach.
+\end{enumerate}}
+\ex{}{
+    \begin{enumerate}
+        \item $(\RR, | \cdot|)$ is complete.
+        \item $X = \prod_{i=1}^n X_i$ with $p$-metric is complete if and only if each $X_i$ is complete. In particular, $(\RR^n, \Vert\cdot\Vert)$ is complete. 
+        \item $\FF^n$ is complete with any more. 
+        \item $\RR \setminus \{0\}$ is not complete with $|\cdot|$ as the metric.
+        \item $\QQ^n$ with $|\cdot|$ is not complete. 
+    \end{enumerate}
+}
+
 \end{document}

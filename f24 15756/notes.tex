@@ -540,7 +540,7 @@ We start with an example. Suppose I flip 100 fair coins. What is the probability
 \thm{}{
     Consider $n$ fair coin flips, $X_1, X_2, \ldots, X_n$ iid with $X_i = \begin{cases} 0 & \text{w.p. $1/2$} \\ 1 & \text{w.p. $1/2$} \end{cases}$. Let $X = \sum X_i$. Then,
     \begin{align*}
-        P\left(X > \frac n2  + K \sqrt n\right) \leq e^{-K^2/2}.
+        P\left(X > \frac n2  + K \sqrt n\right) \leq e^{-\Omega(K^2)}.
     \end{align*}
 }
 \cor{}{
@@ -646,4 +646,124 @@ We review the algorithm for quicksort:
     \end{align*}
     If $X \leq \frac 34 m$, either $P_m$ doesn't exist or $|P_m| \leq n \cdot \left( \frac 34 \right)^{m/4} = n \cdot \left( \frac 34 \right)^{250 \log n} << 1$, which is a contradiction. This means $P_m$ in fact does not exist. As such, we are able to conclude that we have a running time of $O(n \lg n)$ with the desired probability.
 \end{proof}
+
+\newpage
+\section{Revisiting Theorem 4.0.1}
+We start with warm-ups to give an alternative proof to Theorem 4.0.1.
+
+\subsection{Poor Man's Chernoff Bound}
+\thm{}{\[P(X \geq 2K\sqrt n) \leq \frac{1}{2^K}.\]}
+\begin{proof} We make use of the core facts below:
+
+    \noindent\textbf{Core fact 1}: $P(X \geq 2\sqrt n) \leq \frac{1}{4}$, by Chebyshev's inequality.
+
+    \noindent\textbf{Core fact 1'}: $P($any prefix has sum $\geq 2 \sqrt n) \leq \frac 12$. This is a direct result of \textbf{Core fact 1}, and the implication will be shown in the homework. 
+    
+    We can graph the running sum as a function of time and track the times that we hit the values $2\sqrt n$, $4 \sqrt n$, and $6\sqrt n$ and call them $t_1, t_2, t_3,$ et cetera. What the core fact is saying is that $P(t_1$ exists$) \leq \frac 12$. Then, we can build the the following chain:
+    \begin{align*}
+        P(t_1 \text{ exists}) &\leq \frac 12 \\
+        P(t_2 \text{ exists} \mid t_1 \text{ exists}) &\leq \frac 12 \\
+        &\vdots \\
+        P(t_i \text{ exists} \mid t_{i-1} \text{ exists}) &\leq \frac 12.
+    \end{align*}
+    So, 
+    \begin{align*}
+        P(X \geq 2K \sqrt n) \leq P(t_K \text{ exists}) \leq \frac{1}{2^K},
+    \end{align*}
+    as desired.
+\end{proof}
+
+\subsection{Chernoff Bound for Geometric Random Variables}
+\thm{}{Let $X_1, \ldots, X_n$ be non-negative independent random variables such that for all $j \in \NN$,
+\begin{align*}
+    P(X_i \geq j) \leq p^j.
+\end{align*}
+Then $X = \sum X_i$ satisfies
+\begin{align*}
+    P(X \geq 2n) \leq (4p)^n.
+\end{align*}
+}
+\begin{proof}
+    $X \geq 2n \implies \sum \lfloor X_i \rfloor \geq n \implies \exists \langle Y_1, \ldots, Y_n\rangle =: \vec Y$ such that 
+    \begin{itemize}
+        \item $\sum Y_i  = n$.
+        \item $X_i \geq Y_i \, \forall i$. 
+    \end{itemize}
+    For a given option $\langle Y_1, \ldots, Y_n\rangle$ for $\vec Y$,
+    \begin{align*}
+        P(\vec Y \text{ occurs}) &= P(X_i \geq Y_i \forall i) \\
+        &\leq \prod_{i} P(X_i \geq Y_i) \\
+        &\leq \prod_i p^{Y_i} \\
+        &= p^{\sum_i Y_i} \\
+        &= p^n.
+    \end{align*}
+    Now we bound the number of options for $\vec Y$. We can express $\vec Y$ as a binary string, for example:
+    \begin{align*}
+        \underbrace{000}_{Y_1 = 3}1\underbrace{0}_{Y_2=1} 1\underbrace{}_{Y_3 = 0}1 \ldots   
+    \end{align*}
+    So the number of $0$'s is $\sum Y_i = n$ and the number of $1$'s is $n$. This means that the number o options satisfying $\sum Y_i = n$ is less than the number of binary strings of length $2n$ which is $4^n$. 
+
+    So,
+    \begin{align*}
+        P(X \geq 2n) \leq P(\text{some } \vec Y \text{ occurs}) \\
+        &\leq (\text{\# of options for } \vec Y) \cdot P(\vec Y \text{ occurs}) \\
+        &\leq 4^n \cdot p^n \\
+        &= (4p)^n.
+    \end{align*}
+\end{proof}
+
+
+
+
+\subsection{Anti-(Chernoff Bound)}
+\thm{}{
+\begin{align*}
+    P\left(X \geq \frac K4 \sqrt n\right) \geq \frac{1}{4^{K^2}}
+\end{align*}
+}
+
+\begin{proof}
+    Break the coins into $K^2$ groups. So each group has $m = \frac{n}{K^2}$ coins. 
+
+    \noindent \textbf{Core fact}: $P\left( X \geq \frac 14 \sqrt n\right) \geq \frac 14$.
+    
+    Let $C_i$ be the sum of the $i$-th group. So by the core fact, 
+    \begin{align*}
+        P\left(C_i \geq \frac 14 \sqrt m\right) \geq \frac 14.
+    \end{align*}
+    So,
+    \begin{align*}
+        P\left(\text{every } C_i \geq \frac 14 \sqrt m\right) \geq \frac{1}{4^{K^2}}
+    \end{align*}
+    If this occurs, then 
+    \begin{align*}
+        X = \sum C_i \geq K^2 \cdot\left(\frac 14 \sqrt m\right) = \frac K4 \sqrt n.
+    \end{align*}
+\end{proof}
+\newpage 
+\subsection{Real Chernoff Bound}
+\thm{}{
+    \begin{align*}
+        P(X \geq 16k \sqrt n) \leq \frac{1}{2^{K^2}}.
+    \end{align*}
+}
+\begin{proof}
+    We start by defining $Y_i = \max\left(0, \frac{C_i}{8\sqrt m}\right)$. We can apply the Poor Man's Chernoff bound to each $C_i$ to get
+    \begin{align*}
+        P(C_i \geq 2\ell \sqrt m) &\leq \frac{1}{2^\ell} \\
+        \implies P\left(Y_i \geq \frac{2\ell \sqrt m}{8\sqrt m}\right) &\leq \frac{1}{2^{\ell}} \\
+        \implies P(Y_i \geq \ell) & \leq \frac{1}{2^{4\ell}} \leq \frac{1}{16^\ell}.
+    \end{align*}
+    This is saying that $Y_i$ are geometric random variables. So by the geometric random variable bound,
+    \begin{align*}
+        P\left(\sum Y_i \geq 2 K^2\right) \leq (4 \cdot 1/16)^{K^2} = \left(\frac 14 \right)^{K^2}.
+    \end{align*}
+    But also 
+    \begin{align*}
+        X \geq 16K \sqrt n &\implies \sum C_i \geq 16K \sqrt n \\
+        &\implies \sum Y_i \geq \frac{16K \sqrt n}{8 \sqrt m} = 2K^2.
+    \end{align*}
+\end{proof}
+
+
 \end{document}

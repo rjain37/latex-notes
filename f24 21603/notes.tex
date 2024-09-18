@@ -511,4 +511,35 @@ Now let $L = \{ < \}$. For $k \in \omega$, $M_k = [-k - 1, k + 1]$. Clearly $M_k
     Given $M$ and $\lambda$, pick $A \subseteq |M|$, $|A| = \lambda$. Apply the last theorem to find $N \prec M$, $|N| \supseteq A$ of cardinality $\lambda$.
 \end{proof}
 
+\noindent \textbf{Fact} $\exists f: \omega \times \omega \to \omega$. So $M = \langle omega, f \rangle \models f$ is a bijection. 
+
+By compactness and Downward Lowenheim Skolem, $T$ is first order such that $|L(T)| \leq \aleph_0$.  Then if $T$ has an inifnite model, then for all infinite $A$, $\exists M \models T$, $\Vert M \Vert = |A|$. 
+
+Given $A$ infinite, apply the above to $M$ to find $N \models \Th(M)$, $\Vert N \Vert = |A|$ such that $f^N$ induces a bijection for $A \times A \to A$. 
+
+\dfn{}{$\lambda \geq \aleph_0$ is regular provided for every $A$, $|A| = \lambda$ and every $\mu < \lambda$, $B$, $|B| = \mu$ and every $f: A\to B$, there exists $b \in B$ such that $|f^{-1}(b)| = \lambda$.}
+Above, $A$ are the pigeons and $B$ are the pigeon holes. 
+
+\dfn{}{$\lambda \geq \aleph_0$, $\lambda^+ = \min \{\mu \text{ cardinality} \mid \mu > \lambda\}$. For examples, $\aleph_0 = |\NN|$ and $\aleph_0^+ = \aleph_1$. }
+\newpage 
+\thm{$\cancelto{\text{Kurepa Theorem (1930)}}{\text{Erdos-Rado Theorem (1952)}}$}{
+For all $\lambda \geq \aleph_0$, $\lambda^+$ is regular. 
+}
+\begin{proof}
+    Assume $\lambda^+$ is not regular. Then there is $f: \lambda^+ \to \lambda$ such that for all $\alpha in \lambda$, $|f^{-1}(\alpha)| <\lambda^+$ or that $|f^{-1}(\alpha)| \leq \lambda$. Since the domain of $f$ is $\lambda^+$, So,
+    \begin{align*}
+        \lambda^+ = \dom f = \cup_{\alpha < \lambda}f^{-1}(\alpha).
+    \end{align*}
+    So, $\lambda^+ = |\lambda^+| \leq \sup_{\alpha \leq \lambda} |f^{-1}(\alpha)| = \sup_{\alpha < \lambda}\lambda = \lambda$. This  is a contradiction.
+\end{proof}
+
+\dfn{}{$\lambda, \mu, \kappa$ cardinals, $n < \omega$. $\lambda \to (\mu)^n_\kappa$ is true or false. For all $F: [\lambda]^n \to \kappa$, $\exists A \subseteq \lambda, |A| = \mu$ such that for all $\bar a \in [A]^n, F(\bar a) = \beta$. This would mean $A$ is monochromatic in $\beta$.
+}
+
+\thm{Infinite Ramsey}{
+    $\aleph_0 \to {(\aleph_0)}_2^2$. 
+}
+
+\thm{Sierpinski}{ZFC $\vdash \aleph_1 \not\to (\aleph_1)_2^2$. }
+
 \end{document}
