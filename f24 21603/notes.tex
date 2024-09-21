@@ -18,6 +18,7 @@
 \newcommand{\val}{\text{Val}}
 \newcommand{\Mod}{\text{Mod}}
 \newcommand{\Th}{\text{Th}}
+\newcommand{\tp}{\text{tp}}
 
 \maketitle
 \newpage% or \cleardoublepage
@@ -541,5 +542,78 @@ For all $\lambda \geq \aleph_0$, $\lambda^+$ is regular.
 }
 
 \thm{Sierpinski}{ZFC $\vdash \aleph_1 \not\to (\aleph_1)_2^2$. }
+\begin{proof}
+    By monotonicity, it is enough to show $2^{\aleph_0} \not \to (\aleph_1)_2^2$. Fix $<^*$ a well order on $\RR$. 
+
+    For $a < b \in \RR$, define $f(a, b) = \begin{cases} 0 & \text{if $a <^* b$} \\ 1 & \text{if $a >^* b$} \end{cases}$. FSOC, suppose $A \subseteq \RR$ is uncountable monochromatic for $f$. WMA $A = \{a_\alpha \mid \alpha < \omega\}$ increasing in $<^*$. As $A$ is monochromatic for $f$, $\exists \ell \in \{0, 1\}$ such that $|forall x < \omega, f(a_\alpha , a_{\alpha + 1}) = \ell$> 
+
+    Case 1: suppose $\ell = 1$. Namely, $\forall \alpha$, $\RR \models a_{\alpha} < a_{\alpha + 1}$. Remember that $\QQ$ is dense in $\RR$. So $\forall \alpha < \omega$, pick $q_\alpha \in \QQ \cup (a_\alpha, a_{\alpha + 1})$. As $\{a_\alpha\}$ increasing, $\alpha < \beta \implies (a_\alpha, a_{\alpha + 1}) \cap (a_\beta, a_{\beta + 1}) = \emptyset$. We found $\alpha < \beta \implies q_\alpha \neq q_\beta$. So $\{q_\alpha \mid \alpha < \omega\}$ is uncountable subset of $\QQ$, a contradiction.
+
+    Case 2: suppose $\ell = 0$. Then $\forall \alpha < \omega$, $a_{\alpha + 1} < a_\alpha$. Similarly, pick $q_\alpha \in (a_{\alpha + 1}, a_\alpha) \cup \QQ$. $\alpha \neq \beta \implies q_\alpha \neq q_\beta$. So $\{q_\alpha \mid \alpha < \omega\}$ is uncountable subset of $\QQ$, a contradiction.
+\end{proof}
+\noindent \textbf{Question}: Is there a cardinal $\lambda > \aleph_0$ such that $\lambda \to (\lambda)^2_2$. 
+
+\thm{}{
+    $(2^{\aleph_0})^+ \to (\aleph_1)^2_2$.
+}
+\thm{ER}{
+    $\forall \lambda \geq \aleph_0$, $\forall n  < \omega$,
+    \begin{align*}
+        \beth_{n + 1}(\lambda)^+ \to (\lambda^+)^{n+1}_\lambda.
+    \end{align*}
+}
+\dfn{}{
+    Let $\lambda \geq \aleph_0$, $\alpha \in Or$. 
+    \begin{align*}
+        \beth_\alpha (\lambda) = \begin{cases}
+        \lambda  & \alpha = 0 \\
+        2^{\beth_\beta(\lambda)} & \alpha = \beta + 1 \\
+        \sup_{\beta < \alpha} \beth_\beta(\lambda) & \alpha \text{ limit}
+        \end{cases}.
+    \end{align*}
+}
+
+\thm{Cantor's Continuum Hypothesis}{$2^{\aleph_0} = \aleph_1$.}
+ZF $\not\vdash$ CH and ZF $\not\vdash$ $\neg$CH.
+
+\thm{Generalized Continuum Hypothesis}{
+    $\forall \lambda \geq \aleph_0$, $2^{\lambda} = \lambda^+ \iff \forall \alpha 2^{\aleph_\alpha} = \aleph_{\alpha + 1} \iff \forall \alpha$, $\aleph_\alpha = \beth_\alpha$.
+}
+\thm{}{
+    ZF $\vdash$ [GCH $\to$ AC]
+}
+
+\dfn{}{
+    Let $M$ be an $L$-structure, $A \subseteq |M|$, $\bar b \in |M|$, $\ell(\bar b) < \omega$. The type of $\bar b$ over $A$ in $M$, denoted by $\tp(\bar b / A , M)$ is 
+    \begin{align*}
+        \{ \varphi(\bar x, \bar a) \mid \varphi(\bar x, \bar y) \in \fml(L), \bar a \in A, \ell(\bar y) = \ell(\bar a), M \models \varphi[\bar b, \bar a]\}.
+    \end{align*}
+}
+\noindent \textbf{Remark}: If $M$ is ``nice'' and $A \subseteq |M|$ is ``small'', $\bar b_1 , \bar b_2 \in |M|$, then
+\begin{align*}
+    \tp(\bar b_1 / A, M) = \tp(\bar b_2 / A, M) \iff \exists f \in \Aut_A(M), f(\bar b_1) = \bar b_2
+\end{align*}
+\begin{proof} (ER)
+
+    By induction on $n$. For $n = 0$< $\beth_0(\lambda)^+ = \lambda^+$. ER claims $\lambda^+ \to (\lambda)^1_\lambda \impliedby \lambda^+$ is regular.
+
+    For $n+1$, the inductive assumption is that $\beth_n(\lambda)^+ \to (\lambda^+)^{n+1}_\lambda$> We want to show that $\left(2^{\beth_n(\lambda)}\right)^+ \to (\lambda)_\lambda^{n+2}$. 
+
+    Let $\mu = \beth_n(\lambda)$. We are assuming $\mu^+ \to (\lambda^+)^{n+1}_\lambda$. We want to show $(2^\mu)^+ \to (\lambda^+)^{n+2}_\lambda$. 
+
+    Suppose $F: [(2^mu)^+]^{n + 2} \to \lambda$. We want to find $A \subseteq (2^{\mu})^+$ of cardinality $\lambda^+$ that is monochromatic for $F$. 
+
+    Define $M = \langle (2^\mu)^+, F, \epsilon, i\rangle_{i < \lambda}$.
+    
+    So, $L(M) = \{F, \epsilon, C_i \mid i < \lambda \}$, $c_i^M = i$.
+
+    Note that for $n < \omega$ and $A \subseteq |M|$, $S^n(A, M) = \{\tp(\bar b / A, M) \mid \bar b \in |M| \}$. 
+
+    The idea is to find $\{M_i \prec M \mid i < \lambda^+\}$ where $\Vert M_i \Vert=  2^\mu$ for all $i < \lambda^+$ such that 
+    \begin{align*}
+        \forall i < \lambda^+, \forall A \subseteq |M_i|, |A| \leq \mu, \forall p \in S^1(A, M), \exists \bar b \in |M_{i+1}|, \tp(\bar b / A, M_i) = p.
+    \end{align*}
+    
+\end{proof}
 
 \end{document}
