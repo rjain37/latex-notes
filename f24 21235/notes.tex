@@ -725,4 +725,99 @@ The point is that equivalent metrics give the same notions of convergence, Cauch
     \end{enumerate}
 }
 
+\ex{}{
+    \begin{enumerate}
+        \item $V$ is a finite dimensional normed vector spaces. $\varphi : \FF^n \to V$ isomorphism. Then $\FF^n \ni x \mapsto \Vert \varphi(x) \Vert_V \in [0, \infty)$ defines a norm on $\FF^N$, which we call $\Vert | x |\Vert$. Then $(\FF^n, \Vert | \cdot | \Vert)$ is isometric to $(V, \Vert \cdot \Vert_V)$, and hence $V$ is complete. 
+        \item Let $\emptyset \neq X$ be a set endowed with the discrete metric. Suppose $\{x_n \}^\infty_{n = \ell} \subseteq X$ is Cauchy and pick $N \geq \ell$ such that $n,m \geq N \implies d(x_n, x_m) < 1$. Then $x_n = x_m = x_N$. So $x_n \to x_N$ as $n \to \infty$. Therefore $X$ is complete. 
+    \end{enumerate}
+}
+Note that $Y = \prod Y_i$ is complete iff each individual $Y_i$ is complete. 
+\thm{}{
+    Let $V_1, \ldots, V_k, W$ be normed vector spaces over $\FF$. If $W$ is Banach, then so is $\mathcal L(V_1, \ldots, V_k)$.
+}
+\begin{proof}
+    Suppose $\{T_n\}^\infty_{n = \ell} \subseteq \mathcal L(V_1, \ldots, V_k ; W$ is Cauchy. For fixed $v_1, \ldots, v_k) \in \prod_{i=1}^k V_i$, we bound
+    \begin{align*}
+        \Vert T_n(v_1, \ldots, v_k) - T_m(v_1, \ldots, v_k)\Vert_W \leq \Vert T_n - T_m \Vert_{\mathcal L}\prod_{i=1}^k \Vert v_i \Vert_{V_i}.
+    \end{align*}
+    Therefore, $\{T_n(v_1, \ldots, v_k)\}^\infty_{n = \ell} \subseteq  W$ is Cauchy and hence convergent. We may thus define $T: V_1 \times \cdots \times V_k \to W$ via $T(v_1, \ldots, v_k) = \lim_{n \to \infty} T_n(v_1, \ldots, v_k)$.
+    \begin{enumerate}
+        \item $T \in L(V_1, \ldots, V_k; W)$:
+        
+        \begin{align*}
+            T_n(\alpha x  + \beta y, v_2,\ldots, v_k) = \alpha T_n(x, v_2, \ldots, v_k) + \beta T_n(y, v_2, \ldots, v_k)
+        \end{align*}
+        
+
+        As $n \to \infty$, we get:
+
+        \begin{align*}
+            T(\alpha x + \beta y, v_2, \ldots, v_k) = \alpha T(x, v_2, \ldots, v_k) + \beta T(y, v_2, \ldots, v_k).
+        \end{align*}
+        Repeat in other slots if $k \geq 2$. As such, it is multilinear.
+
+        \item $T \in \mathcal L(V_1, \ldots, V_k; W)$: Fix $v_i \in V_i$ with $\Vert v_i \Vert_{V_i} \leq 1$. Then 
+        \begin{align*}
+            \Vert T(v_1, \ldots, v_k) \Vert_W &= \lim_{n \to \infty} \Vert T_n(v_1, \ldots, v_k) \Vert_W \\
+            &\leq \left(\limsup_{n \to \infty} \Vert T_n \Vert_{\mathcal L} \right) \prod_{n=1}^\infty \Vert v_i \Vert_{V_i} \leq \limsup_{n\to \infty} \Vert T_n \Vert_{\mathcal L} < \infty.
+        \end{align*}
+        \item $T_n \to T$ in $\mathcal L$ as $n \to \infty$: Let $\epsilon > 0$ and pick $N \geq \ell$ such that $n , m \geq N \implies \Vert T_n - T_m \Vert_{\mathcal L} < \frac \epsilon 2$. Then let $v_i \in V_i$ with $\Vert v_i \Vert_{V_i} \leq 1$. Then,
+        \begin{align*}
+            \Vert T(v_1, \ldots, v_k) - T_n (v_1, \ldots, v_k) \Vert_W = \lim_{m \to \infty} \Vert T_m(v_1, \ldots, v_k) - T_n (v_1, \ldots, v_k) \Vert_W \leq \lim_{m \to \infty} \Vert T_m - T_n \Vert_{\mathcal L} < \frac \epsilon 2.
+        \end{align*}
+        But this implies 
+        \begin{align*}
+            \Vert T(v_1, \ldots, v_k) - T_n(v_1, \ldots, v_k)\Vert_W \leq \frac \epsilon 2.
+        \end{align*}
+        By taking the supremum, we get that $\Vert T - T_n \Vert_{\mathcal L} \leq \frac \epsilon 2 < \epsilon$. 
+    \end{enumerate}
+\end{proof}
+
+\cor{}{
+    $V^* = \mathcal L (V; \FF)$ is always Banach.
+}
+
+\dfn{}{
+    Let $X$ be a metric space, $E \subseteq X$. 
+    \begin{enumerate}
+        \item $x \in E$ is an interior point if $\exists \epsilon > 0$ such that $B(x, \epsilon) \subseteq E$. $E^\circ = \{ x \in E \mid x \text{ is an interior point}\}$. $E$ is open iff $E = E^\circ$. $E$ is closed iff $E^c$ is open.
+        \item $x \in X$ is a boundary point of $E$ if $\forall \epsilon > 0$, $B(x, \epsilon) \cap E \neq \emptyset$ and $B(x, \epsilon) \cap E^c = \emptyset$. We write $\partial E = \{ x \in X \mid x \text{ is a boundary point of } E\}$. $\bar E = E^\circ \cup \partial E$.
+        \item We say $x \in X$ is a limit point (accumulation point) of $E$ if $\forall \epsilon > 0$ $(B(x, \epsilon) \cap E) \setminus \{ x \} \neq \emptyset$. We write $E' = \{ x \in X \mid x \text{ is a limit point of } E\}$. If $x \in E \setminus E'$, then $x$ is an isolated point. 
+    \end{enumerate}
+}
+
+\ex{}{
+    Let $(X, disc)$ be given. Claim: all subsets of $X$ are both open and closed. 
+    \begin{proof}
+        $B(x, 1) = \{x\} \implies E \subseteq X$ can be written as 
+        \begin{align*}
+            E = \cup_{x \in E} B(x, 1),
+        \end{align*}
+        which is open. Therefore $E = (E^c)^c$ is also closed.
+    \end{proof}
+    Any metric space in which all sets are open and closed is called a discrete space.
+}
+
+\thm{}{
+    Let $X$ be a metric space and $C \subseteq X$. The following are equivalent:
+    \begin{enumerate}
+        \item $C$ is closed.
+        \item $C$ is sequentially closed; If $\{x_n \}_{n = \ell}^\infty \subseteq C$ is such that $x_n \to x$ in $X$ as $n \to \infty$, then $x \in C$. 
+    \end{enumerate}
+}
+\begin{proof}
+    $1 \to 2$. Let $\{x_n\} \subseteq C$ be such that $x_n \to x \in X$. Suppose BWOC that $x \in C^c$, which is open. Then $\exists N \geq \ell$ such that $n \geq N \implies x_n \in C^c \cup C$, which is a contradiction.
+
+    $2 \to 1$. BWOC, suppose that $C$ is not closed, which emans $C^c$ is not open. Then $\exists x \in C^c$ such that we can pick $\{x_n \}_{n = 0}^\infty \subseteq C$ such that $x_n \in B(x, 2^{-n}) \cap C$. This means that $\{x_n \}_{n = 0}^\infty \subseteq C$ and $x_n \to x$ as $n \to \infty$. But $x \notin C$, so we have a contradiction. 
+\end{proof}
+
+\cor{}{
+    Let $X$ be a complete metric space, and $\emptyset \neq C \subseteq X$. Then $C$ is closed in $X$ iff $C$ is a complete metric space with the metric from $X$. 
+}
+\begin{proof}
+    $\implies$: Let $\{x_n\}_{n = \ell}^\infty \subseteq C$ be Cauchy. Then $x_n \to x \in X$ as $n \to \infty$ because $X$ is complete. By since $C$ is closed, $x \in C$.
+
+    $\impliedby$: Let $\{x_n \} \subseteq C$ be such that $x_n \to x$ in $X$ as $n \to \infty$. Then $\{x _n \}$ is cauchy in $C$, meaning it's convergent in $C$, so $x \in C$, so $C$ is sequentially closed. 
+\end{proof}
+
 \end{document}
