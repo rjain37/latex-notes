@@ -766,4 +766,58 @@ Then $X = \sum X_i$ satisfies
 \end{proof}
 
 
+\thm{}{
+    Let $X_1, X_2, \ldots, X_n$ be independent $\{0, 1\}$ coin flips with $P(X_i = 1) = p$ for some $p \leq \frac 12$. Define $X = \sum X_i$, $\mu = E[X] = np$. 
+
+    Small-deviation regime: For $K \in \{1, \ldots, \sqrt \mu\}$,
+    \begin{align*}
+        P(X \geq \mu + K\sqrt \mu) \leq e^{-\Theta(K^2)}. 
+    \end{align*}
+    Large-deviation regime: For $J \geq 2$ such that $J\mu \leq n$, 
+    \begin{align*}
+        P(X \geq J\mu) \leq \frac{1}{J^{\Theta(J \mu)}}.
+    \end{align*}
+}
+\begin{proof}
+    (large-deviation case)
+
+    \noindent \underline{\textbf{Warmup 1}}
+    \newline \newline
+    \noindent \textbf{Theorem 1} (Poor Man's Chernoff Bound)
+        If $\mu \leq 1$, then
+        \begin{align*}
+            P( X \geq K) \leq \mu^K.
+        \end{align*}
+    \begin{proof}
+        \textbf{Core fact} $P(X \geq 1) \leq \mu$ by Markov's inequality. 
+
+        Now repeat the ideas with $t_1, t_2, \ldots$ to say that $P(X \text{ reaches } i) = \mu^i$. 
+    \end{proof}
+    \newpage
+    \noindent \underline{\textbf{Warmup 2}} This was already done prior as it is the exact same.
+    \newline \newline
+    \noindent \underline{\textbf{Warmup 3}}
+    \newline \newline
+    \noindent \textbf{Theorem 3}
+    \begin{align*}
+        P(X \geq J) \geq \frac{1}{J^{O(J\mu)}}
+    \end{align*}
+    \begin{proof}
+        We'll have $J \mu$ groups where each group has mean $\frac 1J$. 
+
+        \noindent \textbf{Core fact}: If $\mu \leq 1$, then $P(X \geq 1) \geq \Omega(\mu)$. 
+
+        By the core fact, each $C_i$ is $\geq 1$ with probability $\geq \Omega \left( \frac 1J\right)$. So, 
+        \begin{align*}
+            P(\text{every } C_i \geq 1) = P(X \geq J\mu) \geq \Omega \left(\frac 1J\right)^{J \mu}.
+        \end{align*}
+        ``Squiggly square to signify almost proof done.''
+    \end{proof}
+
+    So the Poor Man's Chernoff Bound implies $P(C_i \geq K) \leq \frac{1}{J^K}$. Then by Chernoff for geometric random variables,
+    \begin{align*}
+        P\left(\sum C_i \geq 2J \mu\right) \leq \left(\frac{4}{J}\right)^{J \mu}
+    \end{align*}
+
+\end{proof}
 \end{document}
