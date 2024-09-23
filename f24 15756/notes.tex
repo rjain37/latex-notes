@@ -820,4 +820,120 @@ Then $X = \sum X_i$ satisfies
     \end{align*}
 
 \end{proof}
+
+
+
+\section{More Chernoff Bounds}
+\thm{Chernoff Bound}{
+    Let $X_1, X_2, \ldots, X_n \in [0, 1]$ be independent random variables. Let $X = \sum X_i$ and $\mu = E[X]$. Then, for $k \in O(\sqrt \mu)$, 
+    \begin{align*}
+        P(|X - \mu| \geq k \sqrt{\mu}) \leq e^{-\Omega(k^2)}.
+    \end{align*}
+    And for $J \geq 2$,
+    \begin{align*}
+        P(X \geq J\mu) \leq \left( \frac 1 J\right)^{\Omega(J\mu)}.
+    \end{align*}
+}
+\noindent Small-deviation regime:
+\begin{itemize}
+    \item There are $k^2$ chunks.
+    \item So each has expected value $\approx \frac{\mu}{k^2}$.
+    \item If each exceeds expected value by $\sqrt{\frac{\mu}{k^2}}$, then the total sum is $\geq k^2 \cdot \sqrt{\frac{\mu}{k^2}} = k \sqrt \mu$. 
+\end{itemize}
+\noindent Large-deviation regime:
+\begin{itemize}
+    \item $J \mu$ chunks.
+    \item Each chunk has expected value $\approx \frac 1J$.
+    \item If each chunk is at least 1, then the total sum is at least $J \mu$. 
+\end{itemize}
+\thm{Bennett's Inequality, Bernstein's Bound}{
+    Same bound, but let $v = \Var(X)$. 
+    \begin{align*}
+        P(X - E[X] \geq k\sqrt v) &\leq e^{-\Theta(k^)} \text{ for } k \in \{1, 2, \ldots, \sqrt v\} \\
+        P(X - E[X] \geq Jv) &\leq \left( \frac 1J \right)^{\Omega(Jv)} \text{ for } J \geq 2.
+    \end{align*}
+}
+
+\subsection{Adaptive Version}
+\thm{Azuma's Inequality}{
+    Let $X_1, X_2, \ldots, X_n \in [-1, 1]$. Suppose $E[X_i | X_1, \ldots, X_{i-1}] = 0$. Then, $X = \sum X_i$ satisfies
+    \begin{align*}
+        P(X \geq K\sqrt n) \leq e^{-\Omega(K^2)}.
+    \end{align*}
+}
+\noindent Fancier versions:
+
+Have random variables $X_1, X_2, \ldots, X_n \in [0, 1]$ which are revealed one after the other. After $X_1, \ldots, X_{i-1}$ are revealed, Alice gets to select the distribution $P_i$ for $X_i$ and then $X_i$ is revealed from $P_i$. 
+
+Let $\mu_i = E[X_i \mid P_i]$, $v_i = \Var(X_i \mid P_i)$, $X = \sum X_i$, $\mu = \sum \mu_i$ and $v = \sum v_i$. As a corollary to Azuma's inequality,
+\begin{align*}
+    P( X \geq \mu + k \sqrt n) \leq e^{-\Omega(k^2)}.
+\end{align*}
+
+Now if $\mu$ is deterministically at most $\bar \mu$, then
+\begin{align*}
+    P(X \geq K \sqrt{\bar \mu} + \bar \mu) &\leq e^{-\Omega(K^2)} \\
+    P(X \geq J \bar\mu) &\leq \left( \frac 1J \right)^{\Omega(J\bar \mu)}.
+\end{align*}
+
+\thm{Freedman's Inequality}{
+    If $v$ is deterministcally at most $\bar v$, then
+    \begin{align*}
+        P(X \geq K \sqrt{\bar v} + \mu) &\leq e^{-\Omega(K^2)} \text{ for } K \in \{1, 2, \ldots, \sqrt v\} \\
+        P(X \geq \mu + J \bar v) &\leq \left( \frac 1J \right)^{\Omega(J\bar v)} \text{ for } J \geq 2.
+    \end{align*}
+}   
+
+
+\nt{Bill has used the following bound in $\sim 90 \%$ of his papers. 
+
+``Sometimes when you don't need this bound you want to find a way to use it anyway.''}
+\thm{McDiarmid's Inequality}{
+    Let $X_1, X_2, \ldots X_n$ be independent. Let $F : X_1, \ldots, X_n \to \RR$. Suppose: If I change some $X_i$ to a new value $\bar X_i$,
+    \begin{align*}
+        |F(X_1, \ldots, X_i, \ldots, X_n) - F(X_1, \ldots, \bar X_i, \ldots, X_n)| \leq 1.
+    \end{align*}
+    Then, 
+    \begin{align*}
+        P(|F - E[F]| \geq K\sqrt n) \leq e^{-\Omega(K^2)}.
+    \end{align*}
+}
+
+\ex{}{
+    Consider a random graph:
+    \begin{itemize}
+        \item $n$ vertices.
+        \item each $(i, j)$ is an edge with probability $\frac 12$.
+    \end{itemize}
+    Consider the chromatic number $\chi(G)$. There's a way to show that
+    \begin{align*}
+        P(|\chi(G) - E[\chi(G)] | \geq k \sqrt n) \leq e^{-\Omega(k^2)}.
+    \end{align*}
+    We cannot define the random variables $X_i$ on whether an edge is included or not. This is because we end up getting $n^2$ random variables, which makes the inequality flop. We proceed by defining $X_1, X_2, \ldots, X_n$ where $X_i$ is the number of edges from vertex $i$ to vertices $ > i$. Then the result follows directly from McDiarmid's inequality.
+}
+\noindent \textit{Proof Idea}: Let 
+\begin{align*}
+    Y_0 &= E[F] \\
+    Y_1 &= E[F \mid X_1] \\
+    Y_2 &= E[F \mid X_1, X_2] \\
+    \vdots \\
+    Y_n &= E[F \mid X_1, \ldots, X_n] = F.
+\end{align*}
+Then let 
+\begin{align*}
+    Z_1 = Y_1 - Y_0 \\
+    Z_2 = Y_2 - Y_1 \\
+    \vdots \\
+    Z_n = Y_n - Y_{n-1}.
+\end{align*}
+\noindent Claim 1:  $E[Z_i \mid Z_1, \ldots, Z_{i-1}] = 0$. 
+
+\noindent Claim 2: $|Z_i| \leq 1$. 
+
+So by Azuma, $P(\sum Z_i > K \sqrt n) \leq e^{-\Omega(K^2)}$. But $\sum Z_i = Y_n - Y_0 = F - E[F]$. 
+
+
+
+
+
 \end{document}

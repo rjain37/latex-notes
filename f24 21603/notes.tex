@@ -616,4 +616,29 @@ ZF $\not\vdash$ CH and ZF $\not\vdash$ $\neg$CH.
     
 \end{proof}
 
+
+\thm{2nd Tarski Chain Theorem}{
+    $\forall \{ M_i \mid i < \alpha\}$ elemtnary chain, there is $N := \bigcup_{i < \alpha} M_i$ such that $\forall i < \alpha$, $M_i \prec N$. Moreover, such that if there is $M$ such that $i < \alpha \implies M_i \prec M$ then $N \prec M$. 
+}
+\mlenma{}{
+    Let $\mu \geq \aleph_0$ and $|L(M)| \leq \mu$. Given $M$ of cardinality $(2^\mu)^+$, there is $\{M_i \prec M \mid i < \mu^+\}$ an elementary chain such that
+    \begin{enumerate}
+        \item $\Vert M_i \Vert = 2^\mu$ for all $i$.
+        \item $\forall i < \mu^+$, for all $A \subseteq |M_i|$, $|A| \leq \mu$, for every $P \in S(A, M)$, there is $b \in M_{i+1}$, $\tp(b/A, M) = p$. 
+    \end{enumerate} 
+}
+\begin{proof}
+    We construct $\{M_i\}$ by induction on $i$. For $i = 0$, fix $M_i \prec M$ of cardinality $2^\mu$. 
+
+    For $i$ as a limit, let $M_i = \bigcup_{j < i} M_j$. 
+
+    For $i = j+1$, Given $M_j$. The cardinality of $S = \{A \mid A \subseteq |M_j| , |A| \leq \mu \}$ is $2^\mu$.
+
+    Fix $\{A_\alpha \mid \alpha < 2^\mu\}$. What is the cardinality of $\{P \mid P \in S(A_\alpha, M) \}$? It is less than or equal to the cardinality $\{ \Phi \mid \Phi \subseteq \fml(L(M, \ell))_{\ell \in A_\alpha} \} \leq 2^\mu$.
+
+    Fix $\{P_{p, \alpha} \mid p < 2^\mu\} = S(A_{\alpha}, M)$. Given $\beta, \alpha$, there is $b_{\beta, \alpha} \in M$ such that $\tp(b_{\beta, \alpha} / A, M) = P_{p, \alpha}$. Apply the Downward Lowenheim Skolem Theorem to $|M_j| \cup \{b_{\beta, \alpha} \mid p, \alpha < 2^\mu\}$.
+
+    
+\end{proof}
+
 \end{document}
