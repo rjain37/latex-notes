@@ -820,4 +820,94 @@ Note that $Y = \prod Y_i$ is complete iff each individual $Y_i$ is complete.
     $\impliedby$: Let $\{x_n \} \subseteq C$ be such that $x_n \to x$ in $X$ as $n \to \infty$. Then $\{x _n \}$ is cauchy in $C$, meaning it's convergent in $C$, so $x \in C$, so $C$ is sequentially closed. 
 \end{proof}
 
+\dfn{}{Let $X$ be a metric space and $A \subseteq B \subseteq X$. We say $A$ is dense in $B$ if $\forall b \in B$, $\exists \{a_n\} \subseteq A$ such that $a_n \to b$ as $n \to \infty$.}
+
+\ex{}{
+    \begin{enumerate}
+        \item $\QQ$ is dense in $\RR$. $\QQ^n$ is dense in $\RR^n$. $(\QQ^n + i \QQ^n) \subseteq \CC^n$ is dense. 
+        \item $B(x, r) \subseteq \RR^n$ is dense in $B[x, r]$. 
+        \item Let $X$ be given the discrete metric. $B(x, 1) = \{x\}$, but $B[x, 1] = X$, so as long as $X \neq \{x\}$, we do not have $B(x, 1) \subseteq B[x, 1]$ is dense.
+    \end{enumerate}
+}
+
+\mprop{}{Let $X$ be a metrid space, $A \subseteq B \subseteq X$. The following are equivalent: 
+\begin{enumerate}
+    \item $A$ is dense in $B$.
+    \item $ B \subseteq \bar A$.
+    \item $\forall x \in B$ and $\epsilon > 0$, $\exists a \in A$ such that $d(x, a) < \epsilon$.
+    \item $\forall x \in B$ and $\epsilon > 0$, $B(x, \epsilon) \cap A \neq \emptyset$.
+\end{enumerate}
+}
+\begin{proof}
+    Recall $\bar A = A \cup A'$. 
+
+    $1 \implies 2$. Let $b \in B$. If $b \in A$, we're done. Otherwise $b \notin A$, but by density $\exists \{ a_n\}_{n = \ell}^\infty \subseteq A \setminus \{b\}$ such that $a_n \to b$ as $n \to \infty$. Thus, $b \in A'$. 
+
+    $2 \implies 1$. Suppose $B \subseteq A \cup A' = \bar A$. Let $b \in B$. If $b \in A$, let $\{ a \}_{n = \ell}^\infty = b$ then we're done. 
+
+    So suppose $b \in A' \setminus A$. By definition of limit point, we can pick a sequence $\{a_n\}$ such that $a_n \to b$ as $n \to \infty$. So $A$ is dense in $B$.
+
+    $3 \iff 4$ is trivial. 
+
+    $2 \iff 3$. Again, use $\bar A = A \cup A'$. 
+\end{proof}
+
+
+\cor{}{
+    Let $X$ be a metric space and $A \subseteq B \subseteq X$. If $A$ is dense in $B$, then $A$ is also dense in $\bar B$. 
+}
+\begin{proof}
+    $A \subseteq B$ is dense $\implies A \subseteq B \subseteq \bar A$. So $\bar B \subseteq \bar A$, meaning $A$ is dense is $\bar B$ as desired. 
+\end{proof}
+
+
+\dfn{}{
+    Let $X$ be a metric space. We say $X$ is separable if $X$ has a countable dense subset.
+}
+
+\ex{Separable Vector Spaces}{
+    \begin{enumerate}
+        \item $\RR^n$ is separable, ditto for $\CC^n$. 
+        \item Let $V$ be a finite dimensional normed vector space. Let $\varphi: \FF^n \to V$ be an isomorphism. Endow $\FF^n$ with norm $\Vert | x | \Vert = \Vert \varphi(x) \Vert_V$, which is equiavalent to $|\cdot|$ on $\FF^n$. Then $V$ is separable with $\varphi(\QQ^n)$ as a countable dense subset. 
+        \item $\ell^\infty(\NN; \FF)$ is not separable, but $\ell^p(\NN; \FF)$ is for $1 \leq p < \infty$. 
+    \end{enumerate}
+}
+
+
+\dfn{}{Let $X, X^*$ be metric spaces. We say that $X^*$ completes $X$ if:
+\begin{enumerate}
+    \item $X^*$ is complete.
+    \item $\exists f : X \to X^*$ an isometric embedding. 
+    \item $f(x) \subseteq X^*$ is dense.
+\end{enumerate}}
+
+\thm{Uniqueness of completions}{
+    Let $X,Y,Z$ be metric spaces. Suppose $Y$ and $Z$ both complete $X$. Then $Y$ and $Z$ are isometric.
+}
+\begin{proof}
+    Let $g: X \to Y$ and $h: X \to Z$ be isometric embeddings. We will construct an isometric $f: Y \to Z$. Let $y \in Y$. Since $g(X) \subseteq Y$ is dense, $\exists \{y_n\}_{n = \ell}^\infty \subseteq g(X)$ such that $y_n \to y$ as $n \to \infty$.
+
+    Then $\exists! \{x_n \}_{n = \ell}^\infty \subseteq X$ such that $g(x_n) = y_n$ for all $n \geq \ell$. Then upon setting $z_n  = h(x_n) = h \circ g^{-1}(y_n)$, we have 
+    \begin{align*}
+        d_Z(z_n, z_m) = d_X(x_n, x_m) = d_Y(y_n, y_m).
+    \end{align*}
+    This means $\{z_n\}$ is Cauchy, and therefore convergent as $Z$ is complete. 
+
+    Suppose $\{y_n'\}_{n = \ell}^\infty$ is another sequence such that $y_n' \to y$ as $n \to \infty$. Note 
+    \begin{align*}
+        d_Y(y_n, y_n') = d_X(g^{-1}(y_n), g^{-1}(y_n')) = d_Z(h(g^{-1}(y_n)), h(g^{-1}(y_n'))) = d_Z(z_n, z_n').
+    \end{align*}
+    Therefore, $\lim_{n \to \infty} z_n = \lim_{n \to \infty} z_n'$. So, we can define $f: Y \to Z$ as $f(y) = \lim_{n \to \infty} h(g^{-1}(y_n))$ for any sequence $\{y_n\} \subseteq g(X)$ such that $y_n \to y$ as $n \to \infty$.
+
+    We claim that $f$ is an isometric embedding. Let $y , y' \in Y$ and pick $\{y_n\}_{n = \ell}^\infty$ and $\{y'_n\}_{n = \ell}^\infty$ such that $y_n \to y$ and $y'_n \to y'$ as $n \to \infty$. Then,
+    \begin{align*}
+        d_Y(y_n, y_n') = d_X(g^{-1}(y_n), g^{-1}(y_n')) = d_Z(h(g^{-1}(y_n)), h(g^{-1}(y_n'))) \to d_Z(f(y), f(y')) = d_Y(y, y'),
+    \end{align*}
+    so $f$ is an isometric embedding.
+
+    We claim that $f$ is surjective. Let $z \in Z$ and pick $\{x_n\}_{n = \ell}^\infty$ such that $h(x_n) = z_n \to z$ as $n \to \infty$. Then let $y_n = g(x_n)$. Then $\{y_n\}_{n = \ell}^\infty \subseteq Y$ are Cauchy and hence convergent to $y \in Y$. Then $f(y) =\lim_{n \to \infty} h \circ g^{-1}(y_n) = \lim_{n \to \infty} z_n = z$. So $f: Y \to Z$ is an isometry!
+\end{proof}
+\nt{This is analogous to the uniqueness of Dedekind complete ordered fields. In principal, there can be different techniques for finding /constructing completions of a given metric space, but in the end they're isometric.}
+
+
 \end{document}
