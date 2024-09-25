@@ -908,6 +908,88 @@ Note that $Y = \prod Y_i$ is complete iff each individual $Y_i$ is complete.
     We claim that $f$ is surjective. Let $z \in Z$ and pick $\{x_n\}_{n = \ell}^\infty$ such that $h(x_n) = z_n \to z$ as $n \to \infty$. Then let $y_n = g(x_n)$. Then $\{y_n\}_{n = \ell}^\infty \subseteq Y$ are Cauchy and hence convergent to $y \in Y$. Then $f(y) =\lim_{n \to \infty} h \circ g^{-1}(y_n) = \lim_{n \to \infty} z_n = z$. So $f: Y \to Z$ is an isometry!
 \end{proof}
 \nt{This is analogous to the uniqueness of Dedekind complete ordered fields. In principal, there can be different techniques for finding /constructing completions of a given metric space, but in the end they're isometric.}
+\newpage
 
 
+\thm{}{
+    Let $X \neq \emptyset$ be a set and $Y$ be a metric space. Then $\mathcal B(X; Y)$ is complete if and only if $Y$ is complete. 
+}
+\begin{proof}
+    HW5
+\end{proof}
+
+\cor{}{
+    Let $X \neq \emptyset$ be a set. Then $\mathcal B(X) = \mathcal B(X; \RR)$ is a Banach space.
+}
+\begin{proof}
+    $\RR$ is complete. 
+\end{proof}
+
+\thm{}{
+    Let $X$ be a metric space. Then $X$ has a completion.
+}
+\begin{proof}
+    Let $\Phi: X \to \mathcal B(X)$ be the isometric embedding we previously constructed. Let $X^* = \overline{\Phi(X)}$, which is closed in $\mathcal (B)$ and hence a complete metric space. By construction, $\Phi(X)$ is dense in $X^*$. So, $X^*$ is complete.
+\end{proof}
+\noindent Remarks:
+\begin{enumerate}
+    \item Why not just set $\RR = \bar \QQ$? It's cyclic!
+    \item $\exists$ another construction of $X^*$ which is more ``direct'' and proceeds through $\text{Cauchy}(X)$ from HW4. This idea has room to play. It can be hacked to yield an alternate construction of $\bar \RR$ from $\QQ$ or any other Archimedean ordered field. 
+\end{enumerate}
+
+\section{Limits and Continuity}
+\dfn{}{
+    Let $X,Y$ be metric spaces, $E \subseteq X$, $z \in E', f: E \to Y$. We say that $f$ has limit $y \in Y$ as $x \to z$, written as $f(x) \to y$ as $x \to z$ or $\lim_{x \to z} f(x) = y$ if for all $\epsilon > 0$, there exists $\delta > 0$, such that $x \in E$ and $0 < d_X(x, z) < \delta \implies d_Y(f(x), y) < \epsilon$.
+}
+\noindent Remarks:
+\begin{enumerate}
+    \item limits are unique when they exist
+    \item the definition only requires $z \in E'$, not $z \in E$. that is, $f(z)$ doesn't need to be defined and even if it is, the defintion doesn't care what it is. 
+\end{enumerate}
+\newpage
+\thm{Sequential characterization of limits}{Let $X,Y$ be metric spaces, $E \subseteq X$, $f : E \to Y$, $z \in E'$, $y \in Y$. The following are equivalent:
+\begin{enumerate}
+    \item $f(x) \to y$ as $x \to z$.
+    \item $\forall \epsilon > 0$, $\exists \delta > 0$ such that $f(B(z, \delta) \setminus \{z\}) \subseteq B_Y(y, \epsilon)$.
+    \item If $\{x_n\}_{n = \ell}^\infty \subseteq E \setminus \{x\}$ is such that $x_n \to z$ as $n \to \infty$, then $f(x_n) \to y$ as $n \to \infty$. 
+\end{enumerate}}
+\begin{proof}
+    $1 \iff 2$ is a triviality. Now we show $1 \implies 3$. Let $\{x_n\}_{n = \ell}^\infty \subseteq E \setminus \{z\}$ be such that $x_n \to z$ as $n \to \infty$. Let $\epsilon > 0$ and pick $\delta > 0$ such that $x \in E$ and $0 < d_X(x, z) < \delta \implies d_Y(f(x), y) < \epsilon$. Pick $N \geq \ell$ such that $n \geq N$ implies $0 < d_X(x_n, z) < \delta$. So, $d_Y(f(x_n), y) < \epsilon$. Therefore, $f(x_n) \to y$ as $n \to \infty$.
+
+    Now for $3 \implies 1$. Suppose BWOC $\neg 1$. Then $\exists \epsilon > 0$ such that $\forall \delta > 0$, $\exists x \in E$ such that $0 < d(x, z) < \delta$, $d(f(x), y) \geq \epsilon$. 
+
+    For $\delta = 2^{-n}$, $n \in \NN$, we then get $\{x_n \}_{n = 0}^\infty \subseteq E \setminus \{z\}$ such that $d(x_n, z) < 2^{-n}$, but $d(f(x_n), y) \geq \epsilon$. Now we use $3$: $x_n \to z$ as $n \to \infty$, so $f(x_n) \to y$ as $n \to \infty$. In particular, $\exists N \geq 0$ such that $n \geq N \implies d(f(x_n), y) < \epsilon$. This is a contradiction. 
+\end{proof}
+\thm{Limits and components}{Let $X, Y_1, \ldots, Y_n$ be metric spaces, and let $Y = \prod Y_i$ endowed with usual $p$-metric. Let $E \subseteq X$, $z \in E'$, $f: E \to Y$. Write $f = (f_1,\ldots, f_n)$ where $f_i : E \to Y_i$. The following are equivalent for $y = (y_1, \ldots, y_n) \in Y$:
+\begin{enumerate}
+    \item $f(x) \to y$ as $x \to z$.
+    \item $f_i(x) \to y_i$ as $x \to z$ for $1\leq i \leq n$. 
+\end{enumerate}}
+\begin{proof}
+    This follows from the sequential characterization of limits combined with the characterization of limits of sequences in the product space $Y$.
+\end{proof}
+
+\thm{
+    Algebra of limits
+}{
+    Let $X$ be a metric space, $E\subseteq ZX$, $z \in E'$. The following hold:
+    \begin{enumerate}
+        \item Let $V$ be a normed vector space and suppose $f,g: E\to V$, $\alpha : E \to \FF$ are such that $f(x) \to v_1$, $g(x) \to v_2$, and $\alpha(x) \to \beta$ as $x \to z$. Then:
+        \begin{enumerate}
+            \item $f(x) + g(x) \to v_1 + v_2$ as $x \to z$.
+            \item $\alpha(x)f(x) \to \beta v_1$ as $x \to z$.
+        \end{enumerate}
+        \item Let $V_1, \ldots, V_k, W$ be normed vector spaces over $\FF$. Suppose $f_i :E \to V_i$ and $T: E \to \mathcal L(V_1, \ldots, V_k; W)$ are such that $f_i(x) \to v_i$ as $x \to z$ and $T(x) \to M$ as $x \to z$. Then, 
+        \begin{align*}
+            E \ni x \mapsto T(x)(f_1(x), \ldots, f_k(x)) \in W
+        \end{align*}
+        satisfies $T(x)(f_1(x), \ldots, f_k(x)) \to M(v_1, \ldots, v_k)$ as $x \to z$.
+    \end{enumerate}
+}
+\begin{proof}
+    Use characterization of limits via sequences together with algebra of sequential limits.
+\end{proof}
+\dfn{}{
+    Let $X,Y$ be metric spaces, $E\subseteq X$, $z \in E$, and $f: E \to Y$. We say $f$ is continuous at $z$ if for every $\epsilon > 0$ there exists $\delta > 0$ such that $x \in E$ and $d(x, z) < \delta \implies d(f(x), f(z)) < \epsilon$. We say $f$ is continuous on $E$ if $f$ is continuous at every point of $E$.
+}
 \end{document}
