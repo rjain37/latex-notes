@@ -933,6 +933,116 @@ Then let
 So by Azuma, $P(\sum Z_i > K \sqrt n) \leq e^{-\Omega(K^2)}$. But $\sum Z_i = Y_n - Y_0 = F - E[F]$. 
 
 
+\chapter{Oblivious Routing}
+We start with an $n$-node hypercube:
+\begin{itemize}
+    \item $n$ vertices: $1, \ldots n$.
+    \item edges: For each pair $i,j$ if $i,j$ differ in exactly one bit, then we have edges $(i, j)$ and $(j, i)$. 
+\end{itemize}
+This graph contains $n \log n$ edges. Each vertex $i$ wants to send a message to another vertex $\pi(i)$, where $\pi$ is a permutation. Each edge can only send 1 message per time step (may have to wait in queue before goign down edge). 
+
+\noindent Goal: Complete all the message sending within time $O(\log n)$.
+
+\noindent Oblivious Routing: Each message decides its path at the beginning of time. 
+
+\thm{Brebner, Valiant (Leslie) (1981)}{
+    With probability $\geq 1 - \frac{1}{n^{1000}}$, we can achieve $O(\log n)$ total time. 
+}
+\begin{proof}
+    Algorithm:
+    \begin{itemize}
+        \item To send $i \to \pi(i)$; 
+        \begin{itemize}
+            \item Pick random $r_i \in \{1, \ldots, n\}$.
+            \item Phase 1: Send $i \to r_i$.
+            \item Phase 2: Send $r_i \to \pi(i)$.
+        \end{itemize}
+    \end{itemize}
+    We wait until a preplanned time to begin phase 2. To send $i \to r_i$, use bit-fixing where we fix bits from left to right. Let $u_i :=$ message going from $i \to r_i$, $P_i=$ path that $u_i$ takes. Focus on a fixed $i$. 
+
+    \noindent Claim: With high probability, $u_i$ completes $p_i$ within $O(\log n)$ time. 
+
+    \mlenma{Lemma 1}{
+        If $i \neq j$, then edges in $P_i \cap P_j$ form a continguous subpath.
+    }
+    \begin{proof}
+        Consider an edge in $P_i$. For example if we have
+        \begin{align*}
+            010111011001 \\
+            010111111001
+        \end{align*}
+        we can say that the 011001 agrees with $i$ and $j$, while the 0101111 agrees with $r_i$ and $r_j$. 
+
+        The values of $k$ where paths agree,
+        \begin{align*}
+            \{ k \mid r_i, r_j \text{ agree first $k$ bits}\} \cap \{k \mid i, j \text{ agree on final $n-k+1$ bits}\}.
+        \end{align*}
+        Note that the first set is a prefix of $1, \ldots n$ and the second set is a suffix of $1, \ldots n$. Therefore, their intersection is a continguous interval. 
+    \end{proof}
+    \mlenma{Lemma 2}{
+        The number of time steps that $u_i$ spends in queues is at most $|S_i|$, where $S_i = \{ j \neq i \mid P_i \cap P_j \neq \emptyset\}$.
+    }
+    \begin{proof}
+        Say that a message $w$ that is currently on $P_i$ has ``delay'' $d$ if 
+        \begin{itemize}
+            \item $w$ is on the $t$-th step of $P_i$ for some $t$. 
+            \item We are in the $t+d$-th time step of the algorithm.
+        \end{itemize}
+        If $u_i$ waits in a queue and its delay goes from $d$ to $d+1$, give a note with the number $d$ on it to whoever used the edge that $u_i$ wanted to use. Later on, if a message has a note ``$d$'', and $w$ waits in a queue:
+        \begin{itemize}
+            \item if edge $\notin P_i$, keep the note
+            \item otherwise, pass the note to message that's using the edge we're waiting on.
+        \end{itemize}
+        If note $d$ is currently held by a message $w$ and if $w$ is still on $P_i$, then $w$'s delay is exactly $d$. This means that no two notes will be held by the same message. This implies that the number of notes is equal to the number of messages hold notes, which is then less or equal to $|S_i|$.
+    \end{proof}
+    Now let $e$ be an edge. Define $m_e :=$ the number of messages tha tuse $e$.
+    \mlenma{Lemma 3}{
+        $E[m_e] \leq 1$.
+    }
+    \begin{proof}
+        What does it mean to use edge $e$? The first $k$ bits are free variables for $j$ while the last $n-k + 1$ agree with $j$. So the number of options for $j = 2^{k-1}$. FOr each such $j$, 
+        \begin{align*}
+            P(r_j \text{ has correct first $k$ bits}) = \frac{1}{2^k}.
+        \end{align*}
+        So,
+        \begin{align*}
+            E[\text{\# $j$ that use $e$}] \leq \sum_{\text{valid } j} P(\text{$j$ uses $e$}) \leq 2^{k-1} \frac{1}{2^k} = \frac 12.
+        \end{align*}
+    \end{proof}
+
+    \mlenma{Lemma 4}{
+        With high probability, $|S_i| \leq O(\log n)$.
+    }
+    \begin{proof}
+        First, fix $P_i$. 
+        \begin{align*}
+            |S_i| = \sum_{j \neq i} \mathbb I [P_i \cap P_j \neq \emptyset],
+        \end{align*}
+        where $\mathbb I$ is the indicator function. Note that these are all independent random variables determined by $r_j$. This is exactly the type of thing we want to apply Chernoff bounds to. 
+
+        Define $\mu := E[|S_i|] \leq \sum_{e \in P_i} E[\text{\# messages $j\neq i$ that use $e$}] \leq \frac{\log n}{2}$. 
+    \end{proof}
+    So let's say $\mu = \frac{\log n}{2}$. So,
+    \begin{align*}
+        P(|S_i| \geq J\mu) \leq \left( \frac 1J \right)^{\Omega(J\mu)} \leq \frac 12^{\Omega(J \mu)} \leq \frac{1}{\poly n}.
+    \end{align*}
+\end{proof}
+\newpage 
+\noindent Suppose I flip a fair coin repeatedly:
+
+\noindent Question 1: How many flips do I need to get $\geq 1$ heads with high probability. 
+
+\noindent Answer: $O(\log n) \implies P(\text{all tails}) \leq \frac{1}{2^{\Theta (\log n)}}$.
+
+\noindent Question 2: How man flips do I need to get $\geq \log n$ heads with high probability?
+
+\noindent Answer: $O(\log n)$. If I flip $1000 \log n$ coins, $P(\text{$< \log n$ heads}) = P(> 999 \log n \text{ tails})$. This means I exceeded the mean greatly as $E[\text{\# of tails}] = 500 \log n$. If $\mu = E[T]$, then
+\begin{align*}
+    T &> 1.9 \mu \\
+    &> \mu + 0.9 \sqrt \mu ( \sqrt \mu).
+\end{align*}
+And the probability of this is $\leq e^{-\Omega(\log n)}$.
+
 
 
 
