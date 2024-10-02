@@ -992,4 +992,197 @@ Note that $Y = \prod Y_i$ is complete iff each individual $Y_i$ is complete.
 \dfn{}{
     Let $X,Y$ be metric spaces, $E\subseteq X$, $z \in E$, and $f: E \to Y$. We say $f$ is continuous at $z$ if for every $\epsilon > 0$ there exists $\delta > 0$ such that $x \in E$ and $d(x, z) < \delta \implies d(f(x), f(z)) < \epsilon$. We say $f$ is continuous on $E$ if $f$ is continuous at every point of $E$.
 }
+
+
+\newpage
+\noindent Remarks:
+\begin{enumerate}
+    \item If $z$ is isolated, i.e. $z \in E \setminus E'$, then the definition of continuity is true vacuously and so $f$ is continuous as $z$. 
+    \item Unlike when computing limits, we need $f(z)$ defined, and $x = z$ is allowed.
+    \item We can think of $f: E \to Y$ with $E$ a metric space on its own with $d_E = d_X$.  
+\end{enumerate}
+\thm{Characterizations of continuity}{Let $X,Y$ be metric spaces and $z \in E \subseteq X$ and $f: E \to Y$. The following are equivalent:
+\begin{enumerate}
+    \item $f$ is continuous at $z$.
+    \item $\forall \epsilon > 0$, $\exists \delta > 0$ such $f(E \cap B(z, \delta)) \subseteq B(f(z), \epsilon)$.
+    \item If $z \in E'$, then $f(x) \to f(z)$ as $x \to z$.
+    \item If $\{x_n\}_{n = \ell}^\infty  \subseteq E \setminus \{z\}$ is such that $x_n \to z$ as $n \to \infty$, then $f(x_n) \to f(z)$ as $n \to \infty$. 
+    \item If $\{x_n\}_{n = \ell}^\infty \subseteq E$ is such that $x_n \to z$ as $n \to \infty$, then $f(x_n) \to f(z)$ as $n \to \infty$.
+    \item If $\{x_n \}_{n = \ell}^\infty \subseteq E$ is such that $x_n \to z$ as $n \to \infty$, then $\{f(x_n)\}_{n = \ell}^\infty \subseteq Y$ is convergent. 
+\end{enumerate}}
+\begin{proof}
+    $1 \iff 2$ is obvious as well as $3 \iff 4$ since we proved it in the sequential chracterization of limits.
+
+    We'll prove $1 \implies 5 \implies 6 \implies 4$ and $3 \implies 1$. 
+
+    $3 \implies 1$: If $z \in E \setminus E'$, we're done because of earlier remark. So let $z \in E \setminus E'$. Then $3$ is in play: $f(x) \to f(z)$ as $x \to z$. Let $\epsilon > 0$ and pick $\delta > 0$ such that $x \in E$ and $0 < d(x, z) < \delta \implies d(f(x), f(z)) < \epsilon$.
+
+    Note, $x = z \iff d(x, z) = 0$, in which case $d(f(x), f(z)) = 0 < \epsilon$. So $f$ is continuous at $z$.
+
+    $1 \implies 5$: Suppose $f$ is continuous at $z$ and let $\{x_n \} \subseteq E$ be such that $x_n \to z$ as $n \to \infty$. Let $\epsilon > 0$ and pick $\delta > 0$ such that $x \in E$ and $d(x, z) < \delta \implies d(f(x_n), f(z)) < \epsilon$. Pick $N \geq \ell$ such that $n \geq N$ implies $d(x_n , z) < \delta \implies d(f(x_n), f(z)) < \epsilon$. So $f(x_n) \to f(z)$ as $n \to \infty$. 
+
+    $5 \implies 6$. Trivial
+
+    $6 \implies 4$. Let $\{x_n\} \subseteq E \setminus \{z\}$ be such that $x_n \to z$ as $n \to \infty$. Define $\{y_n\} \subseteq E$ via 
+    \begin{align*}
+        y_n = \begin{cases}
+        x_n & n = \ell + 2k \\
+        z & n = \ell + 2k + 1
+        \end{cases}.
+    \end{align*}
+    Then $y_n \to z$ as $n \to \infty$. 6 implies that $f(y_n)$ converges. So we can pick a subsequence to show that is converges to $f(z)$.
+\end{proof}
+
+\cor{Corallary 1}{Let $X, Y$ be metric spaces, $f : X \to Y$. $f$ is continuous if and only if if $ \{x_n \} \subseteq X$  is convergent, then $\{f(x_n)\} \subseteq Y$ is convergent.  }
+\cor{Corallary 2}{Let $X, Y$ be metric spaces with $X$ separable. Let $f: X \to Y$ be continuous. Then $f(X) \subseteq Y$ is separable.}
+\newpage
+\thm{Continuity and products}{Let $X, Y_1,\ldots, Y_k$ be metric spaces and let $f: X \to Y := \prod Y_i$. Let $z \in X$. Write $f = (f_1,\ldots, f_k)$ where $f_i : X \to Y_i$. The following are equivalent:
+\begin{enumerate}
+    \item $f$ is continuous at $z$.
+    \item Each $f_i$ is continuous at $z$.
+\end{enumerate}}
+\begin{proof}
+    Proof direct from limit chracterization.
+\end{proof}
+
+\thm{Algebra of continuity}{Sum, product, and multilinear functions of continuous functions are continuous.}
+
+\thm{Composition}{Let $X, Y, Z$ be metric spaces and $f: X \to Y$ and $g: Y \to Z$. Suppose $f$ is continuous at $z \in X$ and $g$ is continuous at $f(z)$. Then $g \circ f : X \to Z$ is continuous at $z$. }
+
+\thm{}{Let $X, Y$ be metric spaces and $f: X \to Y$. The following are equivalent:
+\begin{enumerate}
+    \item $f$ is continuous.
+    \item $f^{-1}(U)$ is open $\forall U \subseteq Y$ open.
+    \item $f^{-1}(U)$ is closed $\forall U \subseteq Y$ closed.
+\end{enumerate}}
+
+\thm{Multilinearity and continuity}{
+    Let $V_1, \ldots, V_k$ and $W$ be normed vector spaces over $\FF$, and let $T \in L(V_1, \ldots, V_k; W)$. The following are equivalent:
+    \begin{enumerate}
+        \item $T \in \mathcal L(V_1, \ldots, V_k; W)$ i.e. $T$ is a bounded multilinear map.
+        \item $T$ is continuous.
+        \item $T$ is continuous at $0 \in \prod V_i$. 
+    \end{enumerate}
+}
+\begin{proof}
+    $1 \implies 2$: Let $u = (u_1, \ldots, u_k)$, $v = (v_1, \ldots, v_k)$ be two vectors in $V_1 \times \ldots \times V_k$. We write
+    \begin{align*}
+        T(v_1, \ldots, v_k) - T(u_1, \ldots, u_k) &= T(v_1 - u_1, v_2, \ldots, v_k) + T(u_1, v_2 - u_2, \ldots, v_k) + \ldots + T(u_1, \ldots, u_{k-1} v_k - u_k).    \end{align*}
+        This implies that $\Vert T(u) - T(v) \Vert \leq \Vert T \Vert_{\mathcal L} \left[ \Vert v_1 - u_1 \Vert_{V_1} \prod_{i = 2}^k \Vert v_i \Vert_{V_i}  + \Vert u_1 \Vert_{V_1} \Vert u_2 - v_2 \Vert_{V_2} \prod_{i = 3}^k \Vert u_i \Vert_{V_i} + \cdots + \prod_{i=1}^{k-1}\Vert u_1 \Vert_{V_i} \Vert u_k - v_k \Vert_{V_k} \right]$.
+
+    From this est, it's easy to conclude that $T$ is continuous at $u$.
+
+    $2 \implies 3$: trivial
+
+    $3 \implies 1$: Suppose $T$ is continuous at 0. Let $\epsilon = 1$ and let $\delta > 0$ such that $\Vert u \Vert_p = \begin{cases}
+    \left( \sum \Vert u_i \Vert_{V_i}^p \right)^{1/p} & p < \infty \\
+    \max & p = \infty
+    \end{cases} < \delta$. This implies that $\Vert T(u) \Vert_W = \Vert T(u) - T(0) \Vert_W < \epsilon = 1$.
+
+    Let $u_i \in V_i$ be such that $\Vert u_i \Vert_{V_i} = 1$. Then 
+    \begin{align*}
+        \Vert \left( \frac{\delta}{2k^{1/p}} u_1, \ldots, \frac{\delta u_k}{2k^{1/p}}\right) = \frac \delta 2 < \delta.
+    \end{align*}
+    So, $T$ applied to that value is less than 1. But this means 
+    \begin{align*}
+        \left( \frac{\delta}{2k^{1/p}}\right) \Vert T(u) \Vert_W &< 1 \\
+        \Vert T(u) \Vert_W &\leq \left( \frac{2k^{1/p}}{\delta} \right)^k.
+    \end{align*}
+    as well. By taking the supremum, we get that $T$ is bounded and in $\mathcal L$. 
+\end{proof}
+
+\dfn{}{Let $V,W$ be normed vector spaces over $\FF$. 
+\begin{enumerate}
+    \item Recall $L^k (V; W) = L(V_1, \ldots, V_k; W)$ and similarly for $\mathcal L$. Given $T \in L^k(V; W)$ and $v \in V$, we write $Tv^{\otimes k} = T(v^{\otimes k}) = T(v, \ldots, v)$.
+    \item A polynomial is a map $p: V \to W$ given by $p(v) = \sum_{k=0}^d T_kv^{\otimes k}$ for $T_k \in L^k(V; W)$. We write $d=$ degree of $p$ given that $T_d \neq 0$. Note: by the continuity of $T_k \in \mathcal L^k(V; W)$ and algebra of continuity, all polynomials are continuous.
+\end{enumerate}}
+\dfn{}{Let $X,Y$ be metric spaces and $f: X \to Y$. 
+\begin{enumerate}
+    \item We say $f$ is uniformly continuous if $\forall \epsilon > 0$, $\exists \delta > 0$ such that $x, y \in X$ and $d_X(x, y) < \epsilon$ then $d_Y(f(x), f(y)) < \epsilon$.
+    \item $f$ is Lipschitz if $\exists c \geq 0$ such that $d(f(x), f(y)) \leq c d(x, y)$ for all $x, y \in X$.
+\end{enumerate}}
+Facts:
+\begin{enumerate}
+    \item Lipschitz $\implies$ uniformly continuous $\implies$ continuous.
+    \item Compositions of uniformly continuous functions are uniformly continuous.
+    \item Compositions of Lipschitz functions are Lipschitz.
+    \item Suppose $f,g: X \to V$ for $V$ a normed vector space. If $f, g$ are uniformly continuous or Lipschitz, then $\alpha f + \beta g$ are too $\forall \alpha, \beta \in \FF$.
+\end{enumerate}
+\mlenma{}{
+    Suppose $X,Y$ are metric spaces, $f:  X \to Y$ is uniformly continuous if $\{x_n\}_{n = \ell}^\infty \subseteq X$ is Cauchy, then $\{f(x_n)\}_{n = \ell}^\infty \subseteq Y$ is Cauchy.
+}
+\begin{proof}
+    Let $\epsilon > 0$, then there exists $\delta>0$ such that 
+    \begin{align*}
+        x,y \in X \land d_X(x, y) < \delta \implies d_Y(f(x), f(y)) < \epsilon.
+    \end{align*}
+    Pick $N \geq \ell$ such that $m,n \geq N \implies d(x_n, x_m) < \delta$. This means that $d(f(x_n), f(x_m)) < \epsilon$. Therefore $\{f(x_n)\}_{n = \ell}^\infty \subseteq Y$ is Cauchy.
+\end{proof}
+\newpage
+\ex{}{
+    \begin{enumerate}
+        \item Let $f: \RR \to \RR$ via $f(x) = x^2$.
+        \item Let $V, W$ be normed vector spaces, $a \in W$, $T \in \mathcal L(V, W)$. Then $f: V \to W$ via $f(x) = a + Tx$ is Lipschitz:
+        \begin{align}
+            \Vert f(x) - f(y) \Vert_W &= \Vert Tx - Ty \Vert_W \\
+            &\leq \Vert T \Vert_{\mathcal L} \Vert x -y \Vert_V.
+        \end{align}
+        So, $f$ is Lipschitz. 
+
+        But moving back to the first example, $f$ is not uniformly continuous. However, $f$ maps Cauchy sequences to Cauchy sequences. Indeed, suppose $\{x_n\}_n$ is Cauchy and bounded by $M$. Then,
+        \begin{align*}
+            |f(x_n) - f(x_m) | = |x^2_n - x^2_m| = |x_n + x_m||x_n - x_m| \leq 2M|x_n - x_m|.
+        \end{align*}
+        So $f$ is not uniformly continuous. Suppose not, then $\exists \delta > 0$ such that $| x- y| < \delta \implies |f(x) - f(y)| < 1$.
+
+        Let $x = n \in \NN$ and $y = n + \frac \delta 2$. Then 
+        \begin{align*}
+            |x-y| &= \frac \delta 2 < \delta,
+        \end{align*}
+        so $1 > |f(y) - f(x)| = (n + \delta / 2)^2 - n^2 = \delta n + \frac {\delta^2} 4$. This is a contradiction.
+        \item Let $X$ be a metric space. Let $a \in X$ and define $f:  X \to \RR$ via $f(x) = d(x, a)$. $f$ is Lipschitz as $|f(x) - f(y)| = |d(x, a) - d(y, a)| \leq d(x, y)$. 
+        This can be generalized.
+        \item Consider $\sin: \RR \to \RR$. 
+        \begin{align*}
+            |\sin(x) - \sin(y)| &= |\cos(w)(x-y)| \leq |x-y|
+        \end{align*}
+        for some $w$ below $x$ and $y$. Therefore $\sin$ is Lipschitz. Ditto for $\cos$.
+        \item Let $X$ be  a metric space, $V_1, \ldots, V_k, W$ be normed vector spaces. And suppose $f_i: X \to V_i$ is uniformly continuous xor Lipschitz. Further suppose $T: X \to \mathcal L(V_1, \ldots, V_k; W)$ is uniformly continous xor Lipschitz. If $T, f_1, \ldots, f_k$ are all also bounded, then $X \ni x \mapsto T(x)(f_1 (x), \ldots, f_k(x)) \in W$ is uniformly continuous xor Lipschitz.
+        
+        \begin{proof}
+            Recall 
+            \begin{align*}
+                T(u_1, \ldots, u_k) - T(v_1, \ldots, v_k) = \\
+                T(u_1 - v_1, u_2, \ldots, u_k) + \cdots + T(v_1, \ldots, v_{k-1}, u_k - v_k).
+            \end{align*}
+            Now use this with $u_i = f_i(x)$ and $v_i = f_i(y)$. 
+
+        \end{proof}
+    \end{enumerate}
+}
+
+\dfn{}{Let $f: X\to Y$ for $X, Y$ metric spaces. We define $K(f) \in [0, \infty]$ to be 
+\begin{align*}
+    K(f) = \begin{cases}
+    0 & |X| = 1 \\
+    \sup_{x, y \in X , x \neq y} \frac{d_Y(f(x), f(y))}{d_X(x, y)} & \text{otherwise}
+    \end{cases}.
+\end{align*}
+$K(f)$ is called the Lipschitz constant for $f$. }
+\noindent Facts:
+\begin{enumerate}
+    \item $K(f) = 0 \iff f$ is constant. $K(f)$ is finite $\iff$ $f$ is Lipschitz. Also, $d(f(x), f(y)) \leq K(f) d(x, y)$. 
+    \item Suppose $g: Y \to Z$, $Z$ is a metric space. Then $K(g \circ f) \leq K(g) K(f)$. 
+    \begin{proof}
+        $d_Z(g \circ f(x), g \circ f(y)) \leq K(g) d_Y(f(x), f(y)) \leq K(g)K(f)d(x, y)$. This yields the result. 
+    \end{proof}
+    \item If $Y = X$, i.e. $f: X \to X$, then $K(f^{(n)}) \leq K(f)^n$. 
+    \begin{align*}
+        f^{(0)} &= I_X \\
+        f^{(n)} &= f \circ f^{(n-1)}.
+    \end{align*}
+\end{enumerate}
+
+
+
 \end{document}
