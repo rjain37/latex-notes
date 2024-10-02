@@ -1043,7 +1043,133 @@ This graph contains $n \log n$ edges. Each vertex $i$ wants to send a message to
 \end{align*}
 And the probability of this is $\leq e^{-\Omega(\log n)}$.
 
+\chapter{Metric Embeddings}
+\dfn{Metric Space}{
+    A metric space $X$ is a set equipped with a function $d: X \times X \to \RR$ such that 
+    \begin{enumerate}
+        \item $d(x, y) \geq 0$ for all $x, y \in X$, $d(x,y) = 0$ if and only if $x = y$.
+        \item $d(x,y) = d(y,x)$ for all $x,y \in X$
+        \item $d(x,z) \leq d(x,y) + d(y, z)$ for all $x,y,z \in X$
+    \end{enumerate}
+}
+\ex{}{
+    \begin{itemize}
+        \item $\ell^p$-distance. For $p \geq 1$, $X = \RR^k$. Then 
+        \begin{align*}
+            d_{\ell^p}(x, y) = \left( \sum_{i=1}^k |x_i - y_i|^p \right)^{1/p}. 
+        \end{align*}
+        \item Graph-distance. Take any undirected graph with positive weights, then you can talk about the graph distance between two vertices where 
+        \begin{align*}
+            d(v, u) = \text{graph distance}.
+        \end{align*}
+    \end{itemize}
+}
+\dfn{Metric Embeddings}{
+    Given two metric spaces, $(X_1, d_1), (X_2, d_2)$, a map $\phi: X_1 \to X_2$ is a metric embedding with distortion at most $\alpha$ if $\exists \beta$ scaling parameter such that  $\forall x, y \in X_1$, $d_1(x, y)$ is within a factor of $\alpha$ of $\beta d_2(\phi(x), \phi(y))$. That is,
+    \begin{align*}
+        \beta d_2(\phi(x), \phi(y)) \leq d_1(x, y) \leq \alpha \beta d_2(\phi(x), \phi(y)).
+    \end{align*}
+}
+\newpage 
+\thm{Bourgain's Theorem}{
+    Let $(X, d)$ be an $n$-point metric. Then there exists a function $\phi : (X; d) \to (\RR^{O(\log ^2 n)}, d_{\ell^1})$ such that the distortion is $O(\log n)$. 
+}
 
 
+\begin{proof}
+    We review the algorithm. Let $c$ be a large constant. 
+    \begin{itemize}
+        \item For $i = 1, \ldots, \log n$,
+        
+        For $j = 1, \ldots, c \log n$,
+
+        $S_{i, j} = \text{sample each element $x \in X$ with probability $2^{-i}$.}$
+    \end{itemize}
+\end{proof}
+
+\mlenma{Key Lemma}{For $i \in \{1, \ldots, t\}$ and $j \in \{1, \ldots, c \log n\}$, we have with probability $\Omega(1)$ that 
+\begin{align*}
+    |d(x, S_{i, j}) - d(y S_{i, j})| \geq r_{i+1} - r_i.
+\end{align*} }
+
+
+I LEFT LECTURE HERE, FILLIN LATER 
+
+
+\newpage
+\section{Day 2}
+\thm{}{Let $(X, d)$ be an $n$-point metric space. Suppose that $\forall x \neq y \in X$, $d(x, y) \in [1, n^2]$. We will embed $X$ into a tree metric $(T, d_T)$ with the following properties:
+\begin{itemize}
+    \item depth of tree is $O(\log n)$.
+    \item For any root-leaf path, edge weights are decreasing powers of 2.
+    \item Points in $X$ get mapped to leaves of the tree.
+\end{itemize}
+There exists a randomized embedding $\phi: X \to (T, d_T)$, where $T$ is also a random variable, such that 
+\begin{itemize}
+    \item $d_T(\phi(x), \phi(y)) \geq d(x, y)$.
+    \item $E[d_T(\phi(x), \phi(y))] \leq O(\log n) d(x, y)$. 
+\end{itemize}}
+\begin{proof}
+    The algorithm:
+    \begin{enumerate}
+        \item Pick a random permutation $\pi = \pi_1, \ldots, \pi_n$ of the elements of $X$.
+        \item Pick uniformly random $\beta \in [1, 2]$. Define $\beta_i := 2^{i-1} \cdot \beta$.
+
+        For each $x \in X$ and $i \in \{0, \ldots, 2\log n\}$, define 
+        \begin{align*}
+            \text{center}_i(x) = \text{first $\pi_j$ in permutation to satisfy $d(x, \pi_j) \leq \beta_i$}.
+        \end{align*}
+        \item Construct $\phi$ as follows:
+        
+        Each node represents a set of elements. Root at level $2\log n + 1 = $ all of $X$. For any node $w$ at level $i+1$, if node $>$ 1 element.
+        \begin{itemize}
+            \item Group $w$'s elements $z$ by $\text{center}_i(z) \to $ child nodes. 
+        \end{itemize}
+        Two elements $a, b \in w$ are in the same child iff $\text{center}_i(a) = \text{center}_i(b)$.
+        \item Finally, edge from level $i+1$ to level $i$ has weight $2^{i}$. 
+    \end{enumerate}
+    Analysis:
+
+    We first claim that for $x, y\in X$, $d_T(\phi(x), \phi(y)) \geq d(x, y)$. 
+    \begin{proof}
+        Observe that at level $i$, if $x,y$ in the same node, then $d(x, y) \leq 2\beta_i \leq 2^{i+1}$. So let $i$ be the highest level the path goes through, this implies that $d(x, y) \leq 2^{i+1}$. But also $d_T(\phi(x), \phi(y)) \geq 2\cdot 2^i \geq d(x, y)$ as desired.
+    \end{proof}
+
+    \mprop{}{\begin{align*}
+        E[d_T(\phi(x), \phi(y))] \leq O(\log n) d(x, y).
+    \end{align*}}
+    \begin{proof}
+        \begin{align*}
+            d_T(\phi(x), \phi(y)) &\leq O(\text{largest edge weight along the path}) \\
+            &\leq \sum_{i=0}^{2\log n} \mathbb I (\text{center}_i(x) \neq \text{center}_i(y)) \cdot 2^{i+1}.
+        \end{align*}
+        \newpage
+        So we have 
+        \begin{align*}
+            E[d_T(\phi(x), \phi(y))] &\leq \sum_{i=0}^{2 \log n} \int_{r = 2^{i-1}}^{2^i} P(B_i = r) \cdot P(\text{center}_i(x) \neq \text{center}_i(y) \mid \beta_i = r) 2^{i+1} \text dr \\
+            &=  \sum_{i=0}^{2 \log n} \int_{r = 2^{i-1}}^{2^i} \frac{1}{2^{i-1}} \cdot P(\text{center}_i(x) \neq \text{center}_i(y) \mid \beta_i = r) 2^{i+1} \text dr \\
+            &=  \sum_{i=0}^{2 \log n} \int_{r = 2^{i-1}}^{2^i}  P(\text{center}_i(x) \neq \text{center}_i(y) \mid \beta_i = r) \text dr.
+        \end{align*}
+        If we look through $\pi_1, \pi_2, \ldots, \pi_n$, the first of $\{\text{center}_i(x), \text{center}_i(y)\}$ to appear is $w$ implies that $w$ ``cuts'' $(x, y)$ (and the centers are non-equal).
+
+        Let $w_1, w_2, \ldots, w_n$ be elements of $x$ sorted by distance from $w_i$ to $\{x, y\}$. 
+
+        \begin{align*}
+            \sum_{i=0}^{2 \log n} \int_{r = 2^{i-1}}^{2^i}  P(\text{center}_i(x) \neq \text{center}_i(y) \mid \beta_i = r) \text dr &\leq \sum_{j=1}^n \sum_{i=0}^{2 \log n} \int_{r = 2^{i-1}}^{2_i} P(w \text{ cuts } (x, y) \mid \beta_i = r) \text dr.
+        \end{align*}
+        Call the integrand $\Xi$. We consider what must occur for $w_j$ to cut $(x, y)$. Suppose WLOG $d(w_j, x) \leq d(w_j, y)$. We need 
+        \begin{itemize}
+            \item $d(w_j, x) \leq \beta_i \leq d(w_j, y)$.
+            \item $w_j$ must appear before $w_1, \ldots, w_{j-1}$ in $\pi$, which has probability $\leq \frac 1j$. 
+        \end{itemize}
+        So we get 
+        \begin{align*}
+            \sum_{j=1}^n \sum_{i=0}^{2 \log n} \int_{r = 2^{i-1}}^{2_i} P(w \text{ cuts } (x, y) \mid \beta_i = r) \text dr &\leq \sum_{j=1}^n \int_{z = d(w_j, x)}^{d(w_j, y)} \frac 1j \text dz \\
+            &= \sum_{j=1}^n \frac 1j |d(w_j, y) - d_w(w_j, x)| \\
+            &\leq d(x, y) \sum_{j=1}^n \frac 1j = d(x, y) O(\log n).
+        \end{align*}
+    \end{proof}
+    
+\end{proof}
 
 \end{document}
