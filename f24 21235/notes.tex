@@ -1183,6 +1183,107 @@ $K(f)$ is called the Lipschitz constant for $f$. }
     \end{align*}
 \end{enumerate}
 
+\dfn{}{Let $X, Y$ be metric spaces and $f: X \to Y$.
+\begin{enumerate}
+    \item We say $f$ is expansive if $\infty > K(f) > 1$.
+    \item We say $f$ is non-expansion if $K(f) \leq 1$.
+    \item We say $f$ is contractive if $K(f) < 1$.
+    \item Suppose $Y=X$. We say $f$ is eventually contractive if $\exists 1 \leq n \in \N$ such that $f^{(n)}$ is contractive. 
+\end{enumerate}}
+\ex{}{
+    Let $\alpha \in [0, 1]$, $\beta \in(0, 1)$, $\gamma \in [0, \infty)$ and $x \in (-\infty, 0]$. Set $f: \RR \to \RR$ via 
+    \begin{align*}
+        f(x) = \begin{cases}
+        \beta & x \in (-\infty, 0] \\
+        \beta + (1-\beta)\left(\frac x \beta\right)^{\alpha} & x \in [0, \beta] \\
+        1 & x \in [\beta, 1] \\
+            1 + \gamma(x-1) & x \in (1, \infty)
+        \end{cases}.
+    \end{align*}
+    Exercise:
+    \begin{align*}
+        K(f) = \begin{cases}
+        \infty, & \alpha \in (0, 1) \\
+        \max\left(\gamma, \frac 1 \beta - 1 \right) & \alpha = 1
+        \end{cases}.
+    \end{align*}
+    Also,
+    \begin{align*}
+        f^{(2)}(x) = \begin{cases}
+            1 & x \leq 1 \\
+            1 + \gamma^2 (x-1) & x > 1
+        \end{cases}.
+    \end{align*}
+    So $K(f^{(2)}) = \gamma^2 \implies f^{(2)}$ is Lipschitz. If $\gamma < 1$ then $f$ is eventually contractive. 
+}
+\thm{Banach Fixed Point Theorem}{
+    Let $X$ be a complete metric space and $f : X \to X$ be eventually contractive. Then there exists a unique fixed point $x_0 \in X$ such that $f(x_0) = x_0$.
+}
+\begin{proof}
+    Suppose intitially that $f$ is contractive, i.e. $K(f) = \gamma \in [0, 1)$. Let $x_0 \in X$ arbitrarily. Inductively define $\{x_n\}_{n = 0}^\infty \subseteq X$ via $x_{n+1} = f(x_n)$, i.e. $x_n = f^{(n)}(x_0$). For $n > m \geq 0$, we bound
+    \begin{align*}
+        d(x_n, x_m) \leq d(x_n, x_{n-1}) + d(x_{n-1}, x_{m}) \leq \cdots \leq \sum_{i=m}^{n-1} d(x_i, x_{i+1}) = \sum_{i = m}^{n-1} d(f^{(i)}(x_0), f^{(i)}(x_1)) \leq \sum_{i=1}^{n-1} \gamma^i d(x_0, x_1) = d(x_0, x_1) \sum_{i=m}^{n-1} \gamma^i.
+    \end{align*}
+    Since $\gamma< 1$, the infinite sum of $\gamma^i$ converges. That is, $\left\{ \sum_{i=0}^k \gamma^i \right\}_{k = 0}^\infty$ is Cauchy. This and the bound implies that $\{x_n\}_{n = 0}^\infty$ is Cauchy.
 
+    Now note that $x_{n+1} = f(x_n)$, and this converges to $x = f(x)$ because $f$ is continuous. Therefore $x$ is a fixed point. 
+
+    Suppose $y \in X$ is such that $f(y) = y$. Then, $d(x, y) = d(f(x), f(y)) \leq \gamma d(x, y) \implies (1 - \gamma) d(x, y) \leq 0 \implies x = y$.
+
+    Now consider the general case. $\exists z \leq n$ such that $f^{(n)}$ is contractive. By the previous analysis, there exists a unique $x \in x$ such that $f^{(n)} = x$. Thus, $f(x) = f^{(n+1)}(x) = f^{(n)}(f(x)) \implies f(x)$ is a fixed point of $f^{(n)}$. So this means $f(x) = x$. Suppose now $y = f(y)$, this means $y = f^{(n)}(y) \implies y = x$. 
+\end{proof}
+\nt{Say $f$ is contractive for simplicity. What we knew was that if $n > m \geq 0$, then 
+\begin{align*}
+    d(x_n, x_m) \leq d(x_0, x_1) \sum_{i = m}^{n-1} \gamma^i \leq d(x_0, x_1) \sum_{i=m}^\infty \gamma^i = d(x_0, x_1) \frac{\gamma^m}{1 - \gamma}.
+\end{align*}
+So,
+\begin{align*}
+    d(x, x_m) = \lim_{n \to \infty} d(x_n, x_m) \leq \frac{d(x_0, x_1)\gamma^m}{1 - \gamma}.
+\end{align*}
+}
+
+\ex{putnam(?)}{
+    Let $X \neq \emptyset$ be a set, $g: X \to \RR$ be bounded and $h : X \to \RR$ be arbitrary. Let $0 < \gamma < 1$. 
+    
+    Claim: $\exists ! f \in \mathcal B(X; \RR)$ such that $f(x) = g(x) + \gamma \cos(h(x) + f(x))$. 
+    
+    \begin{proof}
+        Define $\Phi : \mathcal B(X) \to \mathcal B(X)$ as $\Phi(f) = g + \gamma \cos(h + f) \in \mathcal B(X)$. 
+
+        Fact 1: $\mathcal B(X)$ is complete. 
+
+        Fact 2: $\Phi(f_1) - \Phi(f_2) = \gamma [\cos(h + f_1) - \cos(h + f_2)]$. That is,
+        \begin{align*}
+            |\Phi(f_1)(x) - \Phi(f_2)(x)| &\leq \gamma |f_1(x) - f_2(x)| \\
+            \Vert \Phi(f_1) - \Phi(f_2) \Vert_{\mathcal B(X)} &\leq \gamma \Vert f_1 - f_2 \Vert_{\mathcal B(X)}.
+        \end{align*}
+        Therefore, $\Phi$ is a contaction, meaning there is a unique $f \in \mathcal B(X)$ such that $f = \Phi(f) = g + \gamma \cos( h + f)$.
+    \end{proof}
+    Example 2: Solving the quadratic equation. Claim: suppose $V, W$ are Banach spaces over $\FF$, $A \in \mathcal L^2(V; W)$, $B \in \mathcal L(V; W), c \in W$. Suppose $A \neq 0$ and $B$ is invertible with $B^{-1} \in \mathcal L(W; V)$. We claim that there eixsts $x \in V$ such that $A(x, x) + Bx + c = 0$ provided that $4 \Vert B^{-1}\Vert^2_{\mathcal L(W; V)} \Vert A \Vert_{\mathcal L^2(V; W)} \Vert c \Vert_W < 1$. 
+    \begin{proof}
+        If $c = 0$, then $x=0$ does the job, so suppose $c \neq 0$. It suffices to prove that when $W =V$ and $B = I_V$. Indeed, suppose we proved this. Then, 
+        \begin{align*}
+            A(x, x) + Bx + c = 0 \text{ in } W \iff B^{-1} A(x, x) + x + B^{-1}c = 0 \text{ in } V.
+        \end{align*}
+        But $B^{-1} \circ A \in \mathcal L^2(V; V)$, $\Vert B^{-1} \circ A \Vert_{\mathcal L^2}\leq \Vert B^{-1} \Vert_{\mathcal L} \Vert A \Vert_{\mathcal L^2}$.
+
+        $B^{-1} c \in V$, $\Vert B^{-1} c \Vert_V \leq \Vert B^{-1} \Vert_{\mathcal L} \Vert c \Vert_W$.
+
+        Then, this means that $4 \Vert B^{-1} A \Vert_{\mathcal L^2} \Vert B^{-1}c \Vert_V < 1 \implies \exists x \in V$ such that we are done.
+
+        \begin{proof}
+            We prove the special case. We want to thsow that $A(x, x) + x + c = 0$ for $A \in \mathcal L^2(V; V), c \in  V \setminus \{0 \}$. Note,
+            \begin{align*}
+                A(x, x) + x + c = 0 \iff x = -c - A(x, x) \iff x \text{ is a fixed point of } f : V \to V, f(x) = -c - A(x, x).
+            \end{align*}
+            The idea is that if $A= 0$, then $x = -c$ is a solution. The strategy is to try to find $R \geq 0$ such that
+            \begin{enumerate}
+                \item $f: B[-c, R] \to B[-c, R]$,
+                \item $f$ is eventually contractive on $B[-c, R]$.
+            \end{enumerate}
+            IF we can prove this, then $\exists ! x \in B[-c, R]$ such that $x = f(x) = -c - A(x, x) \implies A(x, x) + x + c = 0$.
+        \end{proof}
+    \end{proof}
+    }
 
 \end{document}
