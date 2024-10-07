@@ -1286,4 +1286,177 @@ So,
     \end{proof}
     }
 
+\ex{}{
+    $\exists x \in V$ such that $A(x, x) + Bx + c = 0$. Reduce to case $ V + W$, $B = I$.
+
+    Claim: $\exists x \in V$ such that $A(x, x) + x + c = 0$ where $A \in \mathcal L^2(V, V)$, $c \in V \setminus \{0\}$. 
+
+    Let $f: V \to V$ such that $f(x)  = -c - A(x, x)$. Let $R \geq 0$ (TBD) and consider $x \in B[-c, R]$. 
+
+    \begin{align*}
+        f(x) = c = -A(x, x) = -[A(x + c -c, x + c - c)] &= -[A(x + c, x + c) - A(x+c, c) - A(c, x + c) + A(c, c)] \\
+        &
+        \implies \Vert f(x) + c \Vert \leq \Vert A \Vert [\Vert x + c \Vert^2 + 2 \Vert c \Vert \Vert x + c \Vert + \Vert c \Vert^2] \\
+        &\leq \Vert A \Vert [R^2 + 2 \Vert c \Vert R + \Vert c \Vert ^2 ] \leq R.
+    \end{align*}
+    $\Vert A \Vert R^2 + (2 \Vert c \Vert \Vert R \Vert - 1)R + \Vert A \Vert \Vert c \Vert^2 \leq 0 \iff (2 \Vert A \Vert \Vert c \Vert - 1)^2 - 4 \Vert A \Vert^2  \Vert c \Vert^2 \geq 0$. This just gives 
+    \begin{align*}
+        1 - 4\Vert A \Vert \Vert c \Vert \geq 0 \implies 1 \geq 4\Vert A \Vert \Vert c \Vert.
+    \end{align*}
+    That is, if this holds, then $R \in [R_-, R_+]$. So,
+    \begin{align*}
+        R_{\pm} = \frac{1 - 2\Vert A \Vert \Vert C \Vert \pm \sqrt{1 - 4 \Vert A \Vert \Vert c \Vert}}{2 \Vert A \Vert}
+    \end{align*}
+    and $R_- > 0$. We now konw that $4 \Vert A \Vert \Vert c \Vert \leq 1 \implies$ for $R \in [R_-, R_+]$, $f: B[-c, R] \to B[-c, R]$.
+
+    Next, for $x , y \in B[-c, R]$,
+    \begin{align*}
+        \Vert f(x) - f(y) \Vert = \Vert A(y, y) - A(x, x) \Vert &= \Vert A(y-x, x) + A(y, y-x)\Vert \\
+        &= \Vert A(y-x, y+c) - A(y-x, c) + A(x+c, y-x) - A(c, y-x) \Vert \\
+        &\leq \Vert A \Vert [\Vert x - y \Vert R + \Vert x-y \Vert \Vert c \Vert  + \Vert x -y \Vert R - \Vert x - y \Vert \Vert c \Vert] \\
+        &= 2 \Vert A \Vert [R + \Vert c \Vert]\Vert x- y \Vert.
+    \end{align*}
+    We win if this quantity is strictly less than $1$. Note: 
+    \begin{align*}
+        2 \Vert A \Vert R_{\pm} + 2 \Vert A \Vert \Vert c \Vert = 1 \pm \sqrt{1 - 4\Vert A \Vert \Vert c \Vert}.
+    \end{align*}
+    This is why we choose $R_-$. So 
+    \begin{align*}
+        4 \Vert A \Vert \Vert c \Vert - 1 \implies f: B[-c, R_-] \to B[-c, R_-] \text{ is a contraction.}
+    \end{align*}
+    By Banach Fixed Point Theorem, $\exists ! x \in B[-c, R_-]$ such that $f(x) = x$. 
+}
+
+\nt{
+ $f : B[-c, R_-] \rotatebox[origin=c]{270}{$\curvearrowleft$}$
+}
+\newpage
+\section{Homeomorphisms}
+\dfn{}{
+    Let $X, Y$ be metric spaces and $f: X \to Y$ be a bijection. 
+    \begin{enumerate}
+        \item $f$ is a homeomorphism if $f, f^{-1}$ are continuous. We write $X \simeq_{hom} Y$ in this case.
+        \item $f$ is a uniform homeomorphism if $f, f^{-1}$ are uniformly continuous. We write $X \simeq_{uni} Y$ in this case.
+        \item $f$ is a bi-Lipschitz homeomorphism if $f, f^{-1}$ are Lipschitz continuous. We write $X \simeq_{bi-L} Y$ in this case.
+    \end{enumerate}
+}
+\noindent Facts:
+\begin{itemize}
+    \item $\simeq_*$ are equivalence relations (also $X \simeq_{iso} Y \iff \exists \text{ an iso.})$. $[X]_{iso} \subseteq [X]_{bi-L} \subseteq [X]_{uni} \subseteq [X]_{hom}$.
+    \item $f: X \to Y$ is a homeomorphism iff 
+    \begin{align*}
+        \begin{cases}
+        f \text{ is bijective} & \\
+        f^{-1}(U) \text{ is open } \text{ $\forall U \subseteq Y$ open.} \\
+        f(V) \text{ is open } \text{ $\forall V \subseteq X$ open.}
+        \end{cases}
+    \end{align*}
+    $f: X \to Y$ is bi-Lipschitz iff $f$ is surjective and $\exists c_0, c_1 > 0$ such that $c_0d(x, y) \leq d(f(x), f(y)) \leq c_1 d(x, y)$ for all $x, y\in X$. 
+\end{itemize}
+
+\ex{}{
+    \begin{enumerate}
+        \item Suppose $X$ is a finite metric space, $f: X \to Y$ a bijection. We claim that $f$ continuous implies $f$ Lipschitz. If the cardinality of $X$ is 1, then this is pointless (not really??). Suppose $ |X| \geq 2$. 
+        
+        Define $K(f) = \max \left\{ \frac{d(f(x), f(y))}{d(x, y)} \mid x \neq y \right\} < \infty$. 
+        \item Consider $f: (0, 1) \to (1, \infty)$ via $f(x) = \frac{1}{x}$. This is a bijection and a homeomorphism. It's not a uniform homeomorphism. This shows that $[(0, 1)]_{uni} \subset [(0, 1)]_{hom}$.
+        \item Let $V, W$ be normed vector spaces. We can add ``linear'' to any of our homeomorphism notions. In this case, linear bi-Lipschitz $\iff$ linear homeomorphism.
+        
+        Indeed, suppose that $T : V \to W$ is a linear map. This means that $T \in \mathcal L(V; W)$. We can use the same logic for $T^{-1}$. Thus, 
+        \begin{align*}
+            \Vert Tx - Ty \Vert_W \leq \Vert T \Vert_{\mathcal L} \Vert x- y\Vert_V.
+        \end{align*}
+        Also,
+        \begin{align*}
+            \Vert x - y \Vert_V &= \Vert T^{-1}T x - T^{-1}Ty \Vert_V \\
+            &\leq \Vert T^{-1} \Vert_{\mathcal L} \Vert Tx - Tv\Vert_V \\
+            &\implies \frac{1}{\Vert T \Vert_{\mathcal L}} \Vert x - y \Vert_V \leq \Vert Tx - Ty \Vert_W \leq \Vert T \Vert_{\mathcal L} \Vert x -y \Vert_V.
+        \end{align*}
+        Therefore, $T$ is bi-Lipschitz. 
+    \end{enumerate}
+}
+\newpage 
+\noindent \textbf{Question:} In general, is it the case that $[V]_{hom} = [V]_{bi-L}$ for $V \neq \{0\}$ a normed vector space?
+
+\noindent \textbf{Answer:} No. In fact, $[V]_{bi-L} \subset [V]_{uni}$. Remember, we only care about metrics, not necessarily norms. 
+\begin{proof}
+    Fix $(V, \Vert \cdot \Vert)$ a normed vector space. Claim, $d: V \times V \to \RR$ given by $d(x, y) = \sqrt{\Vert x- y \Vert}$ is a metric on $V$. This is obviously symmetric and positive, so we just check the triangle inequality:
+    \begin{align*}
+        d(x, y) = \sqrt{\Vert x- y\Vert} \leq \sqrt{\Vert x - z \Vert + \Vert z - y\Vert} \leq \sqrt{\Vert x - z \Vert} + \sqrt{\Vert y - z \Vert} = d(x, z) + d(z, y).
+    \end{align*}
+    The last inequality is true by squaring. We'll now show that $(V, \Vert \cdot \Vert) \simeq_{uni} (V, d)$ with the identity map. That is $I: (V, \Vert \cdot \Vert) \leftrightarrow (V, d)$ is uniformly continuous in both directions.
+
+    Let $\epsilon > 0$. Then $d(x, y) < \delta \iff \Vert x- y \Vert  < \delta^2$. So taking $\delta = \sqrt \epsilon$ shows that $I$ is uniformly continuous from $(V, d)$ to $(V, \Vert \cdot \Vert)$.
+
+    Similarly, $\Vert x - y \Vert < \delta \iff d(x, y) < \sqrt{\delta}$. So take $\delta = \epsilon^2$ and we see that $I$ is uniformly continuous from $(V, \Vert \cdot \Vert)$ to $(V, d)$.
+
+    Next, we claim that $(V, d)$ and $(V, \Vert \cdot \Vert)$ are not bi-Lipschitz homeomorphic. So suppose BWOC there exists an $f: (V, \Vert \cdot \Vert) \to (V, d)$ that is bi-Lipschitz homeomorphic. In particular, then there exists $c_0, c_1 > 0$ such that 
+    \begin{align*}
+       c_0 \Vert x- y \Vert \leq d(f(x), f(y)) = \sqrt{\Vert f(x) - f(y) \Vert} \leq c_1 \Vert x- y \Vert.
+    \end{align*}
+    for all $x,y \in V$. In particular, if $c:= c_1^2$, then $\Vert f(x) - f(y) \Vert \leq c \Vert x- y \Vert^2$ for $x,y \in V$. Let $x \neq y$ in $V$ and $1 \leq n \in \NN$. Let $x_i = x + \frac in (y - x)$ for $0 \leq i \leq n$. This yields 
+    \begin{align*}
+        \Vert x_{i+1} x_n \Vert = \frac{1}{n} \Vert x- y\Vert.
+    \end{align*}
+    Thus,
+    \begin{align*}
+        \Vert f(y) - f(x) \Vert \leq \sum_{i=0}^{n-1} \Vert f(x_{i+1}) - f(x_i) \Vert \leq \sum_{i=0}^{n-1} c \Vert x_{i+1} - x_i \Vert^2 = c\sum_{i=0}^{n-1} \frac{\Vert x - y\Vert^2}{n^2} = \frac{c \Vert x- y\Vert^2}{n}.
+    \end{align*}
+    Send $n \to \infty$ to get that $f(x) = f(y)$, contradiction! Therefore, $ [V]_{bi-L} \subset [V]_{uni}$.
+\end{proof}
+\noindent \textbf{Question:} Are there any non-linear bi-Lipschitz homeomorphisms on $V \neq \{ 0 \}$ a normed vector space. 
+
+\noindent \textbf{Answer:} Yes, there are lots, at least if $V$ is complete. Suppose $V$ is a banach space and suppose $g: V \to V$ is a contraction. We claim that $f = I + g$ is a bi-Lipschitz homeomorphism.
+\begin{proof} We follow the following steps:
+
+    \begin{enumerate}
+        \item $f$ is a bijection. We'll show $\forall y \in V$, $\exists  x \in V$ such that $x + g(x) = y$. Fix $y$, and define $h : V\to V$ via $h(x) = y - g(x)$. Then we're done if we can show that $\exists !  x \in X$ such that $h(x) = x$. But, $K(h) = K(g)$, so $h$ is a contraction and therefore the Banach fixed point theorem applies. 
+        \item $f $ is bi-Lipschitz. We have 
+        \begin{align*}
+            \Vert f(x) - f(y) \Vert  = \Vert x- y  + g(x) - g(y) \Vert &\leq \Vert x-y \Vert  + \Vert g(x) - g(y) \Vert \\
+            &\leq \Vert x - y \Vert + K(g) \Vert x- y\Vert = (1 + K(g)) \Vert x- y \Vert.
+        \end{align*}
+        This means that $K(f) \leq 1  + K(g)$. On the other hand, 
+        \begin{align*}
+            \Vert x- y \Vert &\leq \Vert x + g(x) - y - g(y) \Vert  + \Vert g(x) - g(y) \Vert\\
+            &\leq \Vert f(x) - f(y) \Vert + K(g) \Vert x- y \Vert.
+        \end{align*}
+        This implies $(1 - K(g)) \Vert x- y\Vert \leq \Vert f(x) - f(y) \Vert \leq (1 + K(g)) \Vert x- y \Vert$. Therefore, $f$ is bi-Lipschitz. 
+    \end{enumerate}
+\end{proof}
+\newpage
+\noindent \textbf{Next:} Let $f:  V \to V$ be a bi-Lipschitz homeomorphism. Let $g: V \to V$ be a bi-Lipschitz homeomorphism with $K(g)K(f^{-1}) < 1$. We claim $h = f +g$ is a bi-Lipschitz homeomorphism. 
+\begin{proof}
+    Indeed, $h = f + g = f + g \circ f^{-1} \circ f = (I + g \circ f^{-1}) \circ f$. We just need to show that $g \circ f^{-1}$ is bi-Lipschitz because then $h$ will be. 
+
+    But, $K(g \circ f^{-1}) \leq K(g)K(f^{-1}) < 1$ by assumption. Therefore, $g \circ f^{-1}$ is a bi-Lipschitz homeomorphism, and so is $h$. 
+\end{proof}
+
+\dfn{}{Let $X$ be a metric space 
+\begin{enumerate}
+    \item We say a property of $X$ is a topological property if it is common to $[X]_{hom}$. That is, it's true in $X$ if and only if it's true in $Y$ for all $Y \simeq_{hom} X$.
+    \item We say a property of $X$ is a uniform property if it is common to $[X]_{uni}$.
+    \item We say a property of $X$ is a strong property if it is common to $[X]_{bi-L}$.
+\end{enumerate}}
+\ex{}{
+    \begin{enumerate}
+        \item $(0, 1) \simeq_{hom} \RR$. Let $f:(0, 1) \to \RR$ be defined as 
+        \begin{align*}
+            f(x) &= \log\left( \frac 1x -  1\right) \\
+            f^{-1}(y) &= \frac{1}{1 + e^{y}}.
+        \end{align*}
+        $(0, 1)$ is not complete and bounded, but $\RR$ is copmlete and unbounded. This is a strong example of how homeomorphisms do not maintain all properties. 
+    \end{enumerate}
+}
+
+\mprop{}{
+    Let $X \simeq_{bi-L} Y$. Then $X$ is bounded iff $Y$ is bounded. 
+}
+\cor{}{Boundedness is a strong property. }
+\begin{proof}
+    $\exists c_0, c_1 > 0$ and a bijection $f: X \to Y$ such that $c_0d(x, y) \leq d(f(x), f(y)) \leq c_1d(x, y)$ for all $x, y \in X$. We'll show that $Y$ bounded implies $X$ bounded. The other direction is free. 
+
+    So if $Y$ is bounded, then $Y \subseteq B(z, r)$ for some $z \in Y$. But, $z = f(x)$ for some $x \in X$. Therefore, $d(x, y) \leq \frac{1}{c_0}d(f(x), f(y))$ for all $y \in X$. But that distance is less than $r$, so we also have that $d(x, y) < \frac{r}{c_0}$. This means that $X \subseteq B(x, r/c_0)$. So $X$ is bounded. 
+\end{proof}
+
 \end{document}
