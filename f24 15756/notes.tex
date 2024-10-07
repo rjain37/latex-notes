@@ -1171,5 +1171,126 @@ There exists a randomized embedding $\phi: X \to (T, d_T)$, where $T$ is also a 
     \end{proof}
     
 \end{proof}
+\newpage
+\section{Day 3}
+\thm{Johnson-Lindenstrauss Lemma (1994)}{
+    Let $\epsilon \in (0, 1)$. Let $S \subseteq \RR^d$ be a set of $n$ points. There exists a map $\phi : S \to \RR^{O(\log n) \cdot \epsilon^{-2}}$ which satisfies:
+    \begin{align*}
+        \forall a , b \in S, (1 \pm \epsilon)\Vert a- b \Vert_2 = \Vert \phi(a) - \phi(b) \Vert_2.
+    \end{align*}
+}
+\noindent Our goal is to construct a linear $\phi$ such that for any $a \in \RR^d$, with high probability in $n$, 
+\begin{align*}
+    \Vert \phi (a) \Vert_2 = (1 \pm \epsilon) \Vert a \Vert_2. 
+\end{align*}
+If we can do this, then $\forall a, b \in S$, we have with high probability that
+\begin{align*}
+    \Vert \phi(a) - \phi(b) \Vert_2  &= \Vert \phi(a-b)\Vert_2 \\
+    &= (1 \pm \epsilon) \Vert a- b \Vert_2.
+\end{align*}
+Then by applying the union bound over all $\binom n2$ pairs,  can complete the proof. 
+
+\noindent We start with a warmup task. We want to construct a linear function $f: \RR^d \to \RR$ such that $E[f(a)^2] = \Vert a \Vert_2^2$. If we can find a function like this that also suffices:
+\begin{align*}
+    P(f(a)^2 > K\Vert a \Vert_2^2) \leq e^{-\Omega(K)},
+\end{align*}
+then we can finish the theorem off. 
+
+\noindent \textbf{Review of normal random variables:} Let $v = $ variance, $\sigma  = \sqrt v$ (standard-deviation). Then $N(0, v)$ represents a normal random variable with mean 0 and standard deviation $\sigma$. 
+
+\noindent \textbf{Fact 1:} Let $X \sim \mathrm N(0, \sigma^2)$. Then
+\begin{align*}
+    P(|X| \geq K \sigma) < 2e^{-K^2/3}.
+\end{align*}
+
+\noindent \textbf{Fact 2:} If $X \sim \mathrm(0, v_1)$ and $Y \sim \mathrm(0, v_2)$, and $X \perp Y$, then $X + Y \sim \mathrm(0, v_1 + v_2)$. 
+
+\noindent \textbf{Fact 3:} Let $X \sim \mathrm N(0, v)$, $c \in \RR$. Then
+\begin{align*}
+    cX \sim \mathrm N(0, c^2v).
+\end{align*}
+For vector $\bar a = (a_1, \ldots, a_d)$, define 
+\begin{align*}
+    f(a) = \sum_{i=1}^d X_i \cdot a_i
+\end{align*}
+where $X_i$ is an independent random variable such that $X_i \sim \mathrm N(0, 1)$. That means $f(a) \sim \mathrm N(0, \Vert a \Vert_2^2)$. 
+
+\cor{1}{$E[f(a)^2] = \Vert a \Vert_2^2$.}
+\cor{2}{$P(f(a)^2 > K\Vert a \Vert_2^2) \leq e^{-\Omega(K)}$.}
+\begin{proof}
+    By the previous Chernoff bound,
+    \begin{align*}
+        P(|f(a)| > J \Vert a \Vert_2) &\leq e^{-J^2/3} \\
+        P(f(a)^2 > J^2 \Vert a \Vert_2^2) &\leq 2e^{-J^2/3}.
+    \end{align*}
+    By setting $K = J^2$, we get the corollary.
+\end{proof}
+\newpage 
+\noindent We now turn to the proof of the Johnson-Lindenstrauss lemma.
+\begin{proof}
+    Define $\phi(\vec a)$ as 
+    \begin{align*}
+        \phi(\vec a) = \langle \phi_1(\vec a), \ldots, \phi_r(\vec a)\rangle
+    \end{align*}
+    where $r = c\epsilon^{-2}\log n$ where $c$ is a large constant. Now we define $\phi_i$. We take the same argument as in the previous proof:
+    \begin{align*}
+        \phi_i(a) = \frac{1}{\sqrt r}\sum_{j=1}^d X_{i, j} \cdot a_j
+    \end{align*}
+    where all the $X_{i, j} \sim \mathrm N(0, 1)$ and are independent. We want to show:
+    \begin{align*}
+        \Vert \phi(\vec a) \Vert_2^2 &= (1 \pm \epsilon) \Vert a \Vert_2^2 \\
+        \iff \sum \phi_i(\vec a)^2 &= (1 \pm \epsilon) \Vert a \Vert_2^2.
+    \end{align*}
+    We now go over a Chernoff bound for geometric random variables. Let $X_1, \ldots, X_n$ be independent. Let $\mu = E[\sum X_i]$. Suppose each $X_i$ satisfies 
+    \begin{align*}
+        P(|X_i| \geq K) \leq e^{-\Omega(k)}.
+    \end{align*}
+    Let $X = \sum X_i$. In the small-deviation regime ($K \in [1, \sqrt \mu]$), we have 
+    \begin{align*}
+        P(|X - E[X]| \geq K \sqrt{\mu}) \leq e^{-\Omega(k^2)}.
+    \end{align*}
+    Then for $J \geq 2$, we have 
+    \begin{align*}
+        P( X \geq J \mu) \leq \left( \frac 12 \right)^{\Omega(J\mu)}.
+    \end{align*}
+    Note that the large-deviation regime bound we're used to does not apply because it is not true in the $n=1$ case. Now for each $\phi_i$, we have 
+    \begin{align*}
+        r \cdot \phi_i(\vec a) \sim \mathrm N(0, \Vert a \Vert_2^2).
+    \end{align*}
+    If we wanted to normalize this, we would get 
+    \begin{align*}
+        Y_i := \left(\frac{\sqrt r \cdot \phi_i(\vec a)}{\Vert a \Vert_2}\right)^2 \sim \mathrm N(0, 1)^2.
+    \end{align*}
+    $Y_i$ has mean 1, and $|Y_i|$ is a geometric random variable. This means
+    \begin{align*}
+        P\left[\left| \sum_{i=1}^r Y_i - r \right| \geq K \sqrt r \right] \leq e^{-\Omega(k^2)}.
+    \end{align*}
+    Let's set $K\sqrt r = \epsilon r$, or that $K = \epsilon \sqrt r$. So,
+    \begin{align*}
+        P\left[\sum_{i=1}^r Y_i \neq (1 \pm \epsilon)r \right] = e^{-\Omega(\epsilon^2 r)}.
+    \end{align*}
+    But $-\Omega(\epsilon^2 r) = \frac{1}{\poly(n)}$. What follows is:
+    \begin{align*}
+        \sum \frac{r \phi_i(\vec a)^2}{\Vert a \Vert_2^2} &= (1 \pm \epsilon) r \\
+        \implies \sum \phi_i(\vec a)^2 &= (1 \pm \epsilon) \Vert a \Vert_2^2.
+    \end{align*}
+    This is exactly what we wanted to prove. 
+\end{proof}
+\newpage
+\noindent We now prove the facts about normal random variables. 
+\cor{from Central Limit Theorem}{
+    Suppoose you define $X^{(n)} := \sum_{i=1}^n X_i$ where $X_i$ takes on $1$ or $-1$ with probability $1/2$. Then as $n \to \infty$, $\frac {\sqrt v}{\sqrt n} X^{(n)}$ converges pointwise to a single distribution. This is the definition of $\mathrm N(0, v)$. 
+}
+\noindent As a shorthand, 
+\begin{align*}
+    \lim_{n\to\infty} \frac{\sqrt v}{n}X^{(n)} \sim N(0, v).
+\end{align*}
+We skip the first fact because it's an easy Chernoff bound. Fact 3 is also straight-forward from the definition of a random variable. So we will just prove that if we have $A, B\sim \mathrm N(0, v_1), \mathrm N(0, v_2)$, then $A+ B \sim \mathrm N(0, v_1 + v_2)$. As an easy example, take $v_1 = v_2 = 1$. So then the distribution of $A+  B$ would be 
+\begin{align*}
+    \lim_{n \to \infty} \frac{1}{\sqrt n} (X^{(n)} + Y^{(n)})  &= \lim_{n \to \infty} \frac{1}{\sqrt n} ( X_1 + \cdots + X_n + Y_1 + \cdots + Y_n) \\
+    &= \lim_{n \to \infty} \frac{1}{\sqrt n} X^{(2n)} \\
+    &= \lim_{n \to \infty} \frac{\sqrt 2}{\sqrt m} X^{m} \tag{where $m = 2n$} \\
+    &= \lim_{m \to \infty} \frac{\sqrt 2}{\sqrt m} \cdot X^{(m)} \sim \mathrm N(0, 2). 
+\end{align*}
 
 \end{document}
