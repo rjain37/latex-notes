@@ -1293,4 +1293,101 @@ We skip the first fact because it's an easy Chernoff bound. Fact 3 is also strai
     &= \lim_{m \to \infty} \frac{\sqrt 2}{\sqrt m} \cdot X^{(m)} \sim \mathrm N(0, 2). 
 \end{align*}
 
+\chapter{The Train Track Problem}
+While very sleep deprived and on a train ride, Bill crossed a bridge and got very confused because he thought there were no tracks below him. So he thought of a problem regarding the number of wheels on the left and right quarter of the train, and how much track is actually necessary for a train to go forever. 
+\qs{}{
+    Consider a set $W$ of wheels where $W \subseteq \{0, \ldots, \ell-1\}$ and $|W| = n$. Then consider the track $T \subseteq \{1, \ldots, 2\ell-1\}$. A track $T$ is valid if 
+    \begin{align*}
+        \forall i \in \{1, \ldots, \ell\}, (i + W) \cap T \neq \emptyset.
+    \end{align*}
+    Our goal is to use as little track as possible. 
+}
+\noindent A clear observation we can make is that if $W$ is an arithmetic progression (or rather, evenly spread out), we can say that there exists a valid track $T$ of size $O\left( \frac \ell n \right)$ (just put a track at every length of the quarter train).
+\begin{center}
+    \includegraphics*[width=10cm]{train.png}
+\end{center}
+There are two theorems we want to prove:
+\thm{}{
+    For any $W$, there exists a valid $T$ such that $|T| \leq O\left( \frac{\ell}{n} \cdot \log n \right)$.
+}
+\thm{}{
+    $\exists W$ such that all valid $T$ satisfy $|T| \geq \Omega \left( \frac \ell n \cdot \log n \right)$. 
+}
+\newpage
+\noindent \textit{Proof of Theorem 7.0.1.} Given $W$, WLOG, $0 \in W$. 
+
+\noindent \textbf{Step 1:} Let 
+\begin{align*}
+    T_1 = \text{ each $i \in \{1, \ldots, 2\ell - 1\}$ with probability $\frac{\ln n}{n}$.} 
+\end{align*}
+\textbf{Step 2:} Let 
+\begin{align*}
+    F = \{ i \in \{1, \ldots, \ell \} \mid (i + W) \cap T_1  = \emptyset \}.
+\end{align*}
+That is, ``$W$ falls through $T$, at point $i$''.
+
+\noindent \textbf{Step 3:} Define $T = T_1 \cup F$. 
+\nt{Because $0 \in W$, $T$ is valid. }
+\noindent We move to analyzing $T$. First, we have 
+\begin{align*}
+    E[|T|] &= E[|T_1|] + E[|F|] \\
+    &\leq \frac{2\ell \ln n}{n} + \text{ ?}.
+\end{align*}
+So,
+\begin{align*}
+    E[|F|] &= \sum_{i=1}^\ell P[(i + W) \cap T = \emptyset] \\
+    &= \sum_{i=1}^\ell  \prod_{j \in (i + W)} P(j \notin T_1) \\
+    &= \sum_{i = 1}^\ell \left( 1 - \frac{\ln n}{n}\right)^n \\
+    &\approx \sum_{i=1}^\ell \frac 1n \\
+    &= \frac \ell n.
+\end{align*}
+So 
+\begin{align*}
+    E[|T|] &\leq \frac{2\ell \ln n}{n} + \frac \ell n \\
+    &= \ell \left( \frac{2 \ln n + 1}{n} \right) \\
+    &= O \left( \frac{\ell \ln n}{n} \right).
+\end{align*}
+From this, it follows that there exists a valid $T$ such that $|T| \leq O\left( \frac{\ell}{n} \cdot \ln n \right)$ that is an outcome of this randomized algorithm. 
+
+\hfill $\qed$
+\newpage
+\noindent \textit{Proof of Theorem 7.0.2.} Without loss of generality, we can set $\ell = 2n$ for the rest of this section. 
+
+\mprop{}{Let $W = \text{include each $i \in \{0, \ldots, 2n - 1\}$ independently with probability $1/2$}$. Let $T \subseteq \{1 , \ldots, 4n\}$ satisfy 
+\begin{align*}
+    |T| \leq \frac{\ln n}{100}.
+\end{align*}
+Then, $P(T \text{ valid}) < \dfrac{1}{n^{\Omega(\sqrt n)}}$. 
+}
+\noindent We'll defer the proof of the proposition to later. But assuming we have proved it, then 
+\begin{align*}
+    P\left(\exists \text{ any $T$ of size $\frac{\ln n}{100}$ that is valid}\right) &\leq \sum_{T\subseteq \{1, \ldots, 4n-1\}, |T| \leq \frac{\ln n}{100}} P(T \text{ valid}) \\
+    &\leq \left(4n\right)^{\frac{\ln n}{100}} \cdot \frac{1}{n^{\Omega(\sqrt n)}} = \frac{1}{n^{\Omega(\sqrt n)}}.
+\end{align*}
+Notice that with probabilty at least $1/2$, $|W| \geq n$. So, there exists $W$ such that $|W| \geq n$ such that there is no valid $T$ of size $\leq \frac{\ln n}{100}$. It follows that there is $W$ of exactly size $n$ such that this is true. 
+
+So given Proposition 7.0.1, we will have proved Theorem 7.0.2.
+
+\hfill $\qed$
+
+\noindent \textit{Proof of Proposition 7.0.1.} Let 
+\begin{align*}
+    F = \{ i \in \{1, \ldots, 2n \} \mid (i + W) \cap T  = \emptyset \}.
+\end{align*}
+We have 
+\begin{align*}
+    E[|F|] &= \sum_{i=1}^{2n} P[(i + W) \cap T = \emptyset] \\
+    &= \sum_{i=1}^{2n} \prod_{j \in T} \underbrace{P(j \notin W + i)}_{\geq 1/2} \\
+    &\geq 2n \cdot \left( \frac 12 \right)^{T} \\
+    &>> n^{0.9}.
+\end{align*}
+If $f := |F|$, then $f$ is a function $f(X_1, \ldots, X_n)$ where $X_i = \mathbb I[i  \in W]$. And if you toggle $X_i$, $f$ changes by at most $|T| \leq \frac{\ln n}{100}$. Now we are in a perfect spot to apply McDiarmid's inequality:
+\begin{align*}
+    \underbrace{P(f = 0)}_{T \text{ is valid}} &\leq P(f < E[f] - n^{0.9}) \\
+    &\leq n^{-\Omega(\sqrt n)}. \tag{$k = \frac{n^{0.4}}{\Theta (\lg n)}$}
+\end{align*}
+\hfill $\qed$
+
+
+
 \end{document}
