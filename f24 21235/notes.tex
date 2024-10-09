@@ -1452,11 +1452,103 @@ So,
 \mprop{}{
     Let $X \simeq_{bi-L} Y$. Then $X$ is bounded iff $Y$ is bounded. 
 }
-\cor{}{Boundedness is a strong property. }
 \begin{proof}
     $\exists c_0, c_1 > 0$ and a bijection $f: X \to Y$ such that $c_0d(x, y) \leq d(f(x), f(y)) \leq c_1d(x, y)$ for all $x, y \in X$. We'll show that $Y$ bounded implies $X$ bounded. The other direction is free. 
 
     So if $Y$ is bounded, then $Y \subseteq B(z, r)$ for some $z \in Y$. But, $z = f(x)$ for some $x \in X$. Therefore, $d(x, y) \leq \frac{1}{c_0}d(f(x), f(y))$ for all $y \in X$. But that distance is less than $r$, so we also have that $d(x, y) < \frac{r}{c_0}$. This means that $X \subseteq B(x, r/c_0)$. So $X$ is bounded. 
+\end{proof}
+\cor{}{Boundedness is a strong property. }
+\newpage
+\ex{}{
+    Let $(X, d)$ be a metric space that is not bounded. We've seen that $\sigma = \frac{d}{1 + d}$ is also a metric on $X$. $(X, \sigma)$ is bounded because $X = B_{\sigma}[x, 1]$ for all $x \in X$. These are not bi-Lipschitz homeomorphic by the previous proposition, but they can be uniformly homeomorphic. We prove that the identity map does the job.
+
+    To see this, let $\epsilon > 0$ and note 
+    \begin{align*}
+        d < \epsilon \implies \frac{d}{1+d} \leq d < \epsilon.
+    \end{align*}
+    This means $I: (X, d) \to (X, \sigma)$ is uniformly continuous. On the other hand, assume $\delta < 1$ and observe that
+    \begin{align*}
+        \frac{d}{d+1} < \delta \implies d(1 - \delta) < \delta \iff d < \frac{\delta}{1 - \delta}.
+    \end{align*}
+    We set $\epsilon := \frac{\delta}{1 - \delta}$. So then we hae $\delta = \frac{\epsilon}{1 + \epsilon}$, so $I: (X, \sigma) \to (X, d)$ is uniformly continuous.
+}
+\cor{}{Boundedness is a strong property (preserved by bi-Lipschitz, not by uniform).}
+\mprop{}{
+    Let $X,Y$ be metric spaces, $f: X \to Y$ be a uniform homeomorphism. The following hold:
+    \begin{enumerate}
+        \item $\{x_n \}_{n = \ell}^\infty \subseteq X $ is Cauchy if and onlyl if $\{f(x_n)\}_{n = \ell}^\infty \subseteq Y$ is Cauchy.
+        \item $X$ complete if and only if $Y$ complete. 
+    \end{enumerate}
+}
+\begin{proof}
+We prove this in parts.
+    \begin{enumerate}
+        \item We know $g: X \to Y$ uniformly continuous implies that $\{g(x_n)\}_{n = \ell}^\infty \subseteq Y$ is Cauchy when $\{x_n\}_{n = \ell}^\infty \subseteq X$ is Cauchy. Now apply this to $g = f$ and $g = f^{-1}$ to get the result.
+        \item Suppose $Y$ is complete. Let $\{x_n\}_{n = \ell}^\infty \subseteq X$ be Cauchy. Then we know $\{f(x_n)\}_{n = \ell}^\infty \subseteq Y$ is Cauchy and hence convergent to some $y \in Y$. Thus $x_n = f^{-1}(f(x_n)) \to f^{-1}(y)$ in $X$ as $n \to \infty$. Therefore $X$ is complete. The converse holds by symmetry. 
+    \end{enumerate}
+\end{proof}
+
+\cor{}{Completeness is a uniform property. }
+\begin{proof}
+    The above proposition and $(0,1) \simeq_{hom} \RR$.
+\end{proof}
+
+\newpage
+\section{More Metric Space Topology}
+\dfn{}{Let $X$ be a metric space, $E \subseteq X$. We say $E$ is totally bounded if $\forall \epsilon > 0$, there exist $x_1, \ldots x_n \in X$ such that $E \subseteq \bigcup_{i=1}^n B(x_i, \epsilon)$.}
+\noindent Facts:
+\begin{enumerate}
+    \item $E \subseteq X$ totally bounded $\implies$ $E$ is bounded. 
+    \item If $A \subseteq E \subseteq X$ and $E$ is totally bounded, then $A$ is totally bounded.
+    \item We don't have to use balls. $E \subseteq X$ is totall bounded if and only if $\forall \epsilon > 0$, $\exists A_1, \ldots, A_n \subseteq X$ such that $\mathrm{diam}(A_i) < \epsilon$ for $i = 1, \ldots, n$ and $E \subseteq \bigcup_{i = 1}^n A_i$.
+\end{enumerate}
+\begin{proof}
+    We prove the third item. 
+
+    First realize that $\mathrm{diam}(B(x, \epsilon)) = 2 \epsilon$. So if we know $E$ is totally bounded, we can pick $E \subseteq \bigcup_{i=1}^n B\left(x_i, \frac \epsilon 3\right)$. Then the diameter of each ball is $\frac{2\epsilon}{3} < \epsilon$, so let $A_i := B\left(x_i, \frac \epsilon 3\right)$ for $i = 1, \ldots, n$.
+
+    Now suppose that $E \subseteq \bigcup_{i=1}^n A_i$ with $\mathrm{diam} < \frac \epsilon 3$. Then let $x_i \in A_i$ be arbitrary and note $A_i \subseteq B(x_i, \epsilon)$. This means $E\subseteq \bigcup_{i=1}^n B(x_i, \epsilon)$.
+\end{proof}
+\ex{}{
+    \begin{enumerate}
+        \item Suppose $E \subseteq X$ is finite. Then $E$ is totally bounded (just take the individual points).
+        \item $a,b \in \RR$, $a<b$. Then $(a, b)$ and $[a,b]$ are totally bounded, but $\RR$ itself is not totally bounded.
+        \item Let $X$ be an infinite set with the discrete metric. Then $B(x, 1)$ is a singleton set, so $X$ itself is not totally bounded. 
+        \item Let $E \subseteq \{\chi_A \in \ell^\infty (\NN; \RR) \mid A \subseteq \NN\}$ where 
+        \begin{align*}
+            \chi_a(n) = \begin{cases}
+            1 \quad n \in A \\
+            0 \quad n \notin A
+            \end{cases}.
+        \end{align*}
+        $E$ is bounded because $\Vert \chi_A \Vert_\infty \leq 1$. Also, if $A \neq B$, then $\Vert \chi_A - \chi_B \Vert_\infty = 1$. 
+
+        Then $B(\chi_A, 1) \cap E = \{\chi_A\}$. Therefore $E$ is bounded but not totally bounded. 
+        \item Let $V$ be a finite dimensional normed vector space. $B(x, r)$ and $B[x, r]$ are totally bounded. 
+    \end{enumerate}
+}
+\mprop{}{
+    Let $X$ be a metric space with $E \subseteq X$ totally bounded. Then $\overline E$ is totally bounded. 
+}
+\begin{proof}
+    Recall $\overline E = E \cup E'$. Let $\epsilon > 0$ and pick $X_1, \ldots, X_n \in X$ such that $E \subseteq \bigcup_{i=1}^n B(x_i, \epsilon / 2)$. 
+    
+    Let $x \in E'$, which means that $\emptyset \neq (B(x, \epsilon / 2) \cap E) \setminus \{x\}$, so pick any $y$ in this set. In particular, $d(x, y) < \epsilon  /2 $. Since $y \in E$, there is an $x_i$ such that $d(x_i, y)  < \epsilon /2$. By the triangle inequality,
+    \begin{align*}
+        d(x, x_i) \leq d(x, y) + d(y, x_i) < \frac{2\epsilon}{2} = \epsilon.
+    \end{align*}
+    That is, $E' \subseteq \bigcup_{i=1}^n B(x_i, \epsilon)$. Therefore, $E$ itself will be contained in the same union of balls as well. 
+\end{proof}
+\newpage 
+\thm{}{Let $X,Y$ be metric spaces.
+\begin{enumerate}
+    \item If $f : X \to Y$ is uniformly continuous and $E \subseteq X$ is totally bounded, then $f(E) \subseteq Y$ is totally bounded.
+    \item If $X \simeq_{uni} Y$, then $X$ is totally bounded if and only if $Y$ is totally bounded. In particular, $TB$ is a uniform property. 
+\end{enumerate}}
+\begin{proof}
+    If suffices to just prove the first item. 
+
+    Let $\epsilon  >  0$ and pick $\delta > 0$ such that $f(B(x, \delta)) \subset B(f(x), \epsilon)$ for all $x \in X$. Since $E$ is totally bounded, there exist $x_1, \ldots, x_n$ in $X$ such that $E \subseteq \bigcup_{i=1}^n B(x_i, \delta)$. Thus, $f(E) \subseteq \bigcup_{i=1}^n f(B(x_i, \delta)) \subseteq \bigcup_{i=1}^n B(f(x_i), \epsilon)$. 
 \end{proof}
 
 \end{document}
