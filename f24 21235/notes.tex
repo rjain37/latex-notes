@@ -1551,4 +1551,69 @@ We prove this in parts.
     Let $\epsilon  >  0$ and pick $\delta > 0$ such that $f(B(x, \delta)) \subset B(f(x), \epsilon)$ for all $x \in X$. Since $E$ is totally bounded, there exist $x_1, \ldots, x_n$ in $X$ such that $E \subseteq \bigcup_{i=1}^n B(x_i, \delta)$. Thus, $f(E) \subseteq \bigcup_{i=1}^n f(B(x_i, \delta)) \subseteq \bigcup_{i=1}^n B(f(x_i), \epsilon)$. 
 \end{proof}
 
+\mprop{}{Let $X$ be a totally bounded metric space. Then $X$ is separable.}
+\begin{proof}
+    Since $X$ is totally bounded, for every $n \in \NN$ there is a finite set $\emptyset \neq E_n \subseteq X$ such that $X = \bigcup_{x \in E_n} B(x, 2^{-n})$. No we can define the countable set $E = \bigcup_{n \in \NN} E_n \subseteq X$. 
+
+    Now given any $x \in X$, we know there exists $x_n \in E_n$ such that $d(x, x_n) < 2^{-n}$. 
+\end{proof}
+
+\ex{}{
+    $\mathcal B(X; Y)$ is not separable when $X$ is an infinite set and $|Y| \geq 2$. 
+}
+
+\thm{}{Let $X$ be a metric space and $E \subseteq X$. The following are equivalent:
+\begin{enumerate}
+    \item $E$ is totally bounded.
+    \item If $\{x_n\}_{n = \ell}^\infty \subseteq E$. Then there exists a Cauchy subsequence $\{x_{n_k}\}_{k = \ell}^\infty$.
+\end{enumerate}}
+\begin{proof}
+    Suppose $E \subseteq X$ is totally bounded. We will use this notation for JUST this proof:
+
+    \noindent Given two sequences $x = \{x_n\}_{n = \ell}^\infty, y = \{y_n\}_{n = \ell}^\infty \subseteq E$. We will write $x \sigma y$ to mean $x$ is a subsequence of $y$. Note, if $x \sigma y$ and $y \sigma z$, then $ x \sigma z$. 
+
+    Set $x^\ell = x$, some given sequence $\{x_n\}_{n = \ell}^\infty \subseteq E$. $E$ is totally bounded, so $E \subseteq \bigcup_{y \in F_\ell} B(y, 2^{-\ell - 1})$ for $F_\ell$ finite. By the pigeonhole principle, $\exists y \in F_\ell$ such that $x^\ell_n \in B(y, 2^{-\ell - 1})$ for infinitely many $n$. We may thus select $x^{\ell + 1} \sigma x^{\ell}$ such that $x^{\ell + 1}_n \in B(y, 2^{-\ell - 1})$ for all $n$. 
+
+    In particular, $d(x_{n}^{\ell + 1}, x_m^{\ell + 1}) < 2^{-\ell}$ for all $n,m \geq \ell$. Iterate this argument. This produces a sequence of subsequences. That is,
+    \begin{align*}
+        \cdots \sigma x^{m + 1} \sigma x^m \sigma \cdots \sigma = x
+    \end{align*}
+    such that $d(x^m_k, x^m_n) < 2^{-m +1}$ for all $m \geq \ell$, $n,k \geq \ell$. 
+
+    Now let $\{y_n\}_{n = \ell}^\infty \subseteq E$ be given by $y_n = x^n_n$. Thus, for $m,n \geq N$, we know by construction that $d(y_n, y_m) = d(x_n^n , x^m_m) < 2^{-N + 1}$. This easily shows that $\{y_n\}_{n = \ell}^\infty \subseteq E$ is Cauchy.
+
+    For the backward direction, we'll show that $\neg 1 \implies \neg 2$. Suppose $E$ is not totally bounded. Then there exists an $\epsilon > 0$ such that $E$ cannot be covered by finitely many $\epsilon$-balls. Let $x_0 \in E$ be arbitrary. $E \not\subseteq B(x_0, \epsilon)$. So there exists $x \in E$ such that $d(x_0, x) \geq \epsilon$. 
+
+    Now suppose we have $x_0, \ldots, x_n \in E$ such that $d(x_i, x_j) \geq \epsilon$ for $i \neq j \leq n$. Note that $E \not\subseteq \bigcup_{i=0}^n B(x, \epsilon)$, so we can pick an $x_{n+1} \in E$ that has a minimal distance of $\epsilon$ to all the previous points. 
+
+    Proceeding via induction, we find that there exists $\{x_n \}_{n= 0}^\infty$ such that $d(x_n, x_m) \geq \epsilon$ for all $m \neq n$ which cannot have a Cauchy subsequence. 
+\end{proof}
+\newpage 
+\cor{}{If $X$ is totally bounded and complete, then it is sequentially compact, meaning all sequences in $X$ have convergent subsequences. }
+\dfn{}{
+    Let $X$ be a metric space. 
+    \begin{enumerate}
+        \item We say $\{U_\alpha\}_{\alpha \in A}$ ($A$ is any index set) is an open cover of $E$ if $E \subseteq \bigcup_{\alpha \in A} U_\alpha$ and each $U_\alpha$ is open.
+        \item An open subcover of the open cover $\{U_\alpha\}_{\alpha \in A}$ is a collection $\{U_\beta\}_{\beta \in B}$ for any $B\subseteq A$ such that it remains an open cover of $E$. We say an open subcover $\{U_\beta\}_{\beta \in B}$ is finite if $B$ is finite. 
+        \item We say $E$ is compact if each open cover of $E$ admits a finite open subcover. 
+    \end{enumerate}
+}
+\ex{}{
+    \begin{enumerate}
+        \item Let $E \subseteq X$ be finite. Then $E$ is compact. 
+        \item $(0, 1) \subset \RR$ is not compact. Take $\left\{\left(0, \frac{n}{n+1}\right)\right\}_{n=1}^{\infty}$. Suppose $B \subseteq \NN \setminus \{0\}$ is a finite set such that $\left\{\left(0, \frac{n}{n+1}\right)\right\}_{n= \in B}$ is an open subcover. Then let $N = \max B$. This implies that
+        \begin{align*}
+            (0, 1) \subseteq \left(0, \frac{N}{N+1}\right)
+        \end{align*}
+        which is a contradiction. 
+        \item Let $E = \{0\} \cup \{2^{-n} \mid n \in \NN\} \subseteq \RR$. Then let $\{U_\alpha\}_{\alpha \in A}$ be an open cover.  Pick $\alpha_0 \in A$ such that $0 \in U_{\alpha_0}$. Since $2^{-n} \to 0$ as $n \to \infty$, in fact $U_{\alpha_0}$ contains all but finitely many of the $2^{-n}$ terms. That is, there exists $N$ such that $2^{-n \in U+{\alpha_0}}$ for all $n \geq N$. Now pick a finite subcover of $\{2^{-n} \mid 0 \leq n \leq N\}$ and we're done. $E$ ic ompact, though $E$ is infinite.
+    \end{enumerate}
+    
+}
+
+
+
+
+
+
 \end{document}
