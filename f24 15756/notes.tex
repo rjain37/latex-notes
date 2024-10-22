@@ -1379,7 +1379,7 @@ We have
     E[|F|] &= \sum_{i=1}^{2n} P[(i + W) \cap T = \emptyset] \\
     &= \sum_{i=1}^{2n} \prod_{j \in T} \underbrace{P(j \notin W + i)}_{\geq 1/2} \\
     &\geq 2n \cdot \left( \frac 12 \right)^{T} \\
-    &>> n^{0.9}.
+    &\gg n^{0.9}.
 \end{align*}
 If $f := |F|$, then $f$ is a function $f(X_1, \ldots, X_n)$ where $X_i = \mathbb I[i  \in W]$. And if you toggle $X_i$, $f$ changes by at most $|T| \leq \frac{\ln n}{100}$. Now we are in a perfect spot to apply McDiarmid's inequality:
 \begin{align*}
@@ -1387,7 +1387,131 @@ If $f := |F|$, then $f$ is a function $f(X_1, \ldots, X_n)$ where $X_i = \mathbb
     &\leq n^{-\Omega(\sqrt n)}. \tag{$k = \frac{n^{0.4}}{\Theta (\lg n)}$}
 \end{align*}
 \hfill $\qed$
+\newpage
 
+\chapter{Hash Tables}
+\section{Random-Probing Hash table}
+For this section, a hash table has two important operations:
+\begin{enumerate}
+    \item $\texttt{insert(key)}$ (adding)
+    \item $\texttt{query(key)}$ (exists)
+\end{enumerate} 
+Also for this section, we'll support up to $(1-\epsilon)n$ total insertions. The hash table will be an array with $n$ slots. 
 
+\begin{center}
+    \begin{tikzpicture}
+        \foreach \x in {1,...,12} {
+            \draw (\x,0) rectangle (\x+1,1);
+            \node at (\x+0.5,0.5) {};
+        }
+    \end{tikzpicture}
+\end{center}
+So to insert a key $k$, we consider a sequence of random hashes $h_1(k), h_2(k), \ldots$ and each $h_i(k)$ is uniformly random in $1, \ldots, n$ and $h_i$'s are independent. We place the key in the first available position out of the sequence $h_1, h_2, h_3, \ldots$. 
+
+\noindent To query $k$, we try $h_1(k), h_2(k), \ldots$ until 
+\begin{itemize}
+    \item we find $k$, in which case we return true.
+    \item or we find a free slot, in which case we return false.
+\end{itemize}
+Observations:
+\begin{enumerate}
+    \item If the hash table is $1 - \delta$ full, then 
+    \begin{align*}
+        E[\text{time for next insertion}] = \delta^{-1}.
+    \end{align*}
+    \item Suppose I fill $1-\epsilon$ full. Then,
+    \begin{align*}
+        E[\text{time to query random elements of those present}] &\approx \frac n2 \cdot O(2) + \frac n4 \cdot O(4) + \frac n8 \cdot O(8) + \cdots + \epsilon n \cdot O(\epsilon^{-1})\\
+        &\approx \underbrace{1 + 1 + \cdots + 1}_{\lg \epsilon^{-1} \text{ terms}} \\
+        &= O(\lg \epsilon^{-1}).
+    \end{align*}
+\end{enumerate}
+``Open-addressed hash tables'': Any hash table that is ``like random-probing'' but that possibly uses a different distribution for its probe sequence
+\begin{align*}
+    h_1(k), h_2(k), \ldots
+\end{align*}
+Some examples include linear probing and double hashing. 
+
+\newpage
+% create conjecture env
+\clm{Ullman '72}{
+    For any open address hash table, 
+    \begin{align*}
+        E[\text{time to query rnadom elements of those present}] \geq \Omega(\lg \epsilon^{-1}).
+    \end{align*}
+}
+\noindent This was proven by Andrew Yao in 1985. The title of his paper was ``Uniform Hashing is Optimal.'' He ended the paper with the following conjecture:
+\clm{Yao '85}{
+    For any open address hash table, if you fill it to $(1-\epsilon)$ full, the expected time of the next insertion is at least $\Omega(\epsilon^{-1})$. 
+}
+\thm{}{
+    Possible to achieve 
+    \begin{align*}
+        E[\text{insertion time}] = O( \lg^2 \eps^{-1}).
+    \end{align*}
+}
+\noindent We now turn attention towards the coupon collector problem:
+\qs{Coupon Collector}{We have a hat with $n$ coupons in it. We repeatedly draw random coupons from it, with replacement. The classical question is how many draws in expectation do we need to collect all $n$ coupons? The answer to this is $O(n \log n)$.}
+\thm{}{Let $\delta \in (0, 1)$ be such taht $\delta \geq \frac{1}{n^{1/10}}$. Let $X$ be the number of draws until we have collected a $(1-\delta)$ fraction of all the coupons. Then, with high probability, $X \leq 2n\ln \delta^{-1}$. }
+\begin{proof}
+    Do $2n \ln \delta^{-1}$ draws. Let $Y$ be the number of distinct coupons not sampled. Then,
+    \begin{align*}
+        E[Y] &= \sum_{i=1}^n P(\text{coupon $i$ is not sampled}) \\
+        &=  n \cdot \left(1  - \frac 1n\right)^{2n \ln \delta^{-1}} \\
+        &\approx n \delta^2.
+    \end{align*}
+    Applying McDiarmid's to $Y$,
+    \begin{itemize}
+        \item $Y$ is a function of $m = 2n \ln \delta^{-1}$ random variables.
+        \item Each of these random variables can only affect $Y$ by $\pm 1$. 
+    \end{itemize}
+    So by McDiarmid's, we have with high probability that
+    \begin{align*}
+        &Y \leq E[Y] + \tilde{O}(\sqrt m) \\
+        &\implies Y \leq \delta^2 n + \tilde{O}(\sqrt m) \\
+        &\implies \text{number of sampled coupons} \geq n - \underbrace{(\delta^2 n + \tilde O(\sqrt m))}_{\lll \delta n} \\
+        & \geq (1-\delta)n.
+    \end{align*}
+\end{proof}
+\newpage
+\noindent We now learn about a new hash table design. Break up the table as follows:
+\begin{itemize}
+    \item $p_1$ is the first $\frac n2$ slots.
+    \item $p_2$ is the next $\frac n4$ slots.
+    \item $\vdots$
+    \item Do this until there is a $\epsilon n / 100$ size part.
+\end{itemize}
+Probe sequence:
+\begin{itemize}
+    \item Try $100 \lg \epsilon^{-1}$ probes in $p_1$.
+    \item Try $100 \lg \eps^{-1}$ probes in $p_2$.
+    \item $\vdots$
+\end{itemize}
+If this fails for all parts, 
+\begin{itemize}
+    \item Do $100 \log n$ probes in the final part.
+    \item Loop through the array until there is a free spot in the worst case.
+\end{itemize}
+The most recent step happens with very very low probability, but is required for correctness of the data structure. 
+
+Now suppose $p_i$ gets $\geq 50\%$ full for some $i$. This means that $p_{i-1}$ must have gotten at least $\frac{|p_i|}{2} \cdot 100 \lg \epsilon^{-1}$ probes. So, with high probability, if $p_i$ gets $50\%$ full, we have that 
+\begin{align*}
+    \frac{|p_i|}{2} \cdot 100 \lg \epsilon^{-1} = |p_{i-1}| \cdot 25 \lg \epsilon^{-1},
+\end{align*}
+which means that $p_{i-1}$ is $1 - \epsilon^{12.5}$ full. Then $p_{i-2}$ is also at least $1 - \eps^{12.5}$ full, and all $p_{i-1}, p_{i-2}, \ldots, p_1$ are all at least $1-\eps^{12.5}$ full. We claim that the final part is $\leq \frac 12$ full. This is because if the final part were $\geq \frac 12$ full, then all the earlier parts would be $\geq 1-\eps^{12.5}$ full, meaning that the overall number of elements is 
+\begin{align*}
+    &\geq  (1 - \eps/10) (|p_1| + \cdots + |p_{k}|) \\
+    &= n \cdot \left( 1 - \frac \eps {50}\right) \\
+    &> (1-\eps)n.
+\end{align*}
+But this yields a contradiction, meaning the final part never reaches $50\%$ full. As such, we have disproved Yao's claim. So,
+\begin{itemize}
+    \item Once we get to the final part, the expected additional time is $O(1)$. 
+    \item So, the total expected time is 
+    \begin{align*}
+        O(1) + \text{number of probes before final part} \\
+        = O(1) + 100 \lg \eps^{-1} \cdot O(\lg \eps^{-1}) = O(\lg^2 \eps^{-1}).
+    \end{align*}
+\end{itemize}
 
 \end{document}

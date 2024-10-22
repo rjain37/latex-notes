@@ -1606,14 +1606,95 @@ We prove this in parts.
             (0, 1) \subseteq \left(0, \frac{N}{N+1}\right)
         \end{align*}
         which is a contradiction. 
-        \item Let $E = \{0\} \cup \{2^{-n} \mid n \in \NN\} \subseteq \RR$. Then let $\{U_\alpha\}_{\alpha \in A}$ be an open cover.  Pick $\alpha_0 \in A$ such that $0 \in U_{\alpha_0}$. Since $2^{-n} \to 0$ as $n \to \infty$, in fact $U_{\alpha_0}$ contains all but finitely many of the $2^{-n}$ terms. That is, there exists $N$ such that $2^{-n \in U+{\alpha_0}}$ for all $n \geq N$. Now pick a finite subcover of $\{2^{-n} \mid 0 \leq n \leq N\}$ and we're done. $E$ ic ompact, though $E$ is infinite.
-    \end{enumerate}
-    
+        \item Let $E = \{0\} \cup \{2^{-n} \mid n \in \NN\} \subseteq \RR$. Then let $\{U_\alpha\}_{\alpha \in A}$ be an open cover.  Pick $\alpha_0 \in A$ such that $0 \in U_{\alpha_0}$. Since $2^{-n} \to 0$ as $n \to \infty$, in fact $U_{\alpha_0}$ contains all but finitely many of the $2^{-n}$ terms. That is, there exists $N$ such that $2^{-n \in U_{\alpha_0}}$ for all $n \geq N$. Now pick a finite subcover of $\{2^{-n} \mid 0 \leq n \leq N\}$ and we're done. $E$ ic ompact, though $E$ is infinite.
+    \end{enumerate}    
 }
+\mprop{}{Let $X$ be a metric space and $K \subseteq X$ be compact. Then $K$ is closed and totally bounded, which in particular means that $K$ is bounded and that $K$ is a separable metric space, provided $K \neq \emptyset$. }
+\begin{proof}
+    Let $\epsilon > 0$ and note that $\{B(x, \epsilon)\}_{x \in X}$ is a cover of $K$. So by compactness, there exists $x_1, \ldots, x_n \in X$ such that $K \subseteq \bigcup_{i = 1}^n B(x_i, \epsilon)$. Therefore, $K$ is totally bounded which means it is bounded and separable.
+
+    We now prove that $K$ is closed. If $K = \emptyset$ or $K^c = \emptyset$, then we are done. So, suppose otherwise. Let $x \in K^c$. For each $y \in K$, note that $B(y, d(x, y)/ 2) \cap B(x, d(x, y)  2) = \emptyset$. Also, $\{B(y, d(x, y)/2)\}_{y \in K}$ is an open cover of $K$.
+
+    $K$ being compact implies that $K \subseteq \bigcup_{i=1}^n B(y_i, d(x, y_i)/2)$ for some $y_1, \ldots, y_n \in K$. 
+
+    Let $\delta = \min\{d(x, y_i)/2 \mid 1 \leq i \leq n\}$. Then, $K \cap B(x, \delta) \subseteq \bigcup_{i=1}^n B(y_i, d(x, y_i)/2) \cap B(x, \delta) = \emptyset$. This means that $B(x, \delta) \subseteq K^c$. As such, $K^c$ is open and $K$ is closed.
+\end{proof}
 
 
+\mprop{}{Let $X$ be a metric space and $\emptyset \neq Y \subseteq X$ and $K \subseteq Y \subseteq X$. Then $K$ is compact in $Y$ if and only if $K$ is compact in $X$.}
+\begin{proof}
+    Suppose $K$ is compact in $Y$. Then let $\{U_\alpha\}_{\alpha \in A}$ be an open cover of $K$ in $X$. Then, $\{Y \cap U_\alpha\}_{\alpha \in A}$ is an open cover of $K$ in $Y$. By compactness, $K \subseteq \bigcup_{i=1}^n (Y \cap U_{\alpha_i}) \subseteq \bigcup_{i=1}^n U_{\alpha_i}$. So, $K$ is compact in $X$.
 
+    Now suppose $K$ is compact in $X$. Let $\{V_{\alpha}\}_{\alpha \in A}$ be an open cover of $K$ in $Y$. Then, there exists an open (in $X$) $U_\alpha$ such that $V_\alpha = Y \cap U_\alpha$ for all $\alpha \in A$. THus, $\{U_\alpha\}_{\alpha \in A}$ is an open cover of $K$ in $X$. So,
+    \begin{align*}
+        K \subseteq \bigcup_{i=1}^n U_{\alpha_i} \implies K = K \cap Y \subseteq \bigcup_{i=1}^n Y_n \cap U_{\alpha_i} = \bigcup_{i=1}^n V_{\alpha_i}.
+    \end{align*}
+    So, $K$ is compact in $Y$.
+\end{proof}
+\nt{In light of this, we will mostly study compact metric spaces rather than compact subsets.}
 
+\thm{}{Let $X$ and $Y$ be metric spaces with $X$ compact and $f: X \to Y$ be continuous. Then $f(X) \subseteq Y$ is compact.}
+\begin{proof}
+    Let $\{U_\alpha\}_{\alpha \in A}$ be an open cover of $f(X)$. Note that $f$ being continuous implies that $f^{-1}(U_\alpha) \subseteq X$ is open for all $\alpha \in A$. Thus, $\{f^{-1}(U_\alpha)\}_{\alpha in A}$ is an open cover of $X$. So since $X$ is compact, we have that $X = \bigcup_{i=1}^n f^{-1}(U_{\alpha_i})$. Therefore, $f(X) \subseteq \bigcup_{i=1}^n U_{\alpha_i}$. So, $f(X)$ is compact.
+\end{proof}
+\cor{}{
+    Compactness is a topological property.
+}
+\mprop{}{Let $X$ be a compact metric space. Then $C \subseteq X$ si compact if and only if $C$ is closed.}
+\begin{proof}
+    Forward direction has already been proved. So now assume $C$ is closed and let $\{U_\alpha\}_{\alpha \in A}$ be an open cover of $C$. Then, $C^c \cup \{U_{\alpha}\}_{\alpha in A}$ is an open cover of $X$. So, $X = C^c \cup \bigcup_{i=1}^n U_{\alpha_i} \implies C \subseteq \bigcup_{i=1}^n U_{\alpha_i}$, so $C$ is compact.
+\end{proof}
+\thm{}{
+    Let $X,Y$ be metric spaces with $X$ compact and suppose $f: X \to Y$ is a continuous bijection. Then $f^{-1} : Y \to X$ is continuous and $f$ is a homeomorphism.
+}
+\begin{proof}
+    First note that if $C \subseteq X$ is closed, then $C$ is compact by the above proposition. So, $f(C)$ is compact and hence closed in $Y$. Define $g = f^{-1}: Y \to X$ and note that for $C \subseteq X$ closed, $g^{-1}(C) = f(C)$ which is closed for all such $C$. As such, $g$ is continuous by the closet set characterization of continuity.
+\end{proof}
 
+\ex{}{The theorem fails if $X$ is not compact:
+\begin{enumerate}
+    \item $[0, 2\pi) \ni t \mapsto (\cos(t), \sin(t)) \in \mathbb S^1$. This is continuous, but its inverse is not.
+    \item $(0, 2\pi) \ni t \mapsto (\sin(2t), \sin(t)) \in \RR^2$. This sort of creates a figure 8 as the image. 
+\end{enumerate}}
+\newpage
+\thm{}{Let $X$ be a metric space, $f : X \to Y$ continuous. The following hold:
+\begin{enumerate}
+    \item Suppose $\emptyset \neq K \subseteq X$ is compact. Then $\forall \epsilon > 0$, $\exists \delta > 0$ such that $x \in K$ and $y \in X$ and $d_X(x, y) < \delta$ implies that $d_Y(f(x), f(y)) < \epsilon$.
+    \item If $X$ is compact, then $f$ is uniformly continuous. 
+\end{enumerate}}
+\begin{proof}
+    Clearly $1  \implies 2$, so weonly need to prove 1. Let $\emptyset \neq K \subseteq X$ be compact and $\epsilon > 0$. Since $f$ is continuous, at each $x \in K$, $\exists \delta_x > 0$ such that 
+    \begin{align*}
+        y \in X \land d_X(x, y) < \delta_x \implies d_Y(f(x), f(y)) < \frac \epsilon 2. 
+    \end{align*}
+    So then, $\{B(x, \delta_x /2)\}_{x \in K}$ is an open cover in $K$. But since $K$ is compact, we have that 
+    \begin{align*}
+        K \subseteq \bigcup_{i=1}^n B(x_i, \delta_i /2).
+    \end{align*}
+    Now let $\delta = \min\{\delta_1/2, \ldots, \delta_n / 2\} > 0$. Now let $x \in K$ and $y \in X$ be such that $d_X(x, y) < \delta$. Since $x \in K$, there eixsts $1 \leq m \leq n$ such that $d_X(x, x_n) < \delta_m /2 $. Thus,
+    \begin{align*}
+        d_X(x_m, y) &\leq d_X(x_m, x) + d_X(x, y) \\
+        &\leq  \frac{\delta_m}{2} + \delta \\
+        &\leq \frac{2\delta_m}{2} = \delta_m.
+    \end{align*}
+    As such,
+    \begin{align*}
+        d_Y(f(x), f(y)) &\leq d_Y(f(x), f(x_m)) + d_Y(f(x_m), f(y)) \\
+        &\leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+    \end{align*}
+    as desired.
+\end{proof}
+\cor{}{Suppose $X$ is a compact metric space. Then 
+\begin{align*}
+    [X]_{hom} = [X]_{uni}.
+\end{align*}}
+\newpage
+\thm{Borel-Lebesgue}{Let $X$ be a metric space. The following are equivalent:
+\begin{enumerate}
+    \item $X$ satisfies the Bolzano-Weierstrass limit point property: If $E \subseteq X$ is infinite, then it has a limit point. 
+    \item $X$ is sequentially compact: all sequences in $X$ have convergent subsequences.
+    \item $X$ is complete and totally bounded.
+    \item $X$ is compact.
+\end{enumerate}}
 
 \end{document}
