@@ -1513,5 +1513,78 @@ But this yields a contradiction, meaning the final part never reaches $50\%$ ful
         = O(1) + 100 \lg \eps^{-1} \cdot O(\lg \eps^{-1}) = O(\lg^2 \eps^{-1}).
     \end{align*}
 \end{itemize}
+\newpage
+\section{Linear Probing}
+To insert an element $v$ into a hash table that incorporates linear probing, we just
+\begin{itemize}
+    \item place $v$ in the first free slot out of $h(v), h(v) + 1, \ldots$ (modulo the table size).
+\end{itemize}
+Searching for an element $v$ uses the same process. At relatively low capacity, linear probing is the most efficient hash table known to man.
+But now suppose we perform $(1 - 1/x)\cdot n$ insertions and perform one more insertion.
+\clm{Peterson 1957}{
+    The expected insertion time is $O(x)$. 
+}
+\thm{Knuth 1962}{
+    The expected insertion time is $\Theta(x^2)$.
+}
+\noindent Intuition for clustering:
+\begin{itemize}
+    \item The longer your run gets, the more likely you are to hash into the run. ``Winner keeps winning.''
+    \item ``Globbing effect.'' This is when an insertion connects two clusters. 
+\end{itemize}
+\noindent Intuition \#2:
+\begin{itemize}
+    \item Consider an interval $I$ with size $x^2$. Let $R$ be the number of items whose hashes are in $I$. We consider properties of $R$. So first,
+    \begin{align*}
+        E[R] &= (1-1/x)\cdot x^2 = x^2 - x \\
+        \mathrm{std} (R) &\approx \sqrt{E[R]} \approx x.
+    \end{align*}
+    Moral: intervals of size $\leq x$ often have more elements hashing to them than can fit. 
+\end{itemize}
+\mlenma{}{
+    Throw $(1-1/x)\cdot n$ balls into $n$ bins. Let $k > 0$. Define $P_i$ to be the number of balls in the first $i$ bins. Then
+    \begin{align*}
+        P(\exists \text{ any $i \geq kx^2$ such that } P_i \geq i) \leq e^{-\Omega(k)}.
+    \end{align*}
+    Call the event above $*$.
+}
+\noindent Warmup: What is $P(P_{kx^2} \geq kx^2)$? (call this event $\dagger$)
+\begin{align*}
+    \mu = E[P_{kx^2}] = (1-1/x) \cdot kx^2  = kx^2 - kx.
+\end{align*}
+So $\sqrt \mu \leq \sqrt{kx^2} = \sqrt k x$.So,
+\begin{align*}
+    P(P_{kx^2} \geq kx^2) \approx P(P_{kx^2} \geq \mu + \sqrt k \sqrt \mu) = e^{-\Omega(k)}.
+\end{align*}
+Now we make a critical claim. If we condition on any prefix being problematic, then
+\begin{align*}
+    P(\dagger \mid *) = \Omega(1).
+\end{align*}
+This would mean that $P(*) = \Theta(P(\dagger))$, so by the warmup, we'd be done.
+\begin{proof}
+    Assume event $*$. Let $i$ be the largest $i$ such that $P_i \geq i$. Note that $kx^2 \leq i$ because we assumed $*$. If you tell me $I, P_i$, what is the conditional distribution for $P_{kx^2}$. Then,
+    \begin{align*}
+        P_{kx^2} \sim \text{binomial random variable given by sum of $P_i$ balls,} \\
+        \text{ each of which has probability $kx^2/i$ of landing in the first $kx^2$ bins.}
+    \end{align*}
+    Therefore, $P_{kx}$ is now a binomial random variable with mean $P_i \cdot \frac{kx^2}{i} \geq kx^2$. Any binomial random variable with mean $\mu \geq 1$ has $\Omega(1)$ probability of meeting or exceeding its mean. So it follows that $P(\dagger \mid *) \geq \Omega(1)$.  This completes the proof of the lemma.
+    \newpage
+    \noindent Returning to Knuth's theorem, consider insertion of an element $u$ at $(1 - 1/x)$ full. Then we want to show that
+    \begin{align*}
+        P(\text{insertion time} \geq kx^2) \leq e^{-\Omega(k)}.
+    \end{align*}
+    Now consider a table where the range $[h(v) -r, h(v) + kx^2)$ is saturated. Then, there exists a suffix of array slots ending at slot $h(v) + kx^2 - 1$ such that 
+    \begin{itemize}
+        \item $|\text{suffix}| \geq kx^2$
+        \item the number of elements that hash to suffix $\geq |\text{suffix}|$.
+    \end{itemize}
+    This is where we apply the lemma. This directly gives us that 
+    \begin{align*}
+        P(\text{insertion time} \geq kx^2) \leq e^{-\Omega(k)}
+    \end{align*}
+    which completes the proof.  
+\end{proof}
+
+
 
 \end{document}

@@ -1696,5 +1696,51 @@ We prove this in parts.
     \item $X$ is complete and totally bounded.
     \item $X$ is compact.
 \end{enumerate}}
+\begin{proof}
+    (BW $\implies$ sequentially compact): Let $\{x_n\}_{n = \ell}^\infty \subseteq X$ and let $F = \{x_n \mid n \geq \ell\} \subseteq X$. If $F$ is finite then we can extract a constant subsequence, which trivially converges. Assume then that $F$ is an infinite set, which means that $\exists x \in F'$. Pick $n_\ell \geq \ell$ such that $x_{n_\ell} \in B(x, 2^{-\ell}) \cap F \setminus \{x\}$. Now suppose we have $n_\ell < n_{\ell+1} < \dots < n_k$ and $x_{n_\ell}, \ldots, x_{n_k} \in X$ such that
+    \begin{align*}
+        x_{n_j} \in B(x, 2^{-j}) \cap F \setminus \{x\}.
+    \end{align*}
+    Note that $B(x, 2^{-(k+1)}) \cap F \setminus \{x\} \neq \emptyset$. Note that this also must be infinite as otherwise we could just shrink the interval as much as we want to not include any of the points. Thus, we can choose $n_{k+1} > n_k$ and $x_{n_{k+1}} \in B(x, 2^{-k - 1}) \cap F \setminus \{x\}$. By induction we know have $\{x_{n_k}\}_{k = \ell}^\infty$ such that $d(x, x_{n_k}) < 2^{-k}$ for all $k \geq \ell$. Therefore $x_{n_k} \to x$ as $k \to \infty$. Therefore, $X$ is sequentially compact.
+
+    (sequentially compact $\implies$ complete and totally bounded): Let $\{x_n\}_{n=\ell}^\infty \subseteq X$ be Cauchy. Sequential compactness give us a convergent subsequence $\{x_{n_k}\}_{k=\ell}^\infty$. We know that Cauchy and convergent subsequence implies convergence, so $\{x_n\}_{n=\ell}^\infty$ is convergent. Also, all convergence subsequences are Cauchy, so all sequences in $X$ have Cauchy subsequences, so $X$ is totally bounded. 
+
+    (complete + totally bounded $\implies$ compact): Let $\{U_\alpha\}_{\alpha \in A}$ be an open cover of $X$. Claim: $\exists \epsilon > 0$ such that $\forall x \in X$, $\exists \alpha \in A$ such that $B(x, \epsilon) \subseteq U_\alpha$. We now prove this claim.
+
+    Suppose the contrapositive. Then for each $n \in \NN$, there is an $x_n \in X$ such that $B(x_n, 2^{-n}) \cap U_\alpha^c \neq \emptyset$ for all $\alpha \in A$. $X$ is totally bounded, so there exists a Cauchy subsequence $\{x_{n_k}\}_{k=0}^\infty$, so this sequence has to be convergent by completeness of $X$. Pick an $\alpha \in A$ such that $x \in U_\alpha$. Since $U_\alpha$ is open, we can pick an $r > 0$ such that $B(x, r) \subseteq U_\alpha$. Now pick $M \geq 0$ such that if $k \geq M$, then $d(x_{n_k}, x) < r/2$ and $2^{-n_k} < r/2$. Now let $y \in B(x_{n_M}, r/2)$. Then $d(x, y) \leq d(x, x_{n_M}) + d(x_{n_M}, y) < r/2 + r/2 = r$. Therefore, $y \in B(x, r)$ and $B(x_{n_M}, r/2) \subseteq B(x, r) \subseteq U_\alpha$. In turn, $B(x_{n_M}, 2^{-n_k}) \subseteq B(x_{n_M}, r/2) \subseteq U_\alpha$ which is a contradiction. 
+
+    So back to the main proof: Let $\{U_\alpha\}_{\alpha \in A}$ be an open cover and let $\epsilon > 0$ be as given by the claim. Then, $X = \bigcup_{i=1}^n B(x_i, \epsilon)$ thanks to totally boundedness. But the claim guarantees that $\exists \alpha_i \in A$ such that $B(x_i, \eps) \subseteq U_{\alpha_i}$, so $X = \bigcup_{i=1}^n U_{\alpha_i}$. Therefore $X$ is compact.
+
+    (compact $\implies$ BW): Let $E \subseteq X$ and suppose that $E' = \emptyset$. Then $\forall x  \in X$, $\exists \eps_x > 0$ such that $E \cap B(x, \eps_x) \setminus \{x\} = \emptyset$. Then, $\{B(x, \eps_x)\}_{x\in X}$ is an open cover of $X$. So, by compactness, $X = \bigcup_{i=1}^n B(x_i, \eps_{x_i})$. Thus, $E = E \cap X = \bigcup_{i=1}^n B(x_i, \eps_{x_i}) \subseteq \bigcup_{i+1}^n \{x_i\}$. Therefore $E$ is finite. But now we're done as if $E$ is infinite, $E'$ cannot be empty. 
+\end{proof}
+\cor{Heine-Borel}{Let $V$ be a finite dimensional normed vector space and $E \subseteq V$. Then $E$ is compact if and only if $E$ is closed and bounded. }
+\begin{proof}
+    We saw that sequential compactness is true if and only if closed and bounded when $V = \RR^n$. Pick your favorite linear homeomorphism $T : V \to \RR^n$. We can do this because we can always consider this as $V$ as a vector space over $\RR$. Now $E \subseteq V$ is compact if and only if $E\subseteq V$ is sequentially compact if and only if $T(E) \subseteq \RR^n$ is sequentially compact if and only if $T(E) \subseteq \RR^n$ is closed and bounded.
+
+    Heavily note that since $T$ is linear, it is bi-Lipschitz, which means $T(E)$ is closed and bounded if and only if $E$ is closed and bounded.
+\end{proof}
+\newpage
+
+\ex{}{
+    $B[x, r] \subseteq V$ are totally bounded.
+}
+\mlenma{}{
+    Suppose $\emptyset \neq K \subseteq \RR$ be compact. Then there exists $x_0 = \min k$ and $x_1 = \max K$. 
+}
+\begin{proof}
+    $K$ compact implies $K$ is closed and bounded. Let $M = \sup K$ and $m = \inf K$. Now pick $\{m_n\}_{n}$ and $\{M_n\}_{n}$ such that $m_n \to m$ and $M_n \to M$ as $n \to \infty$. By closedness, $m, M \in K$ so we have a minimum and maximum as desired.
+\end{proof}
+\thm{Extreme Value Theorem}{
+    Let $X$ be a compact metric space and $f : X \to \RR$ be continuous. Then there exists $x_0, x_1 \in X$ such that $f(x_0) \leq f(x) \leq f(x_1)$ for all $x \in X$. 
+}
+\begin{proof}
+    $f(X) \subseteq \RR$ is compact because $f$ is continuous and $X$ is compact. Therefore, the lemma above shows that there is $y_0, y_1 \in f(X)$ such that $y_0 < f(x) < y_1$ for all $x \in X$. So we can write this as 
+    \begin{align*}
+        f(x_0) \leq f(x) \leq f(x_1)
+    \end{align*}
+    where $x_0, x_1 \in X$ such that $f(x_0) = y_0$ and $f(x_1) = y_1$.
+\end{proof}
+
+
 
 \end{document}
