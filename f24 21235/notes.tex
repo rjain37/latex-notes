@@ -1741,6 +1741,202 @@ We prove this in parts.
     where $x_0, x_1 \in X$ such that $f(x_0) = y_0$ and $f(x_1) = y_1$.
 \end{proof}
 
+\dfn{}{
+    Let $X$ be a metric space. 
+    \begin{enumerate}
+        \item We say $X$ is connected if the only sets in $X$ that are clopen are $\emptyset$ and $X$.
+        \item $E \subseteq X$ is a connected subset if 
+        \begin{align*}
+            \begin{cases}
+                E = \emptyset \\
+                E \text{ is a connected metric space when endowed with the metric from $X$}
+            \end{cases}
+        \end{align*}
+    \end{enumerate}
+}
+\nt{Connectness is automatically intrinsic. That is, if $E \subseteq X \subseteq Y$ for $Y$ a metric space, $X \neq \emptyset$, then $E$ is a connected subset of $X$.}
+\ex{}{
+    \begin{enumerate}
+        \item $(0, 1) \cup (1, 2)$ with the metric from $\RR$ is disconnected.
+        \item Let $X$ be a metric space and $E = \{x\} \subseteq X$. Then $E$ is trivially connected.
+        \item Let $\FF \subset \RR$ be an archimedean field. Pick $z \in \RR \setminus \FF$ and let $L_z = \FF \cap (-\infty, z)$ and $R_z = \FF \cap (z , \infty)$. Then $R_z = L^c_z$ so they are both clopen. 
+        \item Let $X$ be a discrete metric space with cardinality greater than 2. $X$ is disconnected. In fact, the only connected subsets are singletons.
+    \end{enumerate}
+}
+\newpage
+\thm{}{
+    Let $V$ be a normed vector space and $C \subseteq V$ be convex. That is $x, y \in C$ and $t \in [0, 1] \implies (1-t)x + ty \in C$. Then $C$ is connected. In particular, $V$ itself is connected.
+}
+\begin{proof}
+    Suppose BWOC $C$ is disconnected. Then $ \exists \emptyset \neq E \subset C$ that's open and closed. That is, $\emptyset \neq E^c \subset C$ is also open and closed. Let $x \in E$ and $y \in E^c$. Define 
+    \begin{align*}
+        S = \{s \in [0, 1] \mid (1-t)x + ty \in E \text{ for all $0 \leq t \leq s$}\}.
+    \end{align*}
+    Note $x \in E$ implies that $0 \in S$. So we can define $s = \sup S \in [0, 1]$. Now define $z := (1-s) + sy \in C$. It must be the case that $z \in E$ or $z \in E^c$.
+    \begin{itemize}
+        \item Let $z \in E$. Then $E$ is open, so $B(z, \epsilon) \subseteq E$. Then for $0 < \delta < \eps$, the point $w_\delta = x + \left(s + \frac{d}{\Vert x- y \Vert}\right) (y-x)$ is such that 
+        \begin{align*}
+            \Vert w_\delta - z \Vert = \delta  <\eps \implies w_\delta \subseteq B(z, eps) \subseteq E.
+        \end{align*}
+        Then, $s + \frac{\eps}{2\Vert x- y \Vert} \in S$, so we have a contradiction to $s$ being an upper bound.
+        \item Let $z \in E^c$, but $E^c$ is also open so $B(z, \eps) \subseteq E^c$. Arguing as above shoes that the point $x + \left(s - \frac{\delta}{\Vert x- y\Vert}\right)(y-x) \in B(z, \eps) \subseteq E^c$ for all $0 < \delta< \eps$. Thus, $s - \frac{\eps}{2 \Vert x-y\Vert}$ is an upper bound of $s$, a contradiction.
+    \end{itemize}
+    Therefore, $C$ is connected.
+\end{proof}
+
+\thm{}{Let $X$ and $Y$ be metric spaces with $X$ connected. Let $f: X \to Y$ be continuous. Then $f(X) \subseteq Y$ is connected.}
+\begin{proof}
+    Suppose not, i.e. $f(X)$ is a disconnected metric space. Pick $\emptyset \neq V \subset f(X)$ such that $V$ is clopen. Note $f: X \to f(X)$ is still continuous. Thus, $f^{-1}(V) \subseteq X$ is clopen. Since $\emptyset \neq V \subset f(X)$, we must have that $\emptyset \neq f^{-1}(V) \subset X$. Therefore, $X$ is disconnected, which is a contradiction.
+\end{proof}
+
+\cor{}{Connectedness is a topological property.}
+
+\ex{}{
+    Let $f: [0, 2\pi] \to \RR^2$ via $f(t) = (\cos t, \sin t)$. Note that the image is connected, but not convex. Specifically, $\mathbb S^1$ is not convex.
+}
+\newpage 
+\thm{Characterizations of disconnectedness}{
+    Let $X$ be a metric space. The following are equivalent:
+    \begin{enumerate}
+        \item $X$ is disconnected.
+        \item $\exists A, B \subseteq X$ nonempty such that $A \cap \overline B = \overline A \cap B = \emptyset$ and $A \cup B = X$.
+        \item $\exists$ nonempty closed sets $C, D \subseteq X$ such that $C \cup D = X$ and $C \cap D = \emptyset$. 
+        \item $\exists$ nonempety open sets $U, V \subseteq X$ such that $U \cap V = X$ and $U \cap V = \emptyset$.
+        \item $\exists$ continuous surjection $f: X \to \{0, 1\}$. 
+        \item $\exists$ a discrete metric space $Y$ with cardinality greater than 1 and a continuous surjection $f: X \to Y$.
+    \end{enumerate}
+}
+\begin{proof}
+    We go in order.
+
+    (1) $\implies$ (2): $X$ is disconnected, so there exists a clopen set $\emptyset \neq A \subset X$. Let $B := A^c$, which is also clopen and such that $\emptyset \neq B \subset X$. Obviously $A \cup B = X$. Now we check that $A \cap \overline B = A \cap B = \emptyset = \overline A \cap B$ as desired.
+
+    (2) $\implies$ (3): Let $A$ and $B$ as in (2). Note that $\overline A = \overline A \cap (A \cup B) = [\overline A \cap A] \cup [\overline A \cap B] = \overline A \cap A = A$. As such, $A$ is closed. Similarly, $B$ is also closed. Let $C = A, D = B$.
+
+    (3) $\implies$ (4): Let $C, D$ as in (3). Let $U = C^c, V = D^c$.
+
+    (4) $\implies$ (5): Let $U,V$ be the open sets from (4). Define $f: X \to \{0, 1\}$ via
+    \begin{align*}
+        f(x) = \begin{cases}
+            1 & \text{if } x \in U \\
+            0 & \text{if } x \in V
+        \end{cases}
+    \end{align*}
+    $f$ is obviously surjective. Note,
+    \begin{itemize}
+        \item $f^{-1}(\emptyset) = \emptyset$.
+        \item $f^{-1}(\{0\}) = U$.
+        \item $f^{-1}(\{1\}) = V$.
+        \item $f^{-1}(\{0, 1\}) = U \cup V = X$.
+    \end{itemize}
+    These are all open sets, so $f$ is continuous.
+
+    (5) $\implies$ (6): Let $f: X \to Y$ as in (5). Let $Y = \{0, 1\}$. 
+
+    (6) $\implies$ (1): Let $f: X \to Y$ as in (6) with $Y$ a discrete space (all sets are clopen) and cardinality of $Y$ at least 2. Pick $y , z \in Y$ such that $y \neq z$. Let $E = f^{-1}(\{y\})$, which is clopen because $f$ is continuous. As $f$ is surjective, $E$ is nonempty. Also, $z \neq y \implies E \neq X$. Therefore, $E$ is a nonempty clopen set. As such, $X$ is disconnected.
+\end{proof}
+\cor{}{
+    $C \subseteq \RR$ is connected if and only if $C$ is convex.
+}
+\begin{proof}
+    The backwards direction was done already, so now we prove the forward. Let $x, y \in C$ and suppose $x < z < y$ but $z \notin C$. Let 
+    \begin{align*}
+        \begin{cases} L_z = C \cap (-\infty, z) \\ R_z = C \cap (z, \infty) \end{cases}.
+    \end{align*}
+    Both $L_z$ and $R_z$ are open and nonempty, and $L_z \cap R_z = C$, therefore $C$ is disconnected. This is a contradiction, so $x,y \in C \implies (1-t)x + ty \in C$ for all $t \in [0, 1]$, so $C$ is convex.
+\end{proof}
+\newpage
+\thm{Intermediate Value Theorem}{
+    Let $X$ be a metric space. Then the following are equivalent:
+    \begin{enumerate}
+        \item $X$ is connected.
+        \item $X$ satisfies the intermediate value theorem: if $f: X \to \RR$ is continuous and $\alpha , \beta \in f(X)$ with $\alpha < \beta$ and $\alpha < \gamma < \beta$, then there exists $x \in X$ such that $f(x) = \gamma$. 
+    \end{enumerate}
+}
+\begin{proof}
+    (1) $\implies$ (2): Let $X$ be connected. Since $f$ is continuous, $f(X) \subseteq \RR$ is connected and therefore convex. 
+
+    (2) $\implies$ (1): We'll show $\neg (1) \implies \neg (2)$. Suppose $X$ is disconnected. Then, there exists a continuous surjection $f: X \to \{0, 1\}$. Therefore (2) is false as $f$ does not take on values in $(0, 1)$. 
+\end{proof}
+\mprop{}{
+    Let $X$ be a connected metric space with cardinality of $X$ greater than or equal to 2. Then $X$ is uncountable. 
+}
+\begin{proof}
+    Let $y, z\in X$ be distinct and define $f: X \to \RR$ via $f(x) = d(x, z)$. Note, $f$ is continuous, $f(z) = 0$, and $f(y) = d(y, z) > 0$. Thus, by the intermediate value theorem,  we have the inclusion $[0, d(y, z)] \subseteq f(X)$. Therefore, $f(X)$ is uncountable. Now if $X$ were countable, then there would exist $g: \NN \to X$ that's surjective, meaning $f \circ g : \NN \to f(X)$ is a surjection, implying $f(X)$ is countable which is a contradiction. As such, $X$ is uncountable.
+\end{proof}
+
+\chapter{Spaces of Functions}
+\dfn{}{
+    Let $X \neq \emptyset$ be a set, $Y$ a metric space, and $f, f_n: X \to Y$ for $(n \geq \ell)$. 
+    \begin{enumerate}
+        \item We say $f_n \to f$ uniformly if $\forall \eps > 0$ there exists $N \geq \ell$ such that 
+        \begin{align*}
+            n \geq N \implies d(f(x), f_n(x)) < \eps \text{ for all $x \in X$.}
+        \end{align*}
+        \item We say $f_n \to f$ pointwise if for all $x$, $\forall \eps > 0$, there exists $N \geq \ell$ such that
+        \begin{align*}
+            n \geq N \implies d(f(x), f_n(x)) < \eps \text{ for all $x \in X$.}
+        \end{align*}
+        \item We say $\{f_n\}_{n=\ell}^\infty$ is uniformly Cauchy if for every $\eps > 0$, there is $N \geq \ell$ such that 
+        \begin{align*}
+            n,m \geq N \implies d(f_n(x), f_m(x)) < \eps \text{ for all $x \in X$.}
+        \end{align*}
+    \end{enumerate}
+}
+\noindent Clearly, uniformly convergent implies uniformly Cauchy and pointwise convergent.
+\nt{Uniform convergence is the same as metric convergence in $\mathcal B(X;Y)$ if we know the sequence is in $\mathcal B(X: Y)$. Otherwise it's not really metric convergence. Can we hack this?}
+\noindent \textbf{Idea}: An extended metric space is a set $X$ equipped with a map $d: X \times X \to [0, \infty]$ such that 
+\begin{enumerate}
+    \item $d(x, y) = 0 \iff x = y$
+    \item $d(x, y) \leq d(x, z) + d(z, y)$
+    \item $d(x, y) = d(y, x)$
+\end{enumerate}
+
+\ex{}{
+    Let $X \neq \emptyset$ be a set and $Y$ a metric space. 
+    \begin{align*}
+        \mathcal F (X; Y)= \{f : X \to Y\}
+    \end{align*}
+    equipped with $d(f, g) = \sup_{x \in X} d(f(x), g(x))$ is an extended metric.
+}
+\noindent \textbf{Idea}: In an extended metric space, let $x \sim y \iff d(x,y) < \infty$. This is an equivalence relation. So $d$ restricted to each equivalence class $[x]$ is a metric space. Therefore
+\begin{align*}
+    X = \bigsqcup [x].
+\end{align*}
+The moral is that uniform convergence is convergence in $\mathcal F(X; Y)$ with the extended metric. Ditto for Cauchy.
+
+\noindent Things preserved by uniform limits. Suppose $f_n : X \to Y$, $f: X \to Y$ such that $f_n \to f$ uniformly as $n \to \infty$.
+\begin{enumerate}
+    \item If each $f_n$ is bounded, then $f$ is bounded.
+    \item If each $f_n$ is continuous at $x\in X$, then $f$ is continuous at $x$.
+    \item If each $f_n$ is uniformly continuous, then $f$ is uniformly continuous.
+\end{enumerate}
+\noindent This breaks with just pointwise:
+\begin{enumerate}
+    \item Suppose $f: X \to Y$ is an unbounded function. Fix a point $z \in X$. Let $f_n : X\to Y$ via
+    \begin{align*}
+        f_n(x) = \begin{cases}
+        f(x) & \text{ if $f(x) \in B(f(z), 2^n)$} \\
+        f(z) & \text{ otherwise}
+        \end{cases}.
+    \end{align*}
+    Each $f_n$ is bounded and converges to $f$. So $f$ is not necessarily bounded.
+    \item Let $f_n : [0, 1]\to \RR$ where $f_n(x) > x^n$ for $n \in \NN$. Then $f_n \to f$ pointwise as $n \to \infty$ where 
+    \begin{align*}
+        f(x) = \begin{cases} 0 & 0 \leq x < 1 \\
+        1 & x = 1
+        \end{cases}.
+    \end{align*}
+    However, each $f_n$ is uniformly continuous but $f$ is not.
+    \item Suppose $X, Y$ are metric spaces, $M \geq 0$. Let $L_M = \{f: X \to Y \mid K(f) \leq M\}$. Then $L_M$ is closed under pointwise limits. Indeed, suppose $\{f_n\}_{n=\ell}^\infty \subseteq L_M$ and $f_n \to f$ pointwise as $n \to \infty$. By assumption, $d_Y(f_n(x), f_n(y)) \leq Md_X(x, y)$ for all $x, y \in X$. Fix a pair $x, y\in X$. Then,
+    \begin{align*}
+        \begin{cases}
+            f_n(x) \to f(x) \\
+            f_n(y) \to f(y)
+        \end{cases}
+    \end{align*}
+    as $n \to \infty$. Thus, $d_Y(f(x), f(y)) = \lim_{n\to \infty} d_Y(f_n(x), f_n(y)) \leq Md_X(x, y)$. As such, $f$ is Lipschitz with $K(f) \leq M$.
+\end{enumerate}
 
 
 \end{document}
