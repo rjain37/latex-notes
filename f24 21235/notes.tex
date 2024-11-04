@@ -1938,5 +1938,329 @@ The moral is that uniform convergence is convergence in $\mathcal F(X; Y)$ with 
     as $n \to \infty$. Thus, $d_Y(f(x), f(y)) = \lim_{n\to \infty} d_Y(f_n(x), f_n(y)) \leq Md_X(x, y)$. As such, $f$ is Lipschitz with $K(f) \leq M$.
 \end{enumerate}
 
+\dfn{}{
+    Let $X \neq \emptyset$ and $f_n : X \to \overline \RR$ for $n \geq \ell$. We say $\{f_n\}_{n=\ell}^\infty$ is
+    \begin{itemize}
+        \item non-decreasing if $m < n \implies f_m(x) \leq f_n(x)$ for all $x \in X$.
+        \item non-increasing if $m < n \implies f_n(x) \leq f_m(x)$ for all $x \in X$.
+        \item monotone if either are true.
+    \end{itemize} 
+}
+\thm{Dini}{
+    Let $X$ be a compact metric space and suppose $\{f_n\}_{n=\ell}^\infty \subseteq C^0 (X; \RR)$ is monotone. Further suppose that there exists a continuous $f : X \to \RR$ such that $f_n \to f$ pointwise as $n \to \infty$. Then $f_n \to f$ as $n \to \infty$. 
+}
+\begin{proof}
+    Suppose WLOG that $\{f_n\}_{n=\ell}^\infty$ is nondecreasing. Let $\eps > 0$. First note that for all $x \in X$, the pointwise converge guarantees $\exists N_x \geq \ell$ such that 
+    \begin{align*}
+        n \geq N_x \implies \Vert f(x) - f_n(x) \Vert < \frac \eps 3.
+    \end{align*}
+    In turn, since both $f$ and $f_{N_x}$ are continuous at $x$, $\exists \delta_x > 0$ such that 
+    \begin{align*}
+        y \in B(x, \delta_x) \implies \begin{cases} \Vert f(x) - f(y)\Vert < \frac \eps 3 \\
+        \Vert f_{N_x}(x) - f_{N_x}(y) \Vert < \frac \eps 3
+        \end{cases}.
+    \end{align*}
+    $X$ is compact and $\{B(x, \delta_x)\}_{x\in X}$ is an open cover of $X$. So, $\exists x_1, \ldots, x_n$ such that 
+    \begin{align*}
+        X = \bigcup_{i=1}^n B(x_i, \delta_i).
+    \end{align*}
+    Note that if $y \in B(x, \delta_x)$ for some $x\in X$, then 
+    \begin{align*}
+        \Vert f(y) - f_{N_x}(y) \Vert \leq \Vert f(y) - f(x) \Vert + \Vert f(x) - f_{N_x}(x) \Vert + \Vert f_{N_x}(x) - f_{N_x}(y) \Vert < \eps.
+    \end{align*}
+    Given any $y \in X$, we know $y \in B(x_i, \delta_i)$ for some $1 \leq i \leq n$. So, 
+    \begin{align*}
+        \Vert f(y) - f_{N_{x_i}}(y)| < \eps.
+    \end{align*} 
+    Thus for $n \geq N$, we have that 
+    \begin{align*}
+        \Vert f(y) - f_n(y) \Vert = f(y) - f_{n}(y) \leq f(y) - f_{N_{x_i}}(y) \leq \Vert f(y) - f_{N_{x_i}}(y) < \eps. 
+    \end{align*}
+    As such, we have uniform convergence of $f_n \to f$. 
+\end{proof}
+\dfn{}{
+    Let $X,Y$ be metric spaces. Recall that 
+    \begin{align*}
+        UC^0(X; Y) \subseteq C^0(X; Y) \subseteq \mathcal F(X; Y)
+    \end{align*}
+    and that 
+    \begin{align*}
+        UC_b^0(X; Y) \subseteq C_b^0(X; Y) \subseteq \mathcal B(X; Y) \subseteq \mathcal F(X; Y).
+    \end{align*}
+    We also have 
+    \begin{align*}
+        C^{0, 1}(X; Y) &\subseteq C^0(X; Y)
+        C^{0, 1}_b(X; Y) &\subseteq C^{0}_b(X; Y)
+    \end{align*}
+    where 
+    \begin{align*}
+        C^{0, 1}(X; Y) = \{f: X \to Y \mid \text{ $f$ is Lipschitz}\}
+    \end{align*}
+    and 
+    \begin{align*}
+        C^{0, 1}_b(X; Y) = \{f: X \to Y \mid \text{ $f$ is Lipschitz and bounded}\}.
+    \end{align*}
+}
+\noindent Fact:
+\begin{enumerate}
+    \item $Y$ is complete $\iff$ any of $C^0_b, UC^0_b, \mathcal B$ are complete.
+\end{enumerate}
+But what about $C^{0, 1}_b(X; Y)$? Unfortunately this is not true :(
+\newpage
+\thm{Weierstrass' Monster}{
+    There exists $\{f_n\}_{n=0}^\infty \subseteq C_b^{0, 1}(\RR; [0, 1])$ such that
+    \begin{align*}
+        f_n \to f \in UC_b^0(\RR; [0, 1])
+    \end{align*}
+    but $f \notin C_b^{0, 1}(\RR; [0, 1])$. More precisely, for every $x\in \RR$ and $0 < m  \in \NN$, there will exist $\delta_m^{\pm} \in \left\{\frac{8^{-m}}{2}, \frac{3\cdot 8^{-m}}{2}\right\}$ such that
+    \begin{align}
+        \frac{|f(x \pm \delta^{\pm}_m) - f(x)|}{|\delta_m^\pm|} \geq \frac{7^m + 1}{48}
+    \end{align}
+    and
+    \begin{align}
+        \left(\frac{f(x + \delta_m^+) - f(x)}{\delta_m^+} \right) \left(\frac{f(x - \delta^-_m) - f(x)}{\delta^-_m}\right) < 0.
+    \end{align}
+}
+\cor{}{$\exists f \in UC^0_b (\RR ; [0, 1])$ such that $f$ is nowhere differentiable. Moreover, for $x \in \RR$, if $\lim_{y\to 0^-} \frac{f(x+y) - f(x)}{y} = L \in \overline \RR$ and $\lim_{y \to 0^+} \frac{f(x+y) - f(x)}{y} = R \in \overline \RR$, then $L,R \in \{+\infty, -\infty\}$ and $LR < 0$.}
+\begin{proof}
+    The fact that $f$ is not differentiable at any given $x \in \RR$ follows from $(5.1)$. For the second point, $(5.1)$ also implies that $|L| = |R| = \infty$. And $(5.2)$ implies that $LR < 0$.
+\end{proof}
+
+\noindent\textit{Proof of Theorem 5.0.2.} We begin by defining $\varphi: \RR \to [0, 1]$ via 
+\begin{align*}
+    \varphi(x) = \mathrm{dist}(x, 2\ZZ).
+\end{align*}
+That is, the distance between $x$ and the closest even integer. Also,
+\begin{align}
+    |\varphi(x) - \varphi(y)| < 1 \quad \forall x,y\in \RR
+\end{align}
+and 
+\begin{align}
+    \varphi(x+2) = \varphi(x) \quad \forall x \in \RR.
+\end{align}
+Now for $N \in \NN$, we let $f_N \in C_b^{0, 1}(\RR ; \RR)$ be given by 
+\begin{align*}
+    f_N(x) = \frac 18 \sum_{n=0}^N \left( \frac 78 \right)^n \varphi(8^n x).
+\end{align*}
+This is Lipschitz because it is the finite sum of Lipschitz functions. Notice that 
+\begin{align*}
+    0 \leq f_N(x) \leq \frac 18 \sum_{n=0}^\infty \left( \frac 78 \right)^n = \frac 18 \cdot \frac{1}{1 - \frac 78} = 1.
+\end{align*}
+Also if $M \geq N \geq 0$, then 
+\begin{align*}
+    |f_M(x) - f_N(x)| &\leq \frac 18 \sum_{n=N + 1}^M \left( \frac 78\right)^n \\
+    \sup_{x \in \RR} |f_M(x) - f_N(x) &\leq \frac 18 \sum_{n=N + 1}^M \left( \frac 78\right)^n.
+\end{align*}
+Therefore, $\{f_N\}_{N=0}^\infty$ is Cauchy in $UC_b^0(\RR; [0, 1])$. This is complete set, so 
+\begin{align*}
+    \exists f \in UC_b^0(\RR; [0, 1]) \quad \text{such that} \quad f_N \to f.
+\end{align*}
+So,
+\begin{align*}
+    f(x) = \frac 18 \sum_{n=0}^\infty \left(\frac 78 \right)^n \varphi(8^n x).
+\end{align*}
+Now fix $x \in \RR$ and $0 < m \in \NN$. Pick $!k \in \ZZ$ such that $8^mx \in [2k, 2k + 2)$, and set 
+\begin{align*}
+    \delta^+_m&= 8^{-m}\begin{cases}
+    \frac 12 & 8^m x \in [2k, 2k + \frac 12) \\
+    \frac 32 & 8^m x \in [2k + \frac 12, 2k +1) \\
+    \frac 12 & 8^m x \in [2k + 1, 2k + \frac 32) \\
+    \frac 32 & 8^m x \in [2k + \frac 32, 2k + 2)
+    \end{cases} \\
+    \delta^-_m&= 8^{-m}\begin{cases}
+        \frac 32 & 8^m x \in [2k, 2k + \frac 12) \\
+        \frac 12 & 8^m x \in [2k + \frac 12, 2k +1) \\
+        \frac 32 & 8^m x \in [2k + 1, 2k + \frac 32) \\
+        \frac 12 & 8^m x \in [2k + \frac 32, 2k + 2)
+    \end{cases}.
+\end{align*}
+The point is that 
+\begin{align*}
+    \begin{cases}
+        |\varphi(y + 1/2) - \varphi(y)| = \frac 12 \\
+        |\varphi(y + 3/2) - \varphi(y)| = \frac 12
+    \end{cases}.
+\end{align*}
+Next, set 
+\begin{align*}
+    \gamma_n^\pm = \frac{\varphi(8^n(x \pm \delta^{\pm}_m)) - \varphi(8^n x)}{\delta^{\pm}_m}
+\end{align*}
+for $n \in \NN$. Note that $0 \leq n < m \implies |\gamma_n^\pm| \leq \frac{|8^n \delta_m^\pm|}{|\delta^{\pm}_m|} = 8^n$. Also, $n = m \implies |\gamma_m^\pm| = \frac 12 / |\delta^{\pm}_m \in \{8^m, 8^m/3\}$. 
+
+\noindent Now we consider $m < n$. In this situation, $8^n \delta_m^\pm \in 2\ZZ$, which means that $\gamma_m^\pm = 0$ due to the 2-periodicity of $\varphi$. Thus, for $N > m$:
+\begin{align*}
+    \frac{8|f_N(x \pm \delta_m^\pm) - f_N(x)|}{|\delta_m^\pm|} = \left| \sum_{n=0}^N \left( \frac 78 \right)^n \gamma_n^\pm\right| = \left| \sum_{n=0}^m \left(\frac 78\right)^n \gamma_n^\pm \right| \geq \left(\frac 78 \right)^m |\gamma_m^\pm| - \sum_{n=0}^{m-1} \left( \frac 78\right)^n |\gamma_n^\pm|.
+\end{align*}
+But this is also greater than
+\begin{align*}
+    \left( \frac 78 \right)^m \cdot \frac{8^m}{3} - \sum_{n=0}^{m-1} 7^n = \frac{7^m}{3} - \frac{7^m - 1}{6} = \frac{7^m +1}{6}.
+\end{align*}
+Sending $N$ to infinity, we get 
+\begin{align*}
+    \frac{|f(x \pm \delta_m^\pm) - f(x)|}{|\delta_m^\pm|} \geq \frac 18 \cdot \frac{7^m + 1}{6}.
+\end{align*}
+In particular, $K(f) \geq \liminf_{m \to\infty} '' \geq \liminf_{m \to \infty} \frac{7m + 1}{48} = \infty$. So, $f \notin C^{0,1}_b$, but $f \in UC_b^0$. A similar argument shows the other inequality.
+$\hfill \qed$
+\newpage
+\nt{Remarks:
+\begin{enumerate}
+    \item Weierstrass' original proof used trigonometric functions in place of $\varphi$. The upshot is that there exists sequences of smooth functions that converge uniformly to a uniformly continuous and bounded function that is nowhere differentiable.
+    \item There's room to play.
+\end{enumerate}}
+\dfn{}{
+    Let $V$ be a normed vector space, $X$ a metric space. We define a seminorm on $C^{0,1}(X  ;V)$ by
+    \begin{align*}
+        K(f) = [f]_1 = \begin{cases}
+            \sup_{x \neq y} \frac{\Vert f(x) - f(y) \Vert_V}{d(x,y)} & |X| \geq 2 \\
+            0 & \text{otherwise}
+        \end{cases}.
+    \end{align*}
+    This is a seminorm: $[\text{constant}] = 0$. $C^{0,1}_b(X; V)$ is normed:
+    \begin{align*}
+        \Vert f\Vert_{C^{0,1}_b} = \Vert f \Vert_{C^0_b} + [f]_1.
+    \end{align*}
+}
+\thm{}{
+    Let $X$ be a metric space and $V$ a normed vector space. Then $C^{0,1}_b(X; V)$ is complete if and only if $V$ is complete.
+}
+\begin{proof}
+    We only do the backwards direction. Suppose $V$ is Banach and $\{f_n\}_{n=\ell}^\infty C_b^{0,1}$ is Cauchy. Then it's Cauchy in $C^0_b$ as well, and hence convergent in $C^0_b$ to some $f \in C^0_b(X; V)$. 
+
+    Let $\eps > 0$ and pick $N \geq \ell$ such that $m,n \geq N \implies \Vert f_n - f_m \Vert_{C_b^{0,1}} < \frac{\eps}{2} \implies [f_n - f_m] < \frac{\eps}{2}$. As such,
+    \begin{align*}
+        \Vert (f_n(x) - f_m(x)) - (f_n(y) - f_m(y))\Vert_V \leq \frac{\eps}{2} d(x, y)
+    \end{align*}
+    for all $x,y \in X$. Send $m \to \infty$ for $n \geq N$, we have $[f_n -f] \leq \frac{\eps}{2}$.
+\end{proof}
+\newpage
+\section{Stone-Weierstrass}
+\dfn{}{
+    A vector space $V$ is an algebra if it is equipped with an associative multiplication. That is,
+    \begin{align*}
+        v\cdot w \in V \text{ for $v,w \in V$} \\
+        v\cdot(w \cdot z) = (v\cdot w)\cdot z \\
+        \alpha(v\cdot w) = (\alpha v) \cdot w = v \cdot (\alpha w) \\
+        v(w+z) = vw + vz \\
+        (w+z)v = wv + zv.
+    \end{align*}
+    We say $V$ is unital if there exists an $e \in V$ such that $ev = ve = v$ for all $v \in V$. 
+
+    A normed algebra is an algebra $V$ that's a normed vector space such that 
+    \begin{align*}
+        \Vert vw \Vert \leq \Vert v \Vert \Vert w \Vert.
+    \end{align*}
+    A Banach algebra is a complete normed algebra.
+}
+\ex{Normed Algebras}{
+    \begin{enumerate}
+        \item $\FF \in \{ \RR, \CC\}$ a field.
+        \item $\FF^{n \times m}$ with the operator norm.
+        \item Let $V$ be a normed vector space. Then $\mathcal L(V)$ is a normed algebra. $T,S \in \mathcal L(V)$, $TS = T \circ S$.
+        \item Let $A$ be a normed algebra. $\mathcal B(X; A)$ is a normed algebra. $f,g \in \mathcal (X; A)$, $fg \in \mathcal(B; X)$, $(fg)(x) = f(x)g(x)$. We  can check that $A$ unital $\iff$ $\mathcal B(X; A)$ unital.
+        \item $\ell^p(\NN; A)$ is a normed algebra. $x,y \in \ell^p \implies (xy)_n = x_n y_n \in A$. Also, 
+        \begin{align*}
+            \Vert xy \Vert_p = \left( \sum_{n=0}^\infty \Vert x_n y_n \Vert_A^p \right)^{\frac{1}{p}} \leq \left( \sum \Vert x_n\Vert^p \Vert y_n\Vert^p \right)^{\frac{1}{p}} \leq \Vert x \Vert_\infty \Vert y \Vert_\infty \leq \Vert x \Vert^p \Vert y \Vert^p.
+        \end{align*}
+        \item Let $X$ be a metric space. Then $C^0(b(X; A))$, $UC_b^0(X; A)$ and $C^{0,1}_b(X; A)$ are normed algebras.
+        \item Now let $Y \subset X$ as above. $S = \{f \in C^0_b(X; A) \mid f(y) = 0 \,  \forall y \in Y\}$ is a normed algebra.
+    \end{enumerate}
+}
+\noindent Remarks:
+\begin{enumerate}
+    \item Suppose $A$ is a normed algebra. If we complete $A$ to get $A^*$, then $A^*$ is a Banach algebra. 
+    \item Suppose $A$ is a normed algebra and $B \subseteq A$ is a subalgebra. Then $\overline B$ is also a normed algebra. 
+\end{enumerate}
+
+\thm{}{
+    Let $X$ be a unital Banach algebra. Then for every $x \in X$, the sequence $\{\sum_{n=0}^N \frac{x^n}{n!}\}_{N=0}^\infty \subseteq X$ converges. Thus, we may define the map $\exp : X \to X$ via $\exp(x) = \sum_{n=0}^\infty \frac{x^n}{n!}$.
+}
+\begin{proof}
+    Recall that 
+    \begin{align*}
+        \sum_{n=0}^\infty \frac{r^n}{n!} \in \RR
+    \end{align*}
+    is well defined (convergent) because it is equal to 
+    \begin{align*}
+        \lim_{N\to \infty} \sum_{n=0}^N \frac{r^n}{n!}
+    \end{align*}
+    for all $r \in \RR$. Now note for $N  > M \geq 0$ and some $x \in X$,
+    \begin{align*}
+        \left\Vert \sum_{n=M+1}^N  \frac{x^n}{n!} \right\Vert \leq \sum_{n=M+1}^N \frac{\Vert x^n \Vert}{n!} \leq \sum_{n=M+1}^N \frac{\Vert x \Vert^n}{n!}
+    \end{align*}
+    Therefore, $\left\{ \sum_{n=0}^N \frac{x^n}{n!} \right\}_{N=0}^\infty$ is Cauchy and therefore converges.
+\end{proof}
+\noindent Question: Suppose $A \subseteq C^0_b(X; \FF)$ is a subalgebra. Are there algebraic conditions on $A$ that guarantee that $A$ is dense in $C_b^0(X; \FF)$? 
+
+\noindent Answer: Yes.
+
+\mlenma{}{There eixst $\{f_n\}_{n=0}^\infty \subseteq UC_b^0([0, 1]; \RR)$ such that the following hold:
+\begin{enumerate}
+    \item Each $f_n$ is a polynomial satisfying $0 \leq f_n(x) \leq \sqrt x$ for all $x \in [0, 1]$. Also, $f_n \leq f_{n+1}$. 
+    \item $f_n \to f$ uniformly as $n \to \infty$ where $f(x) = \sqrt x$. 
+\end{enumerate}
+}
+\begin{proof}
+    We define $\{f_n\}_{n=0}^\infty$ inductively as follows:
+    \begin{itemize}
+        \item $f_0(x) = 0$.
+        \item Given $f_n$, define $f_{n+1}(x) = f_n(x) + \frac{x - (f_n(x))^2}{2}$.
+    \end{itemize}
+    We claim $0 \leq f_n(x) \leq \sqrt x$ for all $n \in \NN$ and $x \in [0,1]$. We proceed by induction on $n$:
+
+    Suppose true for $n$, we show truth for $n+1$. Then $0 \leq f_n(x) \leq \sqrt x \implies 0 \leq \frac{f_n(x) + \sqrt x}{2} \leq \sqrt x \leq 1$. So,
+    \begin{align*}
+        \sqrt x  - f_{n+1}(x) = \sqrt x  - f_n(x) - \frac{x - f_n^2(x)}{2}= (\sqrt x - f_n(x))\left( 1 - \frac{\sqrt x  + f_n(x)}{2} \right)^2 \geq 0,
+    \end{align*}
+    so $\sqrt x \geq f_{n+1}(x) \geq f_n(x) \geq 0$. Next, note that 
+    \begin{align*}
+        f_{n+1}(x) = f_n(x) + \frac{x - f_n^2(x)}{2} \geq f_{n}(x)
+    \end{align*}
+    so the sequence of $f_n$'s is non-decreasing. Thus, for all $x \in [0,1]$, 
+    \begin{align*}
+        0 \leq f_n(x) &\leq \sqrt x \\
+        f_n(x) &\leq f_{n+1}(x).
+    \end{align*}
+    Now since the sequence is bounded and monotone, it converges pointwise to its supremum. Now,
+    \begin{align*}
+        f_{n+1}(x) = f_n(x) + \frac{x - f_n^2(x)}{2} \implies f(x) = f(x) + \frac{x + f^2(x)}{2} \implies f(x) = \sqrt x
+    \end{align*}
+    as desired. Therefore, Dini tells us the convergence of $f_n \to f$ is uniform, since $[0,1]$ is compact.
+\end{proof}
+\newpage
+\thm{}{
+    Let $X$ be a set and $A \subseteq \mathcal B(X; \RR)$ a subalgebra. The following hold:
+    \begin{enumerate}
+        \item If $f \in A$, then $|f| \in \overline A$. 
+        \item If $f \in \overline A$, then $|f| \in \overline A$. 
+        \item If $f,g \in \overline A$, then $f \vee g, f \wedge g \in \overline A$ where 
+        \begin{align*}
+            f \vee g(x) &= \max\{f(x), g(x)\} \\
+            f \wedge g(x) &= \min\{f(x), g(x)\}.
+        \end{align*}
+    \end{enumerate}
+}
+\begin{proof} We go in order:
+    \begin{enumerate}
+        \item Let $\{p_n\}_{n=0}^\infty \subseteq UC_b^0( [0, 1], [0,1])$ be as in the previous lemma. That is, $p_n$ are polynomials such that $p_n \to \sqrt \cdot$ uniformly. If $f = 0$, then $|f| = 0 = |f| \in A \subseteq \overline A$, so suppose $f \neq 0$. Then let 
+        \begin{align*}
+            g = \left(\frac{f}{\Vert f \Vert_{\mathcal B}}\right)^2 \in A.
+        \end{align*}
+        Note that $0 \leq |g(x)| \leq 1$ for all $x \in X$. Also, $p_n(0) = 0$ for all $n \in \NN$. So, $p_n \circ g \in A$ as well. Now note that $d_{\mathcal B} (p_n \circ g,\sqrt g) = \sup_{x \in X} |p_n(g(x)) - \sqrt{g(x)}| \leq \sup_{y \in [0,1]} |p_n(y) - \sqrt y|$, which tends to 0 as $n \to \infty$ by construction. 
+        
+        Therefore, $p_n \circ g \to \sqrt g \in \mathcal B(X; \RR)$, so $\sqrt{g} \in \overline A$. But, $\sqrt g = \frac{|f|}{\Vert f \Vert_{\mathcal B}}$. So,
+        \begin{align*}
+            |f| = \Vert f \Vert_{\mathcal B} \sqrt{g}.
+        \end{align*}
+        So since $\sqrt g \in \overline A$, so is $|f|$. 
+        \item Let $f \in \overline A$. Pick $\{f_n\}_{n=0}^\infty \subseteq A$ such that $f_n \to f$ in $\mathcal B$. By 1, $|f_n| \in \overline A$ for all $n$. Now notice 
+        \begin{align*}
+            | |f_n| - |f|| \leq |f_n - f|,
+        \end{align*}
+        so $|f_n| \to |f|$ as $n \to \infty$, but $\overline A$ is closed, so $|f| in \overline A$. 
+        \item Note that $f \vee g = \frac{f + g + |f-g|}{2}$, $f \wedge g = \frac{f + g - |f-g|}{2}$. Because of algebra, $f,g \in A \implies f \vee g, f \wedge g \in \overline A$.
+    \end{enumerate}
+\end{proof}
+\noindent Remark: There's nor eason to stick with a single min/max. 3. + induction shows that if $f_1, \ldots f_n \in A$, then $\min_{i} f_i, \max_i f_i \in \overline A$. 
+
 
 \end{document}
