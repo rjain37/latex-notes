@@ -1585,6 +1585,85 @@ This would mean that $P(*) = \Theta(P(\dagger))$, so by the warmup, we'd be done
     which completes the proof.  
 \end{proof}
 
+\section{Ordered Linear Probing}
 
+\thm{Knuth 1963}{Suppose you fill a linear-probing hash table to $(1 - 1/x)$ full. Then, the expected insertion time is $\Theta(x^2)$.}
+\noindent Amble and Knuth had the following idea:
+modify the hash table such that in each ``run'', maintain an invariant that the elements in the run are in sorted order by hash.
+
+\noindent Aside: if elements have the same hash, imagine we break ties with another hash function. 
+\nt{
+    Also note that this is a history-independent data structure, meaning that the final state of the hash table is independent of the order of the elements added. 
+}
+\thm{Amble and Knuth 1973}{
+    $E[\text{time to query an element}] = O(x)$. 
+}
+\begin{proof}
+    Just to simplify things, we will assume positive queries, meaning we only query elements that exist in the hash table.  
+
+    Let $S = \{\text{elements in the hash table}\}$. For $s \in S, Q_s$ is the query time for $s$. Also define $I_s$ as the insertion time for $s$ when it was inserted.
+
+    \noindent \textbf{Observation 1}: $E[Q_s]$ is the same $\forall s\in S$.
+    
+    \noindent \textbf{Proof}: By symmetry and because the hash table is history-independent. $\hfill \qed$
+
+    \noindent \textbf{Observation 2}: 
+    \begin{align*}
+        \sum_{s\in S} Q_s = \sum_{s \in S} I_s.
+    \end{align*}
+    \noindent \textbf{Proof}: Just think about it lowkey. Basically if the insertion time is $k$, then we increase the sum of the query times by $k$.  $\hfill \qed$
+
+    \noindent \textbf{Observation 3}: 
+    \begin{align*}
+        E\left[ \sum_{s \in S} I_s \right] = \Theta(n \cdot x).
+    \end{align*}
+    \noindent \textbf{Proof}: Well we have 
+    \begin{align*}
+        E\left[ \sum_{s \in S} I_s \right] &= \Theta \left( \frac n2 \cdot 2^2 + \frac n4 \cdot 4^2 + \frac n8 \cdot 8^2 + \cdots + \frac{n}{x} \cdot x^2\right) \\
+        &= \Theta\left( n\cdot x\right). \tag{dominated by last summand}
+    \end{align*}
+    This completes the proof of the observation. $\hfill \qed$
+
+    \noindent Moving to the proof of the theorem, we have:
+    \begin{align*}
+        E[Q_s] &= \frac{1}{|S|} \cdot \sum_{s \in S} E[Q_s] \\
+        &= \frac{1}{|S|} \cdot \sum_{s \in S} E[I_s] \\
+        &= \frac{1}{\Theta(n)} \cdot \Theta(n \cdot x) \\
+        &= \Theta(x).
+    \end{align*}
+\end{proof}
+\subsection{Deletions}
+Idea: use ``tombstones.'' That is, rather than entirely deleting the element, we just mark the index as ``deleted.'' What that means is that when we query that index, all we know is that there used to be an element at that spot. Also when trying to insert an element, the tombstone spot is just as good as any other open spot to insert the element. 
+
+However, queries cannot treat tombstones are empty. This is because the element we are searching for could still be to the right of a tombstone. So queries skip over tombstones. 
+
+Every so often, we should pause and rebuild the hash table, but with the tombstones removed. How often? The classical measure is every $R =  \frac{n}{2x}$ operations. 
+
+\noindent \textbf{Question}: What if we have a table with insertions and deletions?
+
+\noindent Experiment: initially fill our hash table to $1 - 1/x$ full. Then, we alternate between insertions and deletions. We get this graph:
+
+\begin{center}
+    \includegraphics*[width=15cm]{hashtableexperiment.jpg}
+\end{center}
+\newpage
+\thm{Kuszmaul (2022)}{
+    Consider any workload such that the hash table is never $> 1-1/x$ full. Then, the amortized expected time per operation is $\widetilde O(x)$. The actual optimal bound is $\Theta(x \lg^{1.5} x)$. 
+}
+\noindent \textbf{Big Idea 1}: Consider all the opeartions in a given rebuild window. Then we draw a random line in the hash table and ask how many insertions crossed the line. If we can answer this for every dotted line, we can sum to get the sum of the insertion times. 
+
+\noindent \textbf{Big Idea 2}: Before rebuilding, consider the state of the hash table.
+Draw an X in every empty slot before the random line. Then for every deletion that occurs in the rebuild window, we draw an X at the time of deletion and at the position of the deleted element. Similarly for insertions, but use $\checkmark$. Now we draw a path from the bottom left to the top right of the graph (nondecreasing). It turns out that 
+\begin{align*}
+    \text{the number of insertions that cross the line} = \max_{\text{all possible paths }p} (\text{number of $\checkmark$ under path } - \text{ number of X under path}).
+\end{align*}
+\noindent \textbf{Big Idea 3}: With enough work, we get a simpler problem which we call the \underline{path surplus problem}. That is, we have an $x \times x$ grid where each entry is randomly $\pm 1$. Consider every monotonic path to the right. For each path $p$, we have 
+\begin{align*}
+    \mathrm{surplus}(p) = \sum \text{ entries under $p$}.
+\end{align*}
+The question is what is the expected max surplus over all path? 
+\thm{}{
+    The expected maximum surplus is $\Theta(x \lg^{0.75} x)$. 
+}
 
 \end{document}
