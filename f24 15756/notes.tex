@@ -1388,7 +1388,115 @@ If $f := |F|$, then $f$ is a function $f(X_1, \ldots, X_n)$ where $X_i = \mathbb
 \end{align*}
 \hfill $\qed$
 \newpage
+\chapter{Poissonization}
+\dfn{}{
+    A random variable $X$ is Poisson distributed, $X \sim \mathrm{Poisson}(\lambda)$ if 
+    \begin{align*}
+        P(X = k) = \frac{e^{-\lambda}\lambda^k}{k!}
+    \end{align*}
+    for $\lambda, k \geq 0$. 
+}
+\nt{Another definition is $\mathrm{Binomial}\left( n, \frac \lambda n\right)$ as $n \to \infty$. }
+The above note is true because we can write 
+\begin{align*}
+    \binom nk \left(\frac \lambda n \right)^k \left( 1- \frac \lambda n \right)^{n-k} &\approx  \left(\frac{en}{k}\right)^k \left(\frac \lambda n\right)^k \left( 1 - \frac \lambda n \right)^{n-k} \\
+    &\approx \left(\frac ek \right)^k \lambda^k e^{-\lambda(1 - k/n)} \\
+    &\approx \left( \frac{1}{k!}\right)^k \lambda^k e^{-\lambda} \\
+    &= \frac{e^{-\lambda}\lambda^k }{k!}
+\end{align*}
+as desired.
 
+\noindent Now we review some properties of the Poisson distribution:
+\begin{itemize}
+    \item If $X \sim \mathrm{Poisson}(\lambda)$, then $E[X] = \Var(X) = \lambda$.
+    \item If $X \sim \mathrm{Poisson}(\lambda)$ and $Y \sim \mathrm{Poisson}(\mu)$, then $X + Y \sim \mathrm{Poisson}(\lambda + \mu)$.
+    \item If $X \sim \mathrm{Poisson}(\lambda)$, then for any $c > 0$, 
+    \begin{align*}
+        P(|X - \lambda| \geq c) \leq 2e^{\frac{-c^2}{2(c + \lambda)}}
+    \end{align*}
+\end{itemize}
+In the old balls and bins problems, we would drop $n$ balls into $m$ bins. This was awkward because the number of balls in different bins aren't independent random variables. So consider a different variant of the problem:
+\qs{New balls and bins}{
+    Suppose $k \sim \mathrm{Poisson}(n)$. We toss $k$ balls uniformly at random into $m$ bins.
+}
+\newpage
+\clm{}{
+    The number of balls in bin $i$ is distributed $\mathrm{Poisson}\left(\frac nm\right)$ for all $i$.
+    The number of balls in bin 1, bin 2,$\ldots$, bin $m$ are independent random variables.
+}
+\begin{proof}
+    We take $m=2$ as this is easily generalizable. Let $X_1, X_2$ be the number of balls in bins 1 and 2 respectively. We claim that
+    \begin{align*}
+        P(X_1 = i, X_2 = j) = P(\mathrm{Poisson}(n/2) = i) \cdot P(\mathrm{Poisson}(n/2) = j).
+    \end{align*}
+    We have 
+    \begin{align*}
+        P(X_1 = i, X_2 = j) &= P(k = i + j) \cdot P(\mathrm{Binomial}(i+j, 1/2) = i) \\
+        &= \frac{e^{-n} n^{i+j}}{(i+j)!} \cdot \binom{i+j}{i} \left(\frac 12\right)^{i+j} \\
+        &= e^{-n/2} \cdot e^{-n/2} \cdot n^i \cdot n^j \cdot \left(\frac {1}{i!}\right)\left( \frac{1}{j!}\right) \cdot \left(\frac 12\right)^i \cdot \left(\frac 12\right)^j \\
+        &= P(\mathrm{Poisson}(n/2) = i) \cdot P(\mathrm{Poisson}(n/2) = j)
+    \end{align*}
+    as desired. This proves the first claim. Now,
+    \begin{align*}
+        P(X_1 = i) &= \sum_j P(X_1 = i, X_2 = j) \\
+        &= \sum_j P(\mathrm{Poisson}(n/2) = i) \cdot P(\mathrm{Poisson}(n/2) = j) \\
+        &= P(\mathrm{Poisson}(n/2) = i).
+    \end{align*}
+    Together, this gives us the second claim that $X_1 \perp X_2$. 
+\end{proof}
+To learn Poissonization, we'll review the coupon collector. So let $X$ be the number of steps until we get all $n$ coupons.
+\clm{}{
+    For any constant $c$,
+    \begin{align*}
+        \lim_{n \to \infty} P(X \geq n \log n + cn) = 1 - e^{-e^{-c}}.
+    \end{align*}
+}
+\begin{proof}
+    To prove this claim, we use Poissonization and view it as a balls and bins problems. So instead of $n$ balls and $m$ bins, we have $n\log n + cn$ steps and $n$ coupons. Similarly, we'll have $k \sim \mathrm{Poisson}(n\log n + cn)$ steps and $n$ coupons. Here are the steps we take:
+    \begin{enumerate}
+        \item We want to show
+        \begin{align*}
+            \lim_{n \to \infty} P(\text{see every coupon after $k$}) = 1 - e^{-e^{-c}}.
+        \end{align*}
+        \item Then we show
+        \begin{align*}
+            P(\text{see every type of coupon after $n \log n + cn$}) = P(\text{see every type of coupon after $k$}) \pm o(1).
+        \end{align*}
+    \end{enumerate}
+    Together, this will show the desired result. So suppose we do $k \sim \mathrm{Poisson}(n  \log n + cn)$ steps. Then the number of coupons of each type is independently distributed as $\mathrm{Poisson}(\log n + c)$. So, 
+    \begin{align*}
+        P(\text{we see all the coupons}) &= (1 - P(\mathrm{Poisson}(\log n + c) = 0))^n \\
+        &= (1 - e^{-\log n + c})^n \\
+        &= (1 - e^{-c}/n)^n \\
+        &\approx 1 - e^{-e^{-c}}
+    \end{align*}
+    as desired.
+    \newpage
+    \noindent So now we de-Poissonify. 
+    \begin{enumerate}[label=(\alph*)]
+        \item We want to show 
+        \begin{align*}
+            P(\text{see all coupons after $b$ steps}) = P(\text{see all coupons after $b \pm n^{0.9}$ steps}) \pm o(1).
+        \end{align*}
+        So let $X$ be the number of boxes needed to get all the coupons. The two events we consider are $X \geq b - n^{0.9}$ and $X \geq b + n^{0.9}$. So,
+        \begin{align*}
+            P(X \geq b + n^{0.9}) &= P(X \geq b - n^{0.9}) + P(\text{find the last coupon in boxes $b - n^{0.9} + 1, \ldots, b+n^{0.9}$}) \\
+            &\leq P(X \geq b - n^{0.9}) + \frac{2n^{0.9}}{n} \\
+            &= P(X \geq b - n^{0.9}) + o(1).
+        \end{align*}
+        This sort of proves the claim.
+        \item So now we can have that 
+        \begin{align*}
+            P(|k - (n \log n + cn) | \geq n^{0.9}) = o(1).
+        \end{align*}
+        This follows directly from the tail-bound that we mentioned earlier.
+    \end{enumerate}
+    This completes the overall result.
+\end{proof}
+
+
+
+\newpage
 \chapter{Hash Tables}
 \section{Random-Probing Hash table}
 For this section, a hash table has two important operations:
