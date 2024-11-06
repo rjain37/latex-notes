@@ -2262,5 +2262,111 @@ $\hfill \qed$
 \end{proof}
 \noindent Remark: There's nor eason to stick with a single min/max. 3. + induction shows that if $f_1, \ldots f_n \in A$, then $\min_{i} f_i, \max_i f_i \in \overline A$. 
 
+\dfn{}{
+    Let $X \neq \emptyset$ and $A \subseteq \mathcal B(X; \FF)$ a subalgebra. We say 
+    \begin{enumerate}
+        \item $A$ contains the constants if $\forall c \in \FF$, the constant function $c \in A$. 
+        \item $A$ is non-vanishing if $\forall x \in X$, there exists $f \in A$ such that $f(x) \neq 0$. 
+        \item $A$ separates points if for every $x,y \in X$ such that $x \neq y$, there exists $f \in A$ such that $f(x) \neq f(y)$. 
+        \item $A$ satisfies the two-point property if for every distinct $x,y \in X$ and $\forall \alpha, \beta \in \FF$ , there exists $f \in A$ such that $f(x) = \alpha$ and $f(y) =\beta$. 
+    \end{enumerate}
+}
+\mprop{}{
+    Let $X$ be a set and $A \subseteq \mathcal B(X; \FF)$ a subalgebra. Then the following hold:
+    \begin{enumerate}
+        \item If $A$ contains constants, then $A$ is non-vanishing.
+        \item $A$ separates points and is non-vanishing implies $A$ satisfies the two-point property.
+        \item If $|X| \geq 2$, then the two-point property implies $A$ separates points and is non-vanishing.
+    \end{enumerate}
+}
+\begin{proof}
+    Lots of definition chasing.
+    \begin{enumerate}
+        \item Duh.
+        \item Fix $x,y \in X$ such that $x \neq y$. $A$ separates, so there is $g \in A$ such that $g(x) \neq g(y)$. As $A$ is non-vanshing, there exists $h,k \in A$ such that $h(x) \neq 0$ and $k(x) \neq 0$. Let $u,v \in A$ be given by 
+        \begin{align*}
+            \begin{cases}
+                u(z) = (g(z) - g(x))k(z) \\
+                v(z) = (g(z) - g(y))h(z)
+            \end{cases}.
+        \end{align*}
+        Note that $u(x) = 0$ and $u(y) \neq 0$. Also $v(x) \neq 0$ and $v(y) =0$. For $\alpha, \beta \in \FF$, let $f \in A$ be given by 
+        \begin{align*}
+            f(z) = \frac{\alpha}{v(x)} v(z) + \beta\frac{u(z)}{u(y)}.
+        \end{align*}
+        Note that $f(x) = \alpha$ and $f(y) =\beta$. 
+        \item Given any $x,y \in X$ such that $x \neq y$, there is $f \in A$ such that $f(x) = 1$ and $f(y) = 2$. Therefore, $A$ separates and is non-vanshing.
+    \end{enumerate}
+\end{proof}
+\thm{Stone-Weierstrass}{
+    Let $X$ be a compact metric space and $\{0\} \neq A \subseteq C^0(X; \RR)$ be a subalgebra. Then the following are equivalent:
+    \begin{enumerate}
+        \item $A$ satisfies the two-point property.
+        \item $A$ is dense in $C^0(X; \RR)$.
+    \end{enumerate}
+}
+\begin{proof}
+    If $|X| = 1$, then infact $A = C^0(X; \RR)$ and we're done. So assume $|X| \geq 2$. 
+    \begin{itemize}
+        \item $2 \implies 1$. We'll prove $\neg 1 \implies \neg 2$. If $A$ doesn't satisfy the two-point property, then either $A$ is not non-vanshing or $A$ does not separate.
+        \begin{itemize}
+            \item If $A$ is not non-vanishing, there is $x \in X$ such that $f(x) = 0$ for all $f \in A$. Thus, if $f \in \overline A$ and $f_n \to f$ in $C^0(X; \RR)$, then $f_n(x) = 0$ for all $n$, which means $f(x) = 0$. Therefore, $A$ cannot be dense because there are functions where $f(x) \neq 0$. 
+            \item If $A$ does not separate, then there exists $x \neq y$ such that $f(x) = f(y)$ for all $f \in A$. Therefore, $f(x) = f(y)$ for all $f \in \overline A$. But $f \in C^0(X; \RR)$ given by $f(z) = d(z, y)$ is such that $f(x) = d(x,y) > 0$, but $f(y) = 0$. As such, we have the same conclusion.
+        \end{itemize}
+        \item $1 \implies 2$: Let $f \in C^0(X; \RR)$ and $\eps > 0$. We will find $h \in A$ such that $d_{\mathcal B}(f, h) = \sup_{x\in X} | f(x)  - h(x)| < \eps$. Once we do this, we then know $\overline A = C^0(X; \RR)$. 
+        
+        Claim: for every $z \in X$, there is $g \in A$ such that $g(z) = f(z)$ and $g(y) > f(y) - \frac{\eps}{2}$ for all $y$. To prove the claim, we first use the two point property. For each $x \in X \setminus \{z\}$, we can choose $\psi_x \in A$ such that 
+        \begin{align*}
+            \psi_x(x) = f(x) \quad \quad \psi_x(z) = f(z).
+        \end{align*}
+        Also define $\psi_z \in A$ via \begin{align*}
+            \psi_z(z) = f(z) \quad \quad \psi_z(y) = 0 \text{ for all $y \neq z$}.
+        \end{align*}
+        Consider $x \in X$. Both $\psi_x$ and $f$ are continuous, so $\exists \delta_x > 0$ such that
+        \begin{align*}
+            y \in B(x, \delta_x) \implies |\psi_x(y) - f(y)| = |\psi_x(y) - f(y) - (\psi_x(x) - f(x))| < \frac{\eps}{2}.
+        \end{align*}
+        Note that $\{B(x, \delta_x)\}_{x\in X}$ is an open cover, so by compactness there exist $x_1 , \ldots, x_n \in X$ such that $X = \bigcup_{i=1}^n B(x_i, \delta_i)$. Define $g = \max (\psi_{x_1}, \ldots, \psi_{x_n}) \in \overline A$. Note that 
+        \begin{align*}
+            g(z) = \max\{f(z), \ldots, f(z)\} = f(z).
+        \end{align*}
+        And if $y \in X$, then $y \in B(x_i, \delta_i)$, meaning 
+        \begin{align*}
+            | \psi_{x_i}(y) - f(y) < \frac \eps 2 \implies \psi_{x_i}(y) > f(y) - \frac{\eps}{2}.
+        \end{align*}
+        This means that $g(y) > f(y) - \frac \eps 2$. 
+
+        So now for each $z \in X$, the first step yields $g_z \in \overline A$ such that $g_z(z) = f(z)$ and $g_z(y) > f(y) - \frac \eps 2$ for all $y \in X$. Since $g_z$ and $f$ are continuous, there will exist $\eta_z > 0$ such that 
+        \begin{align*}
+            y \in B(z, \eta_z) \implies |g_z(y) - f(y)| = |g_z(y) - g_z(z) - (f(y) -f(z))| < \frac \eps 2 \implies g_z(y) < f(y) + \frac \eps 2.
+        \end{align*}
+        Now pick $z_1, \ldots, z_n \in X$ such that $X = \bigcup_{i=1}^n B(z_i, \eta_i)$. Now set $h = \min\{g_{z_1}, \ldots, g_{z_n}\} \in \overline A$. Then $h(y) = \min \{g_{z_1}(y), \ldots g_{z_n}(y)\} > f(y) - \frac \eps 2$ for all $ \in X$. And, $y \in X$ implies that $y \in B(z_i, \eta_i)$, meaning $g_{z_i}(y) < f(y) + \frac \eps 2$. So $h(y) , f(y) + \frac \eps 2$. This finishes the proof.
+    \end{itemize}
+\end{proof}
+\ex{Stone Weierstrass fails on $\CC$}{
+    Let $X = \{z \in \CC \mid |z| = 1\}$. Then let 
+    \begin{align*}
+        A = \left\{ f: X \to \CC \mid f(z) = \sum_{n=0}^N a_nz^n \text{ for $a_n \in \CC$}\right\}.
+    \end{align*}
+    Exercise: $A$ is a subalgebra of $C^0(X; \CC)$ that satisfies the two-point property. Note that $f \in A$ means that $[0, 2\pi] \ni t \mapsto f(e^{it}) \in \CC$.
+
+    Then for $f \in A$, analyze
+    \begin{align*}
+        \int_0^{2\pi} f(e^{it}) \text dt &= \int_0^{2\pi} \sum_{n=0}^N  e^{it} \sum_{n=0}^N a_n e^{int} \text dt \\
+        &= \sum_{n=1}^{N+1} a_n \int_0^{2\pi} e^{i(n+1)t} \text dt \\
+        &= 0.
+    \end{align*}
+    Therefore, $f \in \overline A$ means $\int_0^{2\pi} e^{it}f(e^{it}) \text dt = 0$. Consider $f \in C^0 (X; \CC)$ given by $f(z) = \overline z$. Then, 
+    \begin{align*}
+        \int_0^{2\pi} e^{it}f(e^{it}) \text dt &= \int_0^{2\pi} e^{it} e^{-it} \text dt = 2 \pi \neq 0.
+    \end{align*}
+    As such, $\overline A \subset C^0(X; \CC)$.
+
+    Observe $f \in A \iff f(z) = \sum a_nz^n$. So 
+    \begin{align*}
+        \overline f(z) = \sum_{n=0}^N \overline a_n \overline z^n = \sum_{n=0}^N \frac{\overline a_n}{z^n},
+    \end{align*}
+    which is not a polynomial, meaning $\overline f \notin A$. 
+}
 
 \end{document}
