@@ -1773,5 +1773,112 @@ The question is what is the expected max surplus over all path?
 \thm{}{
     The expected maximum surplus is $\Theta(x \lg^{0.75} x)$. 
 }
+\section{Quadratic Probing}
+To insert an element $v$ into a hash table that incorporates quadratic probing, we just
+\begin{itemize}
+    \item place $v$ into the first free slot out of $h(v), h(v) + 1, h(v) + 4, \ldots$ (modulo the table size).
+\end{itemize}
+\clm{Maurer 1968}{
+    If you fill to $1 -1/x$ fraction full, then the expected time for the next insertion is $O(x)$. 
+}
+\nt{The above conjecture is an open problem, as are the following conjectures.}
+\clm{}{
+    At least $O(x^2)$?
+}
+\clm{}{
+    $f(x)$ for some $f$ that doesn't depend on the hash table size $n$?
+}
+\clm{}{
+    If the hash table is $\leq 1/2$ full, then expected insertion time is $O(1)$. 
+}
+\clm{ICALP '24 (Kuszmaul, Zoe Xi)}{
+    If the hash table is $\leq 1/20$ full, then expected insertion time is $O(1)$.
+}
+The one above is actually solved.
+\newpage
+\noindent Suppose the hash table is filled to $0.0001$ full and consider the next insertion.
+\thm{}{
+    \begin{align*}
+        P(\text{insertion time} \geq t) \leq e^{-\Omega(t)}.
+    \end{align*}
+}
+\noindent Suppose the insertion time takes $\geq t$ time. Then construct a ``witness set'' $S \subset \{1, \ldots, n\}$ fo teh positions that collectively did somethign bad.
+\dfn{}{
+    Given a set $S$ of positions, $q \in S$, $u$ in the hash table, and $i \geq 1$, we say that ``$u$ enters $S$ at $q$ after its $i$ hashes'' if 
+    \begin{itemize}
+        \item $u$ is in some position in the $S$,
+        \item $h(u)$, $h(u) + 1^2$, $\ldots, h(u) + (i-1)^2$ (first $i$ probes for $u$) are not in $S$,
+        \item $h(u) + i^2 = q$.
+    \end{itemize}
+}
+\noindent Constructing $S$: suppose we're inserting an element $v$ which takes time $\geq t$.
+\begin{itemize}
+    \item $S \leftarrow \{h(v), h(v) + 1, \ldots, h(v) + (t-1)^2\}$.
+    \item (a queue) $Q = S$.
+    
+    while $Q$ is non empty:
+    \begin{itemize}
+        \item $q \leftarrow pop(Q)$ (pick the largest $q \in Q$).
+        \item while there exists $u$ and $i \geq 1$ such that ``$u$ enters $S$ at $q$ after $i$ hashes'':
+        \begin{itemize}
+            \item pick such $u$ and $i$ arbitrarily and add $h(u), h(u) + 1, \ldots, h(u) + (i-1)^2$ to $S$ and $Q$.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\noindent Properties of $S$:
+\begin{enumerate}
+    \item Every position in $S$ is occupied by an element that hashes into $S$.
+    \begin{proof}
+        Consider the first time the probe sequence intersects with a value of $S$. What has to happen is that when we process it, $h(v)$ will get added to $S$.
+    \end{proof}
+    \item $|S| \geq t$. 
+    \item For any given option for $S$ such that $|S| = k$, then
+    \begin{align*}
+        P(\text{that $S$ occuring}) \leq \frac{1}{18^k}.
+    \end{align*}
+    \begin{proof}
+        Let $X$ be the number of elements in the hash table such that $h(v) \in S$. If $S$ occurs, that means $X \geq k$. $X$ is the sum of $0,1$ random variables, so
+        \begin{align*}
+            E[X] = 0.0001 \cdot k.
+        \end{align*}
+        By a Chernoff Bound,
+        \begin{align*}
+            P(X \geq k) \leq \frac{1}{18^k}.
+        \end{align*}
+    \end{proof}
+\end{enumerate}
+\mlenma{}{
+    Number of options for $S$ of size $k$ is $\leq 9^k$.
+}
+To finish the proof of the theorem, we'd get 
+\begin{align*}
+    P(\text{insertion time} \geq t) &\leq \sum_{k \geq t} \sum_{\text{options of $S$ of size $k$}} P(\text{$S$ occurs}) \\
+    &\leq \sum_{k \geq t} \sum_{\text{options of $S$ of size $k$}} \frac{1}{18^k} \\
+    &\leq \sum_{k \geq t} \frac{9^k}{18^k} \\
+    &\leq O\left( \frac{1}{2^t}\right).
+\end{align*}
+So now we go ahead and prove the lemma.
+\begin{proof}
+    Given the process of constructing $S$, we record a transcript $T$, a trinary string.
+    \begin{itemize}
+        \item $S \leftarrow \{h(v), h(v) + 1, \ldots, h(v) + (t-1)^2\}$.
+        \item (a queue) $Q = S$.
+        \item $T = $ ``$000\ldots 1''$ such that $|T| = t$. 
+        
+        while $Q$ is non empty:
+        \begin{itemize}
+            \item $q \leftarrow pop(Q)$ (pick the largest $q \in Q$).
+            \item while there exists $u$ and $i \geq 1$ such that ``$u$ enters $S$ at $q$ after $i$ hashes'':
+            \begin{itemize}
+                \item pick such $u$ and $i$ arbitrarily and add $h(u), h(u) + 1, \ldots, h(u) + (i-1)^2$ to $S$ and $Q$.
+                \item $T \leftarrow  T + \underbrace{000\ldots 1}_{i}$.
+            \end{itemize}
+            \item $T \leftarrow T + 2$.
+        \end{itemize}
+    \end{itemize}
+    If I knew $T$ an $h(v)$, I can recover the entire construction of $S$, specifically the final value of $S$. Also, $|T| \leq \# 0s + \# 1s + \# 2s \leq |S| + |S| = 2k$. 
+    Since $T$ fully determines $S$, this means the number of options of $S$ is bounded by the number of options for $S$. This is less than $(3)^{2k} = 9^k$. 
+\end{proof}
+
 
 \end{document}
