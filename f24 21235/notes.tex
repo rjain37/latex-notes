@@ -17,8 +17,9 @@
 \tableofcontents
 
 \pagebreak
-
-\chapter{}
+\chapter{269}
+Insert 269 here.
+\chapter{Dedekind Stuff}
 \section{Ordered Fields (Review)}
 
 \dfn{Order}{Let $E$ be a set. An \emph{order} on $E$ is a relation $<$ on $E$ such that for all $x, y, z \in E$:
@@ -2368,5 +2369,82 @@ $\hfill \qed$
     \end{align*}
     which is not a polynomial, meaning $\overline f \notin A$. 
 }
+
+\thm{Stone-Weierstrass in $\CC$}{
+    Let $X$ be a compact metric space and $\{0\} \neq A \subseteq C^0(X; \RR)$ be a subalgebra that satisifies the two-point property and is self-adjoint $(f \in A \implies \overline f \in A)$. Then $A$ is dense in $C^0(X; \CC)$.
+}
+\begin{proof}
+    Note: given $f \in C^0(X; \RR)$, we have 
+    \begin{align*}
+        \mathrm {Re} f = \frac{f + \overline f}{2} \quad \quad \mathrm{Im} f = \frac{f - \overline f}{2}.
+    \end{align*}
+    This means that $f \in A \implies \mathrm{Re} f, \mathrm{Im} f \in A$. Then $R = \{\mathrm{Re} f \mid f \in A\} = \{ \mathrm{Im} f \mid f\ \in A\} \subseteq A$. It is left as an exercise to show that $R$ is a real subalgebra of $C^0(X; \RR)$ that satisfies the two-point property. As such, $R$ is dense in $C^0(X; \RR)$ by the real version of Stone-Weierstrass. Now let $f \in C^0(X; \CC)$ and $\eps > 0$. 
+
+    Pick $a,b \in \RR$ such that $\Vert \mathrm{Re} f - a \Vert_{\mathcal B} < \frac{\eps}{2}$ and $\Vert \mathrm{Im} f - b \Vert_{\mathcal B} < \frac{\eps}{2}$. Then $a + ib \in A$ and 
+    \begin{align*}
+        \Vert f - (a + ib) \Vert_{\mathcal B} = \Vert (\mathrm{Re}f - a) + i(\mathrm{Im} - b) \Vert_{\mathcal B} < \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+    \end{align*}
+    As such, $\overline A = C^0(X; \CC)$.
+\end{proof}
+\ex{}{
+    \begin{enumerate}
+        \item Let $\emptyset \neq K \subset \RR^n$ be a compact set and consider 
+        \begin{align*}
+            \mathcal P_{\FF}(K) = \{ p\restriction K \mid p:  \RR^n \to \FF \text{ is a polynomial}\} \subseteq C^0(K; \FF).
+        \end{align*}
+        It's easy to check that $\mathcal P_{\FF}(K)$ is a subalgebra and it's not $\{0\}$. If $K$ is a singleton, we're done so suppose otherwise.
+
+        It suffices to show that $\mathcal P_{\FF}(K)$ contains constants and separates points. Constants are trivial. 
+
+        Now let $x,y \in K$ with $x_i \neq y_i$. Let $p: \RR^n \to \FF$ via 
+        \begin{align*}
+            p(z) = 2(z_i - x_i) + (z_i - y_i).
+        \end{align*}
+        Then $p(x) = x_i + y_i$ and $p(y) = 2(y_i - x_i) \neq y_i - x_i$.
+
+        If $\FF = \RR$, then Stone Weierstrass says that $\mathcal P_{\FF}(K)$ is dense in $C^0(K; \RR)$. On the other hand, $f \in \mathcal P_{\CC}(K)$ if and only if $f(x) = \sum_{|\alpha| \leq d} a_\alpha x^{\alpha}$ for $a_\alpha \in \CC$. This means that $\overline f(x) = \sum_{|\alpha| \leq d} \overline{a_\alpha}x^\alpha \implies \overline f \in \mathcal P_{\CC}(K)$, so the algebra is self-adjoint and therefore dense in $C^0(K; \CC)$.
+        \item Let $0 < R < \infty$ and set $X = \{z \in \CC \mid |z| = R\}$. 
+        \begin{align*}
+            A \coloneq \{f : X \to \CC \mid \exists n \text{ such that }f(z) = \sum_{k = -n}^n a_k z^k , a_k \in \CC\} \subseteq C^0(X; \CC).
+        \end{align*}
+        $A$ is a subalgebra and it's an exercise to show that it satisfies the two-point property. Note that for $z \in X$, $\overline   = \frac{R^2}{2}$. So, 
+        \begin{align*}
+            f(z) = \sum_{|k| \leq n} a_k z^k \implies \overline f(z) = \sum_{|k|\leq n} \overline a_k \overline z^k = \sum_{|k| \leq n} \overline a_k \left(\frac{R^2}{z}\right)^k = \sum_{|k| \leq n}R^{2k} \overline a_k z^{-k} = \sum_{|k| \leq n} R^{-2k} \overline a_{-k} z^k.
+        \end{align*}
+        Now by Stone-Weierstrass, $\overline A = C^0(X; \CC)$. 
+        \item Let $X$ be a compact metric space. Note that $L = C^{0,1}(X; \FF) \subseteq C^0(X; \FF)$. We claim that $\overline L = C^0(X; \FF)$. $L$ is a subalgebra:
+        \begin{align*}
+            |f(x)g(x) - f(y)g(y)| \leq |f(x) - f(y)||g(x)| + |f(y)||g(x) - g(y)| \leq [f]\cdot \Vert g\Vert_{C^0}|x-y| + \Vert f\Vert_{C^0} [g]|x-y|.
+        \end{align*}
+        Let $x_0 \neq x_1$, $\alpha, \beta \in \FF$ and define $f: X \to \FF$ via 
+        \begin{align*}
+            f(x) \ frac{\alpha d(x, x_1) + \beta d(x, x_0)}{d(x_0, x_1)}.
+        \end{align*}
+        Then $f \in L$ and $f(x_0) = \alpha$, $f(x_1) = \beta$. Therefore $L$ satisfies the two point property. On the other hand, if $\FF = \CC$ and $f \in L$, then $\overline f \in L$, so $L$ is self-adjoint. Therefore by Stone Weierstrass, $\overline L = C^0(X; \FF)$.
+    \end{enumerate}
+}
+\chapter{Advanced Topics in Metric Space Theory}
+we will come back here in the last week of the semester i guess
+\chapter{Series}
+\dfn{}{
+    Let $X$ be a normed vectors pace and $\{x_n\}_{n=\ell}^\infty \subseteq X$. For $N \geq \ell$, let $S_N = \sum_{n=\ell}^N x_n \in X$ ($N$-th partial sum). If the sequence $\{S_N\}_{N=\ell}^\infty$ converges to $s\in X$, we say that the infinite series $\sum_{n=\ell}^\infty x_n$ converges and set $\sum_{n=\ell}^\infty x_n = \lim_{N \to \infty} S_n =s$. Otherwise, we say $\sum_{n=\ell}^\infty x_n$ diverges. 
+}
+
+\mlenma{}{
+    Suppose $\{x_n\}_{n=\ell}^\infty \subseteq X$ for $X$ a normed vector space and $\sum_{n=\ell}^\infty x_n$ converges. Then $x_n \to 0$ as $n \to \infty$. 
+}
+\begin{proof}
+    We can write $x_n = s_n -s_{n-1}$ for $n \geq \ell + 1$. As the RHS converges to 0, $x_n$ must as well. 
+\end{proof}
+\mlenma{}{
+    Suppose $\{x_n\}_{n=\ell}^\infty \subseteq X$, $X$ a normed vector space, is such that $x_n \to x$ as $n \to \infty$. Let $\{y_n\}_{n=\ell}^\infty \subseteq X$ be such that $y_n = x_{n+1} -x_n$. Then $\sum_{n=\ell}^\infty y_n$ converges and equals $x - x_\ell$.
+}
+\begin{proof}
+    We have 
+    \begin{align*}
+        \sum_{n=\ell}^N y_n = \sum_{n=\ell}^N x_{n+1} - x_n = x_{N+1} - x_\ell.
+    \end{align*}
+    So this goes to $x - x_{\ell}$ as $N \to \infty$.
+\end{proof}
 
 \end{document}
