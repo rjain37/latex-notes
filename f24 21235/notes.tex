@@ -2447,4 +2447,137 @@ we will come back here in the last week of the semester i guess
     So this goes to $x - x_{\ell}$ as $N \to \infty$.
 \end{proof}
 
+\thm{Cauchy Criterion}{
+    Let $X$ be a Banach space and $\{x_n\}_{n=\ell}^\infty \subseteq X$. The following are equivalent:
+    \begin{enumerate}
+        \item $\sum_{n=\ell}^\infty x_n$ converges.
+        \item For every $\eps > 0$, there is $N \geq \ell$ such that $M > N \implies \left\Vert\sum_{n=N}^M x_n\right\Vert < \eps$.
+    \end{enumerate}
+    That is, $\sum_{n=\ell}^\infty x_n$ converges if and only if $\left\{S_N = \sum_{n=\ell}^N x_n\right\}_{N}$ converges if and only if $\{S_N\}_{N}$ is Cauchy if and only if 2.
+}
+\newpage 
+\thm{}{
+    Let $X$ be a normed vector space. The following are equivalent:
+    \begin{enumerate}
+        \item $X$ is Banach.
+        \item If $\{x_n\}_{n=\ell}^\infty$ is such that $\sum_{n=\ell}^\infty \Vert x_n\Vert < \infty$, then $\sum_{n=\ell}^\infty x_n$ converges.
+    \end{enumerate}
+}
+\begin{proof}
+    We go in order.
+    \begin{itemize}
+        \item $(1) \implies (2)$: Note: $\left\Vert \sum_{n=N}^M\right\Vert \leq \sum_{n=N}^M \Vert x_n \Vert$. Apply Cauchy Criterion in $\RR$, then $X$.
+        \item $(2) \implies (1)$: Let $\{x_n\}_{n=\ell}^\infty$ be Cauchy. Extract a subsequence $\{x_{n_k}\}_{k=\ell}^\infty$ such that $\Vert x_{n_{k+1}} - x_{n_k}\Vert \leq 2^{-k}$. Now define $y_k = x_{n_{k+1}} - x_{n_k}$ for $k \geq \ell$. Then 
+        \begin{align*}
+            \Vert y_k \Vert  \leq 2^{-k} \implies \sum_{k=\ell}^\infty \Vert y_k\Vert \leq \sum_{k=\ell}^\infty 2^{-k} < \infty,
+        \end{align*}
+        so (2) implies $\sum_{k=\ell}^\infty y_k = y$ converges in $X$. 
+
+        Then $\sum_{k=\ell}^M y_k = x_{n_{M+1}} - x_{n_{\ell}}$. So, 
+        \begin{align*}
+            \lim_{M \to \infty} x_{n_{M+1}} = y + x_{n_\ell}.
+        \end{align*}
+        So $\{x_{n_k}\}_{k=\ell}^\infty$ is convergent, so $\{x_n\}_{n=\ell}^\infty$ also converges and therefore $X$ is Banach.
+    \end{itemize}
+\end{proof}
+\dfn{}{
+    Let $X$ be a normed vector space, $\{x_n\}_{n=\ell}^\infty \subseteq X$. We say $\sum_{n=\ell}^\infty x_n$ converges absolutely if $\sum_{n=\ell}^\infty \Vert x_n\Vert < \infty$.
+}
+\nt{If $X$ is Banach, then aboslute convergence implies convergence.}
+\thm{Root Test}{
+    Let $X$ be a Banach space and $\{x_n\}_{n=\ell}^\infty \subseteq X$. Define $\alpha = \limsup_{n \to \infty}\Vert x_n\Vert^{1/n} \in [0, \infty]$. The following hold:
+    \begin{enumerate}
+        \item If $0 \leq \alpha < 1$, then $\sum_{n=\ell}^\infty x_n$ converges absolutely.
+        \item If $\alpha > 1$, then $\sum_{n=\ell}^\infty x_n$ diverges.
+    \end{enumerate}
+}
+\begin{proof}
+    We go in order.
+    \begin{enumerate}
+        \item Suppose $0 \leq \alpha < 1$. Then we can pick $\alpha < \beta < 1$. More precisely, there is $N \geq \max(1, \ell)$ such that $n \geq N$ means $\Vert x_n\Vert^{1/n} < \beta$. In particular, $\Vert x_n\Vert < \beta^n$. Thus,
+        \begin{align}
+            \sum_{n =\ell}^\infty \Vert x_n\Vert = \sum_{n=\ell}^N \Vert x_n\Vert + \sum_{n=N+1}^\infty \Vert x_n\Vert \leq \sum_{n=\ell}^N \Vert x_n\Vert + \frac{1}{\beta^{N+1}}\frac{1}{1-\beta} < \infty.
+        \end{align}
+        \item Suppose $\alpha > 1$. Then $\exists$ a subsequence $\{x_{n_k}\}_{k=\ell}^\infty$ such that $\Vert x_{n_{k}}\Vert^{1/n_k} \to \alpha > 1$. In particular, $\Vert x_{n_k}\Vert \geq 1$ for $k$ large enough. So we see that $\sum_{n=\ell}^\infty \Vert x_{n}\Vert$ diverges as it has infinitely many elements greater than $1$.
+    \end{enumerate}
+\end{proof}
+
+\mlenma{}{
+    Let $\{a_n\}_{n=\ell}^\infty \subseteq[0, \infty]$ be such that $\frac{a_{n+1}}{a_n}$ is well-defined in $\overline \RR$ for all $n \geq \ell$. Then 
+    \begin{align*}
+        \limsup_{n\to\infty} a_n^{1/n} \leq \limsup_{n\to\infty}\frac{a_{n+1}}{a_n}.
+    \end{align*}
+}
+\begin{proof}
+    If the right hand side is infinity, then we are done, so suppose it is equal to some $\gamma < \infty$. Then we can pick $\gamma < \beta < \infty$ and $N \geq \max(\ell, 1)$ such that $\frac{a_{n+1}}{a_n} < \beta$ for all $n \geq N$. Then $a_{N+1} \leq \beta a_N$, $a_{N+2} \leq \beta a_{N+1} \leq \beta^2 a_{N}$. Continuing this, we get 
+    \begin{align*}
+        a_{N+n} \leq \beta^n a_N
+    \end{align*}
+    for all $n \geq 0$. Thus 
+    \begin{align*}
+        (a_{N+n})^{\frac{1}{N+n}} \leq \beta^{\frac{n}{N+n}} a_N^{\frac{1}{N+n}}.
+    \end{align*}
+    So now,
+    \begin{align*}
+        \limsup_{n\to\infty} a_n^{1/n} \leq \limsup_{n\to\infty} \beta^{\frac{n}{N+n}} a_N^{\frac{1}{N+n}} \leq \beta.
+    \end{align*}
+    So we have that 
+    \begin{align*}
+        \limsup_{n\to\infty} a_n^{1/n} \leq \gamma
+    \end{align*}
+    as desired.
+\end{proof}
+
+\thm{Ratio Test}{
+    Let $\{x_n\}_{n=\ell}^\infty \subseteq X$, $X$ a Banach space, and suppose 
+    \begin{align*}
+        \frac{\Vert x_{n+1}\Vert}{\Vert x_n\Vert} \in [0, \infty]
+    \end{align*}
+    for all $n \geq \ell$. Let $\alpha = \limsup_{n\to\infty} \frac{\Vert x_{n+1}\Vert}{\Vert x_n\Vert} \in [0, \infty]$. The following hold:
+    \begin{enumerate}
+        \item If $0 \leq \alpha < 1$, then $\sum_{n=\ell}^\infty x_n$ converges absolutely.
+        \item If $\frac{\Vert x_{n+1}\Vert}{\Vert x_n\Vert}$ for all $n \geq N \in \NN$, then $\sum_{n=\ell}^\infty x_n$ diverges.
+    \end{enumerate}
+}
+\begin{proof}
+    We go in order.
+    \begin{enumerate}
+        \item Use the lemma and the root test.
+        \item Then, $\Vert x_{n+1}\Vert \geq \Vert x_n\Vert$ for all $n \geq N$. Without loss of generality, assume $x_N \neq 0$. So,
+        \begin{align*}
+            \Vert x_{N+n} \Vert \geq \Vert x_N\Vert > 0
+        \end{align*}
+        for all $n$, meaning the sum of $x_n$'s cannot converge as it is strictly increasing.
+    \end{enumerate}
+\end{proof}
+\newpage
+\section{Series of functions}
+\dfn{}{
+    Let $X \neq \emptyset$ and $Y$ a normed vector space. For $n \geq \ell \in \ZZ$, suppose $f_n : X\to Y$.
+    \begin{enumerate}
+        \item We define $\Gamma_c = \{x \in X \mid \sum_{n=\ell}^\infty f_n(x) \text{ converges in }Y\}$. We let $\sum_{n=\ell}^\infty : \Gamma_c \to Y$ via 
+        \begin{align*}
+            \left( \sum_{n=\ell}^\infty f_n\right)(x) = \sum_{n=\ell}^\infty f_n(x).
+        \end{align*}
+        We also write $\Gamma_d = X\setminus \Gamma_c$ (divergent set). 
+        \item Let $A \subseteq \Gamma_c$. We say $\sum_{n=\ell}^\infty f_n$ converges uniformly on $A$ if $\left\{S_n = \sum_{n=\ell}^\infty f_n\right\}_{n=\ell}^\infty$ converges uniformly on $A$. 
+    \end{enumerate}
+}
+\noindent \textbf{Facts:}
+Suppose $f = \sum_{n=\ell}^\infty f_n$ converges uniformly on $X$, a metric space.
+\begin{enumerate}
+    \item If each $f_n$ is bounded, then $f$ is bounded.
+    \item If each $f_n$ is continuous at $z \in X$, then $f$ is continuous at $z$. 
+    \item If each $f_n$ is uniformly continuous at $z \in X$, then $f$ is uniformly continuous at $z$.
+\end{enumerate}
+\dfn{}{
+    Let $X \neq \emptyset$ be a set and $Y$ a Banach space. Suppose $f_n: X \to Y$ for all $n \geq \ell$. We say $\sum_{n=\ell}^\infty f_n$ converges pointwise absolutely on $A \subseteq X$ if $\sum_{n=\ell}^\infty \Vert f_n(x)\Vert < \infty$ for all $x \in A$. 
+
+    We say $\sum_{n=\ell}^\infty f_n$ converges uniformly absolutely on $A$ if 
+    \begin{align*}
+        A \ni x \mapsto \sum_{n=\ell}^\infty \Vert f_n(x)\Vert \in \RR
+    \end{align*}
+    converges uniformly where the sum is a limit of partial sums.
+}
+
 \end{document}
