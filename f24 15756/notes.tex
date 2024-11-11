@@ -1880,5 +1880,91 @@ So now we go ahead and prove the lemma.
     Since $T$ fully determines $S$, this means the number of options of $S$ is bounded by the number of options for $S$. This is less than $(3)^{2k} = 9^k$. 
 \end{proof}
 
+\section{Cuckoo Hashing}
+Invented in 2001 by Pagh and Rodler. Note that for a hashtable with $n$ slots, 
+\begin{align*}
+    P(\text{no collision}) = \prod_{i=1}^n \left( 1 - \frac{i-1}{n}\right) \approx \prod_{i=1}^n e^{-(i-1)/n} \approx e^{-m^2/(2n)}.
+\end{align*}
+What Cuckoo hashing does is that it creates a second hash table, also with $n$ slots, and has two different hash functions $h_1$ and $h_2$. So if a slot is occupied in the first table, we kick that element out and put it in its proper spot in the second table. We now have two questions:
+\begin{enumerate}
+    \item Does there exist an assignment of elements $x \mapsto h_1(x)$ or $h_2(x)$ without collisions.
+    \item Do we have efficient insertion?
+\end{enumerate}
+\newpage
+\thm{Erdos-Renyi}{
+    If the hash table has $\leq (1-\Omega(1))\cdot n$ elements, with probability $1- O(1/n)$, there exists an assignment.
+}
+\begin{proof}
+    If there does not exist such an assignment, by Hall's Theorem, there exists a set $S \subseteq \text{elements}$ such that $T = \bigcup_{s \in S} \{h_1(s) \cup h_2(s)\}$ such that $|T| < |S|$. Take a minimal such $S$. That is $|T| < |S|$ but $\forall R \subseteq S$, $|N(R)| \geq |R|$.
+
+    We can create a graph of the hash table where the slots are the vertices and the edges are drawn between $h_1(x)$ and $h_2(x)$ for all $x$. So in this case, our graph has $|S|$ edges and $<|S|$ vertices ($|S| - 1$ actually) that has no degree 1 vertices. There are only so many structures this graph can take on. There are $\leq (|S| -1)! (|S|-1)^2$ such graphs.
+
+    Let $m$ be the total number of elements where $m \leq (1-1/x)n$.
+
+    So,
+    \begin{align*}
+        P(\exists \text{ a bicyclic subgraph}) &\leq E[\text{bicyclic subgraphs}] \\
+        &\leq \sum_{s=1}^m \binom{2n}{s-1}(s-1)!(s-1)^2 m^s (2n)^{-2s}2^s \\
+        &\leq \sum_{s=1}^m  (2n)^{s-1} (s-1)^2 m^s (2n)^{-2s} 2^s \\
+        &\leq \sum_{s=1}^m  (2n)^{-1} (s-1)^2 \left(\frac mn\right)^s \\
+        &\leq (2n)^{-1} \sum_{s=1}^m  (s-1)^2(1- 1/x)^s\\
+        &\leq O\left(\frac 1n\right).
+    \end{align*}
+\end{proof}
+\noindent This could be stated as $G(2n,m)$ has no bicyclic components for $m = cn$, $c < 1$. 
+\thm{Pagh-Rodler 2001}{
+    \begin{align*}
+        E[\text{insertion time}] = O(x).
+    \end{align*}
+}
+\begin{proof}
+    What we're really going to prove is that $P(\text{insertion time} \geq t) = e^{-\Omega(xt)}$. Assume the insertion time $\geq t$. Then there are $t$ keys, $x_1, \ldots, x_t$ such that 
+    \begin{align*}
+        h_\circ(x_1) &= h_{i_2}(x_2) \\
+        h_{3 - i_2}(x_2) &= h_{i_3}(x_3) \\
+        &\vdots
+    \end{align*}
+    So,
+    \begin{align*}
+        m^{t-1}(2n)^{-(t-1)} 2^t \leq \left(\frac mn\right)^{t-1} \leq \left(1 - \frac 1x\right)^t.
+    \end{align*}
+\end{proof}
+\newpage
+\thm{}{
+    If $m > (1 + 1/x)n$, with probability $1 - o(1)$, there does not exist an assignment.
+}
+\subsection{$d$-ary Cuckoo hashing}
+Imagine we have three hashes. Query and deletion will take $\leq 3$ slots. But how does this affect our load factor and insertion time?
+
+\thm{FPSS 2005}{
+    $d$ hashes $\implies$ can't get $\geq 1 - \frac{1}{e^d}$ full. 
+}
+\thm{2009}{
+    For $d$ hashes, there exists $c_d$ such that load factor $> c_d$ implies there does not exist an assignment. And load factor $< c_d$ implies that there does.
+}
+\noindent We already showed that $c_2 = 0.5$. Turns out $c_3 = 0.918$, $c_4 = 0.977$. As $d\to\infty$, $c_d = 1 - e^{-d} - o(e^{-d})$. So if we are $1- 1/x$ full, we need $\ln(x)$ hashes. So query and deletion are both $O(\ln(x))$ in this case.
+
+\thm{FPS 2013}{
+    The expected insertion time is $O(\mathrm{polylog} n)$ up to $c_d$. 
+}
+\thm{Walzer 2022}{
+    For 3 hashes, load factor $\leq 0.818$, the expected insertion is $O(1)$.
+}
+\thm{Tolson, Frieze}{
+    For at least 4 hashes, the expected insertion is $O_x(1)$ up to $c_d$. 
+}
+\mlenma{}{
+    With probability $1 - o(1)$,
+    $\forall T\subseteq\mathrm{slots}$, the number of hashes to $T$ is $\leq O(d \log(n/|T|)) |T|$.
+}
+
+\mlenma{}{
+    With probability $1 - o(1)$,
+    $\forall S \subseteq \mathrm{keys}$, the number of slots hashed to $S$ is
+    \begin{align*}
+        \geq \left(d-1- \frac{\log(e^d(d-1))}{\log(dn/|S|)}\right) |S|
+    \end{align*}
+}
+
 
 \end{document}
