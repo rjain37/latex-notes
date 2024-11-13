@@ -2580,4 +2580,123 @@ Suppose $f = \sum_{n=\ell}^\infty f_n$ converges uniformly on $X$, a metric spac
     converges uniformly where the sum is a limit of partial sums.
 }
 
+\thm{Weierstrass M-test}{
+    Let $X \neq \emptyset$ and $Y$ be a Banach space and usppose $f_n: X \to Y$ for all $n \geq \ell$. Suppose $\{M_n\}_{n=\ell}^\infty \subseteq [0, \infty)$ such that $\sup_{x \in X} \Vert f_n(x) \Vert \leq M_n$ for all $n \geq \ell$ and $\sum_{n=\ell}^\infty M_n < \infty$. Then
+    \begin{enumerate}
+        \item The series $f = \sum_{n=\ell}^\infty f_n$ converges uniformly absolutely. In particular, pointwise absolutely and pointwise. That is, $\Gamma_c(f) = X$.
+        \item $f: X \to Y$ is bounded and satisfies $\Vert f \Vert_{\mathcal B} = \sup_{x \in X}\Vert f(x) \Vert \leq \sum_{n=\ell}^\infty M_n < \infty$.
+        \item If $X$ is a metric space, then if $z \in X$ and each $f_n$ is continuous at $z$, then $f$ is continuous at $z$.
+        \item If $X$ is a metric space, then each $f_n$ uniformly continuous implies that $f$ itself is uniformly continuous.
+    \end{enumerate}
+}
+\begin{proof}
+    For $N > K \geq \ell$, we can bound 
+    \begin{align*}
+        \sup_{x \in X} \sum_{n=K}^N \Vert f_n(x) \Vert \leq \sum_{n=K}^N M_n.
+    \end{align*}
+    Thus, the partial sums $S_n(x) \coloneq \sum_{n=\ell}^N \Vert f_n(x) \Vert$ are uniformly Cauchy, and hence uniformly convergent.Thus $f = \sum_{n=\ell}^\infty f_n$ is convergent uniformly absolutely. Then
+    \begin{align*}
+        \sum_{n=\ell}^N \Vert f_n(x) \Vert \leq \sum_{n =\ell}^N M_n \leq \sum_{n=\ell}^\infty M_n
+    \end{align*}
+    for all $N$. So, 
+    \begin{align*}
+        \Vert f(x) \Vert \leq \sum_{n=\ell}^\infty \Vert f_n(x)\Vert \leq \sum_{n=\ell}^\infty M_n
+    \end{align*}
+    for all $x$, which shows 2.
+
+    We know that $f = \sum_{n=\ell}^\infty f_n$ is convergent uniformly. So 3 and 4 follow from properties preserved by uniform convergence.
+\end{proof}
+\ex{}{Recall if $X$ is a unital Banach algebra, we define $\exp: X \to X$ via 
+\begin{align*}
+    \exp(x) = \sum_{n=0}^\infty \frac{x^n}{n!}.
+\end{align*}
+Consider $f_n(x) = \frac{x^n}{n!}$ for $n \geq 0$. Each $f_n$ is continuous on $X$ and uniformly continuous when restricted to $B[0, R]$ for $0 \leq R < \infty$. 
+}
+\noindent If we restrict $f_n \restriction B[0, R]$, then 
+\begin{align*}
+    \sup_{x \in B[0, R]}\Vert f_n(x)\Vert \leq \frac{R^n}{n!}.
+\end{align*}
+And also 
+\begin{align*}
+    \sum_{n=0}^\infty \frac{R^n}{n!} = \exp(R) < \infty.
+\end{align*}
+So applying the M-test then shows that $\exp$ is bounded and uniformly continuous on $B[0, R]$ for all $0 \leq R < \infty$. If particular, we can send $R$ to infinity and show that $\exp$ is continuous on all of $X$.
+\section{Power Series}
+\noindent Notation: 
+\begin{itemize}
+    \item $\mathcal L^n(X; Y)$ bounded multilinear maps from $X^n \to Y$. Also $\mathcal L^0(X; Y) \coloneq Y$. 
+    \item $p: X \to Y$ is a polynomial if 
+    \begin{align*}
+        p(x) = \sum_{n=0}^N T_n(x^{\otimes n})
+    \end{align*}
+    where $T_n \in \mathcal L^n(X; Y)$ and given $T \in \mathcal L^n(X; Y)$. Also,
+    \begin{align*}
+        T(x^{\otimes n}) = T(x, x, x, x, x, x, x, x, x ,x, x, x, x, x, x, x, x, x, x, x, x, x, , x, x, x, x, x)
+    \end{align*}
+\end{itemize}
+
+
+\dfn{}{
+    Let $X,Y$ be normed vector spaces and for $n \in \NN$, let $T_n \in \mathcal L^n(X; Y)$. Let $x_0 \in X$.
+    \begin{enumerate}
+        \item A power series centered at $x_0$ is a series of functions 
+        \begin{align*}
+            f = \sum_{n=0}^\infty T_n((\cdot  - x_0)^{\otimes n}).
+        \end{align*}
+        That is, $f_n(x) = T_n((x - x_0)^{\otimes n})$.
+        \item We define the analytic radius of convergence to be 
+        \begin{align*}
+            R(f) \coloneq \left( \limsup_{n \to \infty} \Vert T_n\Vert_{\mathcal L^n}^{1.n} \right)^{-1} \in [0, \infty].
+        \end{align*}
+        \item We define the uniform radius of convergence to be 
+        \begin{align*}
+            R_{uni}(f) \coloneq \begin{cases}
+            \infty & X = \{0\} \\
+            \left(\limsup_{n \to \infty} \sup_{\Vert u \Vert_X = 1} \Vert T_n u^{\otimes n} \Vert_{Y}^{1/n} \right)^{-1} & X \neq \{0\}
+            \end{cases}.
+        \end{align*}
+        \item We define the pointwise radius of convergence to be 
+        \begin{align*}
+            R_{pw}(f) = \begin{cases}
+                \infty & X = \{0\} \\
+                \inf_{\Vert u\Vert_X = 1} \left(  \limsup_{n \to \infty} \Vert T_n u^{\otimes n}\Vert_Y^{1/n}\right)^{-1} & X \neq \{0\}
+            \end{cases}.
+        \end{align*}
+        Note that 
+        \begin{align*}
+            \inf_{\Vert u\Vert_X = 1} \left(  \limsup_{n \to \infty} \Vert T_n u^{\otimes n}\Vert_Y^{1/n}\right)^{-1} =  \left( \sup_{\Vert u\Vert_X = 1} \limsup_{n \to \infty} \Vert T_n u^{\otimes n}\Vert_Y^{1/n}\right)^{-1}.
+        \end{align*}
+    \end{enumerate}
+}
+\noindent Remark: each of the radii are independent of $x_0$.
+\thm{}{
+    Let $X$ be a metric space, $Y$ a Banach space, $T_n \in \mathcal L^n(X; Y)$ for all $n \in \NN$. Consider the power series 
+    \begin{align*}
+        f = \sum_{n=0}^\infty T_n((\cdot - x_0)^{\otimes n})
+    \end{align*}
+    for some $x_0 \in X$. The following hold:
+    \begin{enumerate}
+        \item Define $\rho : \partial B_X(0, 1)\to [0, \infty]$ via 
+        \begin{align*}
+            \rho(u) = \left( \limsup_{n \to \infty} \Vert T_n u^{\otimes n}\Vert_Y^{1/n}\right)^{-1}.
+        \end{align*}
+        For every $u \in \partial B_X(0, 1)$, $\rho(u) = \rho(-u)$ and $f$ converges pointwise absolutely on $x_0 + [0, \rho(u))u$ and diverges on the ray $x_0 + (\rho(u), \infty) u$. In particular, 
+        \begin{align*}
+            \{x + tu \mid |t| < \rho(u) \}& \subseteq \Gamma_c(f) \\
+            \{x + tu \mid |t| > \rho(u) \}& \subseteq \Gamma_d(f).
+        \end{align*}
+        \item $R(f) \leq R_{uni}(f) \leq R_{pw}(f)$.
+        \item $f$ converges pointwise absolutely on $B_X(x_0, R_{pw}(f))$ and if $R_{pw}(f) < t$, then $f$ does not converge pointwise on $B_X(x_0, t)$.
+        \item If $0 < S < R_{uni}(f)$, then $f$ converges uniformly absolutely on $B_X[x_0, S]$ and $f: B_X[x_0, S] \to Y$ is bounded and uniformly continuous. If $R_{uni}(f) < t$< then $f$ is not uniformly convergent on $B_X(x_0, t)$.
+        \item $f: B_X(x_0, R_{uni}(f)) \to Y$ is continuous.
+    \end{enumerate}
+}
+\noindent Remark: It is know that 
+\begin{align*}
+    \begin{cases}
+        \dfrac{R_{uni}}{e} \leq R(f) \\
+        R_{uni}(f) = R(f) \text{ if $X,Y$ are Hilbert.}
+    \end{cases}
+\end{align*}
+
 \end{document}
