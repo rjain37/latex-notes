@@ -1965,6 +1965,125 @@ Imagine we have three hashes. Query and deletion will take $\leq 3$ slots. But h
         \geq \left(d-1- \frac{\log(e^d(d-1))}{\log(dn/|S|)}\right) |S|
     \end{align*}
 }
+\newpage
+\section{
+    woo hash table theory idk
+}
+\thm{}{
+    Suppose we want to store up to $n$ elements where each element is $w$ bits. There exists a hash table such that 
+    \begin{enumerate}
+        \item space: $nw \cdot (1 + o(1))$ bits.
+        \item expected time per operation $O(1)$.
+    \end{enumerate}
+}
+\noindent \textbf{Warmup 1}: Chained hash table. Recall that this is where each bin $j$ stores a doubly linked list of elements $v$ such that $h(v) = j$. 
 
+\noindent \textbf{Observation 1}: Expected time per operation is $O(1)$. However, the psace is $nw + O(n \log n)$ where the latter summand comes from pointers. 
+
+Let's talk about what a hash table looks like in memory. We have a list of $n$ pointers  and an array of size $n$. Each internal node takes $O(\log n)$-bit pointers to a $w$-bit item. 
+
+When doing operations, we want to maintain an invariant that the in-use slots in the intermediate array are a prefix of the array.
+
+\noindent \textbf{Warmup 2}: Balls and bins! Suppose we throw $n$ balls into $\frac nb$ bins. Suppose $b = (\log n)^4$.
+
+\clm{}{
+    With high probability, every bin has $\leq b \cdot(1 + 1/\log n)$ balls.
+}
+\begin{proof}
+    By union bound, we can focus on bin 0. So let $X =$ the number of balls in the bin. So 
+    \begin{align*}
+        X = \sum_{i}^n \mathbb {I}_i
+    \end{align*}
+    where $\mathbb I_i$ is an indicator of whether ball $i$ went into the bin or not. So, $E[X] = b$ and we can apply a Chernoff bound. So 
+    \begin{align*}
+        P(X > b(1 + 1/log n)) = P(X > b + \log n \cdot \sqrt b)\leq e^{-\Omega(\log^2 n)}.
+    \end{align*}
+    This completes the proof.
+\end{proof}
+Now we move to the proof of the theorem.
+
+\noindent \textit{Proof:} Again let $b = \log^4 n$. Hash the elements into $\frac nb$ bins, each  with capacity $(1 + 1/\log n)\cdot b$. In each bin, use a chained hash table. Each chained hash table uses $kw + O(k \log k)$ bits where $k$ is the size of the hash table. So for each bin, $k = \Theta(b)$, meaning the space per pointer is order $\log b = \log(\log^4 n) = 4\log \log n$ bits per pointer.
+
+So for the total space, we have 
+\begin{align*}
+    O(n \log \log n) + (1 + 1/\log n) \cdot nw
+\end{align*}
+bits. As $w > \log n$, we have 
+\begin{align*}
+    O(n \log \log n) + (1 + 1/\log n) \cdot nw \leq \left(1 + O\left(\frac{\log \log n}{\log n}\right)\right) \cdot nw.
+\end{align*}
+\noindent How much space does a hash table really need? In total, we have 
+\begin{align*}
+    \log \binom{2^w}{n} &\approx \log\left( \frac{2^w (2^w - 1)\cdots(2^w - n + 1)}{n!} \right) \\
+    &\approx \log\left(\frac{2^{wn}}{n^n/e^n}\right) \\
+    &= wn - n \log n + O(n).
+\end{align*}
+Usually $w = \Theta(\log n)$, and we have room to save $n \log n$ bits, which in the usual case is a constant fraction of the total space we have.
+
+\thm{}{
+    We can improve our space to 
+    \begin{align*}
+        wn \cdot(1 + o(1)) - n \log n + O(n\log\log n)
+    \end{align*}
+    bits.
+}
+\noindent \textbf{Quotienting} (Knuth).
+
+Let's say we have $m = \frac nb$ bins. Imagine that each element was split into the first $\log m$ bits and $w - \log m$ bits. Suppose the first $\log m$ bits are random. So we're going to use the first $\log m$ bits to decide which bin it goes in. 
+
+By doing this, we don't actually need to store the first $\log m$ bits of each element because it is given by the bin number.
+
+Now our idea is that instead of storing $u$, we store $\pi(u)$ where $\pi$ is a random permutation from $[2^w] \to [2^w]$. This is called a permutation hash and is invertible. 
+
+The goal is to use random hash functions to build a pmerutation hash function that is ``as good'' as random.
+
+\noindent \textbf{Single-round Feistel Permutation}:
+
+\noindent Think of an element as $u = (x,y )$ where $x$ is the first $\log m$ bits. Then let $h(y) \to $ the first $\log m$ bit number. Then 
+\begin{align*}
+    \pi(u) = (h(y) \oplus x, y).
+\end{align*}
+\clm{}{
+    $\pi$ is invertible.
+}
+\begin{proof}
+    We can see that 
+    \begin{align*}
+        \pi(\pi(u)) &= \pi(h(y) \oplus x, y) \\
+        &= (h(y) \oplus h(y) \oplus x, y) \\
+        &= (x, y) \\
+        &=u.
+    \end{align*}
+\end{proof}
+Now let $u_1, \ldots u_n$ be the elements and $u_i = (x_i, y_i)$. Let $X$ be the number of elements in bin 0. An element $u_i $ gets put into bin 0 if and only if 
+\begin{align*}
+    h(y_i) \oplus x_i = 0.
+\end{align*}
+\textbf{Observation 1}: $E[X] = \frac nm = b$.
+\begin{proof}
+    Each balls has probability $\frac 1m$ of being in bin 0.
+\end{proof}
+\clm{}{
+    $X$ is still the sum of independent indicator random variables.
+}
+\begin{proof}
+    Let $G_y = \{u_i \mid y_i = y\}$. Let $X_y$ be the number of elements in $G_y$ that go to bin 0. We see that $X = \sum_{y}X_y$. 
+
+    Also $X_y$ is independent across all $y$ because $X_y$ is determined by $h(y)$ which is independent across all $y$. 
+
+    The last thing to show is that each $X_y$ is in $\{0, 1\}$. If $X_y \geq 2$, then there are distinct $u_1 = (x_1, y), u_2 = (x_2, y)$ such that 
+    \begin{align*}
+        h(y) \oplus x_1 = h(y) \oplus x_2 = 0,
+    \end{align*}
+    which would imply $x_1 = x_2 \implies u_1 = u_2$. This completes the proof. 
+\end{proof}
+This completes the proof of the theorem.
+
+\thm{(STOC 2022)}{
+    $\log(\zeta) + O(n \underbrace{\log \log \log \cdots \log n}_{k \log s})$, has time $k$ per operation.
+}
+\thm{(FOCS 2023)}{
+    This is the optimal space/time tradeoff curve across all data structures.
+}
 
 \end{document}
