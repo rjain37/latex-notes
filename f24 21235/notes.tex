@@ -2698,5 +2698,88 @@ So applying the M-test then shows that $\exp$ is bounded and uniformly continuou
         R_{uni}(f) = R(f) \text{ if $X,Y$ are Hilbert.}
     \end{cases}
 \end{align*}
+\begin{proof}
+    I wasn't in class for the first 10 minutes oops.
+    \begin{enumerate}
+        \item missing
+        \item missing
+        \item Since $R_{pw}(f) \leq \rho(u)$ for all $\Vert u \Vert_X = 1$, the inclusion $B_X(x_0, R_{pw}(f)) \subseteq \Gamma_c(f)$ follows from 1. On the other hand, if $R_{pw}(f) < t$, we pick $R_{pw}(f) < s < t$ there exists $\Vert u \Vert = 1$ such that $\rho(u)<s \implies x_0 + su \in \Gamma_d(f)$. 
+        \item Let $0 < s < R_{uni}(f)$ and pick $\frac{1}{R_{uni}(f)} < \gamma < \frac 1s$. 
+        \begin{align*}
+            \frac{1}{R_{uni}(f)} = \limsup_{n \to \infty} \sup_{\Vert u\Vert = 1} \Vert T_n u^{\otimes n}\Vert_Y^{1/n}.
+        \end{align*}
+        So there is $N$ such that $n \geq N \implies \sup_{\Vert u \Vert = 1} \Vert T_n u^{\otimes n} \Vert_Y^{1/n} < \gamma$. Then for $n \geq N$ and $x \in B_X(x_0, s)$, we have 
+        \begin{align*}
+            \Vert T_n(x - x_0)^{\otimes n}\Vert_Y^{1/n} \leq \Vert x - x_0\Vert_X \sup_{\Vert u \Vert = 1} \Vert T_n x^{\otimes n} \Vert_Y^{1/n} < s\gamma.
+        \end{align*}
+        Then $\sum_{n=0}^\infty (\gamma s)^n < \infty$, so the M-test implies that $f$ converges uniformly absolutely on $B_X[x_0, s]$ to a bounded and uniform continuous $f_n$.
+
+        Now let $R_{uni}(f) < s < t$. Pick a subsequence such that 
+        \begin{align*}
+            \sup_{\Vert u \Vert = 1} \Vert T_{n_k} u^{\otimes n_k}\Vert^{1/n_k} \to \frac{1}{R_{uni}(f)}
+        \end{align*}
+        as $k \to \infty$. Now pick $K \in \NN$ such that $k \geq K$ implies 
+        \begin{align*}
+            \frac 1s < \sup_{\Vert u \Vert = 1} \Vert T_{n_k} u^{\otimes n_k}\Vert^{1/n_k}_Y \implies \exists \Vert u_k\Vert = 1
+        \end{align*}
+        such that 
+        \begin{align*}
+            \frac 1s < \Vert T_{n_k} u_k^{\otimes n_k}\Vert^{1/n_k}_Y \implies 1 < \Vert T_{n_k} (su_k)^{\otimes n_k}\Vert^{1/n_k}_Y.
+        \end{align*}
+        Suppose BWOC that $f$ is convergent uniformly in $B(x_0, t)$. Then the partial sums 
+        \begin{align*}
+            \left\{S_n = \sum_{n=0}^N T_n((\cdot - x_0)^{\otimes n})\right\}_{N=0}^\infty
+        \end{align*}
+        converges uniformly on $B(x_0, t)$. Then $su_k \in B(x_0, t)$ for all $k \geq K$. So,
+        \begin{align*}
+            1 < \Vert T_{n_k}(su_k)^{\otimes n_k} \Vert_Y = \Vert S_{n_k}(x_0 + su_k) - S_{n_k - 1}(x_0 + su_k)\Vert_Y \leq \sup_{x \in B(x_0, t)} \Vert S_{n_k} - S_{n_k - 1}(x) \Vert_Y \to 0.
+        \end{align*}
+        This is a contradiction.
+        \item Follows from 4 because $f$ is continuous in $B[x_0, S]$ for all $s < R_{uni}(f)$.
+    \end{enumerate}
+\end{proof}
+\newpage
+As an example, let $X = \ell^2(\NN)$. Let 
+\begin{align*}
+    f(x) = \sum_{n=0}^\infty x_n^n.
+\end{align*}
+That is,
+\begin{align*}
+    f = \sum_{n=0}^\infty T_n(\cdot^{\otimes n})
+\end{align*}
+for $T \in \mathcal L^n(X; \RR)$ given by 
+\begin{align*}
+    T_n(x^{(1)}, \ldots, x^{(n)}) = \prod_{j=1}^n x^{(j)}_n.
+\end{align*}
+Then 
+\begin{align*}
+    |T_n(\cdot)| \leq \prod_{j=1}^n |x^{(j)}_n \implies \Vert T_n \Vert_{\mathcal L} = 1 \implies R(f) = 1.
+\end{align*}
+Similarly $R_{uni}(f) = 1$. Note that $x \in X = \ell^2 \implies x_n \to 0$ as $n \to \infty$. So
+\begin{align*}
+    \limsup_{n \to \infty} |x_n^n|^{1/n} = \limsup_{n \to \infty} |x_n| = 0 \implies R_{pw}(f) = \infty.
+\end{align*}
+Rewinding, when we build PS we consider $T_n \in \mathcal L^n(X; Y)$ and study $x \mapsto T_n(x^{\otimes n})$. In particular, this means 
+\begin{align*}
+    T_n(x^{\otimes n}) = \mathcal S T_n(x^{\otimes n})
+\end{align*}
+where... Fix a map $T \in L^n(X; Y)$ for $n \geq 2$. 
+\begin{enumerate}
+    \item $T$ is symmetric if $T(x_1, \ldots x_n) = T(x_{\pi(1)}, \ldots, x_{\pi(n)})$ where $\pi$ is a permutation of $n$ elements.
+    \item Given $T$, we can ``symmetrize it'': 
+    \begin{align*}
+        \mathcal ST \in L^n(X; Y), \mathcal ST(x_1, \ldots, x_n) = \frac{1}{n!} \sum_{n \in S_n} T(x_{\pi(1)}, \ldots, x_{\pi(n)}).
+    \end{align*}
+    Clearly $\mathcal ST$ is symmetric.
+    \item Given $T \in \mathcal L_{sym}^n(X; Y)$ and $0 \leq k \leq n$, we can define 
+    \begin{align*}
+        T^{(k)} \in \mathcal L_{sym}^{n-k}(X; \mathcal L^k_{sym}(X; Y))
+    \end{align*}
+    as 
+    \begin{align*}
+        T^{(k)}(x_1, \ldots, x_{n_k})(v_1, \ldots, v_k) = T(x_1, \ldots, x_{n-k}, v_1, \ldots v_k).
+    \end{align*}
+\end{enumerate}
+The point is that if we consider $f = \sum_{n=0}^\infty T_n((\cdot - x_0)^{\otimes n}) = \sum_{n=0}^\infty \mathcal ST_n((\cdot - x_0)^{\otimes n})$, we can reduce to studying PS built from $T_n \in \mathcal L^n_{sym}(X; Y)$.
 
 \end{document}
