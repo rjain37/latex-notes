@@ -2781,5 +2781,104 @@ where... Fix a map $T \in L^n(X; Y)$ for $n \geq 2$.
     \end{align*}
 \end{enumerate}
 The point is that if we consider $f = \sum_{n=0}^\infty T_n((\cdot - x_0)^{\otimes n}) = \sum_{n=0}^\infty \mathcal ST_n((\cdot - x_0)^{\otimes n})$, we can reduce to studying PS built from $T_n \in \mathcal L^n_{sym}(X; Y)$.
+\newpage
+\noindent Facts about symmetric multilinear maps:
+
+Let $X,Y$ be a normed vector space over $\FF$:
+\begin{enumerate}
+    \item $\mathcal S: \mathcal L^n(X; Y) \to \mathcal L^n_{sym}(X; Y)$ is bounded and linear and 
+    \begin{align*}
+        \Vert \mathcal ST\Vert_{\mathcal L^n} \leq \Vert T\Vert_{\mathcal L^n}.
+    \end{align*}
+    \item $\mathcal L^n_{sym}(X; Y) \subseteq \mathcal L^n(X; Y)$ is a closed subspace. 
+    \item Let $0 \leq k \leq n$. The map 
+    \begin{align*}
+        \mathcal L^n_{sym}(X; Y) \ni T \mapsto T^{(k)} \in \mathcal L^{n-k}_{sym}(X; \mathcal L^k_{sym}(X; Y))
+    \end{align*}
+    is also bounded and linear, and $\Vert T^{(k)}\Vert_{\mathcal L^{n-k} \mathcal L^k} \leq \Vert T \Vert_{\mathcal L^n}$.
+    \item On $\mathcal L^n_{sym}( X; Y)$ we can define for $T \in \mathcal L^n_{sym}$,
+    \begin{align*}
+        \Vert T \Vert_{\mathcal L^n_{sym}} = \sup_{\Vert u \Vert_X \leq 1} \Vert Tu^{\otimes n} \Vert_Y.
+    \end{align*}
+    If $X \neq \{0\}$, then we just need $\Vert u \Vert = 1$. This is a norm, and 
+    \begin{align*}
+        \Vert T \Vert_{\mathcal L^n_{sym}} \leq \Vert T \Vert_{\mathcal L^n} \leq \frac{n^n}{n!}\Vert T\Vert_{\mathcal L^n_{sym}}.
+    \end{align*}
+    That is, it's an equivalent norm. In particular, if $T \in \mathcal L^n_{sym}(X; Y)$ for all $n \in \NN$, then the power series 
+    \begin{align*}
+        f =\sum_{n=0}^\infty T_n((\cdot - x_0)^{\otimes n}),
+    \end{align*}
+    we have:
+    \begin{align*}
+        \frac 1e R_{uni}(f) \leq R(f) \leq R_{uni}(f).
+    \end{align*}
+    \item If $X$ is an inner product space, then $\Vert T\Vert_{\mathcal L^n_{sym}} = \Vert T\Vert_{\mathcal L^n}$. So $R_{uni}(f) = R(f)$ for power series.
+    
+    That is, we might as well assume $T_n \in \mathcal L^n_{sym}$ when working with power series. This actually helps a bit.
+\end{enumerate}
+
+\thm{Analyticity Theorem}{
+    Let $X,Y$ be normed vector spaces over $\FF$ with $Y$ complete. Assume that $T_n \in \mathcal L^n_{sym}(X; Y)$ for all $n \in \NN$ and consider the power series $f = \sum_{n =0}^\infty T_n((\cdot - x_0)^{\otimes n})$. Suppose $R(f) > 0$, and let $0 < r <R(f)$ and $x_1 \in B(x_0, r)$. The following hold:
+    \begin{enumerate}
+        \item For each $k \in \NN$, the series 
+        \begin{align*}
+            S_k = \sum_{n=k}^\infty \binom nkT_n^{(k)}((x_1 - x_0)^{\otimes (n-k)}) \in \mathcal L^k_{sym}(X; Y)
+        \end{align*}
+        converges absolutely in $\mathcal L^k_{sym}$.
+        \item The power series $F = \sum_{k=0}^\infty S_k((\cdot - x_1)^{\otimes k})$ satisfies \begin{align*}
+            R_{uni}(F) \geq r - \Vert x_1 - x_0\Vert_X
+        \end{align*}
+        and $F=f$ in $B(x_1, r - \Vert x_1 - x_0\Vert)$.
+    \end{enumerate}
+}
+\newpage
+\begin{proof}
+    First note that $\binom nk^{1/n} = \left[\frac{n(n-1)\cdots(n-k+1)}{k!}\right]^{1/n} \leq \left(\frac{n^k}{k!}\right)^{1/n} \to 1$ as $n \to \infty$. This implies for $r < R(f)$,
+    \begin{align*}
+        \limsup_{n\to\infty} \left[ \binom nk \Vert T_n\Vert_{\mathcal L^n} r^{n-k}\right]^{1/n} \leq \frac{r}{R(f)} < 1.
+    \end{align*}
+    Hence, if $x_1 \in B(x_0, r)$, then 
+    \begin{align*}
+        \limsup_{n\to\infty}\left\Vert \binom nk T_n^{(k)} ((x_1 - x_0)^{\otimes (n-k)}) \right\Vert_{\mathcal L^k_{sym}}^{1/n} \leq \limsup_{n\to\infty}\left[ \binom nk \Vert T_n\Vert_{\mathcal L^n} r^{n-k}\right]^{1/n} \leq \frac{r}{R(f)} < 1.
+    \end{align*}
+    Therefore, by the root test, the series $S_k$ converges absolutely.
+    Similarly, $\limsup_{n\to\infty} \left[ \Vert T_n\Vert_{\mathcal L^n} r^n\right]^{1/n} = \frac{r}{R(f)} < 1$. Then again by the root test, we have 
+    \begin{align*}
+        \sum_{n=0}^\infty \Vert T_n\Vert_{\mathcal L^n} r^n < \infty.
+    \end{align*}
+    Now fix $x \in B(x_1, r - \Vert x_1 - x_0\Vert)$. Then 
+    \begin{align*}
+        \Vert x - x_1 \Vert < r - \Vert x_1 - x_0\Vert \implies \sum_{k=0}^n \binom nk \Vert T_n\Vert_{\mathcal L^n} \Vert x_0 - x_1\Vert^{n-k} \Vert x - x_1 \Vert^k \leq \sum_{k=0}^n \binom nk \Vert T_n\Vert_{\mathcal L^n} \Vert x_0 - x_1\Vert^{n-k} (r - \Vert x_1 - x_0\Vert)^k.
+    \end{align*}
+    Applying the binomial theorem, we get that this equal to 
+    \begin{align*}
+        \Vert T_n\Vert_{\mathcal L^n} (\Vert x_0 - x_1\Vert + r - \Vert x_0 - x_1\Vert)^n = \Vert T_n\Vert_{\mathcal L^n}r^n.
+    \end{align*}
+    By the Weierstrass M-test, we get that 
+    \begin{align*}
+        \sum_{n=0}^\infty \sum_{k=0}^n \binom nk T_n^{(k)} ((x_1 - x_0)^{\otimes (n-k)}) (\cdot - x_1)^{\otimes k}
+    \end{align*}
+    converges uniformly absolutely in $B(x_1, r - \Vert x_1 - x_0\Vert)$. Now note that 
+    \begin{align*}
+        T_n((x-x_0)^{\otimes n}) = \sum_{k=0}^n \binom nk T_n^{(k)} ((x_1 - x_0)^{\otimes (n-k)}) (x - x_1)^{\otimes k}.
+    \end{align*}
+    Thus, 
+    \begin{align*}
+        f(x) &= \sum_{n=0}^\infty T_n((x-x_0)^{\otimes n}) \\
+        &= \sum_{n=0}^\infty \sum_{k=0}^n \binom nk T_n^{(k)} ((x_1 - x_0)^{\otimes (n-k)}) (x - x_1)^{\otimes k} \\
+        &= \sum_{k=0}^\infty \sum{n=k}^\infty  \binom nk T_n^{(k)} ((x_1 - x_0)^{\otimes (n-k)}) (x - x_1)^{\otimes k}\\
+        &= \sum_{k=0}^\infty S_k((x - x_1)^{\otimes k}) = F(x).
+    \end{align*}
+    Therefore, $f = F$ in $B(x_1, r - \Vert x_1 - x_0\Vert)$ and $R_{uni}(F) \geq r - \Vert x_1 - x_0\Vert$.
+\end{proof}
+\newpage
+\dfn{}{
+    Let $X$ and $Y$ be normed vector spaces with $Y$ complete. Suppose $\emptyset \neq U \subseteq X$ is open and $f: U \to Y$. We say $f$ is analytic if $\forall x_0 \in U$, there is $R > >0$ with $B(x_0, R) \subseteq U$ such that 
+    \begin{align*}
+        f(x) = \sum_{n=0}^\infty T_n((x - x_0)^{\otimes n})
+    \end{align*}
+    for all $x \in B(x_0, R)$ where $T_n \in \mathcal L^n_{sym}(X; Y)$ for all $n \in \NN$ and $R \leq R_{uni}(f)$.
+}
+\nt{Analytic implies continuous. Also, if we're given $f = \sum T_n(\cdot - x_0)^{\otimes n}$ for $T_n \in \mathcal L^n_{sym}$ for all $n$, then $f$ is analytic in $B(x_0, R(f))$, provided $R(f) > 0$.}
 
 \end{document}
