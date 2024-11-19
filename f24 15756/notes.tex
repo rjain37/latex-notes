@@ -2085,5 +2085,113 @@ This completes the proof of the theorem.
 \thm{(FOCS 2023)}{
     This is the optimal space/time tradeoff curve across all data structures.
 }
+\chapter{List Labeling Problem}
+\noindent Bill likes to call this the ``dynamic sorting'' problem.
+\qs{The list labeling problem}{
+    We have an array of size $m = 2n$. 
+    \begin{itemize}
+        \item Elements are going to be inserted and deleted over time.
+        \item $\leq n$ elements at once.
+        \item Our job is to keep the elements in sorted order in the array.
+    \end{itemize}
+    The goal is to minimize the ``cost'' per operation: 
+    \begin{itemize}
+        \item Really just the number of items whose array position changes.
+    \end{itemize}
+}
+\thm{Itaei, Konheim, Rodeh 1981}{
+    There exists a solution with amortized cost $O(\log^2 n)$ per operation.
+}
+\noindent The algorithm: we're going to think of the list as a binary tree. That is, the root will be the array of size $m$, the children will be the array split into subarrays of size $m/2$, and the $i$-th level contains $m/2^i$ elements in each node. The leaves are going to be subarrrays with $\leq 1000 \lg n$ elements.
+
+\noindent \textbf{The invariant}: consider a subproblem $A$ with children $B$ and $C$. Define the density of a problem to be 
+\begin{align*}
+    \mathrm{density}(A) = \frac{\text{number of elements in $A$}}{|A|}
+\end{align*}
+The invariant is going to be that 
+\begin{align*}
+    \mathrm{density}(B), \mathrm{density}(A) \leq \left(1 + \frac{1}{10 \lg m}\right)\mathrm{density}(A).
+\end{align*}
+If the invariant ever breaks, we take the elements in $A$ and spread them out evenly across $A$. For an insertion:
+\begin{enumerate}
+    \item Fix any invariant that got broken.
+    \item Incur up to $O(\lg n)$ cost at leaf.
+\end{enumerate}
+\newpage
+\mlenma{}{Every subproblem has density $\leq 1$.}
+\begin{proof}
+    We have that 
+    \begin{align*}
+        \mathrm{density}(\mathrm{subproblem}) &\leq \mathrm{density}(\mathrm{root}) \cdot \left(1 + \frac{1}{10 \lg m}\right)^{\lg m} \\
+        &\leq \frac 12 \cdot e^{1/10} \leq 0.6.
+    \end{align*}
+\end{proof}
+\mlenma{}{
+    Amortized cost per operation is $O(\lg^2 n)$.
+}
+\begin{proof}
+    Every insertion/deletion pays $\lg n$ dollars to each subproblem it encounters. So this is $\lg^2n$ total dollars paid. For a subproblem $A$, consider time between 2 rebuilds.
+    \begin{itemize}
+        \item After previous rebuild, let $t =$ the number of elements in $A$.
+        \item Between then and the next rebuild, at least $\Omega\left(\frac{t}{\lg n}\right)$ insertions/deletions must go through $A$. This implies that $A$ collects $\Omega\left(\frac{t}{\lg n}\right)\cdot \lg n = \Omega(t)$ dollars. Actually, if $A$'s new size of $t'$, then $A$ has $\Omega(t')$ dollars.
+    \end{itemize}
+    So rebuilding costs $t'$ dollars and takes time $t'$. So we have 
+    \begin{align*}
+        \text{total cost} &\leq \text{total dollars spent} \leq O(\lg^2 n) \cdot \text{number of operations}.
+    \end{align*}
+\end{proof}
+\noindent Other work on this problem:
+\begin{itemize}
+    \item 1990: any ``smooth'' algorithm must incur $\Omega(\lg^2 n)$ per operation. In this context, ``smooth'' means that whenever the algorithm rebuilds a subarray, it spreads the elements evenly in the subarray.
+    \item 2012: any deterministic algorithm must incur $\Omega(\lg^2 n)$ per operation.
+    \item 2022: there exists a randomized algorithm with expected cost $O(\lg^{1.5} n)$ per operation.
+    \item 2024: there exiss a randomized algorithm with expected amortized cost $O(\lg n(\lg \lg n)^3)$.
+\end{itemize}
+\thm{2015}{
+    There is a history independent solution that gets $O(\lg^2 n)$ per operation.
+}
+\noindent Strong history independence: This says that the state of the data structure at any given moment is fully determined by 
+\begin{enumerate}
+    \item The current set of elements and
+    \item some hash functions.
+\end{enumerate}
+\begin{proof}
+    The algorithm: we are given a set $S$ of elements and a hash function $h:S \to [0,1]$. In the middle of our array, we are going to designate a pivot, meaning the left side has size $(m-1)/2$ as well as the right side.
+
+    How to pick a pivot: consider the elements in sorted order:
+    \begin{align*}
+        s_1, s_2, \ldots s_k.
+    \end{align*}
+    Then the candidates will be the middle $\frac{k}{10 \lg n}$ elements. We pick the pivot of as the candidate who has the min hash value.
+
+    \noindent \textbf{Correctness}: we observe that if we have a problem $A$ with subproblems $B$ and $C$, then 
+    \begin{align*}
+        \mathrm{density}(B), \mathrm{density}(C) \leq \left(1 + \frac{1}{10 \lg m}\right)\mathrm{density}(A)
+    \end{align*}
+    because of the choice of our pivot. This yields correctness.
+
+    \noindent \textbf{Cost bound}: consider an insertion, which has to take a path down the tree from $A_1, \ldots A_k$. The cost of the insertion can be bounded by 
+    \begin{align*}
+        \mathrm{cost} \leq \sum_i \sum_t P(\text{$A_i$ has size $t$}) \cdot E[\text{cost on $A_i$} \mid \text{size $t$}].
+    \end{align*}
+    \mlenma{}{
+        If an insertion goes through a subproblem $A$ and if $A$ has $t$ elements, then 
+        \begin{align*}
+            P(\text{pivot changes for A}) = O\left(\frac{\lg n}{t}\right).
+        \end{align*}
+    }
+    \noindent The point is that 
+    \begin{align*}
+        E[\text{cost from $A_i$} \mid \text{size is $t$}] = O\left(\frac{\lg n}{t}\right) \cdot t = O(\lg n).
+    \end{align*}
+    \noindent \textit{Proof of lemma}: Let $C_1$ be the pivot candidtions before the insertion, and $C_2$ be the pivot conditions after the insertion. We observe that $C_1$ and $C_2$ by $O(1)$ elements. Let $\Delta$ be the elements where they differ. The only way the pivot can change is if the element with the smallest hash happens to be in $\Delta$. The probability that this happens is 
+    \begin{align*}
+        \frac{|\Delta|}{|C_1 \cup C_2|} = \frac{\Theta(1)}{\Theta\left(\frac{t}{\lg n}\right)} = O\left(\frac{\lg n}{t}\right).
+    \end{align*}
+\end{proof}
+
+\thm{Bender, Conway, Kuszmaul, etc. (2022)}{
+    There exists a randomized algorithm with expected cost $O(\lg^{1.5} n)$ per operation.
+}
 
 \end{document}
