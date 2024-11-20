@@ -2881,4 +2881,125 @@ Let $X,Y$ be a normed vector space over $\FF$:
 }
 \nt{Analytic implies continuous. Also, if we're given $f = \sum T_n(\cdot - x_0)^{\otimes n}$ for $T_n \in \mathcal L^n_{sym}$ for all $n$, then $f$ is analytic in $B(x_0, R(f))$, provided $R(f) > 0$.}
 
+\chapter{Differential Calculus}
+High level motivation: hierarchy of complexity of functions $f: X \to Y$:
+\begin{itemize}
+    \item Simplest functions are constant.
+    \item Continuous functions are locally well-approximated by constants.
+\end{itemize}
+Now say $X$ and $Y$ are normed vector spaces. 
+\begin{itemize}
+    \item Then we include affine functions.
+    \item Quadratic polynomials.
+    \item Higher order polynomials.
+    \item Then differentiable functions are locally well-approximated by affine functions.
+\end{itemize}
+\dfn{}{
+    Let $X,Y$ be normed vector spaces over $\FF$ and $\emptyset \neq U \subseteq X$ be open and $f: U \to Y$. $f$ is differentiable at $x \in U$ if there exists $\lambda \in \mathcal L(X; Y)$ such that
+    \begin{align*}
+        \lim_{h \to 0} \frac{f(x+h) - f(x) - \lambda h}{\Vert h\Vert} = 0.
+    \end{align*}
+}
+\mlenma{}{
+    Same hypothesis but assume $\lambda_1, \lambda_2 \in \mathcal L(X; Y)$ are both sufficient for the condition. Then $\lambda_1 = \lambda_2$. 
+}
+\begin{proof}
+    Let $g_i(h) = \frac{f(x + h) - f(x) - \lambda_i h}{\Vert h \Vert}$ for $\Vert h \Vert$ small enough. Then fix $u \in X$ with $\Vert u \Vert =1 $. THen for $t$ small, 
+    \begin{align*}
+        \lambda_1(tu) - \lambda_2(tu) = \Vert tu\Vert [g_2(tu) - g_1(tu)].
+    \end{align*}
+    But this implies 
+    \begin{align*}
+        \lambda_1(u) - \lambda(u) = \Vert u\Vert [g_2(tu) - g_1(tu)] \to 0
+    \end{align*}
+    as $t \to 0$. Therefore, $\lambda_1 u = \lambda_2 u$ for all $\Vert u \Vert = 1$, meaning $\lambda_1 = \lambda_2$.
+\end{proof}
+\dfn{}{
+    Following the definition before, we define $Df(x) = \lambda \in \mathcal L(X; Y)$. We also set 
+    \begin{align*}
+        D^1(U; Y) = \{g: U \to Y \mid g \text{ is differentiable at all points in $U$}\}.
+    \end{align*}
+}
+\mlenma{}{
+    Same hypothesis. Suppose $f$ is differentiable at $x \in U$, then $x$ is continuous at $x$.
+}
+\begin{proof}
+    We have 
+    \begin{align*}
+        f(x + h) - f(x) &= \frac{f(x + h) - f(x) - Df(x) h}{\Vert h \Vert} \Vert h \Vert + Df(x) h.
+    \end{align*}
+    But this right hand side goes to 0 as $h \to 0$ because $Df(x) \in \mathcal L(X; Y)$.
+\end{proof}
+\cor{}{
+    $D^1(U; Y) \subseteq C^0(U ;Y)$.
+}
+\noindent Remarks:
+\begin{enumerate}
+    \item We always need $X$ and $Y$ to be over the same field. If one is over $\CC$ and the other is over $\RR$, then we demote $\CC$ to $\RR$.
+    \item Differentiability is local; $f$ differentiable at $x \in U$ iff $f \restriction V$ is differentiable at $x \in V \subseteq U$.
+    \item It's easy to check that if we change to equivalent norms on $X$ and $Y$, then the notion of differentiability does not change.
+    \item If $X = \FF$ then $\mathcal L(\FF; Y) \simeq Y$.
+\end{enumerate}
+\ex{}{
+    \begin{enumerate}
+        \item All affine functions are differentiable.
+        \item Consider $f: \CC \to \CC$ as $f(z) = \overline z$.
+        \begin{align*}
+            f(z+h) - f(z) &= \overline{z + h} - \overline z = \overline h.
+        \end{align*}
+        But $\overline h$ is not $\CC$-linear, so $f$ is not differentiable.
+        \item $F: \RR^2 \to \RR^2$ by $F(x) = (x_1 - x_2)$ is differentiable.
+    \end{enumerate}
+}
+In $\RR$, MVT says $f(b) - f(a) = f'(c)(b-a)$ for some $c \in [a,b]$. But what if we take it to multiple dimensional output. Then consider 
+\begin{align*}
+    f(t) = (\cos(t), \sin(t)) \implies f'(t) = (-\sin(t), \cos(t)).
+\end{align*}
+This means that $|f'(t)| = 1$. If MVT holds, then there exists $c \in [0, 2\pi]$ such that 
+\begin{align*}
+    f(2\pi) - f(0) = (2\pi - 0) f'(c) \implies 2\pi f'(c) = 0.
+\end{align*}
+\thm{MVT, $X = \RR$ case}{
+    Let $Y$ be a normed vector space over $\RR$, $a,b \in \RR$ such that $a < b$. Suppose $f:[a,b] \to Y$ and $\varphi: [a, b] \to \RR$ are continuous on $[a,b]$ and are differentiable on $[a,b] \setminus E$ for $E \subseteq (a,b)$ a countable set. If $\Vert f'(x) \Vert \leq \varphi'(x)$ for all $x \in (a,b) \setminus E$, then 
+    \begin{align*}
+        \Vert f(x) - f(a) \Vert \leq \varphi(x) - \varphi(a)
+    \end{align*}
+    for all $x \in [a,b]$. 
+}
+\thm{MVT, general case}{
+    Let $X$ and $Y$ be normed vector spaces, $\emptyset \neq U \subseteq X$ open, $f: U \to Y$ continuous. Fix $x,y \in U$ and suppose $L(x,y) = \{(1-\alpha) x + \alpha y \mid \alpha \in [0,1]\} \subseteq U$. Further suppose that $f$ is differentiable on $L(x,y) \setminus E$ for some countable set $E$. Then the following hold:
+    \begin{enumerate}
+        \item If $M \coloneq \sup_{z \in L(x,y) \setminus E} \Vert Df(z) \Vert_{\mathcal L} < \infty$, then
+        \begin{align*}
+            \Vert f(y) - f(x) \Vert \leq M \Vert x -y\Vert.
+        \end{align*}
+        \item Let $T \in \mathcal L(X; Y)$ and suppose $K = \sup_{z \in L(x,y) \setminus E} \Vert Df(z) - T\Vert_{\mathcal L} < \infty$. Then
+        \begin{align*}
+            \Vert f(y) - f(x) - T(x - y) \Vert \leq K \Vert x - y \Vert.
+        \end{align*}
+    \end{enumerate}
+}
+\begin{proof}
+    2 follows from 1 applied to $g(z) = f(z) - Tz$, so we just prove 1. 
+
+    Define $h : [0,1] \to U$ via 
+    \begin{align*}
+        h(t) = (1-t)x + ty.
+    \end{align*}
+    Note that $h([0,1]) = L(x,y)$. $h$ is continuous on $[0,1]$ and differentiable on $(0,1)$ with $h'(t) = y-x$. Consider $g:[0,1] \to Y$ via $g = f\circ h$. By chain rule, $g$ is differentaible on $(0,1) \setminus F$ for $F = h^{-1}(E)$. Then 
+    \begin{align*}
+        Dg(t) &= Df(h(t))h'(t) \\
+        &= Df(h(t))(y-x).
+    \end{align*}
+    Let $\varphi: [0,1] \to \RR$ via $\varphi(t) = tM\Vert y-x\Vert$. Then $\varphi' = M\Vert x-y\Vert$. Then
+    \begin{align*}
+        \Vert g'(t) \Vert \leq \Vert Df(h(t)) \Vert_{\mathcal L} \Vert y-x\Vert \leq M \Vert x-y\Vert.
+    \end{align*}
+    By MVT, we have 
+    \begin{align*}
+        \Vert g(1) - g(0)\Vert \leq \varphi(1) - \varphi(0) = M\Vert x-y\Vert
+    \end{align*}
+    for all $x \in [0,1] \setminus E$.
+\end{proof}
+
 \end{document}

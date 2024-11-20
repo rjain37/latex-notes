@@ -2191,7 +2191,110 @@ If the invariant ever breaks, we take the elements in $A$ and spread them out ev
 \end{proof}
 
 \thm{Bender, Conway, Kuszmaul, etc. (2022)}{
-    There exists a randomized algorithm with expected cost $O(\lg^{1.5} n)$ per operation.
+    There exists a history independent solution with expected cost $\widetilde O(\lg^{1.5} n)$ per operation.
 }
+\thm{}{
+    There exists a history independent solution such that if an insertion is to a random rank, then the expected cost is $\widetilde O(\lg^{1.5} n)$ per operation.
+}
+\noindent We construct the algorithm with the same recursive structure with a pivot in the middle. So last time for picking the pivot, if $s_1, \ldots, s_t$ are the elements being stored, then the set of pivot ``candidates'' as the middle $\frac{t}{\Theta (\lg n)}$ elements. This time, we'll instead consider the middle 
+\begin{align*}
+    \frac{t}{100\sqrt{\lg n \lg\lg n}}
+\end{align*}
+elements. As before, the pivot will be the candidate with the minimum hash value. So now,
+\begin{align*}
+    P(\text{insertion into subproblem changes the pivot}) = O\left(\frac{1}{|\text{candidates}|}\right),
+\end{align*}
+which is now roughly decreased by $\approx \sqrt{\lg n}$. This would lead to a $\widetilde O(\lg^{1.5} n)$ bound. This is great!
+
+\noindent However the bad news is that this is not a correct algorithm! This is because the density could get as high as 
+\begin{align*}
+    \left( 1 + \widetilde O\left(\frac{1}{\sqrt{\lg n}}\right)\right)^{\lg n} \gg 1.
+\end{align*}
+The fix is that if the subproblem's density ever reaches $\geq 3/4$, then swap back to the $O(\lg^2 n)$ algorithm for this subproblem and it's descendants. We will call these subproblems ``corrupted.''
+
+\mlenma{Main Lemma}{Consider insertions into random rank. With probability $1 - \frac{1}{\lg^{10} n}$, the insertion does not go through any corrupted subproblems.}
+\noindent How much does insertion cost:
+\begin{itemize}
+    \item If we void corrupted subproblems, then $\widetilde O(\lg^{1.5}n)$ expected cost.
+    \item If we hit a corrupted subproblem, then $\widetilde O(\lg^2 n)$ expected cost, but only occurs with probability $\frac{1}{\lg^{10} n}$.
+    \item Also, might have to rebuild subproblem if the insertion makes it corrupt. 
+\end{itemize}
+\mlenma{}{
+    Expected cost from rebuilding is $\widetilde O(\lg^{1.5}n)$. 
+}
+\noindent We move to the proof of the main lemma. So let $d_1, d_2, \ldots$ be the densities of the subproblems that we encounter. Here's the intuition we have. Consider any subproblem with density $d_i$. Then it's children have densities of roughly
+\begin{align*}
+    (1 - 1/\sqrt{\lg n}) d_i \quad \text{ and } \quad (1 + 1/\sqrt{\lg n}) d_i.
+\end{align*}
+So if we condition on an insertion reaching the subproblem with density $d_i$, then it will go to either of the two children with roughly 50\% chance. So the $d_i$'s are really doing a random walk where each step is $\pm \frac{1}{\widetilde \Theta(\sqrt{\lg n})}$ where there are $\lg n$ steps. 
+
+Note that if you have a random walk with step size $s$ and goes for $\ell$ steps, then at the end we expect the random walk to be within roughly $s \sqrt{\ell}$ from its starting point. So we really have 
+\begin{align*}
+    \sqrt{\lg n} \cdot \frac{1}{100\sqrt{\lg n \lg \lg n}} = \frac{1}{100\sqrt{\lg \lg n}}.
+\end{align*}
+Morally this means that the probability of hitting $3/4$ density is very very low. So now for an actual proof:
+\begin{proof}
+    Define $\Delta_i = d_{i+1} - d_i$. Then 
+    \begin{align*}
+        |\Delta_i| \leq \frac{1}{100 \sqrt{\lg n \lg \lg n}}.
+    \end{align*}
+    Then we have 
+    \begin{align*}
+        E[\Delta_i \mid \Delta_1, \ldots, \Delta_{i-1}] =\, ?
+    \end{align*}
+    So the probaiblity that an insertion goes left would be 
+    \begin{align*}
+        \frac{1-\Delta}{2}
+    \end{align*}
+    whereas the probabilty of going right would be
+    \begin{align*}
+        \frac{1+\Delta}{2}.
+    \end{align*}
+    So the change in density, $\Delta_i$, would be 
+    \begin{align*}
+        \Delta_i = -\Delta d_i
+    \end{align*}
+    in the left case and 
+    \begin{align*}
+        \Delta_i = \Delta d_i
+    \end{align*}
+    in the right case. So,
+    \begin{align*}
+        E[\Delta_i] &= \left(\frac{1-\Delta}{2}\right) \cdot (-\Delta d_i) + \left(\frac{1+\Delta}{2}\right) \cdot (\Delta d_i) \\
+        &= \Delta^2 d_i \\
+        &\leq \Delta^2 \\
+        &\leq \left(\frac{1}{100 \sqrt{\lg n \lg \lg n}}\right)^2 \\
+        &= \frac{1}{10000\lg n \lg \lg n}.
+    \end{align*}
+    So 
+    \begin{align*}
+        E[\Delta_i \mid \Delta_1, \ldots, \Delta_{i-1}] \leq \frac{1}{10000\lg n \lg \lg n}.
+    \end{align*}
+    So, we have that 
+    \begin{align*}
+        P(\text{get to a corrupt subproblem}) &\leq P(\text{$\exists j \in [\lg n]$ such that $\Delta_1 + \cdots + \Delta_j \geq 1/4$}).
+    \end{align*}
+    We'll focus on $j = \lg n$ and then union bound. So we analyze
+    \begin{align*}
+        P(\sum \Delta_i \geq 1/4).
+    \end{align*}
+    Now define $\Delta'_i \coloneq \Delta_i - \frac{1}{10000\lg n}$. So,
+    \begin{align*}
+        \sum \Delta_i > \frac 14 \implies \sum \Delta_i' > \frac 18.
+    \end{align*}
+    So then define $\Delta''_i \coloneq \Delta_i' \cdot 100\sqrt{\lg n \lg \lg n}$. Then,
+    \begin{align*}
+        \sum \Delta_i'' > \frac{100 \sqrt{\lg n\lg \lg n}}{8}.
+    \end{align*}
+    This is exactly the type of random variable we can apply an adaptive Chernoff bound to as $\Delta_i'' \leq 1$ and $E[\Delta_i'' \mid \text{ the others}] \leq 0$ and there are $r = \lg m$ terms. So,
+    \begin{align*}
+        P(\sum \Delta_i'' \geq k\sqrt r) \leq e^{-k^2/3}
+    \end{align*}
+    In our case, $r = \lg n$ and $k \geq 10 \sqrt{\lg n \lg \lg n}$. This gives us that 
+    \begin{align*}
+        P(\sum \Delta_i'' \geq 1/4) \leq \frac{1}{\lg^{30}n}.
+    \end{align*}
+
+\end{proof}
 
 \end{document}
