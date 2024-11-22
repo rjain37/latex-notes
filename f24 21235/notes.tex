@@ -3002,4 +3002,89 @@ This means that $|f'(t)| = 1$. If MVT holds, then there exists $c \in [0, 2\pi]$
     for all $x \in [0,1] \setminus E$.
 \end{proof}
 
+\mlenma{}{
+    Let $k \geq 1$, $X_1, \ldots X_k, Y$ normed vector spaces, $T \in \mathcal L(X_1, \ldots, X_k; Y)$. Then $T$ is differentiable on $X_1 \times \cdots \times X_k$ and 
+    \begin{align*}
+        DT(x_1, \ldots, x_k)(y_1, \ldots y_k) &= T(y_1, x_2, \ldots, x_k) + T(x_1, y_2, x_3, \ldots x_k) + \cdots + T(x_1, \ldots, x_{k-1}, y_k).
+    \end{align*}
+}
+\begin{proof}
+    Let $k=2$ then induct after. $T: X_1 \times X_2 \to Y$ bilinear. Then for $x = (x_1, x_2) \in X_1 \times X_2$ and $(h_1, h_2) \in X_1 \times X_2$, we write 
+    \begin{align*}
+        T(x_1 + h_1, x_2 + h_2) = T(x_1, x_2) + T(h_1, h_2) + T(x_1, h_2) + T(h_1, x_2).
+    \end{align*}
+    Let $L: X_1 \times X_2 \to Y$ via 
+    \begin{align*}
+        L(y_1, y_2) = T(x_1, y_2) + T(y_1, x_2).
+    \end{align*}
+    Check that $L$ is continuous and linear. Observe that 
+    \begin{align*}
+        T(x_1 + h_1, x_2 + h_2) - T(x_1, x_2) - Lh = T(h_1, h_2),
+    \end{align*}
+    so we can write 
+    \begin{align*}
+        \left|\frac{T(x_1 + h_1, x_2 + h_2) - T(x_1, x_2) - Lh}{\Vert h\Vert_{X_1 \times X_2}}\right| &= \left| \frac{T(h_1, h_2)}{\Vert h \Vert_{X_1 \times X_2}}\right| \\
+        &\leq \frac{\Vert T \Vert_{\mathcal L} \Vert h_1 \Vert_{X_1} \Vert h_2 \Vert_{X_2}}{\Vert h \Vert_{X_1 \times X_2}} \\
+        &\leq \Vert T\Vert_{\mathcal L} \Vert h \Vert_{X_1 \times X_2} \to 0.
+    \end{align*}
+\end{proof}
+\thm{Chain Rule}{
+    Let $X,Y,Z$ be normed vector spaces, $\emptyset \neq U \subseteq X$ and $\emptyset \neq V \subseteq Y$ open sets. Then let $f: U \to Y$ and $g: V \to Z$ such that $f[U] \subseteq V$. If $f$ is differentiable at $x \in U$ and $g$ is differentiable at $f(x) \in V$, then $g\circ f$ is differentiabl at $x$ and 
+    \begin{align*}
+        D(g\circ f)(x) = Dg(f(x)) \circ Df(x).
+    \end{align*}
+}
+\mlenma{}{
+    Let $X, Y_1, \ldots Y_m$ be normed vector spaces, $Y = Y_1 \times \cdots \times Y_m$, $\emptyset \neq U \subseteq X$ open, $f: U \to Y$. Product equipped with  $\pi_i Y \to Y_i$ which maps $y \mapsto y_i$. Let $f_i = \pi_i \circ f$. Then $f$ is differentiable at $x \in U$ if and only if each $f_i$ is differentiable at $x$.
+}
+\begin{proof}
+    We start with the easy direction.
+    \begin{itemize}
+        \item $(\implies)$: Immediate as $\pi_i \in \mathcal L(Y, Y_i)$ and $f$ is differentiable.
+        \item $(\impliedby)$: Check that $(Df_1(x) , Df_2(x), \ldots Df_m(x))$ makes this work.
+    \end{itemize}
+\end{proof}
+
+\thm{Product Rule}{
+    Fix $2 \leq k \in \NN$, $X, Y_1, \ldots Y_k$, $Z$ normed vector spaces, $\emptyset  \neq U \subseteq X$ open. Suppose $f_i : U \to Y_i$ are all differentiable at some point $x \in U$. Also suppose that $T: U \to \mathcal L(Y_1, \ldots Y_k ; Z)$ is differentiable at $x$. Then $S: U \to Z$ via $S(x) = T(x)(f_1(x), \ldots, f_k(x))$ is differentiable at $x$, and 
+    \begin{align*}
+        DS(x)h = (DT(x)h)(f_1(x), \ldots, f_k(x)) + T(x)(Df_1(x)h, f_2(x), \ldots, f_k(x)) + \\
+        T(x)(f_1(x), Df_2(x)h, \ldots, f_k(x)) + \cdots + T(x)(f_1(x), \ldots, f_{k-1}(x), Df_k(x)h).
+    \end{align*}
+}
+\begin{proof}
+    We start by defining
+    \begin{align*}
+        \Phi: U \to \mathcal L(Y_1, \ldots Y_k; Z) \times Y_1 \times \cdots \times Y_k
+    \end{align*}
+    via
+    \begin{align*}
+        \Phi(x) = (T(x), f_1(x), \ldots, f_k(x)).
+    \end{align*}
+    By the second lemma, $\Phi$ is differentiable at $x$. Then let $M \in \mathcal L( \mathcal L(Y_1, \ldots Y_k; Z), Y_1, \ldots, Y_k; Z)$ via 
+    \begin{align*}
+        M(\Lambda, y_1, \ldots, y_k) = \Lambda(y_1, \ldots, y_k).
+    \end{align*}
+    By the first lemma, $M$ is differentiable. Observe $S = M \circ \Phi$. By the chain rule, $S$ is differentiable at $x$, where we have 
+    \begin{align*}
+        DS(x) = DM(\Phi(x)) \circ D\Phi(x).
+    \end{align*}
+    We have that 
+    \begin{align*}
+        DM(\Lambda, \lambda_1, \ldots, \lambda_k)(H, h_1, \ldots, h_k) &= M(H, \lambda_1, \ldots, \lambda_k) + M(\Lambda, h_1, \lambda_2, \ldots, \lambda_k) + \cdots + M(\Lambda, \lambda_1, \ldots, \lambda_{k-1}, h_k).
+    \end{align*}
+    And,
+    \begin{align*}
+        D\Phi(x)\eta = (DT(x)\eta, Df_1(x)\eta, \ldots, Df_k(x)\eta).
+    \end{align*}
+    Now we win because we have
+    \begin{align*}
+        DS(x)\eta &= [DM(\Phi(x)) \circ D\Phi(x)]\eta \\
+        &= (DT(x)\eta)(f_1(x), \ldots, f_k(x)) + T(x)(Df_1(x)\eta, f_2(x), \ldots, f_k(x)) + \\
+        &T(x)(f_1(x), Df_2(x)\eta, \ldots, f_k(x)) + \cdots + T(x)(f_1(x), \ldots, f_{k-1}(x), Df_k(x)\eta).
+    \end{align*}
+\end{proof}
+
+
+
 \end{document}
