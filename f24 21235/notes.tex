@@ -3084,7 +3084,124 @@ This means that $|f'(t)| = 1$. If MVT holds, then there exists $c \in [0, 2\pi]$
         &T(x)(f_1(x), Df_2(x)\eta, \ldots, f_k(x)) + \cdots + T(x)(f_1(x), \ldots, f_{k-1}(x), Df_k(x)\eta).
     \end{align*}
 \end{proof}
+\newpage
 
+\thm{}{
+    Let $a,b \in \RR$ with $a<b$, $Y$ a normed vector space over $\RR$. Suppose $f:[a,b] \to Y$, $\varphi: [a,b] \to \RR$ are continuous on at$[a,b]$ and differentiable on $(a,b) \setminus E$ for $E$ countable. Suppose $\Vert f'(x) \Vert \leq \varphi'(x)$ for all $x \in (a,b) \setminus E$. Then $\Vert f(x) - f(a) \Vert \leq \varphi(x) - \varphi(a)$ for all $x \in [a,b]$.
+}
+\begin{proof}
+    We first do a crazy construction. Let $F = E \cup \{a\}$, which is certainly countable. So let $F = \{r_n\}_{n=0}^\infty$ with the last term repeated infinitely many times if $F$ is finite.
 
+    For $n \in \NN$, let $\zeta_n \in\mathrm{Step}([a,b]; \RR)$ given by $\zeta_n(x) = \begin{cases}
+        0 & x \in [a, r_n] \\
+        1 & x \in (r_n, b]
+    \end{cases}$. So let $\zeta = \sum_{n=0}^\infty 2^{-n} \zeta_n \in \mathrm{Reg}([a,b])$.  Note that this converges uniformly. We now cover some properties of $\zeta$:
+    \begin{enumerate}
+        \item $\Vert \zeta \Vert_{\mathcal B} \leq \sum 2^{-n} \Vert \zeta_n\Vert_{\mathcal B} \leq 2$.
+        \item $a \leq x < y \leq b \implies \zeta_n(x) \leq \zeta_n(y)$ for all $n$, but this implies the same property for $\zeta$, i.e. that it is nondecreasing.
+        \item For $s \in (a, b]$, we have that 
+        \begin{align*}
+            \lim_{x \to s^-} \zeta(x) \leq \zeta(s).
+        \end{align*}
+        \item Suppose $r_n < x \leq b$ for $n \in \NN$. Then 
+        \begin{align*}
+            2^{-n}\zeta_n(r_n) + 2^{-n} = 2^{-n} = 2^{-n} \zeta_n(x).
+        \end{align*}
+        This mean that 
+        \begin{align*}
+            \zeta(r_n) + 2^{-n} \leq \zeta(x).
+        \end{align*}
+    \end{enumerate}
+    Now let $\eps > 0$ and let
+    \begin{align*}
+        S_\eps = \{x \in [a,b] \mid \Vert f(y) - f (a) \Vert \leq \varphi(y) - \varphi(a) + \eps(y-a) + \eps \zeta(y) \,\, \forall a \leq y \leq x \}.
+    \end{align*}
+    Note that $a \in S_\eps \subseteq[a,b]$, so there exists $s = \sup S_\eps \in [a,b]$. We claim that $s = b$. 
+    \begin{itemize}
+        \item We want to show $s = \max S_\eps$. If $s = a$, we're done. So suppose $s \neq a$. By construction, we have that 
+        \begin{align*}
+            \Vert f(y) - f(a) \Vert \leq \varphi(y) - \varphi(a) + \eps(y-a) + \eps \zeta(y) \,\, \forall y \in [a,s).
+        \end{align*}
+        Thus, from the properties outlined above,
+        \begin{align*}
+            f(s) - f(a) = \lim_{y \to s^-}\Vert f(y) - f(a) \Vert \leq \varphi(s) - \varphi(a) + \eps(s-a) + \eps\zeta(s).
+        \end{align*}
+        So this shows that $s \in S_\eps$.
+        \item We want to show $s\notin (a,b) \setminus E$. Suppose BWOC $s \in (a,b) \setminus E$. Since $\varphi,f$ are differentiable at $s$, we can pick $\eta > 0$ such that 
+        \begin{align*}
+            \begin{cases}
+                \Vert f(x) - f(s) - f'(s)(x-s) \Vert < |x-s| \frac \eps 2 \\
+                \Vert \varphi(x) - \varphi(s) - \varphi'(s)(x-s) \Vert < |x-s| \frac \eps 2
+            \end{cases}
+        \end{align*}
+        for all $x \in B(s, \eta) \cap [a,b]$. Then, for $x \in [s, s+\eta) \cap [a,b]$, we have 
+        \begin{align*}
+            \Vert f(x) - f(s) \Vert \leq |x-s| \frac \eps 2 + \Vert f'(s)(x-s)\Vert &= \frac \eps 2 (x-s) + |x-s|\Vert f'(s)\Vert \\
+            &\leq \frac \eps 2 (x-s) + (x-s) \varphi'(s) \\
+            &\leq \eps(x-s) + \varphi(x) - \varphi(s).
+        \end{align*}
+        On the other hand, $s \in S_\eps \implies \Vert f(s) - f(a) \Vert \leq \varphi(s) - \varphi(a) + \eps(s-a) + \eps\zeta(s)$. Combined, this yields that
+        \begin{align*}
+            \Vert f(x) - f(a) \Vert \leq \Vert f(x) - f(s)\Vert + \Vert f(s) - f(a)\Vert \leq \varphi(x) - \varphi(a) + \eps(x-a) + \eps\zeta(x) + \eps\cancelto{\zeta(x)}{\zeta(s)}.
+        \end{align*}
+        But this a contradiction to the maximality of $s$, so we are done.
+        \item Now we show $x \notin F = E \cup \{a\}$. Suppose by way of contradiction that $s \in F$. This means that $s = r_n$ for some $n \in \NN$. Since $f ,\varphi$ are continuous, there exists $\delta > 0$ such that $x \in B(r_n, \delta) \cap [a,b]$ implies that 
+        \begin{align*}
+            \Vert f(x) - f(r_n) \Vert < \eps \cdot 2^{-n-1}
+        \end{align*}
+        and 
+        \begin{align*}
+            | \varphi(x) - \varphi(r_n) | < \eps \cdot 2^{-n-1}.
+        \end{align*}
+        Thus, for $x \in (s, s + \delta) \cap [a,b]$, we have that 
+        \begin{align*}
+            \Vert f(x) - f(a) \Vert &\leq \Vert f(x) - f(s) \Vert + \Vert f(s) -f(a) \Vert \\
+            &\leq \eps \cdot 2^{-n-1} + \varphi(s) - \varphi(a) + \eps(s-a) + \eps\zeta(s) \\
+            &\leq \varphi(x) - \varphi(a) + \eps(s-a) + \eps(\zeta(r_n) + 2^{-n}) \\
+            &\leq \varphi(x) - \varphi(a) + \eps(x-a) + \eps \zeta(x).
+        \end{align*}
+        This shows that $x \in S_\eps$, which is a contradiction.
+    \end{itemize}
+    By combining the above results, we see that $s = \max S_\eps = b$. So, we now know that 
+    \begin{align*}
+        \Vert f(x) - f(a) \Vert \leq \varphi(x) - \varphi(a) + \eps[(x-a) + \zeta(x)]
+    \end{align*}
+    for all $x \in [a,b]$. Now send $\eps \to 0$ for the desired result.
+\end{proof}
+\cor{}{
+    Let $X,Y$ be normed vector spaces, $\emptyset \neq U \subseteq X$ be open and convex, and $f: U \to Y$ be differentiable except on countable $E \subseteq U$. Suppose 
+    \begin{align*}
+        M = \sup_{U \setminus E} \Vert Df(x) \Vert_{\mathcal L} < \infty.
+    \end{align*}
+    Then 
+    \begin{align*}
+        \Vert f(x) - f(y) \Vert \leq M \Vert x - y \Vert.
+    \end{align*}
+    That is, $f$ is Lipschitz.
+}
+\begin{proof}
+    $U$ is convex, so we have that $L(x,y) \subseteq U$ for all $x ,y \in U$. So, the mean value theorem implies that 
+    \begin{align*}
+        \Vert f(x) - f(y) \Vert \leq \Vert x - y \Vert \sup_{z \in L(x,y) \setminus E} \Vert Df(z) \Vert_{\mathcal L} \leq M \Vert x - y \Vert.w
+    \end{align*}
+\end{proof}
+\thm{}{
+    Let $X,Y$ be normed vector spaces, $\emptyset \neq U \subseteq X$ be open and $Y \neq \{0\}$. Then the following are equivalent:
+    \begin{enumerate}
+        \item $U$ is connected.
+        \item If $f : U \to Y$ is continuous everywhere and is differentiable on $U \setminus E$ for $E$ countable, adn $Df(x) = 0$ for all $x \in U \setminus E$, then $f$ is constant.
+    \end{enumerate}
+}
+\begin{proof}
+    We go in order:
+    \begin{itemize}
+        \item $\implies$: Suppose $U$ is connected and $f$ as stated. Pick $z \in U$ and write $y = f(z) \in Y$. Consider $S = f^{-1}(\{y\})$, which is relatively closed in $U$. On the other hand, for $x \in S$, pick $B(x, r) \subseteq U$ and note that $B(x, r)$ is convex. Then for $w \in B(x, r)$, we have 
+        \begin{align*}
+            \Vert f(w) - y\Vert = \Vert f(w) - f(x) \Vert \leq \Vert w -x \Vert \sup_{L(w, x) \setminus E} \Vert Df\Vert = 0.
+        \end{align*}
+        This means $f = y$ in this ball, meaning $B(x, r) \subseteq S$.
+        \item $\impliedby$:
+    \end{itemize}
+\end{proof}
 
 \end{document}
