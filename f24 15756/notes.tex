@@ -2294,7 +2294,97 @@ Morally this means that the probability of hitting $3/4$ density is very very lo
     \begin{align*}
         P(\sum \Delta_i'' \geq 1/4) \leq \frac{1}{\lg^{30}n}.
     \end{align*}
-
 \end{proof}
+\newpage
+\chapter{The Cup Game}
+We describe the game:
+\begin{itemize}
+    \item Start with $n$ cups.
+    \item They are all empty initially.
+\end{itemize}
+\noindent There are two players. In each step of the game, 
+\begin{itemize}
+    \item The filler distributes up to $1-\eps$ units of water into the cups.
+    \item The emptier picks a cup and remove up to $1$ unit of water from the cup.
+\end{itemize}
+\noindent The emptier's goal is the minize the backlog, which is the fill of the fullest cup. Note that $\eps \in [0, 1/2]$. 
+\thm{Dietz, Sleator 1987}{
+    Consider the ``greedy'' emptying algorithm, meaning we just empty from the fullest cup. This algorithm achieves backlog $O(\lg n)$.
+}
+\nt{This result even holds for $\eps = 0$.}
+\thm{}{
+    If the emptier is deterministic, then filler can force backlog $\Omega(\lg n)$.
+}
+\nt{This result even holds for $\eps = \frac 12$. }
+\begin{proof}
+    The filler is gonna put $\frac{1-\eps}{n}$ water in all cups. Then the emptier empties from some cup. So the filler puts $\frac{1-\eps}{n-1}$ in each remaining cup, and we keep doing this. At the end of the construction, the backlog is $(1-\eps)\cdot H_n \leq \frac 12 \ln n$.
+\end{proof}
+\thm{Bender, Farach-Colton, Kuszmaul 2019}{
+    There exists a randomized emptying algorithm that gets backlog $O(\lg \lg n)$ with high probability if $\eps = \Theta(1)$. 
+}
+\noindent After this theorem, they also proved it for $\eps = \frac{1}{\poly(n)}$.
+
+\noindent \textbf{Smoothed Greedy Algorithm}: At the start, put $r_i \in [0,1]$ water into cup $i$ for each $i \in [n]$ where each $r_i$ is i.i.d. and uniform. Then on each step, empty from the fullest cup. BUT, if the fullest cup has less than 1 unit of water, we skip our turn.
+
+This last caveat is extremely important because we want to preserve the randomness we put in each cup. From now on:
+\begin{align*}
+    a_i(t) &= \text{amount of water filler adds to cup $i$ on step $t$} \\
+    b_i(t) &= \text{amount of water emptier removes from cup $i$ on step $t$} \\
+    c_i(t) &= \text{amount of water in cup $i$ at the end of step $t$}.
+\end{align*}
+\clm{}{
+    We claim that $(c_i(t) \mod 1)$ is uniformly random on $[0,1]$.
+}
+\begin{proof}
+    \begin{align*}
+        c_i(t) = r_i + \sum_{j=1}^t a_i(t) - \sum_{j=1}^t b_i(t).
+    \end{align*}
+    Note that $r_i$ is random on $[0,1]$, the second summand is a fixed number chosen by the oblivious adversary, and the third value is an integer.
+\end{proof}
+\noindent Now we create a potential function:
+\begin{align*}
+    \phi(t) = \sum_{t=1}^n \lfloor c_i(t) \rfloor.
+\end{align*}
+\mlenma{}{
+    Consider time $t_1$. Let $t_0 \leq t_1$ be most recent time when $\phi(t_0)$ was 0. With high probability, $t_1 - t_0 \leq O(\lg n)$.
+}
+\noindent During steps $t_0+1, \ldots, t_1$, 
+\begin{itemize}
+    \item The emptier decreases $\phi$ by 1 per step. So the total decrease by the emptier is $t_1 - t_0$.
+\end{itemize}
+But how much does the filler increase $\phi$? We consider 
+\begin{align*}
+    P(\text{filler increases $\lfloor c_i\rfloor$}) = a_i(t).
+\end{align*}
+This means that the total increase to $\phi$ is a sum of independent Bernoulli random variables with total mean $\sum_{i=1}^n a_i(t) \leq 1 -\eps$. Now we move to analyzing a sequence of $k$ steps. Now we draw a picture:
+\begin{itemize}
+    \item Draw water in cups initially.
+    \item And, draw water added by fillter during the $k$ steps.
+\end{itemize}
+Let $x_1, \ldots, x_n$ be the amount of water added into cup $i$ during the $k$ steps. Note that cup $i$ crosses:
+\begin{itemize}
+    \item $\lfloor x_i\rfloor$ thresholds for sure.
+    \item One more threshold with probability $\{x_i\}$.
+\end{itemize}
+This is a sum of $\lfloor x_i\rfloor + 1$ independent Bernoulli random variables with total mean $x_i$. Note that these sums are also independent across cups. Specifically, the total increase to $\phi$ by the filler during the $k$ steps is the sum of Bernoulli random variables with total mean $\sum x_i \leq k(1-\eps)$. 
+\newpage
+\cor{}{
+    For any $k$ steps, 
+    \begin{align*}
+        P(\text{filler increases $\phi$ by at least $k$ during steps}) &\leq \\
+        \leq P(\text{sum of indep}&\text{endent Bernoulli} \text{ random variables with total mean $k(1-\eps)$ is at least $k$}) \\
+        &\leq e^{-\Theta(k)}.
+    \end{align*}
+}
+\noindent If $t_1 - t_0 = k$, then the emptier decreases $\phi$ by $k$, but the filler must increase $\phi$ by $k$. But then the probability of this is $e^{-\Omega(k)}$. It follows that for all $k$, 
+\begin{align*}
+    P(t_1 - t_0 = k) \leq e^{-\Theta(k)}
+\end{align*}
+So, $[t_1 - t_0]$ is a geometric random variable, so with high probability, we have that 
+\begin{align*}
+    [t_1 - t_0] \leq O(\lg n).
+\end{align*}
+Moving on to the proof of the main theorem, consider the amount for which each cup exceeds 2. Consider the heights above 2 during time $t_0, \ldots, t_1 \leftarrow$ now. The number of cups that get to height 2 is at most $t_1 - t_0 \leq O(\lg n)$. This means that these cups are playing a cup game with $n' = O(\lg n)$ cups. From the Dietz/Sleator result, the backlog is $\leq 2 + O(\lg n') = O(\lg \lg n)$ with high probability. $\hfill \qed$
+
 
 \end{document}
