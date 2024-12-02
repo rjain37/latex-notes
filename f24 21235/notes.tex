@@ -3200,8 +3200,90 @@ This means that $|f'(t)| = 1$. If MVT holds, then there exists $c \in [0, 2\pi]$
             \Vert f(w) - y\Vert = \Vert f(w) - f(x) \Vert \leq \Vert w -x \Vert \sup_{L(w, x) \setminus E} \Vert Df\Vert = 0.
         \end{align*}
         This means $f = y$ in this ball, meaning $B(x, r) \subseteq S$.
-        \item $\impliedby$:
+        \item $\impliedby$: AFSOC. If $U$ is not connected, then there exists open sets $V,W \subseteq U$ suchj that $U = V \cup W$ and $V \cap W = \emptyset$. 
+        
+        Let $y \in Y \setminus \{0\}$ and define $f : U \to Y$ via
+        \begin{align*}
+            f(x) = \begin{cases}
+                0 & \text{if } x \in V \\
+                y & \text{if } x \in W
+            \end{cases}.
+        \end{align*}
+        Since $V,W$ are open and $V \cap W = \emptyset$, we have that $f$ is differentiable on all of $U$ and $Df = 0$. Then $\neg (2)$ because $Y \neq \emptyset$. 
     \end{itemize}
 \end{proof}
+missing stuff about partial derivatives n shit. also higher order derivatives but we do not care
+\mlenma{}{
+    Let $a,b \in \RR$ with $a < b$ and $Y$ a Banach space with $\FF$ as its underlying field.. Suppose $f \in C^k((a, b); Y)$ for $k \geq 1$. If $a < \alpha \leq \beta < b$, then $f( \beta) = \sum_{j=0}^{k-1} D^jf(\alpha) \frac{(\beta - \alpha)^j}{j!} + \int_\alpha^\beta \frac{(\beta - t)^{k-1}}{(k-1)!} D^kf(t) \, \text dt$.
+}
+\begin{proof}
+    First note that $D^if \in C^0([\alpha, \beta]; Y)$ for $0 \leq j \leq k$, so the integral is well defined.
+
+    Suppose initially that $g \in C^k((a, b); \FF)$, $h \in C^k((a, b); Y)$. Then,
+    \begin{align*}
+        D \sum_{j=0}^{k-1} (-1)^j D^{j} g D^{k-1 - j} h &= \sum_{j=0}^{k-1} [(-1)^j D^{j+1} g D^{k-1-j} h + (-1)^j D^jg D^{k-j} h] \\
+        &= \sum_{j=1}^k -(-1)^j D^jg D^{k-j}h + \sum_{j=0}^{k-1}(-1)^j D^jg D^{k-j}h \\
+        &= -(-1)^k D^k g h + gD^k h.
+    \end{align*}
+    Let $g: (a,b) \to \RR \subseteq \FF$ via $g(t) = \frac{(\beta - t)^{k-1}}{(k-1)!}$ and $h =f$. Then,
+    \begin{align*}
+        \frac{(\beta - t)^{k-1}}{(k-1)!} D^kf(t) &= \left(\sum_{j=0}^{k-1} (-1)^j D^j g(t) D^{k-1-j} h(t) \right)' \\
+        &\implies \int_\alpha^\beta \frac{(\beta - t)^{k-1}}{(k-1)!} D^kf(t) \, \text dt \\
+        &= \sum \bigg |_{t =\beta} - \sum \bigg|_{t = \alpha} \\
+        &= f(\beta) - \sum_{j=0}^{k-1} D^jf(\alpha) \frac{(\beta - \alpha)^j}{j!}.
+    \end{align*}
+\end{proof}
+\newpage
+\thm{Taylor}{
+    Let $X$ be a normed vector space and $Y$ a Banach space. Let $\emptyset \neq U \subseteq X$ be open. Suppose $f \in C^k(U; Y)$ for $k \geq 1$> Further suppose $x ,y \in U$ and $L(x,y) = \{(1-t)x + ty \mid t \in [0,1]\} \subseteq U$. Then, 
+    \begin{align*}
+        f(y) = \sum_{j=0}^{k-1} \frac{1}{j!} D^jf(x) (y-x)^{\otimes j} + \left( \int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} D^k f(ty + (1-t)x) \, \text dt \right)(y-x)^{\otimes j}.
+    \end{align*}
+    In particular, for all $\eps > 0$, $\exists \delta > 0$ such that $x \in B_X[y, \delta]$ implies that 
+    \begin{align*}
+        \Vert f(y) - \sum_{j=0}^{k} \frac{1}{j!} D^jf(x) (y-x)^{\otimes j} \Vert_Y \leq \eps \Vert y-x \Vert^k_X.
+    \end{align*}
+}
+\begin{proof}
+    Since $U$ is open, $\exists r > 0$ such that 
+    \begin{align*}
+        \{(1-t)x + ty \mid t \in [-r, 1+r] \} \subseteq U.
+    \end{align*}
+    Define $F: (-r, 1+r) \to Y$ via $F(t) = f((1-t)x + ty)$. Then $F \in C^k((-r, 1+r) ; Y)$ and $DF^j(t) = D^j((1-t)x + ty) (y-x)^{\otimes j}$. Then,the desired value for $f(y)$ follows by applying the previous lemma with $a = -r$, $b = 1+r$, $\alpha = 0$, and $\beta = 1$. To complete the proof, 
+    \begin{align*}
+        \int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} \, \text dt = \frac{1}{k!}.
+    \end{align*}
+    Thus, 
+    \begin{align*}
+        f(y) - \sum_{j=0}^{k} \frac{1}{j!} D^jf(x) (y-x)^{\otimes j} &= \int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} D^{k} f((1-t)x + ty) (y-x)^{k} \, \text dt  - \frac{D^kf(x)}{k!}(y-x)^k\\
+        &= \left(\int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} [D^{k} f((1-t)x + ty) - D^kf(x)]  \, \text dt \right)(y-x)^{k}.
+    \end{align*}
+    So the desired result follows from the continuity of $D^kf$.
+\end{proof}
+\noindent Remarks:
+\begin{enumerate}
+    \item $Y$ does not have to be a Banach space for the second estimate. To prove this, let $f: U \to Y \subseteq Y^*$ where $Y^*$ is the completion of $Y$.
+    \item In fact, the converse of Taylor's theorem is true if we add convexity to $U$. This completes the claim that $f \in C^k \iff f$ is locally well approximated by a polynomial of degree $k$.
+\end{enumerate}
+\thm{Power series are smooth}{
+    Let $X$ be a normed vector space and $Y$ a Banach space. For $n \in \NN$, let $T_n \in \mathcal L^n_{sym}(X; Y)$. Fix $x_0 \in X$ and define the power series 
+    \begin{align*}
+        f = \sum_{n=0}^\infty T_n((\cdot - x_0)^{\otimes n}).
+    \end{align*}
+    Finally suppose $R_{uni}(f) = \left(\limsup_{n\to\infty} \Vert T_n\Vert^{1/n}_{\mathcal L^n_{sym}}\right) \in (0, \infty]$. Then the following hold:
+    \begin{enumerate}
+        \item $f \in C^\infty(B_X(x_0, R_{uni}(f)); Y)$.
+        \item For $k \in \NN$, we have that $D^kf(x) = \sum_{n=k}^\infty D^k T_n(x-x_0)^{\otimes (n-k)}$, which is equal to 
+        \begin{align*}
+            \sum_{n=k}^\infty \frac{n!}{(n-k)!} T_n^{(k)} ((x-x_0)^{\otimes (n-k)}) \in \mathcal L^k(X; Y).
+        \end{align*}
+        with series converging uniformly in $B_X(x_0, R_{uni}(f))$. In particular, $T_k = \frac{1}{k!} D^kf(x_0)$. That is,
+        \begin{align*}
+            f(x) = \sum_{n=0}^\infty \frac{n!}{(n-k)!} D^nf(x_0) ((x-x_0)^{\otimes (n-k)})
+        \end{align*}
+        \item If $0 \leq s \leq R_{uni}(f)$, then $f \in UC_b^k (B_X[x_0, s]; Y)$.
+    \end{enumerate}
+}
+
 
 \end{document}
