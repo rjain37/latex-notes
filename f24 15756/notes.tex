@@ -2385,6 +2385,105 @@ So, $[t_1 - t_0]$ is a geometric random variable, so with high probability, we h
     [t_1 - t_0] \leq O(\lg n).
 \end{align*}
 Moving on to the proof of the main theorem, consider the amount for which each cup exceeds 2. Consider the heights above 2 during time $t_0, \ldots, t_1 \leftarrow$ now. The number of cups that get to height 2 is at most $t_1 - t_0 \leq O(\lg n)$. This means that these cups are playing a cup game with $n' = O(\lg n)$ cups. From the Dietz/Sleator result, the backlog is $\leq 2 + O(\lg n') = O(\lg \lg n)$ with high probability. $\hfill \qed$
+\chapter{Random Hash Functions}
+\dfn{}{
+    A hash function $h: U_1 \to U_2$ is pairwise independent if for all $x \neq y \in U_1$, $h(x)$ and $h(y)$ are independent random variables. 
+}
+\noindent Constider a prime $p$. Construct $h: \ZZ_p \to \ZZ_p$. Let $a,b \in \ZZ_p$ be uniformly random. Define $h(x) = ax + b \pmod p$. 
+\thm{}{
+    This definition of $h$ is pairwise independent and uniformly random.
+}
+\noindent Let $a_1, \ldots, a_k$ be random in $\ZZ_p$. Then 
+\begin{align*}
+    h(x) \coloneq a_1 + a_2 x + a_3x^2 + \cdots + a_kx^{k-1} \pmod p
+\end{align*}
+is $k$-wise independent. However, it takes $\Theta(k)$ time to evaluate. 
+\ex{Chained Hashing}{
+    $k=2$ works.
+    \begin{align*}
+        E[\text{time to query $u$}] &= \sum_{v \neq u \text{ in hash table}} P[h(v) = h(u)] \\
+        &= (n-1)\cdot \frac 1n \\
+        &= O(1).
+    \end{align*}
+}
+\ex{Linear Probing}{
+    \begin{itemize}
+        \item 5-way independence works.
+        \item 4-way independence does not work.
+    \end{itemize}
+}
+\ex{Cuckhoo Hashing}{
+    \begin{itemize}
+        \item 5-wise doesn't work.
+        \item $O(\lg n)$-wise works.
+    \end{itemize}
+}
+\ex{Balls and bins}{
+    $n$ balls into $n$ bins. What is the expected maximum load?
+    \begin{itemize}
+        \item $k=2$ is not enough.
+        \item $k=O(1)$ is also not enough.
+    \end{itemize}
+    It is an open problem to whether $[ax + b \pmod p] \pmod n$ achieves expected load $O(\log n / \log \log n)$. 
+}
+\thm{}{
+    There exists a hash function $h: U \to U$, where $U = \{1, \ldots, \poly(n)\}$, such that 
+    \begin{itemize}
+        \item The evaluation time is $O(1)$.
+        \item The space is $O(n^{0.9})$ machine works.
+        \item For any set $S \subseteq U$ such that $|S| = n^{0.8}$, with high probabiilty in $n$, $h$ is random on $S$.
+    \end{itemize}
+}
+\begin{proof}
+    Let $c$ be a large constant. Let $A_1, A_2, \ldots, A_c$ be arrays of size $n^{0.9}$, each filled with random numbers from $U$. Let $g_1, \ldots, g_c$ be pairwise independent hash functions from $U \to \{1, \ldots, n^{0.9}\}$. Define
+    \begin{align*}
+        h(x) = \bigoplus_{i=1}^c A_i[g_i(x)].
+    \end{align*}
+    Call an element $x \in S$ ``happy'' if there exists $A_i$ such that $g_i(x) \neq g_i(y)$ for all $y \in S \setminus \{x\}$. We observe that if all $x \in S$ are happy, then $h$ is fully random on $S$. 
 
-
+    So now we observe that with high probability, all $x \in S$ is happy. So fix an element $x \in S$ and see that 
+    \begin{align*}
+        P(x \text{ is not happy}) &\leq \prod_{i=1}^c P(g_i(x) \in \{g_i(y) \mid y \in S \setminus \{x\}\}) \\
+        &\leq \prod_{i=1}^c\sum_{ y\in S \setminus \{x\}} P(g_i(x) = g_i(y)) \\
+        &= \prod_{i=1}^c \sum_{y \in S \setminus \{x\}} \frac{1}{n^{0.9}} \\
+        &\leq \prod_{i=1}^c \frac{n^{0.8}}{n^{0.9}} \\
+        &= \left(\frac{1}{n^{0.1}}\right)^c \\
+        &= \frac{1}{n^{c/10}}.
+    \end{align*}
+    This is as desired.
+\end{proof}
+\ex{Balls and Bins}{
+    Dietzfelbinger and Rink's Splitting Trick:
+    \begin{enumerate}
+        \item Use a hash function $h_1$ to map balls to $n^{0.2}$ collections $C_1, C_2, \ldots, C_{n^{0.2}}$ such that each $C_i$ has size $(1 \pm o(1))\cdot n^{0.8}$.
+        \item Use a hash function $h_2$ to map each collection to $n^{0.8}$ bins. 
+    \end{enumerate}
+    So in total we see that there are $n^{0.2} n^{0.8} = n$ bins. Now we use the hash function from the previous theorem to conclude that with high probability, $h_2$ is fully random on $C_1$ and on $C_2$ and so on. So, the max load in each of these collections is $O(\lg n / \lg \lg n)$ with high probability, meaning overall the max load is $O(\lg n / \lg \lg n)$. 
+}
+\nt{
+    For step 1, we can also use the hash function from the previous theorem. For analysis, break into sets $S_1, \ldots S_{n^{0.2}}$ of size $n^{0.8}$. So with high probability, $h$ is random on each $S_i$. So we can use a Chernoff bound to argue that with high probability,
+    \begin{align*}
+        |S_i \cap C_j| = (1 \pm o(1)) \cdot n^{0.6}.
+    \end{align*}
+    So it follows that 
+    \begin{align*}
+        |C_j| = \sum_{i=1}^{n^{0.2}} |S_i \cap C_j| = (1 \pm o(1)) \cdot n^{0.8}.
+    \end{align*}
+}
+\thm{Siegel 1989}{
+    There exists a hash function $h$ that 
+    \begin{itemize}
+        \item $O(1)$ time.
+        \item $n^{0.9}$ words.
+        \item $n^{0.8}$ independent with high probability.
+    \end{itemize}
+}
+\thm{Ostlin + Pagh 2001 $\to$ Pagh + Pagh 2004}{
+    Can do 
+    \begin{itemize}
+        \item $O(1)$ time.
+        \item $O(n)$ words.
+        \item On any set $S$ of size $n$, we are random with high probability.
+    \end{itemize}
+}
 \end{document}
