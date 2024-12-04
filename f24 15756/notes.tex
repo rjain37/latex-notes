@@ -2486,4 +2486,105 @@ is $k$-wise independent. However, it takes $\Theta(k)$ time to evaluate.
         \item On any set $S$ of size $n$, we are random with high probability.
     \end{itemize}
 }
+\chapter{Retrieval Data Structures}
+\noindent Our input will be some set $S \subseteq U$, where $U$ is of $\poly(n)$ size and $|S| = n$. We are also given a function $f: S \to \{0, 1\}$. The goal is to output a data structure $D$ supporting queries of the form: on an element $x \in U$, 
+\begin{align*}
+    D(x) = \begin{cases}
+        f(x) & x \in S \\
+        * \leftarrow \text{ anything} & \text{otherwise}
+    \end{cases}.
+\end{align*}
+Our goal today is to make $D$ as small as possible. 
+\begin{enumerate}
+    \item We don't care about time.
+    \item We will assume access to infinite type of random bits.
+\end{enumerate}
+\thm{}{
+    There exists a solution using expected space $n + O(1)$ bits. 
+}
+\begin{proof}
+    Let $h_1, h_2, \ldots$ be an infinite sequence of random hash functions from $U \to \{0,1\}$. Let $h_i$ be the first such hash function such that 
+    \begin{align*}
+        h_i(x) = f(x)
+    \end{align*}
+    for all $x \in S$. Define $D$ to store the number $i$. 
+
+    \noindent Observation: Each $h_j$ has $1/2^n$ probability of working. So,
+    \begin{align*}
+        E[i] = 2^n \implies E[\lg i] \leq n
+    \end{align*}
+    by Jensen's inequality. So, $E[|D|] = n + o(n)$. 
+\end{proof}
+Now we have the value-dynamic retrieval problem. Suppose I want to add an operation:
+\begin{itemize}
+    \item $\mathrm{Toggle}(x)$, where $x \in S$, such that $f(x) \leftarrow \lnot f(x)$.
+\end{itemize}
+\thm{}{
+    There xists a value dynamic solution using $n + n\lg e + o(n)$ expected bits. 
+}
+\begin{proof}
+    Store
+    \begin{itemize}
+        \item Bijection $\phi: S \to \{1, \ldots n\}$.
+        \item $n$ bits storing $f(x)$ is position $\phi(x)$ for each $x \in S$.
+    \end{itemize}
+    For $\phi$, let $\phi_1, \phi_2, \ldots$ be random functions from $U \to \{1, \ldots n\}$. Let $\phi$ be the first $\phi_i$ that works. Each $\phi_j$ works with probability $\frac{n!}{n^n}$. So,
+    \begin{align*}
+        E[i] \approx e^n \implies E[\lg i] \approx \lg e^n = n\lg e.
+    \end{align*}
+\end{proof}
+\thm{}{
+    The value-dynamic problem requires $n + \Omega(n)$ bits. 
+}
+We're going to assume there exists a solution using $n + o(n)$ bits. Then we are going to construct and impossibly good compression scheme. 
+
+\noindent Warmup 1: Let $S$ be $n$ elements and $f: S \to \{0, 1\}$. Let $D_1$ store $f$ and let $D_2$ be $D_1$ after we toggle every element in $S$. Define the ``churn set'' as
+\begin{align*}
+    \Delta = \{u \in U \mid D_1(u) \neq D_2(u) \}.
+\end{align*}
+We claim that if $E[| \Delta |] \leq \frac{|U|}{1000}$, then we can arrive at a contradiction (an impossibly good compression scheme).
+
+\noindent Our procotol:
+\begin{itemize}
+    \item Alice will send $D_1$, $D_2$, and $S$ as a subset of $\Delta$. 
+\end{itemize}
+Then,
+\begin{align*}
+    E[|M|] &= n + n + o(n) + E\left[\lg \binom{|\Delta|}{n}\right] \\
+    &\leq n + n + o(n) + \lg \binom{|U|/1000}{n}  \tag{skip a few steps} \\
+    &\leq n + n + o(n) + \lg \binom{|U|}{n} - 9n. \tag{skip some more}
+\end{align*}
+Bob will use $D_1, D_2$ to get $\Delta$, using that to recover $S$. However, $|S|$ is $\lg \binom{|U|}{n}$ bits. This yields a contradiction. 
+
+\noindent Warmup 2: Let $S_1$ and $S_2$ be disjoint $n/2$ element subsets of $U$. Let $S = S_1 \cup S_2$. Our thought experiment is what if we start with $D_1$ and $D_2$ is the data structure after we just toggle $S_1$. As before, define the churn set as 
+\begin{align*}
+    \Delta = \{u \in U \mid D_1(u) \neq D_2(u)\}.
+\end{align*}
+Suppose $E[\Delta] \geq \frac{|U|}{2000}$. We claim once again that we get a contradiction in the same way.
+
+\noindent Our protocol:
+\begin{itemize}
+    \item Alice will send $D_1$, $S_1$ as a subset of $U$, and $S_2$ as a subset of $U \setminus \Delta$. 
+\end{itemize}
+Now Bob will use $D_1$ and $S_2$ to build $D_2$. Now he can proceed as before to use $D_1$ and $D_2$ to get $\Delta$, which he then uses that to recover $S_2$ and therefore $S$ and $f$. Therefore, Bob recovers approximately $2 \lg \binom{|U|}{n/2} + n$ bits. So now we have 
+\begin{align*}
+    E[|M|] &= n + o(n) + \lg \binom{|U|}{n/2} + E \left[ \lg \binom{|U| - |\Delta|}{n/2} \right] \\
+    &\leq n + 2 \lg \binom{|U|}{n/2} - \Omega(n).
+\end{align*}
+As such, we have yet again arrived at a contradiction. 
+
+We move to proving the theorem:
+\begin{proof}
+We have the following set of data structures:
+\begin{align*}
+    D_1 \xrightarrow{\text{toggle}(S_1)} D_2 \xrightarrow{\text{toggle}(S_2)} D_3
+\end{align*}
+Define $\Delta_1$ as the churn set between $D_1$ and $D_2$. Define $\Delta_2$ as the churn set between $D_2$ and $D_3$. And finally $\Delta_3$ as the churn set between $D_1$ and $D_3$. Either 
+\begin{itemize}
+    \item $E[|\Delta_1|] \geq \frac{|U|}{2000}$,
+    \item $E[|\Delta_2|] \geq \frac{|U|}{2000}$,
+    \item $E[|\Delta_3|] \leq \frac{|U|}{1000}$.
+\end{itemize}
+At least one of these has to occur. In the first situation, we win by warmup 2, as with the second situation. However, in the third situation, we win by warmup 1. 
+\end{proof}
 \end{document}
