@@ -3265,6 +3265,7 @@ missing stuff about partial derivatives n shit. also higher order derivatives bu
     \item $Y$ does not have to be a Banach space for the second estimate. To prove this, let $f: U \to Y \subseteq Y^*$ where $Y^*$ is the completion of $Y$.
     \item In fact, the converse of Taylor's theorem is true if we add convexity to $U$. This completes the claim that $f \in C^k \iff f$ is locally well approximated by a polynomial of degree $k$.
 \end{enumerate}
+\newpage
 \thm{Power series are smooth}{
     Let $X$ be a normed vector space and $Y$ a Banach space. For $n \in \NN$, let $T_n \in \mathcal L^n_{sym}(X; Y)$. Fix $x_0 \in X$ and define the power series 
     \begin{align*}
@@ -3277,13 +3278,90 @@ missing stuff about partial derivatives n shit. also higher order derivatives bu
         \begin{align*}
             \sum_{n=k}^\infty \frac{n!}{(n-k)!} T_n^{(k)} ((x-x_0)^{\otimes (n-k)}) \in \mathcal L^k(X; Y).
         \end{align*}
-        with series converging uniformly in $B_X(x_0, R_{uni}(f))$. In particular, $T_k = \frac{1}{k!} D^kf(x_0)$. That is,
+        with series converging pointwise in $B_X(x_0, R_{uni}(f))$ and uniformly on any ball smaller. In particular, $T_k = \frac{1}{k!} D^kf(x_0)$. That is,
         \begin{align*}
             f(x) = \sum_{n=0}^\infty \frac{n!}{(n-k)!} D^nf(x_0) ((x-x_0)^{\otimes (n-k)})
         \end{align*}
         \item If $0 \leq s \leq R_{uni}(f)$, then $f \in UC_b^k (B_X[x_0, s]; Y)$.
     \end{enumerate}
 }
+\begin{proof}
+    For $k \in \NN$, define the power series with values in $\mathcal L^k(X; Y)$ by 
+    \begin{align*}
+        g_k = \sum_{n=k}^\infty \frac{n!}{(n-k)!} T_n^{(k)}(\cdot - x_0)^{\otimes (n-k)}.
+    \end{align*}
+    Recall that 
+    \begin{align*}
+        T^{(k)}(h_1, \ldots h_{n-k})(v_1, \ldots, v_k) = T(h_1, \ldots, h_{n-k}, v_1, \ldots, v_k).
+    \end{align*}
+    So we have that 
+    \begin{align*}
+        g_k = \sum_{n=0}^\infty \frac{(n+k)!}{n!} T_{n+k}^{(k)}(\cdot - x_0)^{\otimes n}.
+    \end{align*}
+    Note that $g_0 = f$ and $g_k$ is the formal guess for the $k$-th derivative of $f$. For $k \geq 1$, we bound (use Thm 8.2.23),
+    \begin{align*}
+        \Vert T_{n_k}(h_1^{\otimes n}, h_2^{\otimes k}) \Vert_Y \leq \sqrt{\frac{(n+k)^{n+k}}{n^nk^k}} \Vert T_{n+k}\Vert_{\mathcal L^{n+k}_{sym}}
+    \end{align*}
+    for $\Vert h_1 \Vert = \Vert h_2 \Vert = 1$. Thus, 
+    \begin{align*}
+        \Vert T_{n+k}^{(k)}\Vert_{\mathcal L^{n-k}_{sym}(X; \mathcal L_{sym}^k(X; Y))} &= \sup_{\Vert h_1\Vert = 1} \Vert T_{n+k}^{(k)} (h_1^{\otimes n})\Vert_{\mathcal L^k_{sym}} \\
+        &=\sup_{\Vert h_1\Vert = 1} \sup_{\Vert h_2\Vert = 1} \Vert T_{n+k}(h_1^{\otimes n}, h_2^{\otimes k})\Vert_{Y} \\
+        &\leq \sqrt{\frac{(n+k)^{n+k}}{n^nk^k}} \Vert T_{n+k}\Vert_{\mathcal L_{sym}}.
+    \end{align*}
+    Note that if $z > 0 \in \RR$, then $1 + z \leq \sum_{n=0}^\infty \frac{z^n}{n!} = e^z$. Therefore, $1 + \frac kn \leq e^{k/n} \implies (1 + k/n)^n \leq e^k$. Then,
+    \begin{align*}
+        \frac{(n+k)^{n+k}}{n^nk^k} = \frac{(n+k)^n}{n^n} \frac{(n+k)^k}{k^k} = (1 + k/n)^n \frac{(n+k)^k}{k^K }\leq e^k \frac{(n+k)^k}{k^k}.
+    \end{align*}
+    So if $n \geq k \geq 1$, then 
+    \begin{align*}
+        \left\Vert \frac{(n+k)!}{n!} T_{n+k}^{(k)}\right\Vert^{1/n}_{\mathcal L^n_{sym} \mathcal L_{sym}^k} &\leq [(n+k)\cdots(n+1)]^{1/n} \left( \frac{(n+k)^{n+k}}{n^nk^k}\right)^{1/2n} \cdot \Vert T_{n+k} \Vert_{\mathcal L_{sym}}^{1/n} \\
+        &\leq (2n)^{k/n}e^{k/2n} (2n)^{k/2n} \left(\Vert T_{n+k} \Vert^{\frac{1}{n+k}}\right)^{\frac{n+k}{n}}.
+    \end{align*}
+    So,
+    \begin{align*}
+        \limsup_{n\to\infty} \left\Vert \frac{(n+k)!}{n!} T_{n+k}^{(k)}\right\Vert^{1/n}_{\mathcal L^n_{sym} \mathcal L_{sym}^k} \leq \limsup_{n\to\infty} (2n)^{k/n}e^{k/2n} (2n)^{k/2n} \left(\Vert T_{n+k} \Vert^{\frac{1}{n+k}}\right)^{\frac{n+k}{n}} = \frac{1}{R_{uni}(f)}.
+    \end{align*}
+    But note that the left hand side of this is $\frac{1}{R_{uni}(g_k)}$. So we get that $R_{uni}(f) \leq R_{uni}(g_k)$. Thus, if we set $U \coloneq B_X(x_0, R_{uni}(f))$, we get that each $g_k$ converges pointwise in $U$ and defines a continuous $g_K U \to \mathcal L^k_{sym}(X; Y)$. Moreover, each $g_k$ converges uniformly absolutely on $B_X[x_0, S]$ for $S < R_{uni}(f)$. So actually, $g_k$ is bounded and uniformly continuous on $B_X[x_0, S]$. To conclude, we claim that each $g_k$ is differentiable with $Dg_k = g_{k+1}$. 
 
+    Note 
+    \begin{align*}
+        D\sum_{n=N}^\infty \frac{n!}{(n-k)!} T_n^{(k)}(\cdot - x_0)^{\otimes(n-k)} = \sum_{n=k+1}^N \frac{n!}{(n-k-1)!} T_n^{(k+1)} (\cdot - x_0)^{\otimes n-k-1}.
+    \end{align*}
+    If we send $N \to \infty$, we get that result as a result of homework 12 problem 5. 
+    
+\end{proof}
+\thm{}{
+    Let $X$ be a normed vector space and $Y$ a Banach space, $\emptyset \neq U \subseteq X$ open and connected. Suppose $f,g : U \to Y$ are analytic. The following hold:
+    \begin{enumerate}
+        \item If there is $z \in U$ such that $D_n f(z) = D^n g(z)$ for all $n$, then $f=g$ in $U$.
+        \item If $f =g$ in an open set $V \subseteq U$, then $f=g$ in $U$.
+    \end{enumerate}
+}
+\begin{proof}
+    1 implies 2 trivially, so we just prove 1. So let 
+    \begin{align*}
+        E = \{x \in U \mid D^nf(x) = D^ng(x) \,\, \forall n\in \NN\}.
+    \end{align*}
+    If this is clopen then we show that $E$ is just $U$. Once this is established, we then have that for all $x_0 \in U$,
+    \begin{align*}
+        f(x) &= \sum \frac{D^n f(x_0)(x-x_0)^{\otimes n}}{n!} \\
+        g(x) &= \sum \frac{D^n g(x_0)(x-x_0)^{\otimes n}}{n!}
+     \end{align*}
+     which would show $f=g$. So now now that 
+     \begin{enumerate}
+        \item If $x_0 \in E$, then $B(x_0, r) \subseteq E$ via the previous argument. Therefore $E$ is open.
+        \item Suppose $\{x_m\}_{m=0}^\infty \subseteq E$ such that $x_m \to x \in U$ as $m \to \infty$. Then we know that $D^n f(x_m) = D^n g(x_m)$ for all $n$ and $m$. So if we fix $n$ and send $m \to \infty$, we get that $D^n f(x) = D^n g(x)$ by continuity. Therefore, $x \in E$ and therefore $E$ is closed.
+     \end{enumerate}
+\end{proof}
+
+\chapter{ODEs?}
+\noindent Idea: we want to solve equations involving derivatives. An ordinary differential equaiton is an equation with one independent variable. For example, find $x: [0, T] \ to X$ a banach space, such that 
+\begin{align*}
+    \begin{cases}
+        x'(t) = f(t, x(t)) & \forall t \in (0, T)\\
+        x(0) = x_0 \in X & \text{ for given data $x_0 \in X$}
+    \end{cases}.
+\end{align*}
+And given $f: [0, T] \times X \to X$. 
 
 \end{document}
