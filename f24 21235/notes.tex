@@ -3364,4 +3364,85 @@ missing stuff about partial derivatives n shit. also higher order derivatives bu
 \end{align*}
 And given $f: [0, T] \times X \to X$. 
 
+\thm{Cauchy-Lipschitz-Picard-Lindelof Theorem}{
+    Suppose 
+    \begin{enumerate}
+        \item $X$ is a Banach space and $x_0 \in X$.
+        \item $M,T \in [0, \infty)$ and $R \in [0, \infty]$ such that $MT \leq R$.
+        \item There is $r \in [0, \infty]$ and $x \in B[x_0, r]$. 
+        \item $f \in C_b^0([0, T] \times B_X[x_0, r + R], X)$ such that $\Vert f \Vert_{C^0_b} \leq M$ and $\exists K \in [0, \infty)$ such that $\Vert f(t, y) - f(t, z) \Vert_X \leq K d_X(y,z)$ for all $t \in [0, T]$ and for all $y,z \in X$.
+    \end{enumerate}
+    Then, $\exists ! \zeta \ni C_b^0([0, T]; B_X[x_0, r+R])$ such that $\zeta(t) = x + \int_0^t f(s, \zeta(s)) \, \text ds$ for all $t \in [0, T]$. Moreover, $\zeta$ is the unique function in $C_b^0([0, T]; B_X[x_0, r+R]) \cap C^1((0, T); X)$ such that 
+    \begin{align*}
+        \begin{cases}
+            \zeta'(t) = f(t, \zeta(t)) & t\in (0, T)\\
+            \zeta(0) = x &
+        \end{cases}.
+    \end{align*}
+}
+\begin{proof}
+    First note if $\zeta(t) = x + \int_0^t f(s, \zeta(s)) \text ds$. Then by FTC1, $\zeta$ is differentiable with $\zeta'(t) = f(t, \zeta(t))$, $\zeta(0) = x$. Therefore, $\zeta \in C^1$. 
+
+    On the other hand, if $\zeta$ solves the IVP, then FTC2 implies that 
+    \begin{align*}
+        \zeta(t) = x + \int_0^t f(s, \zeta(s))\, \text ds.
+    \end{align*}
+    So, it suffices to prove the existence of $\zeta$ solving $\zeta(t) = x + \int_0^t f(s, \zeta(s)) \text ds$. So now define $Y = C_b^0([0, T]; B_X[x_0, r + R])$ and note that $Y$ is complete.
+
+    Suppose $\zeta \in Y$ and define $\varphi: [0, T] \to X$ via 
+    \begin{align*}
+        \varphi(t) = x + \int_0^t f(s, \zeta(s)) \, \text ds.
+    \end{align*}
+    By FTC1, we have that $\varphi \in C_b^0$ and 
+    \begin{align*}
+        \Vert \varphi(t) - x_0\Vert \leq \Vert x - x_0 \Vert + \int_0^t \Vert f(s, \zeta(s)) \Vert \text ds \leq r + \int_0^T M = r + MT \leq r + R.
+    \end{align*}
+    Therefore, $\varphi \in Y$. Thus, we may define the map $\Phi: Y \to Y$ via 
+    \begin{align*}
+        \Phi(\zeta)(t) = x + \int_0^t f(s, \zeta(s)) \, \text ds.
+    \end{align*}
+    We are finished as soon as we show that $\Phi$ has a unique fixed point. We claim that if we take 
+    \begin{align*}
+        \Vert \Phi^n(\zeta_1)(t) - \Phi^n(\zeta_2)(t) \Vert_X \leq  \frac{t^nK^n}{n!} \Vert \zeta_1 - \zeta_2\Vert_Y
+    \end{align*}
+    for all $ t\in [0, T]$. For $n=0$, this is trivial. So suppose this holds for $n \in \NN$.
+
+    Then, 
+    \begin{align*}
+        \Phi^{(n+1)}(\zeta_1)(t) - \Phi^{(n+1)}(\zeta_2)(t) &= x + \int_0^t f(s, \Phi^n(\zeta_1)(s)) \, \text ds -x - \int_0^t f(s, \Phi^n(\zeta_2)(s)) \, \text ds \\
+        &= \int_0^t f(s, \Phi^n(\zeta_1)(s))  -  f(s, \Phi^n(\zeta_2)(s)) \, \text ds.
+    \end{align*}
+    This shows that 
+    \begin{align*}
+        \Vert \Phi^{(n+1)}(\zeta_1)(t) - \Phi^{(n+1)}(\zeta_2)(t) \Vert_X \leq \int_0^tK \Vert \Phi^n(\zeta_1)(s) - \Phi^n(\zeta_2)(s) \Vert_X \, \text ds \leq \frac{t^{n+1} K^{n+1}}{(n+1)!} \Vert \zeta_1 - \zeta_2\Vert_Y.
+    \end{align*}
+    Therefore, the estimate holds for all $ n\in \NN$ by induction. We now know that 
+    \begin{align*}
+        \Vert \Phi^n(\zeta_1) - \Phi^n(\zeta_2) \Vert_X \leq \frac{T^n K^n}{n!} \Vert \zeta_1 - \zeta_2\Vert_Y
+    \end{align*}
+    but $\frac{(KT)^n}{n!} \to 0$, so $\Phi$ is eventually contractive. Therefore, there exists a unique $\zeta \in Y$ such that $\Phi(\zeta) = \zeta$.
+\end{proof}
+\section{Toy model of ODEs in Banach Spaces}
+Fix $V$ a Banach space. Suppose $f \in C_b^0(\RR, V)$. Fix $r > 0$ and define $A_rf: \RR\to V$ via 
+\begin{align*}
+    A_rf(x) = \frac{1}{2r} \int_{x-r}^{x+r} f.
+\end{align*}
+By FTC1, $A_r f \in C^1_b$ with $(A_rf)'(x) = \dfrac{f(x+r) - f(x-r)}{2}$. In fact, $A_r \in \mathcal L(C^0_b(\RR, V)) \cap \mathcal L(C_b^0; C^1_b)$. Then,
+\begin{align*}
+    \Vert A_rf\Vert_{C^0_b} \leq \Vert f \Vert_{C_b^0}
+\end{align*}
+because $\Vert A_r f(x) \Vert_V \leq \frac{1}{2r} \int_{x-r}^{x+r} \Vert f \Vert_V \leq \Vert f \Vert_{C_b^0}$.
+
+Now suppose we are given some $f_0 \in C_b^0(\RR, V)$. We update it via $f: [0, \infty) \to C_b^0(\RR, V)$ such that $f(0) = f_0$ and 
+\begin{align*}
+    f'(t) = A_rf(t) - f(t) = (A_r - I)f(t).
+\end{align*}
+This is a $C_b^0(\RR; V) = X$-valued ODE with 
+\begin{align*}
+    \begin{cases}
+        f' = (A_r - I)f \\
+        f(0) = f_0
+    \end{cases} \implies f(t) = \exp(t(A_r - I))f_0 = e^{-t} \exp(tA_r)f_0.
+\end{align*}
+
 \end{document}
